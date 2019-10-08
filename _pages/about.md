@@ -16,4 +16,4 @@ Now, I work on dataset distillation: the process of learning tiny synthetic data
 
 Next, I want to work on creating a metric for objectively comparing the difficulty of machine learning tasks based on how much knowledge is needed to solve them. Knowing how tough our tasks are can tell us a lot about how good our models are. 
 
-Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is [isucholu@uwaterloo.ca].
+Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is at isucholu@uwaterloo.ca.
