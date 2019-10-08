@@ -14,4 +14,6 @@ In the beginning, I used deep learning to restore lost data from cars in order t
 
 Now, I work on dataset distillation: the process of learning tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent all that knowledge using far fewer samples. 
 
-Next, I want to work on creating a metric for objectively comparing the difficulty of machine learning tasks based on how much knowledge is needed to solve them. Knowing how tough our tasks are tells us a lot about how good our models are. 
+Next, I want to work on creating a metric for objectively comparing the difficulty of machine learning tasks based on how much knowledge is needed to solve them. Knowing how tough our tasks are can tell us a lot about how good our models are. 
+
+Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is [isucholu@uwaterloo.ca].
