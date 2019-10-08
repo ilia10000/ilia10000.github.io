@@ -24,13 +24,6 @@ Work experience
   - Topic 2: Customizable neural networks in Stata
   - Supervisor: Dr. Matthias Schonlau, Statistics and Actuarial Science
 * Fall 2016 - Winter 2017: Teaching Assistant, University of Waterloo
-* Summer 2015: Data Scientist, Capital One Canada
-    * Took lead on and completed cross-functional Facebook insourcing project start-to-finish:
-        -  Increased app volume to 260% and decreased cost per app by 50% with net benefit of $2 million per year
-        -  Interfaced with Facebook API programmatically to create a fully automated data pipeline
-        -  Performed rank-order and slope analysis to identify optimal bids for demographic segments
-        -  Transitioned model and data infrastructure from Linux server to Hadoop
-
 * Summer 2016: Data Guru (Research Team), Athos
     * Created Luigi pipelines to automate away EMR jobs saving each team member an average of 8-10 hours per week
     * Increased calibration accuracy by 90% by creating patch to recalculate values in backend and push to users’ app
@@ -38,6 +31,14 @@ Work experience
     * Investigated root cause of churn and improved user experience through visualizations of progress metrics
     * Extracted new features from multi-channel time-series data including real 3D motion and muscle-use timing
     * Performed study on data from elite and non-elite athletes to determine what leads to high performance
+* Summer 2015: Data Scientist, Capital One Canada
+    * Took lead on and completed cross-functional Facebook insourcing project start-to-finish:
+        -  Increased app volume to 260% and decreased cost per app by 50% with net benefit of $2 million per year
+        -  Interfaced with Facebook API programmatically to create a fully automated data pipeline
+        -  Performed rank-order and slope analysis to identify optimal bids for demographic segments
+        -  Transitioned model and data infrastructure from Linux server to Hadoop
+
+
 
   
 Skills
