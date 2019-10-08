@@ -12,6 +12,6 @@ I'm doing my PhD in Statistics at the University of Waterloo. I'm fascinated by 
 
 In the beginning, I used deep learning to restore lost data from cars in order to improve anomaly dection algorithms and make cars safer. The ability to restore lost data suggests that knowledge is duplicated across a dataset. 
 
-Now, I work on dataset distillation: the process of creating tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent all that knowledge using far fewer samples. 
+Now, I work on dataset distillation: the process of learning tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent all that knowledge using far fewer samples. 
 
 Next, I want to work on creating a metric for objectively comparing the difficulty of machine learning tasks based on how much knowledge is needed to solve them. Knowing how tough our tasks are tells us a lot about how good our models are. 
