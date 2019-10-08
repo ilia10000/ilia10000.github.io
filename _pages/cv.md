@@ -11,16 +11,18 @@ redirect_from:
 
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
+* BMath in Statistics, University of Waterloo, 2017
+* Ph.D in Statistics, University of Waterloo, 2020 (expected)
 
 Work experience
 ======
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+* Summer 2015: Data Scientist, Capital One Canada
+  *Took lead on and completed cross-functional Facebook insourcing project start-to-finish:
+    *Increased app volume to 260% and decreased cost per app by 50% with net benefit of $2 million per year
+    *Interfaced with Facebook API programmatically to create a fully automated data pipeline
+    *Performed rank-order and slope analysis to identify optimal bids for demographic segments
+    *Transitioned model and data infrastructure from Linux server to Hadoop
+
 
 * Fall 2015: Research Assistant
   * Github University
