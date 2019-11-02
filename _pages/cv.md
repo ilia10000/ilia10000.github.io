@@ -66,7 +66,7 @@ Teaching
   
 Service and leadership
 ======
-* Winter 2017 - Present: Co-founder and Treasurer, Statistics Anti-Depression (S.A.D.) Club
+* Winter 2018 - Present: Co-founder and Treasurer, Statistics Anti-Depression (S.A.D.) Club
   - Graduate studies tend to take their toll on students' mental health
   - Started grassroots mental health initiative for graduate students
   - S.A.D. Club provides students with a safe, relaxed, social setting where they can unwind, socialize with peers, have some nutritious snacks, and hopefully just overall reduce their stress levels
