@@ -77,3 +77,14 @@ Service and leadership
   - Negotiated over $30000 in sponsorship deals with firms including Blackberry, Kik, Capital One,, and Velocity
   - Managed diverse team of 40 students spanning two universities
   - Provided pro-bono consulting to 14 startup companies including later-stage tech startups
+  
+Honors and Awards
+======
+* SSC Student Travel Award for the 2020 SSC Annual Meeting
+* Ontario Graduate Scholarship 2020-2021
+* Ontario Graduate Scholarship 2019-2020
+* Statistics and Actuarial Science Chair's Award Fall 2019
+* Math Senate Graduate Scholarship Winter 2019
+* Statistics and Actuarial Science Chair's Award Spring 2018
+
+
