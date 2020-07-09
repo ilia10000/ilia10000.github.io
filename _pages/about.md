@@ -14,6 +14,6 @@ In the beginning, I used deep learning to restore lost data from cars in order t
 
 Then, I worked on improving dataset distillation: the process of learning tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent all that knowledge using far fewer samples. 
 
-Now, I work on "less than one"-shot Learning, an extreme form of few-shot learning where the goal is for models to learn N new classes using M<N training samples. 
+Now, I work on "less than one"-shot learning, an extreme form of few-shot learning where the goal is for models to learn N new classes using M<N training samples. 
 
 Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is at isucholu@uwaterloo.ca.
