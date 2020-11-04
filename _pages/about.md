@@ -19,6 +19,11 @@ Now, I work on ["less than one"-shot learning](https://arxiv.org/abs/2009.08449)
 Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is at isucholu@uwaterloo.ca.
 
 **News**
+
 Nov 2020: Our extended abstract on [privacy-preserving dataset distillation](https://arxiv.org/abs/2009.09155) has been accepted for poster presentation in the AAAI-21 Student Abstract and Poster Program.
+
 Oct 2020: Our LO-shot learning research was featured on [MIT Tech Review](https://www.technologyreview.com/2020/10/16/1010566/ai-machine-learning-with-tiny-data/), [Digital Trends](https://www.digitaltrends.com/news/new-style-ai-learns-things-differently/), and several other outlets!
+
 Aug 2020: I'm joining [Stratum AI](stratum.ai) as VP of Research and will be leading the development of ML/DL methods to make mining more efficient and environmentally sustainable.
+
+
