@@ -10,7 +10,7 @@ redirect_from:
 
 I'm doing my PhD in Statistics at the University of Waterloo. I'm fascinated by deep learning and its ability to reach superhuman performance on so many different tasks. I want to better understand how neural networks achieve such impressive results... and why sometimes they don't. To do that, I'm exploring what kind of information or knowledge is contained in the datasets we train our models on and how much of this knowledge is actually needed for our models. 
 
-In the beginning, I used deep learning to [restore lost data from cars](https://peerj.com/articles/cs-210/) in order to improve anomaly dection algorithms and make cars safer. The ability to restore lost data suggests that knowledge is duplicated across a dataset. 
+In the beginning, I used deep learning to [restore lost data from cars](https://peerj.com/articles/cs-210/) in order to improve anomaly detection algorithms and make cars safer. The ability to restore lost data suggests that knowledge is duplicated across a dataset. 
 
 Then, I worked on [improving dataset distillation](https://arxiv.org/abs/1910.02551), the process of learning tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent that knowledge using fewer samples. 
 
