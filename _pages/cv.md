@@ -12,10 +12,11 @@ redirect_from:
 Education
 ======
 * BMath in Statistics, University of Waterloo, 2017
-* Ph.D in Statistics, University of Waterloo, 2020 (expected)
+* Ph.D in Statistics, University of Waterloo, 2021 (expected)
 
 Work experience
 ======
+* Summer 2020 - Present: Vice President of Research, [Stratum AI](stratum.ai)
 * Summer 2017: Research Associate, University of Waterloo
   - Topic: Deep learning for anomaly detection in safety-critical real-time embedded systems
   - Supervisor: Prof. Sebastian Fischmeister, Electrical and Computer Engineering
