@@ -8,4 +8,4 @@ date: 2020-01-01
 location: "Waterloo, Ontario"
 ---
 
-I will be offering a section of STAT 231 in Winter 2020. 
+I offered a section of [STAT 231](https://uwflow.com/course/stat231) in Winter 2020. 
