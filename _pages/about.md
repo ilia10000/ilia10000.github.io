@@ -20,6 +20,8 @@ Check out my publications to see my progress so far. If you find something you'r
 
 **News**
 
+Dec 2020: Our paper on ['Less Than One'-Shot Learning](https://arxiv.org/abs/2009.08449) was accepted to AAAI-21!
+
 Nov 2020: Our extended abstract on [privacy-preserving dataset distillation](https://arxiv.org/abs/2009.09155) has been accepted for poster presentation in the AAAI-21 Student Abstract and Poster Program.
 
 Oct 2020: Our LO-shot learning research was featured on [MIT Tech Review](https://www.technologyreview.com/2020/10/16/1010566/ai-machine-learning-with-tiny-data/), [Digital Trends](https://www.digitaltrends.com/news/new-style-ai-learns-things-differently/), and several other outlets!
