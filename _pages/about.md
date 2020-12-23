@@ -14,7 +14,7 @@ In the beginning, I used deep learning to [restore lost data from cars](https://
 
 Then, I worked on [improving dataset distillation](https://arxiv.org/abs/1910.02551), the process of learning tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent that knowledge using fewer samples. 
 
-Now, I work on ["less than one"-shot learning](https://arxiv.org/abs/2009.08449), an extreme form of few-shot learning where the goal is for models to learn N new classes using M<N training samples. If models can generalize from a small number of synthetic samples, can they also generalize from a small number of real samples?
+Now, I work on ["less than one"-shot learning](https://arxiv.org/abs/2009.08449), an extreme form of few-shot learning where the goal is for models to learn N new classes using M < N training samples. If models can generalize from a small number of synthetic samples, can they also generalize from a small number of real samples?
 
 Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is at isucholu@uwaterloo.ca.
 
