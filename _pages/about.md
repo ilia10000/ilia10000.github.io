@@ -20,6 +20,7 @@ Check out my publications to see my progress so far. If you find something you'r
 
 
 **News**
+
 Jan 2021: Our reseach was profiled on [Scientific American](https://www.scientificamerican.com/article/how-to-make-artificial-intelligence-more-democratic/) as a pathway towards democratizing AI.
 
 Dec 2020: Our paper on ['Less Than One'-Shot Learning](https://arxiv.org/abs/2009.08449) was accepted to AAAI-21!
