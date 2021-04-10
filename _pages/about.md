@@ -21,9 +21,9 @@ Check out my publications to see my progress so far. If you find something you'r
 
 **News**
 
-April 2021: Two of our papers were accepted to IJCNN 2021: "Soft-Label Dataset Distillation and Text Dataset Distillation" ([preprint](https://arxiv.org/abs/1910.02551)) and "One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes" ([preprint](https://arxiv.org/abs/2102.07834))
+Apr 2021: Two of our papers were accepted to IJCNN 2021: "Soft-Label Dataset Distillation and Text Dataset Distillation" ([preprint](https://arxiv.org/abs/1910.02551)) and "One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes" ([preprint](https://arxiv.org/abs/2102.07834))
 
-March 2021: Our paper on [Optimal 1-NN Prototypes for Pathological Geometries](https://peerj.com/articles/cs-464/) was accepted for publication in PeerJ Computer Science.
+Mar 2021: Our paper on [Optimal 1-NN Prototypes for Pathological Geometries](https://peerj.com/articles/cs-464/) was accepted for publication in PeerJ Computer Science.
 
 Jan 2021: Our reseach was profiled on [Scientific American](https://www.scientificamerican.com/article/how-to-make-artificial-intelligence-more-democratic/) as a pathway towards democratizing AI.
 
