@@ -33,6 +33,6 @@ Nov 2020: Our extended abstract on [privacy-preserving dataset distillation](htt
 
 Oct 2020: Our LO-shot learning research was featured on [MIT Tech Review](https://www.technologyreview.com/2020/10/16/1010566/ai-machine-learning-with-tiny-data/), [Digital Trends](https://www.digitaltrends.com/news/new-style-ai-learns-things-differently/), and several other outlets!
 
-Aug 2020: I'm joining [Stratum AI](stratum.ai) as VP of Research and will be leading the development of ML/DL methods to make mining more efficient and environmentally sustainable.
+Aug 2020: I'm joining [Stratum AI](https://www.stratum.ai) as VP of Research and will be leading the development of ML/DL methods to make mining more efficient and environmentally sustainable.
 
 
