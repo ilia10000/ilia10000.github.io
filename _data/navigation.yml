@@ -14,4 +14,8 @@ main:
     
   - title: "CV"
     url: /cv/
+ 
+   - title: "Join me!"
+    url: /join/
+    
     
