@@ -19,7 +19,7 @@
   year={2018}
 }
 
-@article{sucholutsky2019pay,
+@article{ourrestorer,
   title={Pay attention and you won’t lose it: a deep learning approach to sequence imputation},
   author={Sucholutsky, Ilia and Narayan, Apurva and Schonlau, Matthias and Fischmeister, Sebastian},
   journal={PeerJ Computer Science},
@@ -30,26 +30,45 @@
   publisher={PeerJ Inc.}
 }
 
-@INPROCEEDINGS{8852116,
-author={I. {Sucholutsky} and A. {Narayan} and M. {Schonlau} and S. {Fischmeister}},
+@inproceedings{          
+ourlstm,          
+Author = {Ilia Sucholutsky and Apurva Narayan and Matthias Schonlau and Sebastian Fischmeister},
+Title = {Deep Learning for System Trace Restoration},
+Year = {2019},
+month={July},
 booktitle={2019 International Joint Conference on Neural Networks (IJCNN)},
-title={Deep Learning for System Trace Restoration},
-year={2019},
-volume={},
-number={},
-pages={1-8},
-abstract={Most real-world datasets, and particularly those collected from physical systems, are full of noise, packet loss, and other imperfections. However, most specification mining, anomaly detection and other such algorithms assume, or even require, perfect data quality to function properly. Such algorithms may work in lab conditions when given clean, controlled data, but will fail in the field when given imperfect data. We propose a method for accurately reconstructing discrete temporal or sequential system traces affected by data loss, using Long Short-Term Memory Networks (LSTMs). The model works by learning to predict the next event in a sequence of events, and uses its own output as an input to continue predicting future events. As a result, this method can be used for data restoration even with streamed data. Such a method can reconstruct even long sequence of missing events, and can also help validate and improve data quality for noisy data. The output of the model will be a close reconstruction of the true data, and can be fed to algorithms that rely on clean data. We demonstrate our method by reconstructing automotive CAN traces consisting of long sequences of discrete events. We show that given even small parts of a CAN trace, our LSTM model can predict future events with an accuracy of almost 90%, and can successfully reconstruct large portions of the original trace, greatly outperforming a Markov Model benchmark. We separately feed the original, lossy, and reconstructed traces into a specification mining framework to perform downstream analysis of the effect of our method on state-of-the-art models that use these traces for understanding the behavior of complex systems.},
-keywords={},
+organization={IEEE},
 doi={10.1109/IJCNN.2019.8852116},
-ISSN={},
-month={July},}
+note = {Pre-print at arXiv:1904.05411}
+}
 
-@misc{sucholutsky2019improving,
-    title={Improving Dataset Distillation},
+
+@article{idd,
+    title={Soft-Label Dataset Distillation and Text Dataset Distillation},
     author={Ilia Sucholutsky and Matthias Schonlau},
     year={2019},
+    journal={2021 International Joint Conference on Neural Networks (IJCNN)},
+    Note={Forthcoming. Pre-print available at arXiv:1910.02551},
     eprint={1910.02551},
     archivePrefix={arXiv},
-    primaryClass={cs.LG},
-    month={October}
+    primaryClass={cs.LG}
+}
+
+@inproceedings{sucholutsky2020less,
+  title={`{L}ess Than One'-Shot Learning: Learning {N} Classes From {M}$<$ {N} Samples},
+  author={Sucholutsky, Ilia and Schonlau, Matthias},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  note={Forthcoming. Pre-print available at arXiv:2009.08449},
+  year={2021}
+}
+
+@article{sucholutsky2020optimal, title={Optimal 1-{NN} prototypes for pathological geometries}, volume={7}, DOI={10.7717/peerj-cs.464}, journal={PeerJ Computer Science}, author={Sucholutsky, Ilia and Schonlau, Matthias}, year={2021}}
+
+
+@article{sucholutsky2021one,
+  title={One Line To Rule Them All: Generating {LO}-Shot Soft-Label Prototypes},
+  author={Sucholutsky, Ilia and Kim, Nam-Hwui and Browne, Ryan P and Schonlau, Matthias},
+  journal={2021 International Joint Conference on Neural Networks (IJCNN)},
+  Note={Forthcoming. Pre-print available at arXiv:2102.07834},
+  year={2021}
 }
