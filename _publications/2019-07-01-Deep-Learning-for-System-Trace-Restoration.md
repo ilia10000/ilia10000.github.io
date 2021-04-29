@@ -2,8 +2,12 @@
 title: "Deep Learning for System Trace Restoration"
 collection: publications
 permalink: /publication/2019-07-01-Deep-Learning-for-System-Trace-Restoration
+excerpt: 'Pre-print at arXiv:1904.05411'
 date: 2019-07-01
 venue: 'The proceedings of the 2019 International Joint Conference on Neural Networks (IJCNN)'
-citation: ' I. {Sucholutsky},  A. {Narayan},  M. {Schonlau},  S. {Fischmeister}, &quot;Deep Learning for System Trace Restoration.&quot; The proceedings of the 2019 International Joint Conference on Neural Networks (IJCNN), 2019.'
+paperurl: 'https://arxiv.org/abs/1904.05411'
+citation: ' Ilia Sucholutsky,  Apurva Narayan,  Matthias Schonlau,  Sebastian Fischmeister, &quot;Deep Learning for System Trace Restoration.&quot; The proceedings of the 2019 International Joint Conference on Neural Networks (IJCNN), 2019.'
 ---
-Use [Google Scholar](https://scholar.google.com/scholar?q=Deep+Learning+for+System+Trace+Restoration){:target="_blank"} for full citation
+Pre-print at arXiv:1904.05411
+
+[Access paper here](https://arxiv.org/abs/1904.05411){:target="_blank"}
