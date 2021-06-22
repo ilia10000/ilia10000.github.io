@@ -1,5 +1,5 @@
 ---
-permalink: /
+permalink: /people
 title: "People"
 excerpt: "Students, collaborators, and more!"
 author_profile: true
