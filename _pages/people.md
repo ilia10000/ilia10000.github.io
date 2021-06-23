@@ -7,9 +7,9 @@ redirect_from:
   - /people.html
 ---
 
-#Students 
+# Students 
 
-##Undergraduate
+## Undergraduate
 
 Anissh Vivekanand - University of Waterloo - Extracting Underlying Driving Video Information from Deepfake Faceswaps
 
@@ -20,7 +20,7 @@ Rishabh Patni - University of Waterloo - Extreme Few-Shot Learning with Hierarch
 Shreya Prasad - University of Waterloo - Multi-Modal Multi-Task Few-Shot Learning for Renal Pathology
 
 
-#Industry Collaborations
+# Industry Collaborations
 
 WOMBO.ai - Extracting Underlying Driving Video Information from Deepfake Faceswaps
 
@@ -29,6 +29,6 @@ CBRE - Extreme Few-Shot Learning with Hierarchical Classification and Interpreta
 Stratum.ai - Deep Learning for Resource Modeling and Other Mine Planning Applications
 
 
-#Academic Collaborations
+# Academic Collaborations
 
 - Under Construction -
