@@ -22,11 +22,11 @@ Shreya Prasad - University of Waterloo - Multi-Modal Multi-Task Few-Shot Learnin
 
 # Industry Collaborations
 
-WOMBO.ai - Extracting Underlying Driving Video Information from Deepfake Faceswaps
-
 CBRE - Extreme Few-Shot Learning with Hierarchical Classification and Interpretable Features
 
 Stratum.ai - Deep Learning for Resource Modeling and Other Mine Planning Applications
+
+WOMBO.ai - Extracting Underlying Driving Video Information from Deepfake Faceswaps
 
 
 # Academic Collaborations
