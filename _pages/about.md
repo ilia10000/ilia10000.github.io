@@ -8,7 +8,12 @@ redirect_from:
   - /about.html
 ---
 
-I'm doing my PhD in Statistics at the University of Waterloo. I'm fascinated by deep learning and its ability to reach superhuman performance on so many different tasks. I want to better understand how neural networks achieve such impressive results... and why sometimes they don't. To do that, I'm exploring what kind of information or knowledge is contained in the datasets we train our models on and how much of this knowledge is actually needed for our models. 
+I'm doing a postdoc in the CoCoSci Lab at Princeton University supervised by Dr. Tom Griffiths.
+
+Before that, I did my PhD in Statistics at the University of Waterloo where I defended my thesis on 'Learning From Almost No Data' supervised by Dr. Matthias Schonlau. 
+
+
+I'm fascinated by deep learning and its ability to reach superhuman performance on so many different tasks. I want to better understand how neural networks achieve such impressive results... and why sometimes they don't. To do that, I'm exploring what kind of information or knowledge is contained in the datasets we train our models on and how much of this knowledge is actually needed for our models. 
 
 In the beginning, I used deep learning to [restore lost data from cars](https://peerj.com/articles/cs-210/) in order to improve anomaly detection algorithms and make cars safer. The ability to restore lost data suggests that knowledge is duplicated across a dataset. 
 
@@ -20,6 +25,10 @@ Check out my publications to see my progress so far. If you find something you'r
 
 
 **News**
+
+July 2021: I'm joining Dr. Tom Griffiths's CoCoSci Lab at Princeton University as a postdoc.
+
+June 2021: I defended my thesis on ['Learning From Almost No Data'](https://uwspace.uwaterloo.ca/handle/10012/17103).
 
 Apr 2021: Two of our papers were accepted to IJCNN 2021: "Soft-Label Dataset Distillation and Text Dataset Distillation" ([preprint](https://arxiv.org/abs/1910.02551)) and "One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes" ([preprint](https://arxiv.org/abs/2102.07834))
 
