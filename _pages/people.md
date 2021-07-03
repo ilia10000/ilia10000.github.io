@@ -20,6 +20,8 @@ redirect_from:
 
 - Shreya Prasad - University of Waterloo - _Multi-Modal Multi-Task Few-Shot Learning for Renal Pathology_
 
+- Yash More - Ashoka University - _Autoencoders for Dataset Distillation and Active Learning_
+
 
 ## Industry Collaborations
 
