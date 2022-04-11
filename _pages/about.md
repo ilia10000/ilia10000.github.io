@@ -25,6 +25,9 @@ Check out my publications to see my progress so far. If you find something you'r
 
 
 **News**
+April 2022: Our paper, "Predicting Human Similarity Judgments Using Large Language Models", was accepted to the [The First Workshop on Learning with Natural Language Supervision at ACL22](https://sites.google.com/princeton.edu/nl-supervision).
+
+March 2022: I received an NSERC Postdoctoral Fellowship to support my research on STEM-AI: Scientific Theory Encoding Methods for Artificial Intelligence.
 
 July 2021: I'm joining Dr. Tom Griffiths's CoCoSci Lab at Princeton University as a postdoc.
 
