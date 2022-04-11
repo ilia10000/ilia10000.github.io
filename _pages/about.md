@@ -30,7 +30,9 @@ April 2022: Our paper, "Predicting Human Similarity Judgments Using Large Langua
 
 March 2022: I received an NSERC Postdoctoral Fellowship to support my research on STEM-AI: Scientific Theory Encoding Methods for Artificial Intelligence.
 
-July 2021: I'm joining Dr. Tom Griffiths's CoCoSci Lab at Princeton University as a postdoc.
+January 2022: I'm also joining Josh Tenenbaum's CoCoSci Lab at MIT as a research affiliate.
+
+July 2021: I'm joining Tom Griffiths's CoCoSci Lab at Princeton University as a postdoc.
 
 June 2021: I defended my thesis on ['Learning From Almost No Data'](https://uwspace.uwaterloo.ca/handle/10012/17103).
 
