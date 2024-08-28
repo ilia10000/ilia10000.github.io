@@ -8,25 +8,18 @@ redirect_from:
   - /about.html
 ---
 
-I'm doing a postdoc in the CoCoSci Lab at Princeton University supervised by Dr. Tom Griffiths.
+I'm a Faculty Fellow/Assistant Professor at the NYU Center for Data Science. 
 
-Before that, I did my PhD in Statistics at the University of Waterloo where I defended my thesis on 'Learning From Almost No Data' supervised by Dr. Matthias Schonlau. 
+Before that, I was a postdoc in the CoCoSci Lab at Princeton University supervised by Dr. Tom Griffiths.
 
+And before that, I did my PhD in Statistics at the University of Waterloo where I defended my thesis on 'Learning From Almost No Data' supervised by Dr. Matthias Schonlau. 
 
-I'm fascinated by deep learning and its ability to reach superhuman performance on so many different tasks. I want to better understand how neural networks achieve such impressive results... and why sometimes they don't. To do that, I'm exploring what kind of information or knowledge is contained in the datasets we train our models on and how much of this knowledge is actually needed for our models. 
+I use tools like [representational alignment](https://arxiv.org/abs/2310.13018) to study the parallels between human and artificial intelligence in order to probe the [limits of learning/teaching with small data](https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html) and develop AI thought partners that [learn & think *with* people rather than *instead of* people](https://arxiv.org/abs/2408.03943).
 
-In the beginning, I used deep learning to [restore lost data from cars](https://peerj.com/articles/cs-210/) in order to improve anomaly detection algorithms and make cars safer. The ability to restore lost data suggests that knowledge is duplicated across a dataset. 
-
-Then, I worked on [improving dataset distillation](https://arxiv.org/abs/1910.02551), the process of learning tiny synthetic datasets that contain all the knowledge of much larger datasets. If knowledge is duplicated across a dataset then it should be possible to represent that knowledge using fewer samples. 
-
-Now, I work on ["less than one"-shot learning](https://arxiv.org/abs/2009.08449), an extreme form of few-shot learning where the goal is for models to learn N new classes using M < N training samples. If models can generalize from a small number of synthetic samples, can they also generalize from a small number of real samples?
-
-Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is at isucholu@uwaterloo.ca.
+Check out my publications to see my progress so far. If you find something you're interested in discussing then shoot me an email and I'd be happy to chat. The best place to reach me is at <is3060 [at] nyu [dot] edu>.
 
 
 **News**
-
-April 2022: Our paper, "Predicting Human Similarity Judgments Using Large Language Models", was accepted to the [The First Workshop on Learning with Natural Language Supervision at ACL22](https://sites.google.com/princeton.edu/nl-supervision).
 
 March 2022: I received an NSERC Postdoctoral Fellowship to support my research on STEM-AI: Scientific Theory Encoding Methods for Artificial Intelligence.
 
@@ -40,13 +33,7 @@ May 2021: I'm joining Kin-Keepers as an AI Advisor to support their mission of d
 
 Apr 2021: Two of our papers were accepted to IJCNN 2021: "Soft-Label Dataset Distillation and Text Dataset Distillation" ([preprint](https://arxiv.org/abs/1910.02551)) and "One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes" ([preprint](https://arxiv.org/abs/2102.07834))
 
-Mar 2021: Our paper on [Optimal 1-NN Prototypes for Pathological Geometries](https://peerj.com/articles/cs-464/) was accepted for publication in PeerJ Computer Science.
-
 Jan 2021: Our reseach was profiled on [Scientific American](https://www.scientificamerican.com/article/how-to-make-artificial-intelligence-more-democratic/) as a pathway towards democratizing AI.
-
-Dec 2020: Our paper on ['Less Than One'-Shot Learning](https://arxiv.org/abs/2009.08449) was accepted to AAAI-21!
-
-Nov 2020: Our extended abstract on [privacy-preserving dataset distillation](https://arxiv.org/abs/2009.09155) has been accepted for poster presentation in the AAAI-21 Student Abstract and Poster Program.
 
 Oct 2020: Our LO-shot learning research was featured on [MIT Tech Review](https://www.technologyreview.com/2020/10/16/1010566/ai-machine-learning-with-tiny-data/), [Digital Trends](https://www.digitaltrends.com/news/new-style-ai-learns-things-differently/), and several other outlets!
 
