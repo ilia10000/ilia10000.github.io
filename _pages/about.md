@@ -21,6 +21,22 @@ Check out my publications to see my progress so far. If you find something you'r
 
 **News**
 
+December 2024: We're organizing the [BehavioralML Workshop](https://sites.google.com/view/behavioralml/) at NeurIPS 2024!
+
+September 2024: I'm starting as a Faculty Fellow/Assistant Professor at NYU CDS!
+
+June 2024: We're organizing the [LLMs and Cognition Workshop](https://llm-cognition.github.io/) at ICML 2024!
+
+May 2024: We're organizing the AI session at [Neuromonster 2024](https://www.neuromonster.org/)!
+
+May 2024: We're organizing the [Re-Align Workshop](https://representational-alignment.github.io/) at ICLR 2024!
+
+December 2023: Our paper, ["Alignment with human representations supports robust few-shot learning"](https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html), was accepted as a **spotlight** at NeurIPS 2023!
+
+August 2023: Our papers, ["Human-in-the-loop mixup"](https://proceedings.mlr.press/v216/collins23a.html) and ["On the informativeness of supervision signals"](https://proceedings.mlr.press/v216/sucholutsky23a.html), were accepted, respectively, as an **oral** and **spotlight** at UAI 2023!
+
+July 2023: We're organizing the [LLMs Meet Cognitive Science Workshop](https://escholarship.org/uc/item/6dp9k2gz) at CogSci 2023!
+
 March 2022: I received an NSERC Postdoctoral Fellowship to support my research on STEM-AI: Scientific Theory Encoding Methods for Artificial Intelligence.
 
 January 2022: I'm also joining Josh Tenenbaum's CoCoSci Lab at MIT as a research affiliate.
