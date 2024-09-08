@@ -4,7 +4,7 @@ collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2022-spring-teaching-1
 venue: "Princeton University, Computer Science"
-date: 2024-09-01
+date: 2022-02-01
 location: "Princeton, New Jersey"
 ---
 
