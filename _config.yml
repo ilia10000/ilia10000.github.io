@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Ilia Sucholutsky"
 title_separator          : "-"
 name                     : &name "Ilia Sucholutsky"
-description              : &description "Postdoc at Princeton University"
+description              : &description "Faculty Fellow/Assistant Professor at NYU"
 url                      : https://ilia10000.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "ilia10000.github.io"
@@ -82,8 +82,8 @@ analytics:
 author:
   name             : "Ilia Sucholutsky"
   avatar           : "profile.jpeg"
-  bio              : "Postdoc at Princeton University"
-  location         : "Princeton, New Jersey"
+  bio              : "Faculty Fellow/Assistant Professor at NYU"
+  location         : "NYC"
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.ca/citations?user=6MfHyuMAAAAJ&hl=en"
