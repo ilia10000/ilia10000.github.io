@@ -3,14 +3,14 @@ main:
   - title: "Publications"
     url: /publications/
      
-  - title: "People"
-    url: /people/
+#  - title: "People"
+#    url: /people/
   
   - title: "Join me!"
     url: /join/
 
-  - title: "Talks"
-    url: /talks/    
+#  - title: "Talks"
+#    url: /talks/    
 
   - title: "Teaching"
     url: /teaching/    
