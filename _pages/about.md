@@ -10,7 +10,7 @@ redirect_from:
 
 I'm a Faculty Fellow/Assistant Professor at the NYU Center for Data Science. 
 
-Before that, I was a postdoc in the CoCoSci Lab at Princeton University supervised by Dr. Tom Griffiths.
+Before that, I was a postdoc in the CoCoSci Lab at Princeton University supervised by Dr. Tom Griffiths and a visiting researcher at MIT BCS.
 
 And before that, I did my PhD in Statistics at the University of Waterloo where I defended my thesis on 'Learning From Almost No Data' supervised by Dr. Matthias Schonlau. 
 
