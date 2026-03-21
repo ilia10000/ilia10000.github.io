@@ -1,7 +1,7 @@
 {
   "pi": {
     "name": "Ilia Sucholutsky",
-    "image": "/images/profile.jpeg",
+    "image": "/images/people/profile.jpeg",
     "bio": "Faculty Fellow/Assistant Professor, NYU Center for Data Science. Incoming Assistant Professor, Department of Computer Science, Purdue University.",
     "research_keywords": ["representational alignment", "few-shot learning", "AI thought partners"],
     "fun_fact": "",
@@ -16,7 +16,7 @@
   "members": [
     {
       "name": "",
-      "image": "/images/placeholder.png",
+      "image": "/images/people/placeholder.png",
       "bio": "",
       "research_keywords": [],
       "fun_fact": "",

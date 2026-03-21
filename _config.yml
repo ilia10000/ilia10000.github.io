@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Ilia Sucholutsky"
-  avatar           : "profile.jpeg"
+  avatar           : "people/profile.jpeg"
   bio              : "Faculty Fellow/Assistant Professor, NYU CDS. Incoming Assistant Professor, Purdue CS."
   location         : "NYC"
   employer         :
