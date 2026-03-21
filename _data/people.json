@@ -3,7 +3,11 @@
     "name": "Ilia Sucholutsky",
     "image": "/images/people/profile.jpeg",
     "bio": "Faculty Fellow/Assistant Professor, NYU Center for Data Science. Incoming Assistant Professor, Department of Computer Science, Purdue University.",
-    "research_keywords": ["representational alignment", "few-shot learning", "AI thought partners"],
+    "research_keywords": [
+      "representational alignment",
+      "few-shot learning",
+      "AI thought partners"
+    ],
     "fun_fact": "",
     "website": "",
     "links": {
@@ -17,22 +21,30 @@
     {
       "name": "Ayush Rajesh Jhaveri",
       "image": "/images/people/AyushRJ.jpeg",
-      "bio": "I’m a Master’s student in Computer Science at NYU Courant. My research focuses on reasoning in large language models, particularly on improving hypothesis exploration, with inspiration from cognitive science.",
-      "research_keywords": ["Large Language Models", "Cognitive Science", "Reasoning"],
+      "bio": "I\u2019m a Master\u2019s student in Computer Science at NYU Courant. My research focuses on reasoning in large language models, particularly on improving hypothesis exploration, with inspiration from cognitive science.",
+      "research_keywords": [
+        "Large Language Models",
+        "Cognitive Science",
+        "Reasoning"
+      ],
       "fun_fact": "Always up for a game of soccer! Love cooking Thai food.",
       "website": "https://ayushjhaveri.github.io/ ",
       "role": "Master's Student",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Sasha Robinson",
       "image": "/images/people/SashaR.png",
       "bio": "I'm a graduate student researcher at UBC interested in synthesizing a more complete understanding of agency and consciousness, both individually and collectively, by combining ideas from computer science, mathematical modelling, and philosophy. Currently, I am particularly interested in how social engineering and hive-mind thinking can influence agents to make irrational decisions, especially with increasing autonomous AI agents and their integration into society. Inspired by this, my current work involves quantifying facets of social intelligence in LLMs to better understand how vigilant they are to, and how effectively they can produce, persuasive social influence, and using these results to advocate for AI safety awareness.",
-      "research_keywords": ["Cognitive Science", "Intelligence", "Philosophy"],
+      "research_keywords": [
+        "Cognitive Science",
+        "Intelligence",
+        "Philosophy"
+      ],
       "fun_fact": "I was on an episode of TVOKids called 'What is AI Anyway?' where I got to explain my research to kids. I also go backcountry camping and portaging for as long as weeks in the summers in Northern Ontario.",
       "website": "https://sashamrobinson.github.io/",
       "role": "Graduate Student Researcher",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Thomas L. Griffiths",
@@ -202,7 +214,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Olga Russakovsky",
@@ -232,7 +244,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Bonan Zhao",
@@ -252,7 +264,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Haoyu Hu",
@@ -262,7 +274,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Sunayana Rane",
@@ -272,7 +284,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Piper Feygin-Sucholutsky",
