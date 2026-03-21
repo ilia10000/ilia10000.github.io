@@ -119,7 +119,7 @@ redirect_from:
 </div>
 
 {% assign sections = "current_members,visitors,collaborators,thought_pawrtners,alumni" | split: "," %}
-{% assign section_titles = "Current Members,Visitors,Collaborators,Thought Pawrtners,Alumni" | split: "," %}
+{% assign section_titles = "Current Members,Research Affiliates,Collaborators,Thought Pawrtners,Alumni" | split: "," %}
 {% assign global_index = 0 %}
 
 {% for section in sections %}
