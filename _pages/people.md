@@ -8,6 +8,10 @@ redirect_from:
 ---
 
 <style>
+.page__content .archive {
+  width: 100%;
+  float: none;
+}
 .person-pi {
   display: flex;
   align-items: flex-start;
@@ -28,6 +32,7 @@ redirect_from:
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-bottom: 40px;
+  min-width: 0;
 }
 .person-card {
   text-align: center;
