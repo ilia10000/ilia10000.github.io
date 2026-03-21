@@ -96,5 +96,5 @@ author_profile: false
 {% endfor %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function() { document.querySelectorAll('.research-item-btn').forEach(function(btn) { btn.addEventListener('click', function() { var targetId = btn.getAttribute('data-target'); var details = document.getElementById(targetId); if (details.classList.contains('open')) { details.classList.remove('open'); btn.classList.remove('active'); } else { details.classList.add('open'); btn.classList.add('active'); } }); }); });
+function initResearchBtns() { document.querySelectorAll('.research-item-btn').forEach(function(btn) { if (btn.dataset.initialized) return; btn.dataset.initialized = 'true'; btn.addEventListener('click', function() { var targetId = btn.getAttribute('data-target'); var details = document.getElementById(targetId); if (details.classList.contains('open')) { details.classList.remove('open'); btn.classList.remove('active'); } else { details.classList.add('open'); btn.classList.add('active'); } }); }); } document.addEventListener('DOMContentLoaded', initResearchBtns); document.addEventListener('turbo:load', initResearchBtns);
 </script>
