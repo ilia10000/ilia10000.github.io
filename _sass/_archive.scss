@@ -152,6 +152,33 @@
 }
 
 
+/* Research grid overrides */
+.research-grid .grid__item {
+  .archive__item-teaser {
+    max-height: 500px;
+  }
+
+  .archive__item-title {
+    color: #222;
+
+    a {
+      color: #222;
+    }
+  }
+
+  @include breakpoint($small) {
+    .archive__item-teaser {
+      max-height: 500px;
+    }
+  }
+
+  @include breakpoint($medium) {
+    .archive__item-teaser {
+      max-height: 500px;
+    }
+  }
+}
+
 /*
    Features
    ========================================================================== */

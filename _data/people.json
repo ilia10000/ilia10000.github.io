@@ -13,7 +13,7 @@
       "researchgate": "https://www.researchgate.net/profile/Ilia_Sucholutsky"
     }
   },
-  "current_members": [
+  "members": [
     {
       "name": "",
       "image": "/images/placeholder.png",
@@ -21,40 +21,8 @@
       "research_keywords": [],
       "fun_fact": "",
       "website": "",
-      "role": ""
-    }
-  ],
-  "collaborators": [
-    {
-      "name": "",
-      "image": "/images/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": ""
-    }
-  ],
-  "alumni": [
-    {
-      "name": "",
-      "image": "/images/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": ""
-    }
-  ],
-  "thought_pawrtners": [
-    {
-      "name": "",
-      "image": "/images/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": ""
+      "role": "",
+      "section": "current_members"
     }
   ]
 }

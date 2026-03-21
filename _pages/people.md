@@ -86,10 +86,11 @@ redirect_from:
 
 {% for section in sections %}
   {% assign idx = forloop.index0 %}
+  {% assign section_people = people.members | where: "section", section %}
 ## {{ section_titles[idx] }}
 
 <div class="people-grid">
-  {% for person in people[section] %}
+  {% for person in section_people %}
     {% if person.name != "" %}
     <div class="person-card">
       <img src="{{ person.image }}" alt="{{ person.name }}" />
