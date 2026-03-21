@@ -1,37 +1,30 @@
 ---
 permalink: /people/
 title: "People"
-excerpt: "Students, collaborators, and more!"
-author_profile: true
-redirect_from: 
+excerpt: "AITP Lab members"
+author_profile: false
+redirect_from:
   - /students/
 ---
 
+## Principal Investigator
 
-## Students 
+**Ilia Sucholutsky** — Assistant Professor, Department of Computer Science, Purdue University
 
-### Undergraduate
+<!-- Add PI photo and bio here -->
 
-- Anissh Vivekanand - University of Waterloo - _Extracting Underlying Driving Video Information from Deepfake Faceswaps_
+## PhD Students
 
-- Dexter van Leeuwen - University of Waterloo - _Extracting Underlying Driving Video Information from Deepfake Faceswaps_
+<!-- Add PhD students here -->
 
-- Rishabh Patni - University of Waterloo - _Extreme Few-Shot Learning with Hierarchical Classification and Interpretable Features_
+## Masters & Undergraduate Students
 
-- Shreya Prasad - University of Waterloo - _Multi-Modal Multi-Task Few-Shot Learning for Renal Pathology_
+<!-- Add students here -->
 
-- Yash More - Ashoka University - _Autoencoders for Dataset Distillation and Active Learning_
+## Alumni
 
+<!-- Add alumni here -->
 
-## Industry Collaborations
+## Collaborators
 
-- CBRE - _Extreme Few-Shot Learning with Hierarchical Classification and Interpretable Features_
-
-- Stratum.ai - _Deep Learning for Resource Modeling and Other Mine Planning Applications_
-
-- WOMBO.ai - _Extracting Underlying Driving Video Information from Deepfake Faceswaps_
-
-
-## Academic Collaborations
-
--Under Construction-
+<!-- Add collaborators here -->

@@ -1,26 +1,12 @@
-# main links links
 main:
+  - title: "People"
+    url: /people/
+
+  - title: "Research"
+    url: /research/
+
   - title: "Publications"
     url: /publications/
-     
-#  - title: "People"
-#    url: /people/
-  
-  - title: "Join me!"
-    url: /join/
 
-#  - title: "Talks"
-#    url: /talks/    
-
-  - title: "Teaching"
-    url: /teaching/    
-        
-    #  - title: "Blog Posts"
-    #    url: /year-archive/
-    
-  - title: "CV"
-    url: /cv/
- 
-  
-    
-    
+  - title: "Contact Us"
+    url: /contact/
