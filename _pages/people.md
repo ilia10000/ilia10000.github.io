@@ -41,22 +41,36 @@ redirect_from:
   border: 1px solid #e0e0e0;
   margin-bottom: 10px;
 }
-.person-card .name {
+.person-card .name-btn {
+  display: inline-block;
+  padding: 0.4em 1em;
+  border: 1px solid #999;
+  border-radius: 20px;
+  background: transparent;
+  color: #333;
+  font-size: 1em;
   font-weight: 700;
-  font-size: 1.05em;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
   margin-bottom: 6px;
 }
-.person-card .name a {
-  color: inherit;
-  text-decoration: none;
+.person-card .name-btn:hover {
+  background-color: rgba(128,128,128,0.3);
 }
-.person-card .name a:hover {
-  text-decoration: underline;
+.person-card .name-btn.active {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
 }
 .person-card .info {
   font-size: 0.9em;
   text-align: left;
   line-height: 1.6;
+  display: none;
+  margin-top: 8px;
+}
+.person-card .info.open {
+  display: block;
 }
 @media (max-width: 768px) {
   .people-grid {
@@ -83,6 +97,7 @@ redirect_from:
 
 {% assign sections = "current_members,collaborators,alumni,thought_pawrtners" | split: "," %}
 {% assign section_titles = "Current Members,Collaborators,Alumni,Thought Pawrtners" | split: "," %}
+{% assign global_index = 0 %}
 
 {% for section in sections %}
   {% assign idx = forloop.index0 %}
@@ -92,14 +107,16 @@ redirect_from:
 <div class="people-grid">
   {% for person in section_people %}
     {% if person.name != "" %}
+    {% assign global_index = global_index | plus: 1 %}
     <div class="person-card">
       {% if person.image != "" and person.image != "/images/people/placeholder.png" %}<img src="{{ person.image }}" alt="{{ person.name }}" />{% else %}<img src="/images/people/placeholder.png" alt="{{ person.name }}" />{% endif %}
-      <div class="name">{% if person.website != "" %}<a href="{{ person.website }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}</div>
-      <div class="info">
+      <button class="name-btn" data-target="person-info-{{ global_index }}">{{ person.name }}</button>
+      <div class="info" id="person-info-{{ global_index }}">
         {% if person.role != "" %}<strong>Role:</strong> {{ person.role }}<br/>{% endif %}
         {% if person.bio != "" %}<strong>Bio:</strong> {{ person.bio }}<br/>{% endif %}
         {% if person.research_keywords.size > 0 %}<strong>Research:</strong> {{ person.research_keywords | join: ", " }}<br/>{% endif %}
-        {% if person.fun_fact != "" %}<strong>Fun fact:</strong> {{ person.fun_fact }}{% endif %}
+        {% if person.fun_fact != "" %}<strong>Fun fact:</strong> {{ person.fun_fact }}<br/>{% endif %}
+        {% if person.website != "" %}<a href="{{ person.website }}" target="_blank">Website</a>{% endif %}
       </div>
     </div>
     {% endif %}
@@ -107,3 +124,7 @@ redirect_from:
 </div>
 
 {% endfor %}
+
+<script>
+function initPeopleBtns() { document.querySelectorAll('.name-btn').forEach(function(btn) { if (btn.dataset.initialized) return; btn.dataset.initialized = 'true'; btn.addEventListener('click', function() { var targetId = btn.getAttribute('data-target'); var details = document.getElementById(targetId); var isOpen = details.classList.contains('open'); document.querySelectorAll('.person-card .info.open').forEach(function(el) { el.classList.remove('open'); }); document.querySelectorAll('.name-btn.active').forEach(function(b) { b.classList.remove('active'); }); if (!isOpen) { details.classList.add('open'); btn.classList.add('active'); } }); }); } document.addEventListener('DOMContentLoaded', initPeopleBtns); document.addEventListener('turbo:load', initPeopleBtns);
+</script>
