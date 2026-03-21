@@ -93,7 +93,7 @@ redirect_from:
   {% for person in section_people %}
     {% if person.name != "" %}
     <div class="person-card">
-      <img src="{{ person.image }}" alt="{{ person.name }}" />
+      {% if person.image != "" and person.image != "/images/people/placeholder.png" %}<img src="{{ person.image }}" alt="{{ person.name }}" />{% else %}<img src="/images/people/placeholder.png" alt="{{ person.name }}" />{% endif %}
       <div class="name">{% if person.website != "" %}<a href="{{ person.website }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}</div>
       <div class="info">
         {% if person.role != "" %}<strong>Role:</strong> {{ person.role }}<br/>{% endif %}
