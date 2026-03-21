@@ -1,0 +1,695 @@
+[
+  {
+    "title": "GPT is an effective tool for multilingual psychological text analysis",
+    "author": "Steve Rathje and Dan-Mircea Mirea and Ilia Sucholutsky and Raja Marjieh and Claire E Robertson and Jay J Van Bavel",
+    "venue": "Proceedings of the National Academy of Sciences",
+    "year": 2024,
+    "url": "https://www.pnas.org/doi/abs/10.1073/pnas.2308950121",
+    "num_citations": 512,
+    "bib_type": "article"
+  },
+  {
+    "title": "Humanity's last exam",
+    "author": "Long Phan and Alice Gatti and Ziwen Han and Nathaniel Li and Josephina Hu and Hugh Zhang and Chen Bo Calvin Zhang and Mohamed Shaaban and John Ling and Sean Shi and Michael Choi and Anish Agrawal and Arnav Chopra and Adam Khoja and Ryan Kim and Richard Ren and Jason Hausenloy and Oliver Zhang and Mantas Mazeika and Dmitry Dodonov and Tung Nguyen and Jaeho Lee and Daron Anderson and Mikhail Doroshenko and Alun Cennyth Stokes and Mobeen Mahmood and Oleksandr Pokutnyi and Oleg Iskra and Jessica P Wang and John-Clark Levin and Mstyslav Kazakov and Fiona Feng and Steven Y Feng and Haoran Zhao and Michael Yu and Varun Gangal and Chelsea Zou and Zihan Wang and Serguei Popov and Robert Gerbicz and Geoff Galgon and Johannes Schmitt and Will Yeadon and Yongki Lee and Scott Sauers and Alvaro Sanchez and Fabian Giska and Marc Roth and S\u00f8ren Riis and Saiteja Utpala and Noah Burns and Gashaw M Goshu and Mohinder Maheshbhai Naiya and Chidozie Agu and Zachary Giboney and Antrell Cheatom and Francesco Fournier-Facio and Sarah-Jane Crowson and Lennart Finke and Zerui Cheng and Jennifer Zampese and Ryan G Hoerr and Mark Nandor and Hyunwoo Park and Tim Gehrunger and Jiaqi Cai and Ben McCarty and Alexis C Garretson and Edwin Taylor and Damien Sileo and Qiuyu Ren and Usman Qazi and Lianghui Li and Jungbae Nam and John B Wydallis and Pavel Arkhipov and Jack Wei Lun Shi and Aras Bacho and Chris G Willcocks and Hangrui Cao and Sumeet Motwani and Emily de Oliveira Santos and Johannes Veith and Edward Vendrow and Doru Cojoc and Kengo Zenitani and Joshua Robinson and Longke Tang and Yuqi Li and Joshua Vendrow and Natanael Wildner Fraga and Vladyslav Kuchkin and Andrey Pupasov Maksimov and Pierre Marion and Denis Efremov and Jayson Lynch and Kaiqu Liang and Aleksandar Mikov and Andrew Gritsevskiy and Julien Guillod and G\u00f6zdenur Demir and Dakotah Martinez and Ben Pageler and Kevin Zhou and Saeed Soori and Ori Press and Henry Tang and Paolo Rissone and Sean R Green and Lina Br\u00fcssel and Moon Twayana and Aymeric Dieuleveut and Joseph Marvin Imperial and Ameya Prabhu and Jinzhou Yang and Nick Crispino and Arun Rao and Dimitri Zvonkine and Gabriel Loiseau and Mikhail Kalinin and Marco Lukas and Ciprian Manolescu and Nate Stambaugh and Subrata Mishra and Tad Hogg and Carlo Bosio and Brian P Coppola and Julian Salazar and Jaehyeok Jin and Rafael Sayous and Stefan Ivanov and Philippe Schwaller and Shaipranesh Senthilkuma and Andres M Bran and Andres Algaba and Kelsey Van den Houte and Lynn Van Der Sypt and Brecht Verbeken and David Noever and Alexei Kopylov and Benjamin Myklebust and Bikun Li and Lisa Schut and Evgenii Zheltonozhskii and Qiaochu Yuan and Derek Lim and Richard Stanley and Tong Yang and John Maar and Julian Wykowski",
+    "venue": "arXiv preprint arXiv:2501.14249",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2501.14249",
+    "num_citations": 406,
+    "bib_type": "article"
+  },
+  {
+    "title": "Explicitly unbiased large language models still form biased associations",
+    "author": "Xuechunzi Bai and Angelina Wang and Ilia Sucholutsky and Thomas L Griffiths",
+    "venue": "Proceedings of the National Academy of Sciences",
+    "year": 2025,
+    "url": "https://www.pnas.org/doi/abs/10.1073/pnas.2416228122",
+    "num_citations": 289,
+    "bib_type": "article"
+  },
+  {
+    "title": "Getting aligned on representational alignment",
+    "author": "Ilia Sucholutsky and Lukas Muttenthaler and Adrian Weller and Andi Peng and Andreea Bobu and Been Kim and Bradley C Love and Erin Grant and Iris Groen and Jascha Achterberg and Joshua B Tenenbaum and Katherine M Collins and Katherine L Hermann and Kerem Oktar and Klaus Greff and Martin N Hebart and Nori Jacoby and Qiuyi Zhang and Raja Marjieh and Robert Geirhos and Sherol Chen and Simon Kornblith and Sunayana Rane and Talia Konkle and Thomas P O'Connell and Thomas Unterthiner and Andrew K Lampinen and Klaus-Robert M\u00fcller and Mariya Toneva and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2310.13018",
+    "year": 2023,
+    "url": "https://arxiv.org/abs/2310.13018",
+    "num_citations": 237,
+    "bib_type": "article"
+  },
+  {
+    "title": "Large language models surpass human experts in predicting neuroscience results",
+    "author": "Xiaoliang Luo and Akilles Rechardt and Guangzhi Sun and Kevin K Nejad and Felipe Y\u00e1\u00f1ez and Bati Yilmaz and Kangjoo Lee and Alexandra O Cohen and Valentina Borghesani and Anton Pashkov and Daniele Marinazzo and Jonathan Nicholas and Alessandro Salatiello and Ilia Sucholutsky and Pasquale Minervini and Sepehr Razavi and Roberta Rocca and Elkhan Yusifov and Tereza Okalova and Nianlong Gu and Martin Ferianc and Mikail Khona and Kaustubh R Patil and Pui-Shee Lee and Rui Mata and Nicholas E Myers and Jennifer K Bizley and Sebastian Musslick and Isil Poyraz Bilgin and Guiomar Niso and Justin M Ales and Michael Gaebler and N Apurva Ratan Murty and Leyla Loued-Khenissi and Anna Behler and Chloe M Hall and Jessica Dafflon and Sherry Dongqi Bao and Bradley C Love",
+    "venue": "Nature human behaviour",
+    "year": 2025,
+    "url": "https://www.nature.com/articles/s41562-024-02046-9",
+    "num_citations": 225,
+    "bib_type": "article"
+  },
+  {
+    "title": "Soft-Label Dataset Distillation and Text Dataset Distillation",
+    "author": "Ilia Sucholutsky and Matthias Schonlau",
+    "venue": "2021 International Joint Conference on Neural Networks",
+    "year": 2019,
+    "url": "https://ieeexplore.ieee.org/abstract/document/9533769/",
+    "num_citations": 196,
+    "bib_type": "article"
+  },
+  {
+    "title": "Building machines that learn and think with people",
+    "author": "Katherine M Collins and Ilia Sucholutsky and Umang Bhatt and Kartik Chandra and Lionel Wong and Mina Lee and Cedegao E Zhang and Tan Zhi-Xuan and Mark Ho and Vikash Mansinghka and Adrian Weller and Joshua B Tenenbaum and Thomas L Griffiths",
+    "venue": "",
+    "year": 2024,
+    "url": "https://www.nature.com/articles/s41562-024-01991-9",
+    "num_citations": 146,
+    "bib_type": "article"
+  },
+  {
+    "title": "Large language models predict human sensory judgments across six modalities",
+    "author": "Raja Marjieh and Ilia Sucholutsky and Pol van Rijn and Nori Jacoby and Thomas L Griffiths",
+    "venue": "Scientific Reports",
+    "year": 2024,
+    "url": "https://www.nature.com/articles/s41598-024-72071-1",
+    "num_citations": 106,
+    "bib_type": "article"
+  },
+  {
+    "title": "Text mining with n-gram variables",
+    "author": "Matthias Schonlau and Nick Guenther and Ilia Sucholutsky",
+    "venue": "The Stata Journal",
+    "year": 2017,
+    "url": "https://journals.sagepub.com/doi/abs/10.1177/1536867X1801700406",
+    "num_citations": 103,
+    "bib_type": "article"
+  },
+  {
+    "title": "Mind your step (by step): Chain-of-thought can reduce performance on tasks where thinking makes humans worse",
+    "author": "Ryan Liu and Jiayi Geng and Addison J Wu and Ilia Sucholutsky and Tania Lombrozo and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2410.21333",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2410.21333",
+    "num_citations": 100,
+    "bib_type": "article"
+  },
+  {
+    "title": "'Less Than One'-Shot Learning: Learning N Classes From M< N Samples",
+    "author": "Ilia Sucholutsky and Matthias Schonlau",
+    "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "year": 2021,
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/view/17171",
+    "num_citations": 70,
+    "bib_type": "article"
+  },
+  {
+    "title": "Alignment with human representations supports robust few-shot learning",
+    "author": "Ilia Sucholutsky and Tom Griffiths",
+    "venue": "Advances in Neural Information Processing Systems",
+    "year": 2023,
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html",
+    "num_citations": 63,
+    "bib_type": "article"
+  },
+  {
+    "title": "Human uncertainty in concept-based ai systems",
+    "author": "Katherine Maeve Collins and Matthew Barker and Mateo Espinosa Zarlenga and Naveen Raman and Umang Bhatt and Mateja Jamnik and Ilia Sucholutsky and Adrian Weller and Krishnamurthy Dvijotham",
+    "venue": "",
+    "year": 2023,
+    "url": "https://dl.acm.org/doi/abs/10.1145/3600211.3604692",
+    "num_citations": 62,
+    "bib_type": "article"
+  },
+  {
+    "title": "Large language models assume people are more rational than we really are",
+    "author": "Ryan Liu and Jiayi Geng and Joshua C Peterson and Ilia Sucholutsky and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2406.17055",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2406.17055",
+    "num_citations": 58,
+    "bib_type": "article"
+  },
+  {
+    "title": "Words are all you need? language as an approximation for human similarity judgments",
+    "author": "Raja Marjieh and Pol Van Rijn and Ilia Sucholutsky and Theodore R Sumers and Harin Lee and Thomas L Griffiths and Nori Jacoby",
+    "venue": "arXiv preprint arXiv:2206.04105",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2206.04105",
+    "num_citations": 47,
+    "bib_type": "article"
+  },
+  {
+    "title": "Large language models meet cognitive science: LLMs as tools, models, and participants",
+    "author": "Mathew Hardy and Ilia Sucholutsky and Bill Thompson and Tom Griffiths",
+    "venue": "Proceedings of the annual meeting of the cognitive science society",
+    "year": 2023,
+    "url": "https://escholarship.org/uc/item/6dp9k2gz",
+    "num_citations": 45,
+    "bib_type": "article"
+  },
+  {
+    "title": "On benchmarking human-like intelligence in machines",
+    "author": "Lance Ying and Katherine M Collins and Lionel Wong and Ilia Sucholutsky and Ryan Liu and Adrian Weller and Tianmin Shu and Thomas L Griffiths and Joshua B Tenenbaum",
+    "venue": "arXiv preprint arXiv:2502.20502",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2502.20502",
+    "num_citations": 30,
+    "bib_type": "article"
+  },
+  {
+    "title": "What language reveals about perception: Distilling psychophysical knowledge from large language models",
+    "author": "Raja Marjieh and Ilia Sucholutsky and Pol van Rijn and Nori Jacoby and Tom Griffiths",
+    "venue": "Proceedings of the Annual Meeting of the Cognitive Science Society",
+    "year": 2023,
+    "url": "https://escholarship.org/uc/item/6dk5q565",
+    "num_citations": 29,
+    "bib_type": "article"
+  },
+  {
+    "title": "Learning with language-guided state abstractions",
+    "author": "Andi Peng and Ilia Sucholutsky and Belinda Z Li and Theodore R Sumers and Thomas L Griffiths and Jacob Andreas and Julie A Shah",
+    "venue": "arXiv preprint arXiv:2402.18759",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2402.18759",
+    "num_citations": 28,
+    "bib_type": "article"
+  },
+  {
+    "title": "Concept alignment",
+    "author": "Sunayana Rane and Polyphony J Bruna and Ilia Sucholutsky and Christopher Kello and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2401.08672",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2401.08672",
+    "num_citations": 27,
+    "bib_type": "article"
+  },
+  {
+    "title": "Predicting human similarity judgments using large language models",
+    "author": "Raja Marjieh and Ilia Sucholutsky and Theodore R Sumers and Nori Jacoby and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2202.04728",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2202.04728",
+    "num_citations": 25,
+    "bib_type": "article"
+  },
+  {
+    "title": "Secdd: Efficient and secure method for remotely training neural networks (student abstract)",
+    "author": "Ilia Sucholutsky and Matthias Schonlau",
+    "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "year": 2021,
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/view/17945",
+    "num_citations": 24,
+    "bib_type": "article"
+  },
+  {
+    "title": "On the informativeness of supervision signals",
+    "author": "Ilia Sucholutsky and Ruairidh M Battleday and Katherine M Collins and Raja Marjieh and Joshua Peterson and Pulkit Singh and Umang Bhatt and Nori Jacoby and Adrian Weller and Thomas L Griffiths",
+    "venue": "Uncertainty in Artificial Intelligence",
+    "year": 2023,
+    "url": "https://proceedings.mlr.press/v216/sucholutsky23a.html",
+    "num_citations": 23,
+    "bib_type": "article"
+  },
+  {
+    "title": "Preference-conditioned language-guided abstraction",
+    "author": "Andi Peng and Andreea Bobu and Belinda Z Li and Theodore R Sumers and Ilia Sucholutsky and Nishanth Kumar and Thomas L Griffiths and Julie A Shah",
+    "venue": "",
+    "year": 2024,
+    "url": "https://dl.acm.org/doi/abs/10.1145/3610977.3634930",
+    "num_citations": 21,
+    "bib_type": "article"
+  },
+  {
+    "title": "Dimensions of disagreement: Divergence and misalignment in cognitive science and artificial intelligence.",
+    "author": "Kerem Oktar and Ilia Sucholutsky and Tania Lombrozo and Thomas L Griffiths",
+    "venue": "Decision",
+    "year": 2024,
+    "url": "https://psycnet.apa.org/record/2025-13905-001",
+    "num_citations": 14,
+    "bib_type": "article"
+  },
+  {
+    "title": "Using the tools of cognitive science to understand large language models at different levels of analysis",
+    "author": "Alexander Ku and Declan Campbell and Xuechunzi Bai and Jiayi Geng and Ryan Liu and Raja Marjieh and R Thomas McCoy and Andrew Nam and Ilia Sucholutsky and Veniamin Veselovsky and Liyi Zhang and Jian-Qiao Zhu and Thomas L Griffiths",
+    "venue": "arXiv e-prints",
+    "year": 2025,
+    "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv250313401K/abstract",
+    "num_citations": 13,
+    "bib_type": "article"
+  },
+  {
+    "title": "Human-in-the-Loop Mixup",
+    "author": "Katherine M Collins and Umang Bhatt and Weiyang Liu and Vihari Piratla and Ilia Sucholutsky and Bradley Love and Adrian Weller",
+    "venue": "Uncertainty in Artificial Intelligence, 2023",
+    "year": 2022,
+    "url": "https://proceedings.mlr.press/v216/collins23a.html",
+    "num_citations": 13,
+    "bib_type": "article"
+  },
+  {
+    "title": "Can humans do less-than-one-shot learning?",
+    "author": "Maya Malaviya and Ilia Sucholutsky and Kerem Oktar and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2202.04670",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2202.04670",
+    "num_citations": 13,
+    "bib_type": "article"
+  },
+  {
+    "title": "Deep Learning for System Trace Restoration",
+    "author": "Ilia Sucholutsky and Apurva Narayan and Matthias Schonlau and Sebastian Fischmeister",
+    "venue": "2019 International Joint Conference on Neural Networks (IJCNN)",
+    "year": 2019,
+    "url": "https://arxiv.org/abs/1904.05411",
+    "num_citations": 13,
+    "bib_type": "article"
+  },
+  {
+    "title": "Adaptive language-guided abstraction from contrastive explanations",
+    "author": "Andi Peng and Belinda Z Li and Ilia Sucholutsky and Nishanth Kumar and Julie A Shah and Jacob Andreas and Andreea Bobu",
+    "venue": "arXiv preprint arXiv:2409.08212",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2409.08212",
+    "num_citations": 12,
+    "bib_type": "article"
+  },
+  {
+    "title": "Pay attention and you won\u2019t lose it: a deep learning approach to sequence imputation",
+    "author": "Ilia Sucholutsky and Apurva Narayan and Matthias Schonlau and Sebastian Fischmeister",
+    "venue": "PeerJ Computer Science",
+    "year": 2019,
+    "url": "https://peerj.com/articles/cs-210/",
+    "num_citations": 12,
+    "bib_type": "article"
+  },
+  {
+    "title": "Quantifying knowledge distillation using partial information decomposition",
+    "author": "Pasan Dissanayake and Faisal Hamman and Barproda Halder and Ilia Sucholutsky and Qiuyi Zhang and Sanghamitra Dutta",
+    "venue": "arXiv preprint arXiv:2411.07483",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2411.07483",
+    "num_citations": 11,
+    "bib_type": "article"
+  },
+  {
+    "title": "Learning human-like representations to enable learning human values",
+    "author": "Andrea Hui Wynn",
+    "venue": "",
+    "year": 2024,
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/3578fd44b2381db12bf16e28a667c934-Abstract-Conference.html",
+    "num_citations": 11,
+    "bib_type": "article"
+  },
+  {
+    "title": "Concept alignment as a prerequisite for value alignment",
+    "author": "Sunayana Rane and Mark Ho and Ilia Sucholutsky and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2310.20059",
+    "year": 2023,
+    "url": "https://arxiv.org/abs/2310.20059",
+    "num_citations": 11,
+    "bib_type": "article"
+  },
+  {
+    "title": "When should we orchestrate multiple agents?",
+    "author": "Umang Bhatt and Sanyam Kapoor and Mihir Upadhyay and Ilia Sucholutsky and Francesco Quinzan and Katherine M Collins and Adrian Weller and Andrew Gordon Wilson and Muhammad Bilal Zafar",
+    "venue": "arXiv preprint arXiv:2503.13577",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2503.13577",
+    "num_citations": 10,
+    "bib_type": "article"
+  },
+  {
+    "title": "Modulating language model experiences through frictions",
+    "author": "Katherine M Collins and Valerie Chen and Ilia Sucholutsky and Hannah Rose Kirk and Malak Sadek and Holli Sargeant and Ameet Talwalkar and Adrian Weller and Umang Bhatt",
+    "venue": "arXiv preprint arXiv:2407.12804",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2407.12804",
+    "num_citations": 10,
+    "bib_type": "article"
+  },
+  {
+    "title": "exKidneyBERT: a language model for kidney transplant pathology reports and the crucial role of extended vocabularies",
+    "author": "Tiancheng Yang and Ilia Sucholutsky and Kuang-Yu Jen and Matthias Schonlau",
+    "venue": "PeerJ Computer Science",
+    "year": 2024,
+    "url": "https://peerj.com/articles/cs-1888/",
+    "num_citations": 9,
+    "bib_type": "article"
+  },
+  {
+    "title": "What is a Number, That a Large Language Model May Know It?",
+    "author": "Raja Marjieh and Veniamin Veselovsky and Thomas L Griffiths and Ilia Sucholutsky",
+    "venue": "arXiv preprint arXiv:2502.01540",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2502.01540",
+    "num_citations": 8,
+    "bib_type": "article"
+  },
+  {
+    "title": "Characterizing similarities and divergences in conversational tones in humans and llms by sampling with people",
+    "author": "Dun-Ming Huang and Pol Van Rijn and Ilia Sucholutsky and Raja Marjieh and Nori Jacoby",
+    "venue": "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    "year": 2024,
+    "url": "https://aclanthology.org/2024.acl-long.565.pdf",
+    "num_citations": 8,
+    "bib_type": "article"
+  },
+  {
+    "title": "Multilevel interpretability of artificial neural networks: leveraging framework and methods from neuroscience",
+    "author": "Zhonghao He and Jascha Achterberg and Katie Collins and Kevin Nejad and Danyal Akarca and Yinzhu Yang and Wes Gurnee and Ilia Sucholutsky and Yuhan Tang and Rebeca Ianov and George Ogden and Chole Li and Kai Sandbrink and Stephen Casper and Anna Ivanova and Grace W Lindsay",
+    "venue": "arXiv preprint arXiv:2408.12664",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2408.12664",
+    "num_citations": 7,
+    "bib_type": "article"
+  },
+  {
+    "title": "Analyzing the roles of language and vision in learning from limited data",
+    "author": "Allison Chen and Ilia Sucholutsky and Olga Russakovsky and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2403.19669",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2403.19669",
+    "num_citations": 7,
+    "bib_type": "article"
+  },
+  {
+    "title": "Around the world in 60 words: A generative vocabulary test for online research",
+    "author": "Pol van Rijn and Yue Sun and Harin Lee and Raja Marjieh and Ilia Sucholutsky and Francesca Lanzarini and Elisabeth Andr\u00e9 and Nori Jacoby",
+    "venue": "arXiv preprint arXiv:2302.01614",
+    "year": 2023,
+    "url": "https://arxiv.org/abs/2302.01614",
+    "num_citations": 7,
+    "bib_type": "article"
+  },
+  {
+    "title": "One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes",
+    "author": "Ilia Sucholutsky and Nam-Hwui Kim and Ryan P Browne and Matthias Schonlau",
+    "venue": "2021 International Joint Conference on Neural Networks (IJCNN)",
+    "year": 2021,
+    "url": "https://ieeexplore.ieee.org/abstract/document/9534284/",
+    "num_citations": 7,
+    "bib_type": "article"
+  },
+  {
+    "title": "Quantifying spuriousness of biased datasets using partial information decomposition",
+    "author": "Barproda Halder and Faisal Hamman and Pasan Dissanayake and Qiuyi Zhang and Ilia Sucholutsky and Sanghamitra Dutta",
+    "venue": "arXiv e-prints",
+    "year": 2024,
+    "url": "https://ui.adsabs.harvard.edu/abs/2024arXiv240700482H/abstract",
+    "num_citations": 6,
+    "bib_type": "article"
+  },
+  {
+    "title": "Optimal 1-NN prototypes for pathological geometries",
+    "author": "Ilia Sucholutsky and Matthias Schonlau",
+    "venue": "PeerJ Computer Science",
+    "year": 2021,
+    "url": "https://peerj.com/articles/cs-464/",
+    "num_citations": 6,
+    "bib_type": "article"
+  },
+  {
+    "title": "Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models",
+    "author": "Jakob Niedermann and Ilia Sucholutsky and Raja Marjieh and Elif Celen and Thomas L Griffiths and Nori Jacoby and Pol van Rijn",
+    "venue": "",
+    "year": 2024,
+    "url": "https://escholarship.org/uc/item/4hs755zz",
+    "num_citations": 5,
+    "bib_type": "article"
+  },
+  {
+    "title": "Representational Alignment Supports Effective Teaching",
+    "author": "Ilia Sucholutsky and Katherine M Collins and Maya Malaviya and Nori Jacoby and Weiyang Liu and Theodore Sumers and Michalis Korakakis and Umang Bhatt and Mark K Ho and Joshua B Tenenbaum and Bradley C Love and Zachary Pardos and Adrian Weller and Thomas L Griffiths",
+    "venue": "ICLR 2025 Workshop on Bidirectional Human-AI Alignment",
+    "year": 2025,
+    "url": "https://openreview.net/forum?id=7zxUVXFPez",
+    "num_citations": 4,
+    "bib_type": "article"
+  },
+  {
+    "title": "A rational analysis of the speech-to-song illusion",
+    "author": "Raja Marjieh and Pol van Rijn and Ilia Sucholutsky and Harin Lee and Thomas L Griffiths and Nori Jacoby",
+    "venue": "arXiv preprint arXiv:2402.06992",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2402.06992",
+    "num_citations": 4,
+    "bib_type": "article"
+  },
+  {
+    "title": "Analyzing diffusion as serial reproduction",
+    "author": "Raja Marjieh and Ilia Sucholutsky and Thomas A Langlois and Nori Jacoby and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2209.14821",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2209.14821",
+    "num_citations": 4,
+    "bib_type": "article"
+  },
+  {
+    "title": "Revisiting Rogers' Paradox in the Context of Human-AI Interaction",
+    "author": "Katherine M Collins and Umang Bhatt and Ilia Sucholutsky",
+    "venue": "arXiv preprint arXiv:2501.10476",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2501.10476",
+    "num_citations": 3,
+    "bib_type": "article"
+  },
+  {
+    "title": "Using compositionality to learn many categories from few examples",
+    "author": "Ilia Sucholutsky and Bonan Zhao and Tom Griffiths",
+    "venue": "Proceedings of the Annual Meeting of the Cognitive Science Society",
+    "year": 2024,
+    "url": "https://escholarship.org/uc/item/6kj0s042",
+    "num_citations": 3,
+    "bib_type": "article"
+  },
+  {
+    "title": "ConvART: Improving Adaptive Resonance Theory for Unsupervised Image Clustering",
+    "author": "Ilia Sucholutsky and Matthias Schonlau",
+    "venue": "Journal of Computational Vision and Imaging Systems",
+    "year": 2018,
+    "url": "https://openreview.net/forum?id=SkTqMwkDf",
+    "num_citations": 3,
+    "bib_type": "article"
+  },
+  {
+    "title": "Using LLMs to advance the cognitive science of collectives",
+    "author": "Ilia Sucholutsky and Katherine M Collins and Nori Jacoby and Bill D Thompson and Robert D Hawkins",
+    "venue": "Nature Computational Science",
+    "year": 2025,
+    "url": "https://www.nature.com/articles/s43588-025-00848-z",
+    "num_citations": 2,
+    "bib_type": "article"
+  },
+  {
+    "title": "Towards formalizing spuriousness of biased datasets using partial information decomposition",
+    "author": "Barproda Halder and Faisal Hamman and Pasan Dissanayake and Qiuyi Zhang and Ilia Sucholutsky and Sanghamitra Dutta",
+    "venue": "arXiv preprint arXiv:2407.00482",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2407.00482",
+    "num_citations": 2,
+    "bib_type": "article"
+  },
+  {
+    "title": "Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models, Feb 2024",
+    "author": "Jakob Niedermann and Ilia Sucholutsky and Raja Marjieh and Elif Celen and Thomas L Griffiths and Nori Jacoby and Pol van Rijn",
+    "venue": "URL osf. io/preprints/psyarxiv/3jvxw",
+    "year": "",
+    "url": "https://scholar.google.com/scholar?cluster=15447318504533567004&hl=en&oi=scholarr",
+    "num_citations": 2,
+    "bib_type": "article"
+  },
+  {
+    "title": "Identifying, Evaluating, and Mitigating Risks of AI Thought Partnerships",
+    "author": "Kerem Oktar and Katherine M Collins and Jose Hernandez-Orallo and Diane Coyle and Stephen Cave and Adrian Weller and Ilia Sucholutsky",
+    "venue": "arXiv preprint arXiv:2505.16899",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2505.16899",
+    "num_citations": 1,
+    "bib_type": "article"
+  },
+  {
+    "title": "First Workshop on Representational Alignment (Re-Align)",
+    "author": "Erin Grant and Ilia Sucholutsky and Jascha Achterberg and Katherine Hermann and Lukas Muttenthaler",
+    "venue": "ICLR 2024 Workshops",
+    "year": 2024,
+    "url": "https://openreview.net/forum?id=bTkdoh5CuG",
+    "num_citations": 1,
+    "bib_type": "article"
+  },
+  {
+    "title": "Why should we care if machines learn human-like representations?",
+    "author": "Ilia Sucholutsky and Thomas L Griffiths",
+    "venue": "AAAI-24 Spring Symposium on Human-Like Learning",
+    "year": 2024,
+    "url": "https://cocosci.princeton.edu/papers/Sucholutsky2024a.pdf",
+    "num_citations": 1,
+    "bib_type": "article"
+  },
+  {
+    "title": "Language Model Teams as Distributed Systems",
+    "author": "Elizabeth Mieczkowski and Katherine M Collins and Ilia Sucholutsky and Natalia V\u00e9lez and Thomas L Griffiths",
+    "venue": "arXiv preprint arXiv:2603.12229",
+    "year": 2026,
+    "url": "https://arxiv.org/abs/2603.12229",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Under the Influence: Quantifying Persuasion and Vigilance in Large Language Models",
+    "author": "Sasha Robinson and Kerem Oktar and Katherine M Collins and Ilia Sucholutsky and Kelsey R Allen",
+    "venue": "arXiv preprint arXiv:2602.21262",
+    "year": 2026,
+    "url": "https://arxiv.org/abs/2602.21262",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Why Human Guidance Matters in Collaborative Vibe Coding",
+    "author": "Haoyu Hu and Raja Marjieh and Katherine M Collins and Chenyi Li and Thomas L Griffiths and Ilia Sucholutsky and Nori Jacoby",
+    "venue": "arXiv preprint arXiv:2602.10473",
+    "year": 2026,
+    "url": "https://arxiv.org/abs/2602.10473",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Human-AI Synergy Supports Collective Creative Search",
+    "author": "Chenyi Li and Raja Marjieh and Haoyu Hu and Mark Steyvers and Katherine M Collins and Ilia Sucholutsky and Nori Jacoby",
+    "venue": "arXiv preprint arXiv:2602.10001",
+    "year": 2026,
+    "url": "https://arxiv.org/abs/2602.10001",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Characterizing the Large\u2010Scale Structure of Multimodal Semantic Networks",
+    "author": "Raja Marjieh and Pol van Rijn and Ilia Sucholutsky and Harin Lee and Nori Jacoby and Thomas L Griffiths",
+    "venue": "Cognitive science",
+    "year": 2025,
+    "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/cogs.70131",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Measuring and mitigating overreliance is necessary for building human-compatible AI",
+    "author": "Lujain Ibrahim and Katherine M Collins and Sunnie SY Kim and Anka Reuel and Max Lamparth and Kevin Feng and Lama Ahmad and Prajna Soni and Alia El Kattan and Merlin Stein and Siddharth Swaroop and Ilia Sucholutsky and Andrew Strait and Q Vera Liao and Umang Bhatt",
+    "venue": "arXiv preprint arXiv:2509.08010",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2509.08010",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "AI Impact on Human Proof Formalization Workflows",
+    "author": "Katherine M Collins and Simon Frieder and Jonas Bayer and Jacob Loader and Jeck Lim and Peiyang Song and Fabian Zaiser and Lexin Zhou and Shanda Li and Shi-Zhuo Looi and Jose Hernandez-Orallo and Joshua B Tenenbaum and Cameron Freer and Umang Bhatt and Adrian Weller and Valerie Chen and Ilia Sucholutsky",
+    "venue": "The 5th Workshop on Mathematical Reasoning and AI at NeurIPS 2025",
+    "year": 2025,
+    "url": "https://openreview.net/forum?id=D7I8fVkMVs",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Learning a Doubly-Exponential Number of Concepts From Few Examples",
+    "author": "Ilia Sucholutsky and Bonan Zhao and Hee Seung Hwang and Allison Chen and Olga Russakovsky and Tom Griffiths",
+    "venue": "Proceedings of the Annual Meeting of the Cognitive Science Society",
+    "year": 2025,
+    "url": "https://escholarship.org/uc/item/011374xq",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Pushing the Limits of Learning from Limited Data",
+    "author": "Maya Malaviya and Ilia Sucholutsky and Thomas L Griffiths",
+    "venue": "Proceedings of the AAAI Symposium Series",
+    "year": 2024,
+    "url": "https://ojs.aaai.org/index.php/AAAI-SS/article/view/31276",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Characterizing the Large-Scale Structure of Grounded Semantic Networks",
+    "author": "Raja Marjieh and Pol van Rijn and Ilia Sucholutsky and Harin Lee and Nori Jacoby and Thomas L Griffiths",
+    "venue": "",
+    "year": 2024,
+    "url": "https://europepmc.org/article/ppr/ppr831252",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Introducing deep learning and interpreting the patterns \u2013 a mineral  deposit perspective",
+    "author": "David First and Ilia Sucholutsky and Daniel Mogilny and Farzi Yusufali",
+    "venue": "Mineral Resource Estimation Conference 2023",
+    "year": 2023,
+    "url": "",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "End-to-End Learnable Masks With Differentiable Indexing",
+    "author": "Dibyanshu Shekhar and Sree Harsha Nelaturu and Ashwath Shetty and Ilia Sucholutsky",
+    "venue": "",
+    "year": 2023,
+    "url": "https://openreview.net/forum?id=EyliiBqhFz",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Playing the Lottery of a Lifetime: The Effect of Socially Induced Aspiration on Q-Learning Agents",
+    "author": "Yosi Hatekar and Rachit Dubey and Ted Sumers and Ilia Sucholutsky",
+    "venue": "Proceedings of the Annual Meeting of the Cognitive Science Society",
+    "year": 2022,
+    "url": "https://escholarship.org/uc/item/21j6j1tg",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Learning From Almost No Data",
+    "author": "Ilia Sucholutsky",
+    "venue": "",
+    "year": 2021,
+    "url": "https://uwspace.uwaterloo.ca/items/3c75c1a6-54e7-4b0c-9c68-1b60ddb9c6fb",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Failing to Falsify: Understanding and Mitigating Confirmation Bias in Language Models",
+    "author": "Ayush Rajesh Jhaveri and GX-Chen Anthony and Ilia Sucholutsky and Eunsol Choi",
+    "venue": "ICLR 2026 Workshop-From Human Cognition to AI Reasoning: Models, Methods, and Applications",
+    "year": "",
+    "url": "https://openreview.net/forum?id=ALCSqYYYdf",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Do Large Language Models Mentalize When They Teach?",
+    "author": "Sevan K Harootonian and Mark K Ho and Thomas L Griffiths and Yael Niv and Ilia Sucholutsky",
+    "venue": "ICLR 2026 Workshop-From Human Cognition to AI Reasoning: Models, Methods, and Applications",
+    "year": "",
+    "url": "https://openreview.net/forum?id=0dKNDFRJBe",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Representational Alignment (Re-Align)",
+    "author": "Badr AlKhamissi and Brian Cheung and Dota Tianai Dong and Stephanie Fu and Erin Grant and Kushin Mukherjee and Ilia Sucholutsky and Siddharth Suresh",
+    "venue": "ICLR 2026 Workshop Proposals",
+    "year": "",
+    "url": "https://openreview.net/forum?id=7tNhq0H39L",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "REPRESENTATIONAL ALIGNMENT OF GLOMERULI ACTIVATION IN MURINE OLFACTORY BULB",
+    "author": "Vivek kumar Agarwal and Julia Manasson and Mario H Garrido-Czacki and Ilia Sucholutsky",
+    "venue": "Second Workshop on Representational Alignment at ICLR 2025",
+    "year": "",
+    "url": "https://openreview.net/forum?noteId=FIVCQO2qeL",
+    "num_citations": 0,
+    "bib_type": "article"
+  },
+  {
+    "title": "Second Workshop on Representational Alignment (Re-Align)",
+    "author": "Brian Cheung and Dota Tianai Dong and Erin Grant and Ilia Sucholutsky and Lukas Muttenthaler and Siddharth Suresh",
+    "venue": "ICLR 2025 Workshop Proposals",
+    "year": "",
+    "url": "https://openreview.net/forum?id=zvO3rgxc4g",
+    "num_citations": 0,
+    "bib_type": "article"
+  }
+]

@@ -3,7 +3,11 @@ title: "ConvART: Improving Adaptive Resonance Theory for Unsupervised Image Clus
 collection: publications
 permalink: /publication/2018-01-01-ConvART-Improving-Adaptive-Resonance-Theory-for-Unsupervised-Image-Clustering
 date: 2018-01-01
+year: 2018
 venue: 'Journal of Computational Vision and Imaging Systems'
-citation: ' Ilia Sucholutsky,  Matthias Schonlau, &quot;ConvART: Improving Adaptive Resonance Theory for Unsupervised Image Clustering.&quot; Journal of Computational Vision and Imaging Systems, 2018.'
+authors: 'Ilia Sucholutsky and Matthias Schonlau'
+paperurl: 'https://openreview.net/forum?id=SkTqMwkDf'
+citation: 'Ilia Sucholutsky and Matthias Schonlau, "ConvART: Improving Adaptive Resonance Theory for Unsupervised Image Clustering." Journal of Computational Vision and Imaging Systems, 2018.'
 ---
-Use [Google Scholar](https://scholar.google.com/scholar?q=ConvART:+Improving+Adaptive+Resonance+Theory+for+Unsupervised+Image+Clustering){:target="_blank"} for full citation
+
+[Access paper here](https://openreview.net/forum?id=SkTqMwkDf){:target="_blank"}
