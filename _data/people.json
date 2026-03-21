@@ -1,0 +1,60 @@
+{
+  "pi": {
+    "name": "Ilia Sucholutsky",
+    "image": "/images/profile.jpeg",
+    "bio": "Faculty Fellow/Assistant Professor, NYU Center for Data Science. Incoming Assistant Professor, Department of Computer Science, Purdue University.",
+    "research_keywords": ["representational alignment", "few-shot learning", "AI thought partners"],
+    "fun_fact": "",
+    "website": "",
+    "links": {
+      "google_scholar": "https://scholar.google.ca/citations?user=6MfHyuMAAAAJ&hl=en",
+      "github": "https://github.com/ilia10000",
+      "linkedin": "https://www.linkedin.com/in/iliasu/",
+      "researchgate": "https://www.researchgate.net/profile/Ilia_Sucholutsky"
+    }
+  },
+  "current_members": [
+    {
+      "name": "",
+      "image": "/images/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
+      "role": ""
+    }
+  ],
+  "collaborators": [
+    {
+      "name": "",
+      "image": "/images/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
+      "role": ""
+    }
+  ],
+  "alumni": [
+    {
+      "name": "",
+      "image": "/images/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
+      "role": ""
+    }
+  ],
+  "thought_pawrtners": [
+    {
+      "name": "",
+      "image": "/images/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
+      "role": ""
+    }
+  ]
+}
