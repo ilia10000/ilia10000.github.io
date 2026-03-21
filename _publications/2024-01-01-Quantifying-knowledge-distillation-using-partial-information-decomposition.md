@@ -8,6 +8,7 @@ venue: 'arXiv preprint arXiv:2411.07483'
 authors: 'Pasan Dissanayake and Faisal Hamman and Barproda Halder and Ilia Sucholutsky and Qiuyi Zhang and Sanghamitra Dutta'
 paperurl: 'https://arxiv.org/abs/2411.07483'
 citation: 'Pasan Dissanayake and Faisal Hamman and Barproda Halder and Ilia Sucholutsky and Qiuyi Zhang and Sanghamitra Dutta, "Quantifying knowledge distillation using partial information decomposition." arXiv preprint arXiv:2411.07483, 2024.'
+keywords: ["Dataset Distillation"]
 ---
 
 [Access paper here](https://arxiv.org/abs/2411.07483){:target="_blank"}

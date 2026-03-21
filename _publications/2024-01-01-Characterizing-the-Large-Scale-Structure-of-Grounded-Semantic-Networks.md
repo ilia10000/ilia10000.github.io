@@ -8,6 +8,7 @@ venue: ''
 authors: 'Raja Marjieh and Pol van Rijn and Ilia Sucholutsky and Harin Lee and Nori Jacoby and Thomas L Griffiths'
 paperurl: 'https://europepmc.org/article/ppr/ppr831252'
 citation: 'Raja Marjieh and Pol van Rijn and Ilia Sucholutsky and Harin Lee and Nori Jacoby and Thomas L Griffiths, "Characterizing the Large-Scale Structure of Grounded Semantic Networks." , 2024.'
+keywords: ["Cognitive Science"]
 ---
 
 [Access paper here](https://europepmc.org/article/ppr/ppr831252){:target="_blank"}

@@ -8,6 +8,7 @@ venue: 'arXiv preprint arXiv:2202.04728'
 authors: 'Raja Marjieh and Ilia Sucholutsky and Theodore R Sumers and Nori Jacoby and Thomas L Griffiths'
 paperurl: 'https://arxiv.org/abs/2202.04728'
 citation: 'Raja Marjieh and Ilia Sucholutsky and Theodore R Sumers and Nori Jacoby and Thomas L Griffiths, "Predicting human similarity judgments using large language models." arXiv preprint arXiv:2202.04728, 2022.'
+keywords: ["Large Language Models", "Cognitive Science"]
 ---
 
 [Access paper here](https://arxiv.org/abs/2202.04728){:target="_blank"}

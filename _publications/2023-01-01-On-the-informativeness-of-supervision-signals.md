@@ -8,6 +8,7 @@ venue: 'Uncertainty in Artificial Intelligence'
 authors: 'Ilia Sucholutsky and Ruairidh M Battleday and Katherine M Collins and Raja Marjieh and Joshua Peterson and Pulkit Singh and Umang Bhatt and Nori Jacoby and Adrian Weller and Thomas L Griffiths'
 paperurl: 'https://proceedings.mlr.press/v216/sucholutsky23a.html'
 citation: 'Ilia Sucholutsky and Ruairidh M Battleday and Katherine M Collins and Raja Marjieh and Joshua Peterson and Pulkit Singh and Umang Bhatt and Nori Jacoby and Adrian Weller and Thomas L Griffiths, "On the informativeness of supervision signals." Uncertainty in Artificial Intelligence, 2023.'
+keywords: ["Human-AI Interaction"]
 ---
 
 [Access paper here](https://proceedings.mlr.press/v216/sucholutsky23a.html){:target="_blank"}

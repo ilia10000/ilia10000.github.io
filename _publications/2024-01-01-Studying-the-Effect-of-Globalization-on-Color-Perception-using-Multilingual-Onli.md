@@ -8,6 +8,7 @@ venue: ''
 authors: 'Jakob Niedermann and Ilia Sucholutsky and Raja Marjieh and Elif Celen and Thomas L Griffiths and Nori Jacoby and Pol van Rijn'
 paperurl: 'https://escholarship.org/uc/item/4hs755zz'
 citation: 'Jakob Niedermann and Ilia Sucholutsky and Raja Marjieh and Elif Celen and Thomas L Griffiths and Nori Jacoby and Pol van Rijn, "Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models." , 2024.'
+keywords: ["Large Language Models", "Cognitive Science"]
 ---
 
 [Access paper here](https://escholarship.org/uc/item/4hs755zz){:target="_blank"}

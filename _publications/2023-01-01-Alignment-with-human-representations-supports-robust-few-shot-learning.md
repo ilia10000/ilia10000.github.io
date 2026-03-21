@@ -8,6 +8,7 @@ venue: 'Advances in Neural Information Processing Systems'
 authors: 'Ilia Sucholutsky and Tom Griffiths'
 paperurl: 'https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html'
 citation: 'Ilia Sucholutsky and Tom Griffiths, "Alignment with human representations supports robust few-shot learning." Advances in Neural Information Processing Systems, 2023.'
+keywords: ["Representational Alignment", "Few-Shot Learning"]
 ---
 
 [Access paper here](https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html){:target="_blank"}

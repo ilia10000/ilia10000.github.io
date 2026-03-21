@@ -8,6 +8,7 @@ venue: 'arXiv preprint arXiv:2202.04670'
 authors: 'Maya Malaviya and Ilia Sucholutsky and Kerem Oktar and Thomas L Griffiths'
 paperurl: 'https://arxiv.org/abs/2202.04670'
 citation: 'Maya Malaviya and Ilia Sucholutsky and Kerem Oktar and Thomas L Griffiths, "Can humans do less-than-one-shot learning?." arXiv preprint arXiv:2202.04670, 2022.'
+keywords: ["Few-Shot Learning"]
 ---
 
 [Access paper here](https://arxiv.org/abs/2202.04670){:target="_blank"}

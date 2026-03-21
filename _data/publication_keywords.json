@@ -1,0 +1,85 @@
+{
+  "_comment": "Map publication title substrings to keyword tags. When fetch_publications.py runs, it matches titles and adds these keywords to the front matter. You can also manually add 'keywords' to any publication's front matter.",
+  "keywords": [
+    "Representational Alignment",
+    "Few-Shot Learning",
+    "AI Thought Partners",
+    "Large Language Models",
+    "Cognitive Science",
+    "Human-AI Interaction",
+    "Dataset Distillation"
+  ],
+  "mappings": {
+    "Representational Alignment": [
+      "representational alignment",
+      "Getting aligned",
+      "Re-Align",
+      "human representations supports robust",
+      "human-like representations",
+      "Concept alignment",
+      "Dimensions of disagreement",
+      "Multilevel interpretability"
+    ],
+    "Few-Shot Learning": [
+      "Less Than One",
+      "less-than-one-shot",
+      "few-shot",
+      "few examples",
+      "LO-Shot",
+      "Almost No Data",
+      "Limited Data",
+      "prototypes for pathological",
+      "Doubly-Exponential",
+      "compositionality to learn many"
+    ],
+    "AI Thought Partners": [
+      "thought partner",
+      "learn and think with people",
+      "Building machines that learn",
+      "Human-AI Synergy",
+      "Human Guidance Matters",
+      "Vibe Coding",
+      "orchestrate multiple agents",
+      "overreliance",
+      "Revisiting Rogers"
+    ],
+    "Large Language Models": [
+      "large language model",
+      "LLM",
+      "GPT",
+      "language model",
+      "Chain-of-thought",
+      "Humanity's last exam",
+      "Persuasion and Vigilance"
+    ],
+    "Cognitive Science": [
+      "cognitive science",
+      "human similarity judgments",
+      "perception",
+      "psychophysical",
+      "speech-to-song",
+      "serial reproduction",
+      "semantic network",
+      "sensory judgments",
+      "human experts in predicting neuroscience",
+      "color perception",
+      "rational",
+      "benchmarking human-like intelligence"
+    ],
+    "Human-AI Interaction": [
+      "Human-in-the-Loop",
+      "human uncertainty",
+      "informativeness of supervision",
+      "frictions",
+      "conversational tones",
+      "AI Impact on Human",
+      "confirmation bias"
+    ],
+    "Dataset Distillation": [
+      "Dataset Distillation",
+      "knowledge distillation",
+      "partial information decomposition",
+      "spuriousness"
+    ]
+  }
+}

@@ -8,6 +8,7 @@ venue: 'Proceedings of the AAAI Symposium Series'
 authors: 'Maya Malaviya and Ilia Sucholutsky and Thomas L Griffiths'
 paperurl: 'https://ojs.aaai.org/index.php/AAAI-SS/article/view/31276'
 citation: 'Maya Malaviya and Ilia Sucholutsky and Thomas L Griffiths, "Pushing the Limits of Learning from Limited Data." Proceedings of the AAAI Symposium Series, 2024.'
+keywords: ["Few-Shot Learning"]
 ---
 
 [Access paper here](https://ojs.aaai.org/index.php/AAAI-SS/article/view/31276){:target="_blank"}

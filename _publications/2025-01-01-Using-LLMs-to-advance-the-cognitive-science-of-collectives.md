@@ -8,6 +8,7 @@ venue: 'Nature Computational Science'
 authors: 'Ilia Sucholutsky and Katherine M Collins and Nori Jacoby and Bill D Thompson and Robert D Hawkins'
 paperurl: 'https://www.nature.com/articles/s43588-025-00848-z'
 citation: 'Ilia Sucholutsky and Katherine M Collins and Nori Jacoby and Bill D Thompson and Robert D Hawkins, "Using LLMs to advance the cognitive science of collectives." Nature Computational Science, 2025.'
+keywords: ["Large Language Models", "Cognitive Science"]
 ---
 
 [Access paper here](https://www.nature.com/articles/s43588-025-00848-z){:target="_blank"}

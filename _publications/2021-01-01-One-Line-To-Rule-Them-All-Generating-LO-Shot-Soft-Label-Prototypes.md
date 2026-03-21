@@ -8,6 +8,7 @@ venue: '2021 International Joint Conference on Neural Networks (IJCNN)'
 authors: 'Ilia Sucholutsky and Nam-Hwui Kim and Ryan P Browne and Matthias Schonlau'
 paperurl: 'https://ieeexplore.ieee.org/abstract/document/9534284/'
 citation: 'Ilia Sucholutsky and Nam-Hwui Kim and Ryan P Browne and Matthias Schonlau, "One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes." 2021 International Joint Conference on Neural Networks (IJCNN), 2021.'
+keywords: ["Few-Shot Learning"]
 ---
 
 [Access paper here](https://ieeexplore.ieee.org/abstract/document/9534284/){:target="_blank"}

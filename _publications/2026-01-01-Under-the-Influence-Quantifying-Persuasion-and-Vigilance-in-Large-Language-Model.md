@@ -8,6 +8,7 @@ venue: 'arXiv preprint arXiv:2602.21262'
 authors: 'Sasha Robinson and Kerem Oktar and Katherine M Collins and Ilia Sucholutsky and Kelsey R Allen'
 paperurl: 'https://arxiv.org/abs/2602.21262'
 citation: 'Sasha Robinson and Kerem Oktar and Katherine M Collins and Ilia Sucholutsky and Kelsey R Allen, "Under the Influence: Quantifying Persuasion and Vigilance in Large Language Models." arXiv preprint arXiv:2602.21262, 2026.'
+keywords: ["Large Language Models"]
 ---
 
 [Access paper here](https://arxiv.org/abs/2602.21262){:target="_blank"}

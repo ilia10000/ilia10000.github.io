@@ -8,6 +8,7 @@ venue: 'arXiv preprint arXiv:2206.04105'
 authors: 'Raja Marjieh and Pol Van Rijn and Ilia Sucholutsky and Theodore R Sumers and Harin Lee and Thomas L Griffiths and Nori Jacoby'
 paperurl: 'https://arxiv.org/abs/2206.04105'
 citation: 'Raja Marjieh and Pol Van Rijn and Ilia Sucholutsky and Theodore R Sumers and Harin Lee and Thomas L Griffiths and Nori Jacoby, "Words are all you need? language as an approximation for human similarity judgments." arXiv preprint arXiv:2206.04105, 2022.'
+keywords: ["Cognitive Science"]
 ---
 
 [Access paper here](https://arxiv.org/abs/2206.04105){:target="_blank"}
