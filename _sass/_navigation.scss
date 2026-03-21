@@ -179,13 +179,18 @@
 
   a {
     display: block;
-    margin: 0 1rem;
-    padding: 0.5rem 0;
-    color: $masthead-link-color;
+    margin: 0 0.5rem;
+    color: #000000;
     text-decoration: none;
+    background-color: rgba(128, 128, 128, 0.4);
+    padding: 0.5em 3.5em;
+    font-size: 1.1em;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 
     &:hover {
-      color: $masthead-link-color-hover;
+      background-color: rgba(80, 80, 80, 0.7);
+      color: #fff;
     }
   }
 
