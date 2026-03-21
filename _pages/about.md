@@ -8,9 +8,9 @@ redirect_from:
   - /about.html
 ---
 
-The **AI Thought Partner Lab (AITP Lab)** at Purdue Computer Science develops AI systems that learn and think *with* people rather than *instead of* people. We use tools like [representational alignment](https://arxiv.org/abs/2310.13018) to study the parallels between human and artificial intelligence, probe the [limits of learning and teaching with small data](https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html), and build [AI thought partners](https://arxiv.org/abs/2408.03943) for human collaboration.
+The **AI Thought Partner Lab (AITP Lab)** develops AI systems that learn and think *with* people rather than *instead of* people. We use tools like [representational alignment](https://arxiv.org/abs/2310.13018) to study the parallels between human and artificial intelligence, probe the [limits of learning and teaching with small data](https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html), and build [AI thought partners](https://arxiv.org/abs/2408.03943) for human collaboration.
 
-The lab is led by [Ilia Sucholutsky](/people/), Assistant Professor in the Department of Computer Science at Purdue University.
+The lab is led by [Ilia Sucholutsky](/people/), currently a Faculty Fellow/Assistant Professor at the NYU Center for Data Science and an incoming Assistant Professor in the Department of Computer Science at Purdue University.
 
 **News**
 

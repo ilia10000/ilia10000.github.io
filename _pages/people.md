@@ -9,7 +9,7 @@ redirect_from:
 
 ## Principal Investigator
 
-**Ilia Sucholutsky** — Assistant Professor, Department of Computer Science, Purdue University
+**Ilia Sucholutsky** — Faculty Fellow/Assistant Professor, NYU Center for Data Science. Incoming Assistant Professor, Department of Computer Science, Purdue University.
 
 <!-- Add PI photo and bio here -->
 
