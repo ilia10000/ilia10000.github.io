@@ -89,44 +89,5 @@ You can also find our articles on <u><a href="https://scholar.google.ca/citation
 {% endfor %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('keyword-filters').addEventListener('click', function(e) {
-    var btn = e.target;
-    if (!btn.classList.contains('keyword-btn')) return;
-
-    var keyword = btn.getAttribute('data-keyword');
-
-    // Update active button
-    document.querySelectorAll('.keyword-btn').forEach(function(b) {
-      b.classList.remove('active');
-    });
-    btn.classList.add('active');
-
-    // Filter publications
-    document.querySelectorAll('.pub-entry').forEach(function(entry) {
-      if (keyword === 'all') {
-        entry.classList.remove('hidden');
-      } else {
-        var kws = entry.getAttribute('data-keywords');
-        if (kws && kws.split(',').indexOf(keyword) !== -1) {
-          entry.classList.remove('hidden');
-        } else {
-          entry.classList.add('hidden');
-        }
-      }
-    });
-
-    // Show/hide year headings
-    document.querySelectorAll('.pub-year-heading').forEach(function(heading) {
-      var year = heading.getAttribute('data-year');
-      var hasVisible = false;
-      document.querySelectorAll('.pub-entry[data-year="' + year + '"]').forEach(function(entry) {
-        if (!entry.classList.contains('hidden')) {
-          hasVisible = true;
-        }
-      });
-      heading.classList.toggle('hidden', !hasVisible);
-    });
-  });
-});
+document.addEventListener('DOMContentLoaded', function() { document.getElementById('keyword-filters').addEventListener('click', function(e) { var btn = e.target; if (!btn.classList.contains('keyword-btn')) return; var keyword = btn.getAttribute('data-keyword'); document.querySelectorAll('.keyword-btn').forEach(function(b) { b.classList.remove('active'); }); btn.classList.add('active'); document.querySelectorAll('.pub-entry').forEach(function(entry) { if (keyword === 'all') { entry.classList.remove('hidden'); } else { var kws = entry.getAttribute('data-keywords'); if (kws && kws.split(',').indexOf(keyword) !== -1) { entry.classList.remove('hidden'); } else { entry.classList.add('hidden'); } } }); document.querySelectorAll('.pub-year-heading').forEach(function(heading) { var year = heading.getAttribute('data-year'); var hasVisible = false; document.querySelectorAll('.pub-entry[data-year="' + year + '"]').forEach(function(entry) { if (!entry.classList.contains('hidden')) { hasVisible = true; } }); heading.classList.toggle('hidden', !hasVisible); }); }); });
 </script>
