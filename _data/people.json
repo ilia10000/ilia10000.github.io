@@ -25,6 +25,16 @@
       "section": "collaborators"
     },
     {
+      "name": "Sasha Robinson",
+      "image": "/images/people/SashaR.png",
+      "bio": "I'm a graduate student researcher at UBC interested in synthesizing a more complete understanding of agency and consciousness, both individually and collectively, by combining ideas from computer science, mathematical modelling, and philosophy. Currently, I am particularly interested in how social engineering and hive-mind thinking can influence agents to make irrational decisions, especially with increasing autonomous AI agents and their integration into society. Inspired by this, my current work involves quantifying facets of social intelligence in LLMs to better understand how vigilant they are to, and how effectively they can produce, persuasive social influence, and using these results to advocate for AI safety awareness.",
+      "research_keywords": ["Cognitive Science", "Intelligence", "Philosophy"],
+      "fun_fact": "I was on an episode of TVOKids called 'What is AI Anyway?' where I got to explain my research to kids. I also go backcountry camping and portaging for as long as weeks in the summers in Northern Ontario.",
+      "website": "https://sashamrobinson.github.io/",
+      "role": "Graduate Student Researcher",
+      "section": "collaborators"
+    },
+    {
       "name": "Piper Feygin-Sucholutsky",
       "image": "/images/people/Piper1.jpeg",
       "bio": "",
