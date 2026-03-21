@@ -11,13 +11,13 @@
           animation-delay: 0.15s;
   z-index: 20;
   background-size: cover;
-  background-position: center;
+  background-position: left center;
   background-repeat: no-repeat;
 
   &__inner-wrap {
     @include container;
     @include clearfix;
-    padding: 1em 1em 1em;
+    padding: 2em 1em;
     font-family: $sans-serif-narrow;
 
     @include breakpoint($x-large) {
@@ -49,9 +49,28 @@
   list-style-type: none;
   white-space: nowrap;
 
+  a {
+    background-color: rgba(128, 128, 128, 0.4);
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(80, 80, 80, 0.7);
+    }
+  }
+
   &--lg {
     padding-right: 2em;
     font-weight: 700;
+
+    a {
+      background-color: rgba(128, 128, 128, 0.4);
+
+      &:hover {
+        background-color: rgba(80, 80, 80, 0.7);
+      }
+    }
   }
 }
 
