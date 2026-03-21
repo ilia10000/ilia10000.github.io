@@ -53,11 +53,11 @@ You can also find our articles on <u><a href="https://scholar.google.ca/citation
 {% endfor %}
 {% assign keyword_array = all_keywords | split: "," | uniq | sort %}
 
-<div class="keyword-filters">
-  <button class="keyword-btn active" data-keyword="all" onclick="filterPubs('all', this)">All</button>
+<div class="keyword-filters" id="keyword-filters">
+  <button class="keyword-btn active" data-keyword="all">All Topics</button>
   {% for kw in keyword_array %}
     {% if kw != "" %}
-      <button class="keyword-btn" data-keyword="{{ kw }}" onclick="filterPubs('{{ kw }}', this)">{{ kw }}</button>
+      <button class="keyword-btn" data-keyword="{{ kw }}">{{ kw }}</button>
     {% endif %}
   {% endfor %}
 </div>
@@ -89,41 +89,44 @@ You can also find our articles on <u><a href="https://scholar.google.ca/citation
 {% endfor %}
 
 <script>
-function filterPubs(keyword, btn) {
-  // Update active button
-  document.querySelectorAll('.keyword-btn').forEach(function(b) {
-    b.classList.remove('active');
-  });
-  btn.classList.add('active');
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('keyword-filters').addEventListener('click', function(e) {
+    var btn = e.target;
+    if (!btn.classList.contains('keyword-btn')) return;
 
-  // Filter publications
-  document.querySelectorAll('.pub-entry').forEach(function(entry) {
-    if (keyword === 'all') {
-      entry.classList.remove('hidden');
-    } else {
-      var keywords = entry.getAttribute('data-keywords');
-      if (keywords && keywords.split(',').indexOf(keyword) !== -1) {
+    var keyword = btn.getAttribute('data-keyword');
+
+    // Update active button
+    document.querySelectorAll('.keyword-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    btn.classList.add('active');
+
+    // Filter publications
+    document.querySelectorAll('.pub-entry').forEach(function(entry) {
+      if (keyword === 'all') {
         entry.classList.remove('hidden');
       } else {
-        entry.classList.add('hidden');
-      }
-    }
-  });
-
-  // Show/hide year headings based on visible publications
-  document.querySelectorAll('.pub-year-heading').forEach(function(heading) {
-    var year = heading.getAttribute('data-year');
-    var hasVisible = false;
-    document.querySelectorAll('.pub-entry[data-year="' + year + '"]').forEach(function(entry) {
-      if (!entry.classList.contains('hidden')) {
-        hasVisible = true;
+        var kws = entry.getAttribute('data-keywords');
+        if (kws && kws.split(',').indexOf(keyword) !== -1) {
+          entry.classList.remove('hidden');
+        } else {
+          entry.classList.add('hidden');
+        }
       }
     });
-    if (hasVisible) {
-      heading.classList.remove('hidden');
-    } else {
-      heading.classList.add('hidden');
-    }
+
+    // Show/hide year headings
+    document.querySelectorAll('.pub-year-heading').forEach(function(heading) {
+      var year = heading.getAttribute('data-year');
+      var hasVisible = false;
+      document.querySelectorAll('.pub-entry[data-year="' + year + '"]').forEach(function(entry) {
+        if (!entry.classList.contains('hidden')) {
+          hasVisible = true;
+        }
+      });
+      heading.classList.toggle('hidden', !hasVisible);
+    });
   });
-}
+});
 </script>
