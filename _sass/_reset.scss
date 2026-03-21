@@ -7,7 +7,9 @@
 html {
   /* apply a natural box layout model to all elements */
   box-sizing: border-box;
-  background-color: $background-color;
+  background: linear-gradient($ombre-color-top, $ombre-color-bottom $ombre-stop) no-repeat;
+  background-color: $ombre-color-bottom;
+  min-height: 100%;
   font-size: 16px;
 
   @include breakpoint($medium) {

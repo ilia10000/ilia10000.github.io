@@ -55,6 +55,13 @@ $lighter-gray               : mix(#fff, $gray, 90%);
 
 $body-color                 : #fff;
 $background-color           : #fff;
+
+/* Ombre gradient for page background (below header).
+   Change these to customize the gradient colors and transition point.
+   $ombre-stop controls what % down the page the transition completes. */
+$ombre-color-top            : #d0e8ff;
+$ombre-color-bottom         : #ffd0e0;
+$ombre-stop                 : 100%;
 $code-background-color      : #fafafa;
 $code-background-color-dark : $light-gray;
 $text-color                 : $dark-gray;
