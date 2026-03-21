@@ -153,28 +153,35 @@
 
 
 /* Research grid overrides */
-.research-grid .grid__item {
-  .archive__item-teaser {
-    max-height: 500px;
-  }
+.research-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
 
-  .archive__item-title {
-    color: #222;
+  .grid__item {
+    width: 100% !important;
+    float: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 
-    a {
+    .archive__item-teaser {
+      max-height: 500px !important;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: cover;
+      }
+    }
+
+    .archive__item-title {
       color: #222;
-    }
-  }
 
-  @include breakpoint($small) {
-    .archive__item-teaser {
-      max-height: 500px;
-    }
-  }
-
-  @include breakpoint($medium) {
-    .archive__item-teaser {
-      max-height: 500px;
+      a {
+        color: #222;
+      }
     }
   }
 }
