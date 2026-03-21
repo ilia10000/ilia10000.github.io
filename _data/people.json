@@ -15,13 +15,13 @@
   },
   "members": [
     {
-      "name": "Test",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
+      "name": "Ayush Rajesh Jhaveri",
+      "image": "/images/people/AyushRJ.png",
+      "bio": "I’m a Master’s student in Computer Science at NYU Courant. My research focuses on reasoning in large language models, particularly on improving hypothesis exploration, with inspiration from cognitive science.",
+      "research_keywords": ["Large Language Models", "Cognitive Science", "Reasoning"],
+      "fun_fact": "Always up for a game of soccer! Love cooking Thai food.",
+      "website": "https://ayushjhaveri.github.io/ ",
+      "role": "Master's Student",
       "section": "current_members"
     },
     {
