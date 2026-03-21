@@ -42,7 +42,7 @@ redirect_from:
   margin-bottom: 10px;
 }
 .person-card .name {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1.05em;
   margin-bottom: 6px;
 }
