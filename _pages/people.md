@@ -62,6 +62,24 @@ redirect_from:
   color: #fff;
   border-color: #333;
 }
+.person-card .role {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 4px;
+}
+.person-card .keywords {
+  font-size: 0.85em;
+  color: #777;
+  margin-bottom: 4px;
+}
+.person-card .fun-fact {
+  font-size: 0.85em;
+  margin-bottom: 4px;
+}
+.person-card .website-link {
+  font-size: 0.85em;
+  margin-bottom: 6px;
+}
 .person-card .info {
   font-size: 0.9em;
   text-align: left;
@@ -111,12 +129,12 @@ redirect_from:
     <div class="person-card">
       {% if person.image != "" and person.image != "/images/people/placeholder.png" %}<img src="{{ person.image }}" alt="{{ person.name }}" />{% else %}<img src="/images/people/placeholder.png" alt="{{ person.name }}" />{% endif %}
       <button class="name-btn" data-target="person-info-{{ global_index }}">{{ person.name }}</button>
+      {% if person.role != "" %}<div class="role">{{ person.role }}</div>{% endif %}
+      {% if person.research_keywords.size > 0 %}<div class="keywords">{{ person.research_keywords | join: ", " }}</div>{% endif %}
+      {% if person.fun_fact != "" %}<div class="fun-fact"><strong>Fun fact:</strong> {{ person.fun_fact }}</div>{% endif %}
+      {% if person.website != "" %}<div class="website-link"><a href="{{ person.website }}" target="_blank">Website</a></div>{% endif %}
       <div class="info" id="person-info-{{ global_index }}">
-        {% if person.role != "" %}<strong>Role:</strong> {{ person.role }}<br/>{% endif %}
-        {% if person.bio != "" %}<strong>Bio:</strong> {{ person.bio }}<br/>{% endif %}
-        {% if person.research_keywords.size > 0 %}<strong>Research:</strong> {{ person.research_keywords | join: ", " }}<br/>{% endif %}
-        {% if person.fun_fact != "" %}<strong>Fun fact:</strong> {{ person.fun_fact }}<br/>{% endif %}
-        {% if person.website != "" %}<a href="{{ person.website }}" target="_blank">Website</a>{% endif %}
+        {{ person.bio }}
       </div>
     </div>
     {% endif %}
