@@ -73,7 +73,7 @@ redirect_from:
   </div>
 </div>
 
-## PhD Students
+## Current Members
 
 <div class="people-grid">
   <!-- Copy this block for each person:
@@ -89,19 +89,13 @@ redirect_from:
   -->
 </div>
 
-## Masters & Undergraduate Students
+## Collaborators
 
 <div class="people-grid">
   <!-- Copy the person-card block above for each person -->
 </div>
 
 ## Alumni
-
-<div class="people-grid">
-  <!-- Copy the person-card block above for each person -->
-</div>
-
-## Collaborators
 
 <div class="people-grid">
   <!-- Copy the person-card block above for each person -->
