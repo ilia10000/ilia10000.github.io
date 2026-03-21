@@ -106,3 +106,9 @@ redirect_from:
 <div class="people-grid">
   <!-- Copy the person-card block above for each person -->
 </div>
+
+## Thought Pawrtners
+
+<div class="people-grid">
+  <!-- Copy the person-card block above for each pet/mascot -->
+</div>
