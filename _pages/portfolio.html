@@ -7,8 +7,94 @@ author_profile: false
 
 {% include base_path %}
 
-<div class="grid__wrapper research-grid">
-  {% for post in site.portfolio %}
-    {% include archive-single.html type="grid" %}
-  {% endfor %}
-</div>
+<style>
+.research-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid #e0e0e0;
+}
+.research-item:last-child {
+  border-bottom: none;
+}
+.research-item-image {
+  flex-shrink: 0;
+  width: 250px;
+}
+.research-item-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.research-item-content {
+  flex: 1;
+}
+.research-item-btn {
+  display: inline-block;
+  padding: 0.4em 1em;
+  border: 1px solid #999;
+  border-radius: 20px;
+  background: transparent;
+  color: #333;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  margin-bottom: 0.5em;
+}
+.research-item-btn:hover {
+  background-color: rgba(128,128,128,0.3);
+}
+.research-item-btn.active {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+.research-item-excerpt {
+  font-size: 0.95em;
+  color: #555;
+  margin-top: 0.5em;
+}
+.research-item-details {
+  display: none;
+  margin-top: 1em;
+  padding: 1em;
+  background: rgba(255,255,255,0.5);
+  border-radius: 8px;
+  line-height: 1.7;
+}
+.research-item-details.open {
+  display: block;
+}
+@media (max-width: 768px) {
+  .research-item {
+    flex-direction: column;
+  }
+  .research-item-image {
+    width: 100%;
+  }
+}
+</style>
+
+{% for post in site.portfolio %}
+  <div class="research-item">
+    <div class="research-item-image">
+      {% if post.header.teaser %}
+        <img src="{{ post.header.teaser | prepend: '/images/' | prepend: base_path }}" alt="{{ post.title }}">
+      {% endif %}
+    </div>
+    <div class="research-item-content">
+      <button class="research-item-btn" data-target="research-details-{{ forloop.index }}">{{ post.title }}</button>
+      <div class="research-item-excerpt">{{ post.excerpt }}</div>
+      <div class="research-item-details" id="research-details-{{ forloop.index }}">
+        {{ post.content }}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() { document.querySelectorAll('.research-item-btn').forEach(function(btn) { btn.addEventListener('click', function() { var targetId = btn.getAttribute('data-target'); var details = document.getElementById(targetId); if (details.classList.contains('open')) { details.classList.remove('open'); btn.classList.remove('active'); } else { details.classList.add('open'); btn.classList.add('active'); } }); }); });
+</script>
