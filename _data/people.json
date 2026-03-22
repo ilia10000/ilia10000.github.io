@@ -80,13 +80,23 @@
       "section": "collaborators"
     },
     {
-      "name": "Raja Marjieh",
+      "name": "Elizabeth Mieczkowski",
       "image": "/images/people/placeholder.png",
       "bio": "",
       "research_keywords": [],
       "fun_fact": "",
       "website": "",
       "role": "",
+      "section": "visitors"
+    },
+    {
+      "name": "Raja Marjieh",
+      "image": "/images/people/RajaM.png",
+      "bio": "Raja is a PhD candidate at Princeton Psychology working in the Griffiths Computational Cognitive Science Lab. In September 2026, he will be joining the Kempner Institute at Harvard as a Research Fellow. Prior to Princeton, Raja completed an MSc in Physics, and a joint BSc in Physics and Electrical Engineering at the Technion. Raja's work is broadly focused on the study of representations in natural and artificial minds using tools from cognitive science, AI, and physics.",
+      "research_keywords": ["Cognitive Science", "Representations", "AI"],
+      "fun_fact": "Check out Raja's list of recommended short reads: https://raja-marjieh.github.io/short/",
+      "website": "https://raja-marjieh.github.io/",
+      "role": "PhD Candidate",
       "section": "visitors"
     },
     {
@@ -98,6 +108,26 @@
       "website": "",
       "role": "",
       "section": "visitors"
+    },
+    {
+      "name": "Robert Hawkins",
+      "image": "/images/people/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
+      "role": "",
+      "section": "collaborators"
+    },
+    {
+      "name": "Zach Pardos",
+      "image": "/images/people/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
+      "role": "",
+      "section": "collaborators"
     },
     {
       "name": "Nori Jacoby",
