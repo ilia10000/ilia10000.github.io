@@ -22,7 +22,10 @@
       "name": "Divya Srinivasan",
       "image": "/images/people/DivyaS.jpeg",
       "bio": "Hi! I'm Divya. I am a graduate student majoring in Computer Science at NYU and am broadly interested in formalizing how humans and machines process language and navigate decision making. I study how humans update their beliefs by combining prior knowledge with new information, and the conditions under which this breaks down. With the help of Reinforcement Learning and Bayesian modeling, I aim to understand how agents learn from their environments. Currently, I am studying learner modeling and diagnostic inference, particularly how observers reason about the underlying cognitive processes that produced a given behavior.",
-      "research_keywords": ["Heuristics and Biases", "Diagnostic Inference and Decision Making"],
+      "research_keywords": [
+        "Heuristics and Biases",
+        "Diagnostic Inference and Decision Making"
+      ],
       "fun_fact": "I love crocheting! My most frequent internal monologue being, 'I can definitely make that in crochet.' I also love hiking, going on long walks and running!",
       "website": "https://divya603.github.io/",
       "role": "Lab Manager",
@@ -84,7 +87,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Katherine M. Collins",
@@ -94,7 +97,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "visitors"
     },
     {
       "name": "Nori Jacoby",
@@ -114,7 +117,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Matthias Schonlau",
@@ -144,7 +147,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Joshua B. Tenenbaum",
@@ -164,7 +167,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Harin Lee",
@@ -174,7 +177,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Andi Peng",
@@ -184,7 +187,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Ryan Liu",
@@ -194,7 +197,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Theodore R. Sumers",
@@ -204,7 +207,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Andreea Bobu",
@@ -229,9 +232,13 @@
     {
       "name": "Kiet Nguyen",
       "image": "/images/people/KietN.jpg",
-      "bio": "Hi! I'm a Master's student in Data Science at NYU focused on AI safety evaluation and applied LLM research. My current work centers on decoupling safety behaviors from general problem-solving in language models. I also study how model scale and prompting strategy affect reliability, particularly how smaller models degrade on complex safety risk. Looking ahead, I'm excited about extending this to agentic systems — understanding how autonomous AI agents handle adversarial dynamics, social influence, and failure modes in multi-agent settings.",
-      "research_keywords": ["AI Safety", "LLM Evaluation", "Agentic AI Systems"],
-      "fun_fact": "I love hosting themed dinner parties — full commitment: custom menu, playlist, dress code, the works.",
+      "bio": "Hi! I'm a Master's student in Data Science at NYU focused on AI safety evaluation and applied LLM research. My current work centers on decoupling safety behaviors from general problem-solving in language models. I also study how model scale and prompting strategy affect reliability, particularly how smaller models degrade on complex safety risk. Looking ahead, I'm excited about extending this to agentic systems \u2014 understanding how autonomous AI agents handle adversarial dynamics, social influence, and failure modes in multi-agent settings.",
+      "research_keywords": [
+        "AI Safety",
+        "LLM Evaluation",
+        "Agentic AI Systems"
+      ],
+      "fun_fact": "I love hosting themed dinner parties \u2014 full commitment: custom menu, playlist, dress code, the works.",
       "website": "",
       "role": "Master's Student",
       "section": "visitors"
@@ -254,7 +261,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Mark Ho",
@@ -284,7 +291,7 @@
       "fun_fact": "",
       "website": "",
       "role": "",
-      "section": "collaborators"
+      "section": "alumni"
     },
     {
       "name": "Chenyi Li",
