@@ -80,6 +80,16 @@
       "section": "collaborators"
     },
     {
+      "name": "Sunny Yu",
+      "image": "/images/people/SunnyY.jpg",
+      "bio": "Sunny Yu is an undergraduate student studying Symbolic Systems and Computer Science at Stanford University, working with the Stanford NLP Group.",
+      "research_keywords": ["Cognitive Science", "AI", "Large Language Models", "Post-Training", "Human-AI Interaction"],
+      "fun_fact": "Enjoys running, all racquet sports, outdoor activities, and card games.",
+      "website": "https://sunnyych.github.io/",
+      "role": "Undergraduate Student",
+      "section": "visitors"
+    },
+    {
       "name": "Andy Han",
       "image": "/images/people/AndyH.jpeg",
       "bio": "Andy is a first-year PhD student in computer science at NYU, advised by Claudio Silva and Pavel Izmailov. Before this, he worked in industry as an engineer; before that, he graduated from Pomona College in philosophy and computer science.",
@@ -141,11 +151,11 @@
     },
     {
       "name": "Robert Hawkins",
-      "image": "/images/people/placeholder.png",
+      "image": "/images/people/RobertH.png",
       "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
+      "research_keywords": ["Cognitive Science", "Language", "Social Interaction"],
+      "fun_fact": "Find me in a jazz kissa",
+      "website": "https://scholar.google.com/citations?hl=en&user=7EPsnxEAAAAJ&view_op=list_works&sortby=pubdate",
       "role": "",
       "section": "collaborators"
     },
@@ -251,13 +261,13 @@
     },
     {
       "name": "Ryan Liu",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
-      "section": "alumni"
+      "image": "/images/people/RyanL.jpeg",
+      "bio": "Ryan Liu is a 3rd year PhD student at Princeton University Computer Science advised by Tom Griffiths. His research focuses on understanding the similarities and differences between language models and humans through the lens of cognitive science, and using these insights to shed light on core problems in LLMs and AI agents. In the past, he has worked on improving conference peer review advised by Nihar Shah at Carnegie Mellon.",
+      "research_keywords": ["AI Agents", "Psychology"],
+      "fun_fact": "I sing A cappella",
+      "website": "https://theryanl.github.io/",
+      "role": "PhD Student",
+      "section": "visitors"
     },
     {
       "name": "Theodore R. Sumers",
@@ -335,21 +345,21 @@
     },
     {
       "name": "Maya Malaviya",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
+      "image": "/images/people/MayaM.png",
+      "bio": "I am a PhD student in the Computation and Decision-Making Lab at NYU. I explore decision-theoretic models of human choices during pedagogy and learning. For instance, how do we choose between many possible representations for a difficult problem? How can we communicate these representations to impart knowledge or work better together?",
+      "research_keywords": ["Computational Cognitive Science", "Pedagogy"],
+      "fun_fact": "I have been making time capsule playlists every season since the start of 2016, so I can remember all the music I've listened to!",
+      "website": "https://maya-malaviya.github.io/",
+      "role": "PhD Student",
       "section": "visitors"
     },
     {
       "name": "Bonan Zhao",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
+      "image": "/images/people/BonanZ.jpg",
+      "bio": "I started my journey to cognitive science from an undergraduate degree in philosophy (Tsinghua, China). That led me to do the Master of Logic at ILCC at the University of Amsterdam. Following a few years working as a data scientist, I did my PhD in a fantastic lab at the University of Edinburgh, and then spent some wonderful time at Princeton University for my postdoc. I am now leading my lab in computational cognitive science at the University of Edinburgh.",
+      "research_keywords": ["Compositionality", "Program Induction", "Library Learning"],
+      "fun_fact": "I realized that language conveys meaning at the age of 23.",
+      "website": "https://zhaobn.github.io/index.html",
       "role": "",
       "section": "alumni"
     },
