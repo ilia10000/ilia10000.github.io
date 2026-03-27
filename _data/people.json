@@ -120,13 +120,23 @@
       "section": "visitors"
     },
     {
+      "name": "Valerie Chen",
+      "image": "/images/people/ValerieC.png",
+      "bio": "Valerie is a Machine Learning PhD student at CMU. Her work bridges machine learning, natural language processing, and human-computer interaction to advance the design of collaborative AI systems. Her research has fostered close collaborations with major engineering and financial companies, with findings cited by leading model providers and deployed in industry products. Valerie has been recognized with the Rising Stars in Data Science award, CMU Presidential Fellowship, and the NSF Graduate Research Fellowship. Her research has also received various awards, including Best Paper at a NeurIPS workshop and Oral Presentations at ICLR and AAAI.",
+      "research_keywords": ["Human-AI Collaboration", "AI Agents", "Interactive Evaluation"],
+      "fun_fact": "I love to travel (the headshot was taken at Granada, Spain).",
+      "website": "https://valeriechen.github.io/",
+      "role": "PhD Student",
+      "section": "visitors"
+    },
+    {
       "name": "Elizabeth Mieczkowski",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
+      "image": "/images/people/ElizabethM.jpg",
+      "bio": "Elizabeth is a PhD candidate at Princeton Computer Science advised by Tom Griffiths and Natalia Vélez. She studies multi-agent teams (human, AI, and both) by developing formal frameworks to characterize optimal collaborative strategies and trade-offs, and testing these models with multiplayer human experiments, LLM teams, and multi-agent reinforcement learning.",
+      "research_keywords": ["Multi-Agent Systems", "Cognitive Science"],
+      "fun_fact": "Her cat is named Pascal (as in, the triangle)!",
+      "website": "https://emieczkowski.github.io/",
+      "role": "PhD Candidate",
       "section": "visitors"
     },
     {
@@ -280,6 +290,16 @@
       "section": "alumni"
     },
     {
+      "name": "Eunsol Choi",
+      "image": "/images/people/EunsolC.jpeg",
+      "bio": "I am an assistant professor in Computer Science and Data Science at New York University. Before I was at UT Austin, Google AI, UW, and Cornell. I enjoy studying real world language usages with simple, efficient and generalizable models.",
+      "research_keywords": ["Knowledge Rich Tasks", "Retrieval", "Human-LLM Interaction"],
+      "fun_fact": "I tend to like sad, character-driven movies.",
+      "website": "https://eunsol.github.io",
+      "role": "Assistant Professor, NYU",
+      "section": "collaborators"
+    },
+    {
       "name": "Andreea Bobu",
       "image": "/images/people/AndreeaB.png",
       "bio": "Andreea Bobu is an Assistant Professor at MIT in AeroAstro and CSAIL. She leads the Collaborative Learning and Autonomy Research Lab (CLEAR Lab), where they develop autonomous agents that learn to do tasks for, with, and around people. Her goal is to ensure that these agents' behavior is consistent with human expectations, whether they interact with expert designers or novice users. She obtained her Ph.D. in Electrical Engineering and Computer Science at UC Berkeley with Anca Dragan in 2023. Prior to her Ph.D. she earned her Bachelor's degree in Computer Science and Engineering from MIT in 2017. She was the recipient of the Apple AI/ML Ph.D. fellowship, is a Rising Star in EECS and an R:SS and HRI Pioneer, and has won best paper award at HRI 2020 and the Emerging Research Award at the International Symposium on the Mathematics of Neuroscience 2023. Before MIT, she was also a Research Scientist at the AI Institute and an intern at NVIDIA in the Robotics Lab.",
@@ -315,12 +335,12 @@
     },
     {
       "name": "Allison Chen",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
+      "image": "/images/people/AllisonC.jpeg",
+      "bio": "Allison is a 4th year computer science PhD student working with Dr. Olga Russakovsky at Princeton University. Broadly, she is interested in the intersections of computer science, psychology, and cognitive science. She works to both better understanding and analyzing limitations of current AI systems as well as studying human-computer interaction with AI systems specifically. In addition to research, she is passionate about communication and education about science and technology, seeking ways to make black-box AI technology more accessible to everyone to understand!",
+      "research_keywords": ["AI", "HCI"],
+      "fun_fact": "I love to cook for my friends, play spikeball outside, go rock climbing, and just spend quality time with my friends and family!",
+      "website": "https://allisonchen.us",
+      "role": "PhD Student",
       "section": "visitors"
     },
     {
