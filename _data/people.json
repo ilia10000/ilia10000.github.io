@@ -201,12 +201,12 @@
     },
     {
       "name": "Matthias Schonlau",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
+      "image": "/images/people/MatthiasS.jpg",
+      "bio": "Matthias Schonlau, Ph.D., is a Professor in the Department of Statistics and Actuarial Science at the University of Waterloo, Ontario, Canada.  Prior to his current appointment he spent 14 years at the RAND Corporation, the National Institute of Statistical Sciences, AT&T Labs and the German Institute for Economic Research, DIW.  He is a recipient of the Humboldt Prize and is an elected Fellow of the American Statistical Association.  His two books and 80+ peer-reviewed papers have been cited more than 27,000 times.",
+      "research_keywords": ["survey methodology", "visualization"],
+      "fun_fact": "In my spare time, I write songs about life's adventures and play guitar.",
+      "website": "https://schonlau.net",
+      "role": "Professor, University of Waterloo",
       "section": "collaborators"
     },
     {
@@ -391,6 +391,16 @@
       "fun_fact": "Chenyi and her cat Buchi are both good at bouldering.",
       "website": "https://www.chenyi-li.com/about/",
       "role": "PhD Student",
+      "section": "visitors"
+    },
+    {
+      "name": "Kristina Fujimoto",
+      "image": "/images/people/KristinaF.jpg",
+      "bio": "Kristina is a Master's in Data Science student at NYU (May 2026) researching LLM safety and bias-resistance. Her work with Professor Ilia focuses on the end-to-end pipeline of on-policy distillation for building LLMs that are resistant to sycophancy. Prior to NYU, she did internships and co-ops in the biotech industry where she built ML pipelines for oncology drug discovery. She's passionate about perfecting the data science applications in new domains to solve ML problems that create an impressive impact in the world.",
+      "research_keywords": ["LLM Sycophancy", "Computational Biology", "Agentic AI"],
+      "fun_fact": "I love traveling and exploring new countries through cultures and food, taking photos and videos to remember the memories.",
+      "website": "https://www.linkedin.com/in/kristinafujimoto/",
+      "role": "Master's Student",
       "section": "visitors"
     },
     {
