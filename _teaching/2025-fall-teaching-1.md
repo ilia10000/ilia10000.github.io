@@ -2,7 +2,7 @@
 title: "DS-GA 3001: Learning from small data"
 collection: teaching
 type: "Graduate course"
-permalink: /teaching/2024-fall-teaching-1
+permalink: /teaching/2025-fall-teaching-1
 venue: "NYU, Center for Data Science"
 date: 2025-09-01
 location: "New York"
