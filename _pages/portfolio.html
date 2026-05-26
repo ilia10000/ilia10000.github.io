@@ -117,42 +117,51 @@ author_profile: false
 </div>
 
 <script>
-function openThrust(card) {
-  if (!card) return;
-  var btn = card.querySelector('.research-thrust__toggle');
-  var details = card.querySelector('.research-thrust__details');
-  if (!btn || !details || details.classList.contains('open')) return;
-  details.classList.add('open');
-  btn.setAttribute('aria-expanded', 'true');
-  btn.textContent = 'Show less';
-}
-function initThrustToggles() {
-  document.querySelectorAll('.research-thrust__toggle').forEach(function(btn) {
-    if (btn.dataset.initialized) return;
-    btn.dataset.initialized = 'true';
-    btn.addEventListener('click', function() {
-      var targetId = btn.getAttribute('data-target');
-      var details = document.getElementById(targetId);
-      var isOpen = details.classList.toggle('open');
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      btn.textContent = isOpen ? 'Show less' : 'Read more';
-    });
-  });
-  // Honour deep-links like /research/#thrust-3 (used from the homepage cards):
-  // open and scroll to the matching card on initial load and on hash change.
-  var openFromHash = function() {
-    var h = (window.location.hash || '').replace(/^#/, '');
-    if (!/^thrust-[1-6]$/.test(h)) return;
-    var card = document.getElementById(h);
+(function() {
+  function toggleThrust(btn) {
+    if (!btn) return;
+    var targetId = btn.getAttribute('data-target');
+    var details = document.getElementById(targetId);
+    if (!details) return;
+    var isOpen = details.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    btn.textContent = isOpen ? 'Show less' : 'Read more';
+    return isOpen;
+  }
+  function openThrustCard(card) {
     if (!card) return;
-    openThrust(card);
-    setTimeout(function() {
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
-  };
-  openFromHash();
-  window.addEventListener('hashchange', openFromHash);
-}
-document.addEventListener('DOMContentLoaded', initThrustToggles);
-document.addEventListener('turbo:load', initThrustToggles);
+    var btn = card.querySelector('.research-thrust__toggle');
+    var details = card.querySelector('.research-thrust__details');
+    if (!btn || !details || details.classList.contains('open')) return;
+    details.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.textContent = 'Show less';
+  }
+  // Event delegation — one handler on document, survives Turbo navigation.
+  if (!window.__aitpThrustsBound) {
+    window.__aitpThrustsBound = true;
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.research-thrust__toggle');
+      if (!btn) return;
+      e.preventDefault();
+      toggleThrust(btn);
+    });
+    var openFromHash = function() {
+      var h = (window.location.hash || '').replace(/^#/, '');
+      if (!/^thrust-[1-6]$/.test(h)) return;
+      var card = document.getElementById(h);
+      if (!card) return;
+      openThrustCard(card);
+      setTimeout(function() {
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    };
+    var runFromHash = function() { openFromHash(); };
+    document.addEventListener('DOMContentLoaded', runFromHash);
+    document.addEventListener('turbo:load', runFromHash);
+    window.addEventListener('hashchange', runFromHash);
+    // Also run immediately in case the document is already loaded
+    if (document.readyState !== 'loading') runFromHash();
+  }
+})();
 </script>

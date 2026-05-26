@@ -8,4 +8,4 @@ date: 2025-09-01
 location: "New York"
 ---
 
-I'm offering [DS-GA 3001.011: Special Topics in Data Science - Learning from small data](https://docs.google.com/document/d/1YJ7yxnAqwWn6KNht1NP_YQac7lPtLZtzdV66jXSWBy8/edit?usp=sharing) in Fall 2025. 
+I'm offering [DS-GA 3001.011: Special Topics in Data Science - Learning from small data](https://docs.google.com/document/d/1bk_RP14O2YnrsDGjrl_6KSgIl0UCIutaKMoL1R-9mow/edit?tab=t.0) in Fall 2025. 
