@@ -8,4 +8,4 @@ date: 2024-09-01
 location: "New York, NY"
 ---
 
-A tour of the lab's data-efficient learning work — less-than-one-shot learning, soft-label prototypes, and what minimal-data learning looks like for humans and machines.
+A tour of the lab's data-efficient learning work, including less-than-one-shot learning, soft-label prototypes, and what minimal-data learning looks like for humans and machines.

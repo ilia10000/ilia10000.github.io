@@ -11,7 +11,7 @@ redirect_from:
 <section class="aitp-hero">
   <span class="aitp-hero__eyebrow">AITP Lab &middot; NYU CDS &middot; Purdue CS (Aug 2026)</span>
   <h1 class="aitp-hero__title">AI that learns and thinks <em>with</em> people.</h1>
-  <p class="aitp-hero__tagline">We study humans and machines in mutually informative ways and build AI thought partners — systems that learn and think with people rather than instead of them.</p>
+  <p class="aitp-hero__tagline">We study humans and machines in mutually informative ways, and build AI thought partners: systems that learn and think with people rather than instead of them.</p>
   <div class="aitp-hero__pills">
     <span class="aitp-hero__pill">Individually &middot; Together &middot; Collectively</span>
     <span class="aitp-hero__pill">Measure &middot; Design &middot; Diagnose</span>
@@ -23,7 +23,7 @@ redirect_from:
   </div>
 </section>
 
-The **AI Thought Partner Lab (AITP Lab)** works at three scales — _individually_, _together_, and _collectively_ — across three lines of inquiry: **measuring** how human and AI minds share structure, **designing** interactive systems that turn that shared structure into productive partnership, and **diagnosing** when partnership fails because the structure breaks. The lab is led by [Ilia Sucholutsky](/people/), currently a Faculty Fellow / Assistant Professor at the [NYU Center for Data Science](https://cds.nyu.edu/), and starting **August 2026** as an Assistant Professor in the Department of Computer Science at [Purdue University](https://www.cs.purdue.edu/).
+The **AI Thought Partner Lab (AITP Lab)** works at three scales (individually, together, and collectively) across three lines of inquiry. We **measure** how human and AI minds share structure, **design** interactive systems that turn that shared structure into productive partnership, and **diagnose** when partnership fails because the structure breaks. The lab is led by [Ilia Sucholutsky](/people/), currently a Faculty Fellow / Assistant Professor at the [NYU Center for Data Science](https://cds.nyu.edu/), and starting **August 2026** as an Assistant Professor in the Department of Computer Science at [Purdue University](https://www.cs.purdue.edu/).
 
 <span class="aitp-eyebrow">Three lines of inquiry</span>
 <h2 class="aitp-section-title">What we work on</h2>
@@ -32,37 +32,37 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales — _individuall
   <article class="aitp-card">
     <div class="aitp-card__num">01 &middot; Measure</div>
     <h3 class="aitp-card__title"><a href="/research/01-alignment/">Alignment between human and AI minds</a></h3>
-    <p class="aitp-card__excerpt">How human and AI minds come to share structure across representations, concepts, values, and perception &mdash; and how to use that structure as a lever for collaboration.</p>
+    <p class="aitp-card__excerpt">How human and AI minds come to share structure across representations, concepts, values, and perception, and how to use that structure as a lever for collaboration.</p>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
     <div class="aitp-card__num">02 &middot; Measure</div>
     <h3 class="aitp-card__title"><a href="/research/02-data-efficient-learning/">Data-efficient learning</a></h3>
-    <p class="aitp-card__excerpt">A multi-year program on the fundamental limits of learning from very few examples &mdash; for machines and for people. We introduced less-than-one-shot (LO-shot) learning.</p>
+    <p class="aitp-card__excerpt">A multi-year program on the fundamental limits of learning from very few examples, for machines and for people. We introduced less-than-one-shot (LO-shot) learning.</p>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
     <div class="aitp-card__num">03 &middot; Diagnose</div>
     <h3 class="aitp-card__title"><a href="/research/03-cogsci-for-ai-diagnosis/">Cognitive science for AI diagnosis</a></h3>
-    <p class="aitp-card__excerpt">Classical psychology paradigms &mdash; IATs, serial reproduction, rational analysis, psychophysics, theory-of-mind probes &mdash; adapted as measurement instruments for AI.</p>
+    <p class="aitp-card__excerpt">Classical psychology paradigms, including IATs, serial reproduction, rational analysis, psychophysics, and theory-of-mind probes, adapted as measurement instruments for AI.</p>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
     <div class="aitp-card__num">04 &middot; Diagnose</div>
     <h3 class="aitp-card__title"><a href="/research/04-collective-intelligence/">Collective intelligence</a></h3>
-    <p class="aitp-card__excerpt">What emerges when humans and AIs interact in groups &mdash; teams, networks, populations. Coordination, cultural dynamics, and failure at scale.</p>
+    <p class="aitp-card__excerpt">What emerges when humans and AIs interact in groups: teams, networks, and populations. Coordination, cultural dynamics, and failure at scale.</p>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
     <div class="aitp-card__num">05 &middot; Design</div>
     <h3 class="aitp-card__title"><a href="/research/05-trustworthy-thought-partners/">Safe and trustworthy thought partners</a></h3>
-    <p class="aitp-card__excerpt">How partnership breaks &mdash; bias, overreliance, manipulation, miscalibrated trust &mdash; and how to build AI that resists those failure modes. Anchors our DARPA ITM work.</p>
+    <p class="aitp-card__excerpt">How partnership breaks (bias, overreliance, manipulation, miscalibrated trust) and how to build AI that resists those failure modes. Anchors our DARPA ITM work.</p>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
     <div class="aitp-card__num">06 &middot; Design</div>
     <h3 class="aitp-card__title"><a href="/research/06-applied-thought-partnership/">Applied thought partnership</a></h3>
-    <p class="aitp-card__excerpt">Where the framework lands in the world &mdash; education, music, mathematics, robotics &mdash; with each application chosen to feed back into the core science.</p>
+    <p class="aitp-card__excerpt">Where the framework lands in the world, across education, music, mathematics, and robotics, with each application chosen to feed back into the core science.</p>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
 </div>
@@ -73,13 +73,13 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales — _individuall
 <div class="aitp-papers">
   <div class="aitp-paper">
     <span class="aitp-paper__venue">Phil. Trans. R. Soc. A &middot; 2026</span>
-    <p class="aitp-paper__title"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the context of human–AI interaction</a></p>
+    <p class="aitp-paper__title"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the context of human-AI interaction</a></p>
     <p class="aitp-paper__authors">Collins, Bhatt, Sucholutsky.</p>
   </div>
   <div class="aitp-paper">
     <span class="aitp-paper__venue">Nature Human Behaviour &middot; 2024</span>
     <p class="aitp-paper__title"><a href="https://www.nature.com/articles/s41562-024-01991-9">Building machines that learn and think with people</a></p>
-    <p class="aitp-paper__authors">Collins et al. &mdash; the AITP framework paper.</p>
+    <p class="aitp-paper__authors">Collins et al. The AITP framework paper.</p>
   </div>
   <div class="aitp-paper">
     <span class="aitp-paper__venue">NeurIPS Spotlight &middot; 2023</span>
@@ -89,17 +89,17 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales — _individuall
   <div class="aitp-paper">
     <span class="aitp-paper__venue">PNAS &middot; 2025</span>
     <p class="aitp-paper__title"><a href="https://www.pnas.org/doi/abs/10.1073/pnas.2416228122">Explicitly unbiased large language models still form biased associations</a></p>
-    <p class="aitp-paper__authors">Bai, Sucholutsky, et al.</p>
+    <p class="aitp-paper__authors">Bai et al.</p>
   </div>
   <div class="aitp-paper">
     <span class="aitp-paper__venue">Nature Human Behaviour &middot; 2024</span>
     <p class="aitp-paper__title"><a href="https://www.nature.com/articles/s41562-024-02046-9">LLMs surpass human experts in predicting neuroscience results</a></p>
-    <p class="aitp-paper__authors">Luo, Sucholutsky, et al.</p>
+    <p class="aitp-paper__authors">Luo et al.</p>
   </div>
   <div class="aitp-paper">
     <span class="aitp-paper__venue">Preprint &middot; 2026</span>
     <p class="aitp-paper__title"><a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a></p>
-    <p class="aitp-paper__authors">Mieczkowski, Collins, Sucholutsky, Vélez, Griffiths.</p>
+    <p class="aitp-paper__authors">Mieczkowski, Collins, Sucholutsky, V&eacute;lez, Griffiths.</p>
   </div>
 </div>
 
@@ -113,10 +113,10 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales — _individuall
 <h2 class="aitp-section-title">Recent news</h2>
 
 <ul class="aitp-news">
-  <li><span class="aitp-news__date">May 2026</span> Our paper <a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149"><em>Revisiting Rogers' Paradox in the context of human–AI interaction</em></a> is published in <em>Philosophical Transactions of the Royal Society A</em>.</li>
-  <li><span class="aitp-news__date">May 2026</span> Two new co-organized programs at <strong>CogSci 2026</strong> — <em>The Cognitive Science of AI Alignment</em> workshop and a dedicated AI Alignment track within the program.</li>
-  <li><span class="aitp-news__date">Apr 2026</span> New preprint — <a href="https://arxiv.org/abs/2603.12229"><em>Language Model Teams as Distributed Systems</em></a> (Mieczkowski et al.) reframes multi-agent LLM workflows using distributed-systems primitives.</li>
-  <li><span class="aitp-news__date">Mar 2026</span> New preprints — <a href="https://arxiv.org/abs/2602.10001"><em>Human–AI Synergy Supports Collective Creative Search</em></a> and <a href="https://arxiv.org/abs/2602.10473"><em>Why Human Guidance Matters in Collaborative Vibe Coding</em></a>.</li>
+  <li><span class="aitp-news__date">May 2026</span> Our paper <a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149"><em>Revisiting Rogers' Paradox in the context of human-AI interaction</em></a> is published in <em>Philosophical Transactions of the Royal Society A</em>.</li>
+  <li><span class="aitp-news__date">May 2026</span> Two new co-organized programs at <strong>CogSci 2026</strong>: <em>The Cognitive Science of AI Alignment</em> workshop and a dedicated AI Alignment track within the program.</li>
+  <li><span class="aitp-news__date">Apr 2026</span> New preprint: <a href="https://arxiv.org/abs/2603.12229"><em>Language Model Teams as Distributed Systems</em></a> (Mieczkowski et al.) reframes multi-agent LLM workflows using distributed-systems primitives.</li>
+  <li><span class="aitp-news__date">Mar 2026</span> New preprints: <a href="https://arxiv.org/abs/2602.10001"><em>Human-AI Synergy Supports Collective Creative Search</em></a> and <a href="https://arxiv.org/abs/2602.10473"><em>Why Human Guidance Matters in Collaborative Vibe Coding</em></a>.</li>
   <li><span class="aitp-news__date">Jan 2026</span> Ilia is serving as Area Chair for <strong>ICLR 2026</strong>, <strong>ICML 2026</strong>, and <strong>NeurIPS 2026</strong>.</li>
   <li><span class="aitp-news__date">Dec 2025</span> Awarded a <strong>Google Gemini Academic Program Award</strong> and a <strong>Tinker Research Award</strong>.</li>
   <li><span class="aitp-news__date">Sep 2025</span> Co-PI on a new <strong>$5M DARPA "In the Moment" (ITM)</strong> program on algorithmic trust at scale.</li>
@@ -135,5 +135,5 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales — _individuall
 </div>
 
 <p style="margin-top:1.5em; color:#5b6470; font-size:0.92em;">
-  Active funding includes the DARPA &ldquo;In the Moment&rdquo; (ITM) program (Algorithmic Trust at Scale, co-PI; 2025&ndash;2027), a Google Gemini Academic Program Award (2025), a Tinker Research Award (2026), and a Microsoft Accelerate Foundation Models Research award (2023).
+  Active funding includes the DARPA &ldquo;In the Moment&rdquo; (ITM) program (Algorithmic Trust at Scale, co-PI; 2025 to 2027), a Google Gemini Academic Program Award (2025), a Tinker Research Award (2026), and a Microsoft Accelerate Foundation Models Research award (2023).
 </p>
