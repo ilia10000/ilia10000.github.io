@@ -12,10 +12,6 @@ redirect_from:
   <span class="aitp-hero__eyebrow">AITP Lab &middot; NYU CDS &middot; Purdue CS (Aug 2026)</span>
   <h1 class="aitp-hero__title">AI that learns and thinks <em>with</em> people.</h1>
   <p class="aitp-hero__tagline">We study humans and machines in mutually informative ways, and build AI thought partners: systems that learn and think with people rather than instead of them.</p>
-  <div class="aitp-hero__pills">
-    <span class="aitp-hero__pill">At three scales: <em>individually</em>, <em>together</em>, <em>collectively</em>.</span>
-    <span class="aitp-hero__pill">Across three lines of inquiry: <em>measure</em>, <em>design</em>, <em>diagnose</em>.</span>
-  </div>
   <div class="aitp-hero__ctas">
     <a class="aitp-cta aitp-cta--primary" href="/research/">Research thrusts &rarr;</a>
     <a class="aitp-cta aitp-cta--ghost" href="/publications/">Publications</a>

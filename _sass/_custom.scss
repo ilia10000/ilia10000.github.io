@@ -943,3 +943,10 @@ body::before {
   font-variation-settings: "opsz" 24, "wght" 400, "SOFT" 60;
   color: $aitp-muted !important;
 }
+
+/* On any page that renders the AITP hero (homepage), suppress the
+   layout-default h1 page title — the hero carries its own headline. */
+article.page:has(.page__content .aitp-hero) > header,
+article.page:has(.page__content .aitp-hero) > .page__title {
+  display: none !important;
+}
