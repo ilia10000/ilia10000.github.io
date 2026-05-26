@@ -126,7 +126,7 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales (individually, t
 
 <ul class="aitp-news">
   <li><span class="aitp-news__date">May 2026</span> Our paper <a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149"><em>Revisiting Rogers' Paradox in the context of human-AI interaction</em></a> is published in <em>Philosophical Transactions of the Royal Society A</em>.</li>
-  <li><span class="aitp-news__date">May 2026</span> Two new co-organized programs at <strong>CogSci 2026</strong>: <em>The Cognitive Science of AI Alignment</em> workshop and a dedicated AI Alignment track within the program.</li>
+  <li><span class="aitp-news__date">May 2026</span> Co-organizing <em>The Cognitive Science of AI Alignment</em> workshop at <strong>CogSci 2026</strong>.</li>
   <li><span class="aitp-news__date">Apr 2026</span> New preprint: <a href="https://arxiv.org/abs/2603.12229"><em>Language Model Teams as Distributed Systems</em></a> (Mieczkowski et al.) reframes multi-agent LLM workflows using distributed-systems primitives.</li>
   <li><span class="aitp-news__date">Mar 2026</span> New preprints: <a href="https://arxiv.org/abs/2602.10001"><em>Human-AI Synergy Supports Collective Creative Search</em></a> and <a href="https://arxiv.org/abs/2602.10473"><em>Why Human Guidance Matters in Collaborative Vibe Coding</em></a>.</li>
   <li><span class="aitp-news__date">Jan 2026</span> Ilia is serving as Area Chair for <strong>ICLR 2026</strong>, <strong>ICML 2026</strong>, and <strong>NeurIPS 2026</strong>.</li>
