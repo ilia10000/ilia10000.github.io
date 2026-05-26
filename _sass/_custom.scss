@@ -1,439 +1,888 @@
 /* ==========================================================================
-   Custom design layer (AITP Lab)
-   Layered on top of Minimal Mistakes / Academicpages theme.
-   Prefix all new component classes with .aitp- to avoid theme collisions.
+   AITP Lab — Editorial science-journal aesthetic.
+   Single committed direction: cream paper, deep ink, Fraunces display +
+   IBM Plex Sans body, single oxblood/vermillion accent, asymmetric grid,
+   hairline rules, light grain texture.
+
+   Layered after the Minimal Mistakes theme; everything aitp-prefixed.
    ========================================================================== */
 
 
-/* ---- Design tokens ------------------------------------------------------- */
+/* ---- Tokens --------------------------------------------------------- */
 
-$aitp-navy:        #0a1f44;
-$aitp-navy-deep:   #051335;
-$aitp-accent:      #c0392b;
-$aitp-accent-warm: #d97f5a;
-$aitp-ink:         #1a1a1a;
-$aitp-text:        #2a2d34;
-$aitp-muted:       #5b6470;
-$aitp-rule:        #e5e7eb;
-$aitp-soft:        #f6f7fb;
-$aitp-card:        #ffffff;
-$aitp-display:     Georgia, "Source Serif Pro", "Times New Roman", serif;
+$aitp-paper:       #f6f1e7;      // cream background
+$aitp-paper-deep:  #ece4d2;      // tonal contrast
+$aitp-ink:         #16181d;      // near-black ink
+$aitp-ink-soft:    #2e2f37;
+$aitp-muted:       #6e6863;      // warm graphite
+$aitp-rule:        #d9cfb9;      // hairline on cream
+$aitp-rule-soft:   #e7dfca;
+$aitp-accent:      #b13a2b;      // deep vermillion / oxblood
+$aitp-accent-dark: #842519;
+$aitp-accent-warm: #d97a40;
+$aitp-card:        #fffaf0;      // slightly warmer paper for cards
+$aitp-display:     "Fraunces", "Source Serif 4", Georgia, serif;
+$aitp-body:        "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$aitp-mono:        "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
 
 
-/* ---- Global polish ------------------------------------------------------- */
+/* ---- Global page polish ---------------------------------------------- */
+
+html, body {
+  background: $aitp-paper;
+  color: $aitp-ink;
+}
 
 body {
-  color: $aitp-text;
+  font-family: $aitp-body;
+  font-feature-settings: "ss01", "ss02";
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+// subtle grain overlay on the whole document — adds tactility, not noise
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.initial-content,
+.page,
+.page__inner-wrap,
+.page__content {
+  background: transparent;
 }
 
 .page__content {
-  h1, h2, h3, h4 {
-    font-family: $aitp-display;
-    letter-spacing: -0.005em;
-    color: $aitp-ink;
-  }
-  h1 { font-weight: 700; }
-  h2 {
-    margin-top: 1.8em;
-    padding-bottom: 0.35em;
-    border-bottom: 1px solid $aitp-rule;
-  }
-  a {
-    color: darken($aitp-accent, 5%);
-    text-decoration: none;
-    border-bottom: 1px solid rgba($aitp-accent, 0.25);
-    transition: color 0.15s, border-color 0.15s;
-    &:hover {
-      color: $aitp-accent;
-      border-bottom-color: $aitp-accent;
-    }
-  }
-  hr {
-    border: 0;
-    height: 1px;
-    background: $aitp-rule;
-    margin: 2.5em 0;
-  }
+  font-family: $aitp-body;
+  font-size: 1.02em;
+  line-height: 1.7;
+  color: $aitp-ink-soft;
+  max-width: 64ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page__content p { font-feature-settings: "kern", "liga", "onum"; }
+
+.page__content h1,
+.page__content h2,
+.page__content h3,
+.page__content h4,
+.page__content h5,
+.page__content h6 {
+  font-family: $aitp-display;
+  color: $aitp-ink;
+  letter-spacing: -0.02em;
+  font-feature-settings: "ss01";
+}
+.page__content h1 {
+  font-size: clamp(2.4em, 5vw, 3.2em);
+  font-variation-settings: "opsz" 120, "wght" 720, "SOFT" 35;
+  font-weight: 720;
+  line-height: 1.05;
+  margin: 0.4em 0;
+}
+.page__content h2 {
+  font-size: 1.7em;
+  font-variation-settings: "opsz" 84, "wght" 620, "SOFT" 30;
+  font-weight: 620;
+  margin: 2.4em 0 0.8em 0;
+  padding-top: 0.4em;
+  border-top: 1px solid $aitp-rule;
+  letter-spacing: -0.015em;
+}
+.page__content h2:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.page__content h3 {
+  font-size: 1.22em;
+  font-variation-settings: "opsz" 24, "wght" 600;
+  font-weight: 600;
+  margin: 1.6em 0 0.4em 0;
+}
+
+.page__content a {
+  color: $aitp-accent;
+  text-decoration: none;
+  background-image: linear-gradient(transparent calc(100% - 2px), currentColor 2px);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transition: color 0.15s, background-size 0.2s;
+  padding-bottom: 1px;
+}
+.page__content a:hover {
+  color: $aitp-accent-dark;
+  background-size: 100% 100%;
+}
+
+.page__content strong { color: $aitp-ink; font-weight: 600; }
+.page__content em, .page__content i { font-style: italic; }
+.page__content hr {
+  border: 0;
+  border-top: 1px solid $aitp-rule;
+  margin: 3em 0;
+}
+.page__content blockquote {
+  font-family: $aitp-display;
+  font-style: italic;
+  font-size: 1.18em;
+  border-left: 3px solid $aitp-accent;
+  padding: 0.2em 0 0.2em 1.2em;
+  margin: 1.6em 0;
+  color: $aitp-ink;
 }
 
 
-/* ---- Hero ---------------------------------------------------------------- */
+/* ---- Masthead ------------------------------------------------------- */
+
+.masthead {
+  background: $aitp-ink !important;
+  border-bottom: 1px solid $aitp-accent-dark;
+  position: relative;
+}
+.masthead::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $aitp-accent 30%, $aitp-accent 70%, transparent);
+}
+.greedy-nav {
+  background: transparent !important;
+}
+.greedy-nav .visible-links a {
+  color: rgba(246,241,231,0.75) !important;
+  font-family: $aitp-body;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 0.94em;
+  background-image: none !important;
+  padding-bottom: 0 !important;
+}
+.greedy-nav .visible-links a:hover {
+  color: $aitp-paper !important;
+}
+.greedy-nav .visible-links a::before {
+  background: $aitp-accent !important;
+}
+.greedy-nav .visible-links .masthead__menu-item--lg a {
+  color: $aitp-paper !important;
+  font-family: $aitp-display;
+  font-variation-settings: "opsz" 32, "wght" 700, "SOFT" 30;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: 1.05em;
+}
+.site-logo { max-height: 30px; margin-right: 0.55em; border-radius: 3px; }
+
+
+/* ---- Footer --------------------------------------------------------- */
+
+.page__footer {
+  background: $aitp-ink !important;
+  color: rgba(246,241,231,0.7) !important;
+  border-top: none;
+  font-family: $aitp-body;
+}
+.page__footer-copyright,
+.page__footer-follow {
+  color: rgba(246,241,231,0.55) !important;
+}
+.page__footer a {
+  color: $aitp-paper !important;
+  background-image: none !important;
+}
+
+
+/* ---- Animations: staggered reveal on load --------------------------- */
+
+@keyframes aitp-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.aitp-hero > *,
+.aitp-grid > *,
+.aitp-papers > *,
+.aitp-news > li {
+  opacity: 0;
+  animation: aitp-rise 0.7s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.aitp-hero > *:nth-child(1) { animation-delay: 0.05s; }
+.aitp-hero > *:nth-child(2) { animation-delay: 0.18s; }
+.aitp-hero > *:nth-child(3) { animation-delay: 0.30s; }
+.aitp-hero > *:nth-child(4) { animation-delay: 0.42s; }
+.aitp-hero > *:nth-child(5) { animation-delay: 0.54s; }
+.aitp-grid > article:nth-child(1) { animation-delay: 0.15s; }
+.aitp-grid > article:nth-child(2) { animation-delay: 0.22s; }
+.aitp-grid > article:nth-child(3) { animation-delay: 0.29s; }
+.aitp-grid > article:nth-child(4) { animation-delay: 0.36s; }
+.aitp-grid > article:nth-child(5) { animation-delay: 0.43s; }
+.aitp-grid > article:nth-child(6) { animation-delay: 0.50s; }
+.aitp-news > li:nth-child(n)        { animation-delay: 0.1s; }
+@media (prefers-reduced-motion: reduce) {
+  .aitp-hero > *,
+  .aitp-grid > *,
+  .aitp-papers > *,
+  .aitp-news > li { opacity: 1; animation: none; }
+}
+
+
+/* ---- Hero ------------------------------------------------------------ */
 
 .aitp-hero {
   position: relative;
-  margin: -1em -1em 2.5em -1em;
-  padding: 3.25em 2em 2.75em 2em;
-  background: linear-gradient(135deg, $aitp-navy 0%, $aitp-navy-deep 100%);
-  color: #f4f6fb;
-  border-radius: 6px;
+  margin: -1em -1em 3.5em -1em;
+  padding: 4em 2.5em 3em 2.5em;
+  background:
+    radial-gradient(ellipse 80% 60% at 90% 0%, rgba($aitp-accent-warm, 0.16), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 0% 100%, rgba($aitp-accent, 0.08), transparent 60%),
+    $aitp-paper-deep;
+  border-top: 1px solid $aitp-rule;
+  border-bottom: 1px solid $aitp-rule;
   overflow: hidden;
 }
-.aitp-hero::after {
-  content: "";
+.aitp-hero::before {
+  // typographic ornament — large faded "A" mark in the corner
+  content: "A";
   position: absolute;
-  inset: auto -10% -40% auto;
-  width: 60%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba($aitp-accent-warm, 0.18), transparent 70%);
+  top: 0.05em;
+  right: 0.05em;
+  font-family: $aitp-display;
+  font-variation-settings: "opsz" 144, "wght" 900, "SOFT" 25;
+  font-size: clamp(8em, 22vw, 16em);
+  color: $aitp-accent;
+  opacity: 0.08;
+  line-height: 0.95;
   pointer-events: none;
+  user-select: none;
 }
 .aitp-hero__eyebrow {
   display: inline-block;
-  padding: 0.2em 0.75em;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 999px;
+  font-family: $aitp-mono;
   font-size: 0.78em;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #f4f6fb;
-  margin-bottom: 1.1em;
+  color: $aitp-accent-dark;
+  font-weight: 500;
+  margin-bottom: 1.4em;
+  padding: 0;
+  background: none;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+.aitp-hero__eyebrow::before {
+  content: "§ ";
+  color: $aitp-accent;
+  font-weight: 600;
 }
 .aitp-hero__title {
   font-family: $aitp-display;
-  font-size: clamp(2.0em, 4.6vw, 3.1em);
-  font-weight: 700;
-  line-height: 1.12;
-  color: #fff;
-  margin: 0 0 0.45em 0;
-  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 144, "wght" 760, "SOFT" 40;
+  font-weight: 760;
+  font-size: clamp(2.5em, 6vw, 4.2em);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: $aitp-ink;
+  max-width: 14ch;
+  margin: 0 0 0.55em 0;
+  position: relative;
+  z-index: 1;
+}
+.aitp-hero__title em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 600, "SOFT" 75;
+  color: $aitp-accent;
 }
 .aitp-hero__tagline {
-  font-size: 1.18em;
-  line-height: 1.55;
-  color: rgba(255,255,255,0.92);
-  max-width: 56ch;
-  margin: 0 0 1.6em 0;
+  font-family: $aitp-display;
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "wght" 400, "SOFT" 50;
+  font-size: 1.32em;
+  line-height: 1.45;
+  color: $aitp-ink-soft;
+  max-width: 52ch;
+  margin: 0 0 1.8em 0;
+  position: relative;
+  z-index: 1;
 }
 .aitp-hero__pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em;
-  margin-bottom: 1.6em;
+  gap: 0;
+  margin: 0 0 1.8em 0;
+  font-family: $aitp-mono;
+  font-size: 0.82em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
 }
 .aitp-hero__pill {
-  font-size: 0.86em;
-  padding: 0.4em 0.95em;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: #f4f6fb;
-  border-radius: 999px;
-  letter-spacing: 0.01em;
+  padding: 0.2em 0.95em;
+  border-right: 1px solid $aitp-rule;
+  color: $aitp-ink;
+  font-weight: 500;
+  background: none;
+  border-radius: 0;
 }
+.aitp-hero__pill:first-child { padding-left: 0; }
+.aitp-hero__pill:last-child  { border-right: none; }
 .aitp-hero__ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6em;
+  gap: 0.8em;
+  position: relative;
+  z-index: 1;
 }
 .aitp-cta {
   display: inline-flex;
-  align-items: center;
-  gap: 0.45em;
-  padding: 0.65em 1.2em;
+  align-items: baseline;
+  gap: 0.4em;
+  padding: 0.7em 1.2em;
+  font-family: $aitp-body;
   font-size: 0.95em;
   font-weight: 600;
-  border-radius: 4px;
+  letter-spacing: 0.005em;
   text-decoration: none !important;
-  border: 1px solid transparent !important;
-  transition: transform 0.15s, background 0.15s, color 0.15s;
+  background-image: none !important;
+  border-radius: 0;
+  transition: background 0.18s, color 0.18s, transform 0.18s, border-color 0.18s;
 }
 .aitp-cta--primary {
-  background: $aitp-accent;
-  color: #fff;
-  &:hover { background: lighten($aitp-accent, 8%); color: #fff; transform: translateY(-1px); }
+  background: $aitp-ink !important;
+  color: $aitp-paper !important;
+  border: 1px solid $aitp-ink !important;
+  &:hover {
+    background: $aitp-accent !important;
+    border-color: $aitp-accent !important;
+    color: $aitp-paper !important;
+    transform: translateY(-2px);
+  }
 }
 .aitp-cta--ghost {
-  background: transparent;
-  color: #f4f6fb !important;
-  border: 1px solid rgba(255,255,255,0.40) !important;
-  &:hover { background: rgba(255,255,255,0.10); color: #fff !important; transform: translateY(-1px); }
+  background: transparent !important;
+  color: $aitp-ink !important;
+  border: 1px solid $aitp-ink !important;
+  &:hover {
+    background: $aitp-ink !important;
+    color: $aitp-paper !important;
+    transform: translateY(-2px);
+  }
 }
 
 
-/* ---- Section heading on home ------------------------------------------- */
+/* ---- Section eyebrow + title --------------------------------------- */
 
 .aitp-eyebrow {
   display: block;
+  font-family: $aitp-mono;
   font-size: 0.72em;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: $aitp-muted;
-  font-family: $aitp-display;
-  font-weight: 600;
-  margin: 2.8em 0 0.3em 0;
+  color: $aitp-accent;
+  font-weight: 500;
+  margin: 3.4em 0 0.4em 0;
+}
+.aitp-eyebrow::before {
+  content: "— ";
+  color: $aitp-accent;
 }
 .aitp-section-title {
   font-family: $aitp-display;
-  font-size: 1.6em;
-  margin: 0 0 1em 0;
+  font-variation-settings: "opsz" 96, "wght" 700, "SOFT" 35;
+  font-weight: 700;
+  font-size: 2.1em;
+  letter-spacing: -0.022em;
   color: $aitp-ink;
-  border-bottom: 1px solid $aitp-rule;
+  margin: 0 0 1em 0;
   padding-bottom: 0.35em;
+  line-height: 1.08;
+  border-bottom: none;
 }
 
 
-/* ---- Pillar / thrust grid ---------------------------------------------- */
+/* ---- Editorial numbered list (research thrusts) ------------------- */
 
 .aitp-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25em;
-  margin: 0 0 2em 0;
-}
-@media (max-width: 720px) {
-  .aitp-grid { grid-template-columns: 1fr; }
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0 0 2.5em 0;
+  border-top: 1px solid $aitp-rule;
 }
 .aitp-card {
-  background: $aitp-card;
-  border: 1px solid $aitp-rule;
-  border-radius: 6px;
-  padding: 1.25em 1.3em;
-  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: grid;
+  grid-template-columns: 4em 1fr auto;
+  gap: 1.5em;
+  align-items: baseline;
+  padding: 1.6em 0.5em 1.55em 0.5em;
+  border-bottom: 1px solid $aitp-rule;
+  background: transparent;
+  border-radius: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: background 0.2s, padding-left 0.2s;
 }
 .aitp-card:hover {
-  border-color: rgba($aitp-accent, 0.35);
-  box-shadow: 0 6px 24px -12px rgba(10,31,68,0.20);
-  transform: translateY(-1px);
+  background: rgba($aitp-accent, 0.04);
+  padding-left: 1em;
+  box-shadow: none;
+  transform: none;
 }
+.aitp-card:hover .aitp-card__num { color: $aitp-accent; }
 .aitp-card__num {
   font-family: $aitp-display;
-  font-size: 0.8em;
-  letter-spacing: 0.12em;
-  color: $aitp-accent;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-bottom: 0.35em;
+  font-variation-settings: "opsz" 144, "wght" 380, "SOFT" 60;
+  font-size: 2.6em;
+  line-height: 1;
+  color: $aitp-muted;
+  letter-spacing: -0.04em;
+  transition: color 0.2s;
 }
 .aitp-card__title {
   font-family: $aitp-display;
-  font-size: 1.18em;
-  font-weight: 700;
-  margin: 0 0 0.45em 0;
+  font-variation-settings: "opsz" 72, "wght" 640, "SOFT" 35;
+  font-weight: 640;
+  font-size: 1.45em;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  margin: 0 0 0.35em 0;
   color: $aitp-ink;
-  line-height: 1.25;
 }
 .aitp-card__title a {
   color: inherit !important;
-  border-bottom: none !important;
+  background-image: none !important;
+  padding-bottom: 0 !important;
 }
 .aitp-card__excerpt {
-  font-size: 0.95em;
-  color: $aitp-muted;
+  font-family: $aitp-body;
+  font-size: 0.98em;
   line-height: 1.55;
-  margin: 0 0 0.5em 0;
-}
-.aitp-card__more {
-  margin-top: auto;
-  font-size: 0.85em;
-  font-weight: 600;
-  color: $aitp-accent;
-  letter-spacing: 0.02em;
-}
-
-
-/* ---- News / timeline -------------------------------------------------- */
-
-.aitp-news {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 0 1em 0;
-  border-left: 2px solid $aitp-rule;
-}
-.aitp-news li {
-  position: relative;
-  padding: 0.35em 0 0.95em 1.2em;
+  color: $aitp-ink-soft;
   margin: 0;
-  list-style: none !important;
+  max-width: 56ch;
 }
-.aitp-news li::before {
-  content: "";
-  position: absolute;
-  left: -5px;
-  top: 0.8em;
-  width: 8px;
-  height: 8px;
-  background: $aitp-accent;
-  border-radius: 50%;
-}
-.aitp-news__date {
-  display: inline-block;
-  font-family: $aitp-display;
-  font-size: 0.82em;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.aitp-card > a.aitp-card__more,
+.aitp-card .aitp-card__more {
+  font-family: $aitp-mono;
+  font-size: 0.78em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: $aitp-accent;
-  margin-right: 0.5em;
+  font-weight: 500;
+  align-self: center;
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .aitp-card { grid-template-columns: 3em 1fr; gap: 1em; padding: 1.3em 0; }
+  .aitp-card__num { font-size: 1.8em; }
+  .aitp-card__title { font-size: 1.2em; }
+  .aitp-card .aitp-card__more { grid-column: 2 / -1; margin-top: 0.5em; }
 }
 
 
-/* ---- Featured papers strip ------------------------------------------- */
+/* ---- Featured papers (editorial cards) ----------------------------- */
 
 .aitp-papers {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1em;
-  margin: 0 0 2em 0;
-}
-@media (max-width: 900px) {
-  .aitp-papers { grid-template-columns: 1fr; }
-}
-.aitp-paper {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: $aitp-rule;
   border: 1px solid $aitp-rule;
-  border-left: 3px solid $aitp-accent;
-  background: $aitp-soft;
-  padding: 0.95em 1.1em;
-  border-radius: 4px;
-  font-size: 0.93em;
-  line-height: 1.45;
+  margin: 0 0 2.5em 0;
+}
+@media (max-width: 900px) { .aitp-papers { grid-template-columns: 1fr; } }
+.aitp-paper {
+  background: $aitp-card;
+  padding: 1.3em 1.4em;
+  border-radius: 0;
+  border-left: none;
+  font-family: $aitp-body;
+  font-size: 0.92em;
+  line-height: 1.5;
+  position: relative;
+  transition: background 0.2s;
+}
+.aitp-paper:hover {
+  background: lighten($aitp-card, 1%);
 }
 .aitp-paper__venue {
   display: block;
-  font-size: 0.78em;
-  letter-spacing: 0.08em;
+  font-family: $aitp-mono;
+  font-size: 0.7em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: $aitp-accent;
-  font-weight: 700;
-  margin-bottom: 0.35em;
+  font-weight: 500;
+  margin-bottom: 0.55em;
 }
 .aitp-paper__title {
   font-family: $aitp-display;
-  font-weight: 700;
+  font-variation-settings: "opsz" 24, "wght" 600;
+  font-weight: 600;
+  font-size: 1.04em;
   color: $aitp-ink;
-  margin: 0 0 0.25em 0;
-  line-height: 1.3;
-  font-size: 1.0em;
+  margin: 0 0 0.4em 0;
+  line-height: 1.25;
 }
 .aitp-paper__title a {
   color: inherit !important;
-  border-bottom: none !important;
+  background-image: none !important;
+  padding-bottom: 0 !important;
+}
+.aitp-paper__title a:hover {
+  color: $aitp-accent !important;
 }
 .aitp-paper__authors {
-  font-size: 0.82em;
+  font-family: $aitp-display;
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "wght" 400, "SOFT" 60;
+  font-size: 0.92em;
   color: $aitp-muted;
+  margin: 0;
 }
 
 
-/* ---- Quick-nav button row ------------------------------------------- */
+/* ---- Quick-nav pills ----------------------------------------------- */
 
 .aitp-quicknav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6em;
-  margin: 1.5em 0 2em 0;
+  gap: 0;
+  margin: 1.6em 0 2.4em 0;
+  border-top: 1px solid $aitp-rule;
+  border-bottom: 1px solid $aitp-rule;
+  padding: 0.6em 0;
 }
 .aitp-quicknav a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35em;
-  padding: 0.5em 1em;
-  background: $aitp-soft;
-  border: 1px solid $aitp-rule !important;
-  border-radius: 999px;
-  font-size: 0.9em;
-  font-weight: 600;
+  font-family: $aitp-mono !important;
+  font-size: 0.82em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.4em 1em;
   color: $aitp-ink !important;
+  background: transparent !important;
+  border: none !important;
+  border-right: 1px solid $aitp-rule !important;
+  border-radius: 0 !important;
   text-decoration: none !important;
-  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  background-image: none !important;
+  font-weight: 500;
+  transition: color 0.15s, background 0.15s;
 }
+.aitp-quicknav a:last-child { border-right: none !important; }
 .aitp-quicknav a:hover {
-  background: #fff;
-  border-color: rgba($aitp-accent, 0.45) !important;
   color: $aitp-accent !important;
-  transform: translateY(-1px);
+  background: rgba($aitp-accent, 0.04) !important;
+}
+
+
+/* ---- News / editorial timeline ------------------------------------ */
+
+.aitp-news {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 1.5em 0;
+  border-top: 1px solid $aitp-rule;
+}
+.aitp-news li {
+  position: relative;
+  padding: 1em 0 1em 6.5em;
+  margin: 0;
+  list-style: none !important;
+  border-bottom: 1px dashed $aitp-rule-soft;
+  font-family: $aitp-body;
+  font-size: 0.98em;
+  line-height: 1.55;
+  color: $aitp-ink-soft;
+}
+.aitp-news li::before { content: none; }
+.aitp-news__date {
+  position: absolute;
+  left: 0;
+  top: 1.05em;
+  font-family: $aitp-mono;
+  font-size: 0.78em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $aitp-accent;
+  font-weight: 500;
+  margin-right: 0;
+  display: inline-block;
+  width: 5.5em;
+}
+@media (max-width: 600px) {
+  .aitp-news li { padding-left: 0; padding-top: 1em; }
+  .aitp-news__date { position: static; display: block; margin-bottom: 0.3em; }
 }
 
 
 /* ---- Closing call-out --------------------------------------------- */
 
 .aitp-callout {
-  border: 1px solid $aitp-rule;
-  background: linear-gradient(180deg, $aitp-soft 0%, #fff 100%);
-  border-radius: 6px;
-  padding: 1.25em 1.5em;
-  margin: 2em 0;
-  display: flex;
+  border: 1px solid $aitp-ink;
+  background: $aitp-ink;
+  color: $aitp-paper;
+  border-radius: 0;
+  padding: 2em 2.2em;
+  margin: 3em 0 1.5em 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5em;
   align-items: center;
-  gap: 1em;
-  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.aitp-callout::after {
+  content: "";
+  position: absolute;
+  inset: -50% auto auto -50%;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba($aitp-accent, 0.5), transparent 70%);
+  pointer-events: none;
+  filter: blur(20px);
 }
 .aitp-callout__text {
-  flex: 1 1 0%;
-  min-width: 260px;
-  color: $aitp-text;
+  font-family: $aitp-body;
+  font-size: 1.0em;
+  line-height: 1.55;
+  color: $aitp-paper;
+  position: relative;
+  z-index: 1;
 }
-.aitp-callout__text strong { color: $aitp-ink; }
-
-
-/* ---- Masthead refinements (logo + spacing) ---------------------------- */
-
-.masthead {
-  background: linear-gradient(180deg, $aitp-navy 0%, $aitp-navy-deep 100%) !important;
-  border-bottom: 1px solid rgba(0,0,0,0.15);
+.aitp-callout__text strong {
+  font-family: $aitp-display;
+  font-variation-settings: "opsz" 48, "wght" 660;
+  font-weight: 660;
+  color: $aitp-paper;
+  font-size: 1.15em;
+  display: block;
+  margin-bottom: 0.4em;
+  letter-spacing: -0.012em;
 }
-.greedy-nav .visible-links a {
-  color: rgba(255,255,255,0.85) !important;
-  font-weight: 500;
+.aitp-callout__text a {
+  color: $aitp-accent-warm !important;
+  background-image: linear-gradient(transparent calc(100% - 1px), currentColor 1px) !important;
 }
-.greedy-nav .visible-links a:hover {
-  color: #fff !important;
+.aitp-callout .aitp-cta {
+  background: $aitp-accent !important;
+  border-color: $aitp-accent !important;
+  color: $aitp-paper !important;
+  position: relative;
+  z-index: 1;
 }
-.greedy-nav .visible-links .masthead__menu-item--lg a {
-  color: #fff !important;
-  font-weight: 700;
-  letter-spacing: -0.005em;
+.aitp-callout .aitp-cta:hover {
+  background: $aitp-paper !important;
+  border-color: $aitp-paper !important;
+  color: $aitp-ink !important;
 }
-.site-logo {
-  max-height: 32px;
-  margin-right: 0.55em;
-  border-radius: 4px;
-}
-
-
-/* ---- Page-content max width tweak ---------------------------------- */
-
-.page__content {
-  font-size: 0.98em;
-}
-.page__content p {
-  line-height: 1.65;
+@media (max-width: 700px) {
+  .aitp-callout { grid-template-columns: 1fr; }
 }
 
 
-/* ---- Publications page polish ------------------------------------- */
+/* ---- Publications page ------------------------------------------- */
 
 .pub-year-heading {
   font-family: $aitp-display !important;
-  font-size: 1.45em !important;
-  margin-top: 1.6em !important;
-  color: $aitp-accent !important;
+  font-variation-settings: "opsz" 84, "wght" 660, "SOFT" 30;
+  font-weight: 660 !important;
+  font-size: 1.85em !important;
+  margin-top: 2em !important;
+  margin-bottom: 0.6em !important;
+  color: $aitp-ink !important;
   border-bottom: 1px solid $aitp-rule;
-  padding-bottom: 0.2em;
+  padding-bottom: 0.25em;
+  letter-spacing: -0.02em;
 }
 .pub-entry {
-  padding: 0.6em 0 0.6em 0 !important;
-  border-bottom: 1px dashed $aitp-rule;
+  padding: 0.7em 0 0.7em 0 !important;
+  border-bottom: 1px dashed $aitp-rule-soft;
   line-height: 1.55;
+  color: $aitp-ink-soft;
 }
-.pub-entry strong { color: $aitp-ink; }
+.pub-entry strong { color: $aitp-ink; font-weight: 600; }
+.pub-entry em { font-family: $aitp-display; font-style: italic; color: $aitp-muted; }
+.keyword-filters { font-family: $aitp-mono; }
+.keyword-btn {
+  font-family: $aitp-mono !important;
+  font-size: 0.78em !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase;
+  border: 1px solid $aitp-rule !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: $aitp-ink !important;
+  font-weight: 500;
+  padding: 0.45em 0.95em !important;
+}
+.keyword-btn:hover {
+  background: $aitp-paper-deep !important;
+}
 .keyword-btn.active {
-  background-color: $aitp-accent !important;
-  border-color: $aitp-accent !important;
+  background-color: $aitp-ink !important;
+  border-color: $aitp-ink !important;
+  color: $aitp-paper !important;
 }
 
 
-/* ---- Footer polish ------------------------------------------------ */
+/* ---- People page ------------------------------------------------- */
 
-.page__footer {
-  background: $aitp-soft !important;
-  color: $aitp-muted !important;
-  border-top: 1px solid $aitp-rule;
+.person-pi strong { font-family: $aitp-display; font-size: 1.15em; font-weight: 700; color: $aitp-ink; }
+.person-pi img { border-color: $aitp-rule; padding: 4px; background: $aitp-card; border-radius: 50%; }
+.person-card img { border-color: $aitp-rule; padding: 3px; background: $aitp-card; }
+.person-card .name-btn {
+  font-family: $aitp-mono !important;
+  font-size: 0.82em !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-color: $aitp-rule !important;
+  border-radius: 0 !important;
+  font-weight: 500 !important;
+  color: $aitp-ink !important;
 }
-.page__footer-copyright,
-.page__footer-follow {
-  color: $aitp-muted !important;
+.person-card .name-btn.active {
+  background-color: $aitp-ink !important;
+  color: $aitp-paper !important;
+  border-color: $aitp-ink !important;
 }
-.page__footer a {
+.person-card .role { font-family: $aitp-mono; font-size: 0.78em; letter-spacing: 0.08em; text-transform: uppercase; color: $aitp-muted; }
+
+
+/* ---- Research page (one-off page styles override) --------------- */
+
+.research-thrust {
+  background: $aitp-card !important;
+  border: 1px solid $aitp-rule !important;
+  border-top: 4px solid $aitp-accent !important;
+  border-radius: 0 !important;
+}
+.research-thrust:hover {
+  box-shadow: 0 16px 40px -22px rgba(0,0,0,0.18) !important;
+}
+.research-thrust__num {
+  font-family: $aitp-mono !important;
   color: $aitp-accent !important;
+  letter-spacing: 0.18em !important;
+}
+.research-thrust__title {
+  font-family: $aitp-display !important;
+  font-variation-settings: "opsz" 72, "wght" 660;
+  font-weight: 660 !important;
+  color: $aitp-ink !important;
+  letter-spacing: -0.018em !important;
+}
+.research-thrust__excerpt {
+  font-family: $aitp-body !important;
+  color: $aitp-ink-soft !important;
+}
+.research-thrust__toggle {
+  font-family: $aitp-mono !important;
+  letter-spacing: 0.08em !important;
+  border-color: $aitp-ink !important;
+  color: $aitp-ink !important;
+  border-radius: 0 !important;
+  font-weight: 500 !important;
+}
+.research-thrust__toggle:hover {
+  background: $aitp-ink !important;
+  color: $aitp-paper !important;
+  border-color: $aitp-ink !important;
+}
+.research-thrust__details {
+  font-family: $aitp-body !important;
+  color: $aitp-ink-soft !important;
+}
+.research-thrust__details a {
+  color: $aitp-accent !important;
+  border-bottom-color: $aitp-rule !important;
+}
+
+
+/* ---- Contact + CV pages override ------------------------------ */
+
+.contact-card,
+.cv-card {
+  background: $aitp-card !important;
+  border: 1px solid $aitp-rule !important;
+  border-radius: 0 !important;
+}
+.cv-card {
+  border-left: 3px solid $aitp-accent !important;
+}
+.contact-card__label,
+.cv-card h3 {
+  font-family: $aitp-mono !important;
+  letter-spacing: 0.16em !important;
+}
+.cv-card h3 {
+  font-family: $aitp-display !important;
+  font-variation-settings: "opsz" 36, "wght" 640;
+  font-weight: 640 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+.contact-card__title {
+  font-family: $aitp-display !important;
+  font-variation-settings: "opsz" 48, "wght" 660;
+  font-weight: 660 !important;
+  letter-spacing: -0.012em !important;
+}
+.contact-socials a,
+.cv-quicklinks a {
+  font-family: $aitp-mono !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: 1px solid $aitp-rule !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78em !important;
+  background-image: none !important;
+}
+.contact-socials a:hover,
+.cv-quicklinks a:hover {
+  background: $aitp-ink !important;
+  border-color: $aitp-ink !important;
+  color: $aitp-paper !important;
+}
+.contact-section h2 {
+  font-family: $aitp-display !important;
+  font-variation-settings: "opsz" 72, "wght" 640;
+  font-weight: 640 !important;
+  letter-spacing: -0.015em;
+}
+
+
+/* ---- Selection ---------------------------------------------------- */
+
+::selection { background: rgba($aitp-accent, 0.25); color: $aitp-ink; }
+
+
+/* ---- Page-title (academicpages default H1) ----------------------- */
+
+.page__title {
+  font-family: $aitp-display !important;
+  font-variation-settings: "opsz" 144, "wght" 760, "SOFT" 35;
+  font-weight: 760 !important;
+  font-size: clamp(2.2em, 4.8vw, 3.3em) !important;
+  letter-spacing: -0.025em !important;
+  color: $aitp-ink !important;
+  margin: 0.2em 0 0.6em 0 !important;
+  line-height: 1.05 !important;
+}
+.page__lead {
+  font-family: $aitp-display !important;
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "wght" 400, "SOFT" 60;
+  color: $aitp-muted !important;
 }
