@@ -944,9 +944,5 @@ body::before {
   color: $aitp-muted !important;
 }
 
-/* On any page that renders the AITP hero (homepage), suppress the
-   layout-default h1 page title — the hero carries its own headline.
-   The header sits inside .page__inner-wrap, not directly under article. */
-.page__inner-wrap:has(.page__content .aitp-hero) > header {
-  display: none !important;
-}
+/* The hide-title behavior is handled at the layout level
+   (single.html respects page.hide_title in frontmatter). */

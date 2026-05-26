@@ -3,6 +3,7 @@ permalink: /
 title: "AI Thought Partner Lab"
 excerpt: "Building AI that learns and thinks with people"
 author_profile: false
+hide_title: true
 redirect_from:
   - /about/
   - /about.html
