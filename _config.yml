@@ -146,6 +146,7 @@ exclude:
   - package.json
   - tmp
   - vendor
+  - images/people/_orig_backup
 keep_files:
   - .git
   - .svn

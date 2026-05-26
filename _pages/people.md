@@ -132,7 +132,7 @@ redirect_from:
     {% if person.name != "" %}
     {% assign global_index = global_index | plus: 1 %}
     <div class="person-card">
-      {% if person.image != "" and person.image != "/images/people/placeholder.png" %}<img src="{{ person.image }}" alt="{{ person.name }}" />{% else %}<img src="/images/people/placeholder.png" alt="{{ person.name }}" />{% endif %}
+      {% if person.image != "" and person.image != "/images/people/placeholder.png" %}<img src="{{ person.image }}" alt="{{ person.name }}" loading="lazy" decoding="async" width="150" height="150" />{% else %}<img src="/images/people/placeholder.png" alt="{{ person.name }}" loading="lazy" decoding="async" width="150" height="150" />{% endif %}
       <button class="name-btn" data-target="person-info-{{ global_index }}">{{ person.name }}</button>
       {% if person.role != "" %}<div class="role">{{ person.role }}</div>{% endif %}
       {% if person.research_keywords.size > 0 %}<div class="keywords">{{ person.research_keywords | join: ", " }}</div>{% endif %}

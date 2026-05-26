@@ -57,7 +57,7 @@
     },
     {
       "name": "Sasha Robinson",
-      "image": "/images/people/SashaR.png",
+      "image": "/images/people/SashaR.jpg",
       "bio": "I'm a graduate student researcher at UBC interested in synthesizing a more complete understanding of agency and consciousness, both individually and collectively, by combining ideas from computer science, mathematical modelling, and philosophy. Currently, I am particularly interested in how social engineering and hive-mind thinking can influence agents to make irrational decisions, especially with increasing autonomous AI agents and their integration into society. Inspired by this, my current work involves quantifying facets of social intelligence in LLMs to better understand how vigilant they are to, and how effectively they can produce, persuasive social influence, and using these results to advocate for AI safety awareness.",
       "research_keywords": [
         "Cognitive Science",
@@ -121,7 +121,7 @@
     },
     {
       "name": "Valerie Chen",
-      "image": "/images/people/ValerieC.png",
+      "image": "/images/people/ValerieC.jpg",
       "bio": "Valerie is a Machine Learning PhD student at CMU. Her work bridges machine learning, natural language processing, and human-computer interaction to advance the design of collaborative AI systems. Her research has fostered close collaborations with major engineering and financial companies, with findings cited by leading model providers and deployed in industry products. Valerie has been recognized with the Rising Stars in Data Science award, CMU Presidential Fellowship, and the NSF Graduate Research Fellowship. Her research has also received various awards, including Best Paper at a NeurIPS workshop and Oral Presentations at ICLR and AAAI.",
       "research_keywords": ["Human-AI Collaboration", "AI Agents", "Interactive Evaluation"],
       "fun_fact": "I love to travel (the headshot was taken at Granada, Spain).",
@@ -141,7 +141,7 @@
     },
     {
       "name": "Raja Marjieh",
-      "image": "/images/people/RajaM.png",
+      "image": "/images/people/RajaM.jpg",
       "bio": "Raja is a PhD candidate at Princeton Psychology working in the Griffiths Computational Cognitive Science Lab. In September 2026, he will be joining the Kempner Institute at Harvard as a Research Fellow. Prior to Princeton, Raja completed an MSc in Physics, and a joint BSc in Physics and Electrical Engineering at the Technion. Raja's work is broadly focused on the study of representations in natural and artificial minds using tools from cognitive science, AI, and physics.",
       "research_keywords": ["Cognitive Science", "Representations", "AI"],
       "fun_fact": "Check out Raja's list of recommended short reads: https://raja-marjieh.github.io/short/",
@@ -161,7 +161,7 @@
     },
     {
       "name": "Robert Hawkins",
-      "image": "/images/people/RobertH.png",
+      "image": "/images/people/RobertH.jpg",
       "bio": "",
       "research_keywords": ["Cognitive Science", "Language", "Social Interaction"],
       "fun_fact": "Find me in a jazz kissa",
@@ -301,7 +301,7 @@
     },
     {
       "name": "Andreea Bobu",
-      "image": "/images/people/AndreeaB.png",
+      "image": "/images/people/AndreeaB.jpg",
       "bio": "Andreea Bobu is an Assistant Professor at MIT in AeroAstro and CSAIL. She leads the Collaborative Learning and Autonomy Research Lab (CLEAR Lab), where they develop autonomous agents that learn to do tasks for, with, and around people. Her goal is to ensure that these agents' behavior is consistent with human expectations, whether they interact with expert designers or novice users. She obtained her Ph.D. in Electrical Engineering and Computer Science at UC Berkeley with Anca Dragan in 2023. Prior to her Ph.D. she earned her Bachelor's degree in Computer Science and Engineering from MIT in 2017. She was the recipient of the Apple AI/ML Ph.D. fellowship, is a Rising Star in EECS and an R:SS and HRI Pioneer, and has won best paper award at HRI 2020 and the Emerging Research Award at the International Symposium on the Mathematics of Neuroscience 2023. Before MIT, she was also a Research Scientist at the AI Institute and an intern at NVIDIA in the Robotics Lab.",
       "research_keywords": ["Human-Centered Robot Learning", "Algorithmic HRI"],
       "fun_fact": "I dabble in DJing and music production in my free time",
@@ -365,7 +365,7 @@
     },
     {
       "name": "Maya Malaviya",
-      "image": "/images/people/MayaM.png",
+      "image": "/images/people/MayaM.jpg",
       "bio": "I am a PhD student in the Computation and Decision-Making Lab at NYU. I explore decision-theoretic models of human choices during pedagogy and learning. For instance, how do we choose between many possible representations for a difficult problem? How can we communicate these representations to impart knowledge or work better together?",
       "research_keywords": ["Computational Cognitive Science", "Pedagogy"],
       "fun_fact": "I have been making time capsule playlists every season since the start of 2016, so I can remember all the music I've listened to!",
