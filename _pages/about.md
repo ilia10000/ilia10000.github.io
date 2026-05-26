@@ -30,39 +30,51 @@ The **AI Thought Partner Lab (AITP Lab)** works at three scales (individually, t
 
 <div class="aitp-grid">
   <article class="aitp-card">
-    <div class="aitp-card__num">01 &middot; Measure</div>
-    <h3 class="aitp-card__title"><a href="/research/01-alignment/">Alignment between human and AI minds</a></h3>
-    <p class="aitp-card__excerpt">How human and AI minds come to share structure across representations, concepts, values, and perception, and how to use that structure as a lever for collaboration.</p>
+    <div class="aitp-card__head"><span class="aitp-card__num">01</span><span class="aitp-card__phase">Measure</span></div>
+    <div class="aitp-card__body">
+      <h3 class="aitp-card__title"><a href="/research/#thrust-1">Alignment between human and AI minds</a></h3>
+      <p class="aitp-card__excerpt">How human and AI minds come to share structure across representations, concepts, values, and perception, and how to use that structure as a lever for collaboration.</p>
+    </div>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
-    <div class="aitp-card__num">02 &middot; Measure</div>
-    <h3 class="aitp-card__title"><a href="/research/02-data-efficient-learning/">Data-efficient learning</a></h3>
-    <p class="aitp-card__excerpt">A multi-year program on the fundamental limits of learning from very few examples, for machines and for people. We introduced less-than-one-shot (LO-shot) learning.</p>
+    <div class="aitp-card__head"><span class="aitp-card__num">02</span><span class="aitp-card__phase">Measure</span></div>
+    <div class="aitp-card__body">
+      <h3 class="aitp-card__title"><a href="/research/#thrust-2">Data-efficient learning</a></h3>
+      <p class="aitp-card__excerpt">A multi-year program on the fundamental limits of learning from very few examples, for machines and for people. We introduced less-than-one-shot (LO-shot) learning.</p>
+    </div>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
-    <div class="aitp-card__num">03 &middot; Diagnose</div>
-    <h3 class="aitp-card__title"><a href="/research/03-cogsci-for-ai-diagnosis/">Cognitive science for AI diagnosis</a></h3>
-    <p class="aitp-card__excerpt">Classical psychology paradigms, including IATs, serial reproduction, rational analysis, psychophysics, and theory-of-mind probes, adapted as measurement instruments for AI.</p>
+    <div class="aitp-card__head"><span class="aitp-card__num">03</span><span class="aitp-card__phase">Diagnose</span></div>
+    <div class="aitp-card__body">
+      <h3 class="aitp-card__title"><a href="/research/#thrust-3">Cognitive science for AI diagnosis</a></h3>
+      <p class="aitp-card__excerpt">Classical psychology paradigms, including IATs, serial reproduction, rational analysis, psychophysics, and theory-of-mind probes, adapted as measurement instruments for AI.</p>
+    </div>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
-    <div class="aitp-card__num">04 &middot; Diagnose</div>
-    <h3 class="aitp-card__title"><a href="/research/04-collective-intelligence/">Collective intelligence</a></h3>
-    <p class="aitp-card__excerpt">What emerges when humans and AIs interact in groups: teams, networks, and populations. Coordination, cultural dynamics, and failure at scale.</p>
+    <div class="aitp-card__head"><span class="aitp-card__num">04</span><span class="aitp-card__phase">Diagnose</span></div>
+    <div class="aitp-card__body">
+      <h3 class="aitp-card__title"><a href="/research/#thrust-4">Collective intelligence</a></h3>
+      <p class="aitp-card__excerpt">What emerges when humans and AIs interact in groups: teams, networks, and populations. Coordination, cultural dynamics, and failure at scale.</p>
+    </div>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
-    <div class="aitp-card__num">05 &middot; Design</div>
-    <h3 class="aitp-card__title"><a href="/research/05-trustworthy-thought-partners/">Safe and trustworthy thought partners</a></h3>
-    <p class="aitp-card__excerpt">How partnership breaks (bias, overreliance, manipulation, miscalibrated trust) and how to build AI that resists those failure modes. Anchors our DARPA ITM work.</p>
+    <div class="aitp-card__head"><span class="aitp-card__num">05</span><span class="aitp-card__phase">Design</span></div>
+    <div class="aitp-card__body">
+      <h3 class="aitp-card__title"><a href="/research/#thrust-5">Safe and trustworthy thought partners</a></h3>
+      <p class="aitp-card__excerpt">How partnership breaks (bias, overreliance, manipulation, miscalibrated trust) and how to build AI that resists those failure modes. Anchors our DARPA ITM work.</p>
+    </div>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
   <article class="aitp-card">
-    <div class="aitp-card__num">06 &middot; Design</div>
-    <h3 class="aitp-card__title"><a href="/research/06-applied-thought-partnership/">Applied thought partnership</a></h3>
-    <p class="aitp-card__excerpt">Where the framework lands in the world, across education, music, mathematics, and robotics, with each application chosen to feed back into the core science.</p>
+    <div class="aitp-card__head"><span class="aitp-card__num">06</span><span class="aitp-card__phase">Design</span></div>
+    <div class="aitp-card__body">
+      <h3 class="aitp-card__title"><a href="/research/#thrust-6">Applied thought partnership</a></h3>
+      <p class="aitp-card__excerpt">Where the framework lands in the world, across education, music, mathematics, and robotics, with each application chosen to feed back into the core science.</p>
+    </div>
     <span class="aitp-card__more">Explore &rarr;</span>
   </article>
 </div>

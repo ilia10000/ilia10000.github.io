@@ -420,9 +420,10 @@ body::before {
 .aitp-card {
   position: relative;
   display: grid;
-  grid-template-columns: 4em 1fr auto;
-  gap: 1.5em;
-  align-items: baseline;
+  grid-template-columns: 5.5em 1fr auto;
+  column-gap: 1.6em;
+  row-gap: 0;
+  align-items: start;
   padding: 1.6em 0.5em 1.55em 0.5em;
   border-bottom: 1px solid $aitp-rule;
   background: transparent;
@@ -439,14 +440,32 @@ body::before {
   transform: none;
 }
 .aitp-card:hover .aitp-card__num { color: $aitp-accent; }
+.aitp-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  align-items: flex-start;
+  min-width: 0;
+}
 .aitp-card__num {
   font-family: $aitp-display;
   font-variation-settings: "opsz" 144, "wght" 380, "SOFT" 60;
-  font-size: 2.6em;
-  line-height: 1;
+  font-size: 2.7em;
+  line-height: 0.95;
   color: $aitp-muted;
   letter-spacing: -0.04em;
   transition: color 0.2s;
+}
+.aitp-card__phase {
+  font-family: $aitp-mono;
+  font-size: 0.72em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $aitp-accent-dark;
+  font-weight: 500;
+}
+.aitp-card__body {
+  min-width: 0;
 }
 .aitp-card__title {
   font-family: $aitp-display;
@@ -455,7 +474,7 @@ body::before {
   font-size: 1.45em;
   letter-spacing: -0.015em;
   line-height: 1.18;
-  margin: 0 0 0.35em 0;
+  margin: 0 0 0.4em 0;
   color: $aitp-ink;
 }
 .aitp-card__title a {
@@ -483,10 +502,15 @@ body::before {
   white-space: nowrap;
 }
 @media (max-width: 700px) {
-  .aitp-card { grid-template-columns: 3em 1fr; gap: 1em; padding: 1.3em 0; }
-  .aitp-card__num { font-size: 1.8em; }
+  .aitp-card {
+    grid-template-columns: 3.6em 1fr;
+    column-gap: 1em;
+    padding: 1.3em 0;
+  }
+  .aitp-card__num { font-size: 1.9em; }
+  .aitp-card__phase { font-size: 0.66em; letter-spacing: 0.14em; }
   .aitp-card__title { font-size: 1.2em; }
-  .aitp-card .aitp-card__more { grid-column: 2 / -1; margin-top: 0.5em; }
+  .aitp-card .aitp-card__more { grid-column: 2 / -1; margin-top: 0.5em; align-self: start; }
 }
 
 
@@ -866,6 +890,34 @@ body::before {
 /* ---- Selection ---------------------------------------------------- */
 
 ::selection { background: rgba($aitp-accent, 0.25); color: $aitp-ink; }
+
+
+/* ---- Thrust figure (embedded inside each thrust's content) ------- */
+
+.thrust-figure {
+  margin: 0 0 1.4em 0;
+  padding: 0;
+  background: $aitp-paper;
+  border: 1px solid $aitp-rule;
+  border-radius: 0;
+}
+.thrust-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid $aitp-rule;
+  background: #fff;
+}
+.thrust-figure figcaption {
+  font-family: $aitp-display;
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "wght" 400, "SOFT" 60;
+  font-size: 0.92em;
+  line-height: 1.45;
+  color: $aitp-muted;
+  padding: 0.75em 1em;
+  background: $aitp-paper-deep;
+}
 
 
 /* ---- Page-title (academicpages default H1) ----------------------- */

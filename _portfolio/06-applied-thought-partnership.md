@@ -6,6 +6,11 @@ header:
   teaser: "500x300.png"
 ---
 
+<figure class="thrust-figure">
+  <img src="/images/research/education_grade.jpg" alt="Schematic of representational-alignment-aware machine teaching: a teacher and a learner with internal representations, with the teacher selecting hints conditioned on the learner's representations so that the learner improves." loading="lazy" decoding="async" />
+  <figcaption>The GRADE system: machine teachers aligned to a learner's representations produce better hints. From <em>Representational Alignment Supports Effective Teaching</em> (Sucholutsky et al. 2025).</figcaption>
+</figure>
+
 The applied face of the program. We translate AITP science into systems that work alongside people in specific domains, with each project chosen so the application also feeds back into the core science.
 
 **Education.** [_Representational Alignment Supports Effective Teaching_](https://openreview.net/forum?id=7zxUVXFPez) (Sucholutsky et al. 2025; the GRADE paper) shows that aligning machine teachers to learner representations improves hint quality. Adjacent work spans K-12 collaborations with the Children Helping Science network and graduate-level mathematics tutoring through the MATH-AI workshop community.

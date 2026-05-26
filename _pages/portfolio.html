@@ -104,12 +104,12 @@ author_profile: false
 
 <div class="research-thrusts">
   {% for post in site.portfolio %}
-    <article class="research-thrust">
-      <div class="research-thrust__num">{{ forloop.index | prepend: "0" | slice: -2, 2 }} &middot; Thrust</div>
+    <article class="research-thrust" id="thrust-{{ forloop.index }}">
+      <div class="research-thrust__num">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</div>
       <h3 class="research-thrust__title">{{ post.title }}</h3>
       <p class="research-thrust__excerpt">{{ post.excerpt }}</p>
-      <button class="research-thrust__toggle" data-target="thrust-{{ forloop.index }}" aria-expanded="false">Read more</button>
-      <div class="research-thrust__details" id="thrust-{{ forloop.index }}">
+      <button class="research-thrust__toggle" data-target="thrust-{{ forloop.index }}-details" aria-expanded="false">Read more</button>
+      <div class="research-thrust__details" id="thrust-{{ forloop.index }}-details">
         {{ post.content }}
       </div>
     </article>
@@ -117,6 +117,15 @@ author_profile: false
 </div>
 
 <script>
+function openThrust(card) {
+  if (!card) return;
+  var btn = card.querySelector('.research-thrust__toggle');
+  var details = card.querySelector('.research-thrust__details');
+  if (!btn || !details || details.classList.contains('open')) return;
+  details.classList.add('open');
+  btn.setAttribute('aria-expanded', 'true');
+  btn.textContent = 'Show less';
+}
 function initThrustToggles() {
   document.querySelectorAll('.research-thrust__toggle').forEach(function(btn) {
     if (btn.dataset.initialized) return;
@@ -129,6 +138,20 @@ function initThrustToggles() {
       btn.textContent = isOpen ? 'Show less' : 'Read more';
     });
   });
+  // Honour deep-links like /research/#thrust-3 (used from the homepage cards):
+  // open and scroll to the matching card on initial load and on hash change.
+  var openFromHash = function() {
+    var h = (window.location.hash || '').replace(/^#/, '');
+    if (!/^thrust-[1-6]$/.test(h)) return;
+    var card = document.getElementById(h);
+    if (!card) return;
+    openThrust(card);
+    setTimeout(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  };
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 }
 document.addEventListener('DOMContentLoaded', initThrustToggles);
 document.addEventListener('turbo:load', initThrustToggles);
