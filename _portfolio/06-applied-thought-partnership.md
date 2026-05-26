@@ -10,9 +10,9 @@ The applied face of the program. We translate AITP science into systems that wor
 
 **Education.** [_Representational Alignment Supports Effective Teaching_](https://openreview.net/forum?id=7zxUVXFPez) (Sucholutsky et al. 2025 — GRADE) shows that aligning machine teachers to learner representations improves hint quality. K-12 work in progress with the Children Helping Science network, and graduate-level mathematics tutoring via the MATH-AI workshop community.
 
-**Music.** Schmidt Sciences–funded work on the HAVI AI Music Editor (in development with collaborators across NYU, Cornell, and the music-cognition community).
+**Music.** The HAVI AI Music Editor — collaborative interactive editing for music — in development with collaborators across NYU, Cornell, and the music-cognition community.
 
-**Math.** Renaissance Philanthropy / XTX Markets *AI for Math* proposal: AI partners for graduate-level mathematical research.
+**Math.** AI partners for graduate-level mathematical research; an active project line.
 
 **Robotics.** The LGA series — language-guided abstraction for robot learners — published at ICLR, HRI, and CoRL 2024.
 

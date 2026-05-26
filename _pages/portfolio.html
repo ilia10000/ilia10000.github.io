@@ -8,93 +8,128 @@ author_profile: false
 {% include base_path %}
 
 <style>
-.research-item {
+.research-page-intro {
+  font-size: 1.05em;
+  color: #2a2d34;
+  line-height: 1.65;
+  margin: 0 0 2em 0;
+  max-width: 64ch;
+}
+.research-thrusts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5em;
+}
+@media (max-width: 720px) {
+  .research-thrusts { grid-template-columns: 1fr; }
+}
+.research-thrust {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top: 4px solid #c0392b;
+  border-radius: 6px;
+  padding: 1.4em 1.55em 1.3em 1.55em;
   display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 2em;
-  padding-bottom: 2em;
-  border-bottom: 1px solid #e0e0e0;
+  flex-direction: column;
+  transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
 }
-.research-item:last-child {
-  border-bottom: none;
+.research-thrust:hover {
+  box-shadow: 0 10px 32px -18px rgba(10,31,68,0.25);
+  transform: translateY(-2px);
 }
-.research-item-image {
-  flex-shrink: 0;
-  width: 250px;
+.research-thrust__num {
+  font-family: Georgia, serif;
+  font-size: 0.75em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c0392b;
+  font-weight: 700;
+  margin-bottom: 0.35em;
 }
-.research-item-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
+.research-thrust__title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.32em;
+  font-weight: 700;
+  margin: 0 0 0.45em 0;
+  color: #1a1a1a;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
 }
-.research-item-content {
-  flex: 1;
+.research-thrust__excerpt {
+  font-size: 0.97em;
+  color: #5b6470;
+  line-height: 1.6;
+  margin: 0 0 1em 0;
 }
-.research-item-btn {
-  display: inline-block;
-  padding: 0.4em 1em;
-  border: 1px solid #999;
-  border-radius: 20px;
+.research-thrust__toggle {
+  align-self: flex-start;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c0392b;
   background: transparent;
-  color: #333;
-  font-size: 1em;
-  font-weight: 500;
+  border: 1px solid rgba(192,57,43,0.35);
+  border-radius: 999px;
+  padding: 0.4em 0.95em;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  margin-bottom: 0.5em;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.research-item-btn:hover {
-  background-color: rgba(128,128,128,0.3);
-}
-.research-item-btn.active {
-  background-color: #333;
+.research-thrust__toggle:hover {
+  background: #c0392b;
   color: #fff;
-  border-color: #333;
+  border-color: #c0392b;
 }
-.research-item-excerpt {
-  font-size: 0.95em;
-  color: #555;
-  margin-top: 0.5em;
-}
-.research-item-details {
+.research-thrust__details {
   display: none;
   margin-top: 1em;
-  padding: 1em;
-  background: rgba(255,255,255,0.5);
-  border-radius: 8px;
-  line-height: 1.7;
+  padding-top: 1em;
+  border-top: 1px dashed #e5e7eb;
+  font-size: 0.95em;
+  line-height: 1.65;
+  color: #2a2d34;
 }
-.research-item-details.open {
-  display: block;
+.research-thrust__details.open { display: block; }
+.research-thrust__details a {
+  color: #c0392b;
+  border-bottom: 1px solid rgba(192,57,43,0.25);
+  text-decoration: none;
 }
-@media (max-width: 768px) {
-  .research-item {
-    flex-direction: column;
-  }
-  .research-item-image {
-    width: 100%;
-  }
-}
+.research-thrust__details a:hover { border-bottom-color: #c0392b; }
 </style>
 
-{% for post in site.portfolio %}
-  <div class="research-item">
-    <div class="research-item-image">
-      {% if post.header.teaser %}
-        <img src="{{ post.header.teaser | prepend: '/images/' | prepend: base_path }}" alt="{{ post.title }}">
-      {% endif %}
-    </div>
-    <div class="research-item-content">
-      <button class="research-item-btn" data-target="research-details-{{ forloop.index }}">{{ post.title }}</button>
-      <div class="research-item-excerpt">{{ post.excerpt }}</div>
-      <div class="research-item-details" id="research-details-{{ forloop.index }}">
+<p class="research-page-intro">
+  Six active programs spanning the lab's three lines of inquiry — measuring shared structure between human and AI minds, designing interactive systems that exploit it, and diagnosing partnership failures. Click any card to read more.
+</p>
+
+<div class="research-thrusts">
+  {% for post in site.portfolio %}
+    <article class="research-thrust">
+      <div class="research-thrust__num">{{ forloop.index | prepend: "0" | slice: -2, 2 }} &middot; Thrust</div>
+      <h3 class="research-thrust__title">{{ post.title }}</h3>
+      <p class="research-thrust__excerpt">{{ post.excerpt }}</p>
+      <button class="research-thrust__toggle" data-target="thrust-{{ forloop.index }}" aria-expanded="false">Read more</button>
+      <div class="research-thrust__details" id="thrust-{{ forloop.index }}">
         {{ post.content }}
       </div>
-    </div>
-  </div>
-{% endfor %}
+    </article>
+  {% endfor %}
+</div>
 
 <script>
-function initResearchBtns() { document.querySelectorAll('.research-item-btn').forEach(function(btn) { if (btn.dataset.initialized) return; btn.dataset.initialized = 'true'; btn.addEventListener('click', function() { var targetId = btn.getAttribute('data-target'); var details = document.getElementById(targetId); if (details.classList.contains('open')) { details.classList.remove('open'); btn.classList.remove('active'); } else { details.classList.add('open'); btn.classList.add('active'); } }); }); } document.addEventListener('DOMContentLoaded', initResearchBtns); document.addEventListener('turbo:load', initResearchBtns);
+function initThrustToggles() {
+  document.querySelectorAll('.research-thrust__toggle').forEach(function(btn) {
+    if (btn.dataset.initialized) return;
+    btn.dataset.initialized = 'true';
+    btn.addEventListener('click', function() {
+      var targetId = btn.getAttribute('data-target');
+      var details = document.getElementById(targetId);
+      var isOpen = details.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      btn.textContent = isOpen ? 'Show less' : 'Read more';
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', initThrustToggles);
+document.addEventListener('turbo:load', initThrustToggles);
 </script>
