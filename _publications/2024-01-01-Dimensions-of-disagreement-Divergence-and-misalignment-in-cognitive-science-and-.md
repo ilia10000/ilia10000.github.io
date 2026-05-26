@@ -8,7 +8,7 @@ venue: 'Decision'
 authors: 'Kerem Oktar and Ilia Sucholutsky and Tania Lombrozo and Thomas L Griffiths'
 paperurl: 'https://psycnet.apa.org/record/2025-13905-001'
 citation: 'Kerem Oktar and Ilia Sucholutsky and Tania Lombrozo and Thomas L Griffiths, "Dimensions of disagreement: Divergence and misalignment in cognitive science and artificial intelligence.." Decision, 2024.'
-keywords: ["Representational Alignment", "Cognitive Science"]
+keywords: ["AI Thought Partners", "Cognitive Science of AI"]
 ---
 
 [Access paper here](https://psycnet.apa.org/record/2025-13905-001){:target="_blank"}

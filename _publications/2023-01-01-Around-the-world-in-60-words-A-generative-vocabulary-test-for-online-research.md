@@ -8,6 +8,7 @@ venue: 'arXiv preprint arXiv:2302.01614'
 authors: 'Pol van Rijn and Yue Sun and Harin Lee and Raja Marjieh and Ilia Sucholutsky and Francesca Lanzarini and Elisabeth André and Nori Jacoby'
 paperurl: 'https://arxiv.org/abs/2302.01614'
 citation: 'Pol van Rijn and Yue Sun and Harin Lee and Raja Marjieh and Ilia Sucholutsky and Francesca Lanzarini and Elisabeth André and Nori Jacoby, "Around the world in 60 words: A generative vocabulary test for online research." arXiv preprint arXiv:2302.01614, 2023.'
+keywords: ["Cognitive Science of AI"]
 ---
 
 [Access paper here](https://arxiv.org/abs/2302.01614){:target="_blank"}

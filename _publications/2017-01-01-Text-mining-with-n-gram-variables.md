@@ -8,6 +8,7 @@ venue: 'The Stata Journal'
 authors: 'Matthias Schonlau and Nick Guenther and Ilia Sucholutsky'
 paperurl: 'https://journals.sagepub.com/doi/abs/10.1177/1536867X1801700406'
 citation: 'Matthias Schonlau and Nick Guenther and Ilia Sucholutsky, "Text mining with n-gram variables." The Stata Journal, 2017.'
+keywords: []
 ---
 
 [Access paper here](https://journals.sagepub.com/doi/abs/10.1177/1536867X1801700406){:target="_blank"}

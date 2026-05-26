@@ -8,6 +8,7 @@ venue: ''
 authors: 'Dibyanshu Shekhar and Sree Harsha Nelaturu and Ashwath Shetty and Ilia Sucholutsky'
 paperurl: 'https://openreview.net/forum?id=EyliiBqhFz'
 citation: 'Dibyanshu Shekhar and Sree Harsha Nelaturu and Ashwath Shetty and Ilia Sucholutsky, "End-to-End Learnable Masks With Differentiable Indexing." , 2023.'
+keywords: []
 ---
 
 [Access paper here](https://openreview.net/forum?id=EyliiBqhFz){:target="_blank"}

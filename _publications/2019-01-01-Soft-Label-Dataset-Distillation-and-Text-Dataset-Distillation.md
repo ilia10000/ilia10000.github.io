@@ -8,7 +8,7 @@ venue: '2021 International Joint Conference on Neural Networks'
 authors: 'Ilia Sucholutsky and Matthias Schonlau'
 paperurl: 'https://ieeexplore.ieee.org/abstract/document/9533769/'
 citation: 'Ilia Sucholutsky and Matthias Schonlau, "Soft-Label Dataset Distillation and Text Dataset Distillation." 2021 International Joint Conference on Neural Networks, 2019.'
-keywords: ["Dataset Distillation"]
+keywords: ["LO-shot Learning"]
 ---
 
 [Access paper here](https://ieeexplore.ieee.org/abstract/document/9533769/){:target="_blank"}
