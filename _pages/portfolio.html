@@ -61,8 +61,12 @@ author_profile: false
   line-height: 1.6;
   margin: 0 0 1em 0;
 }
-.research-thrust__toggle {
+.research-thrust__more {
   align-self: flex-start;
+  margin-top: auto;
+}
+.research-thrust__more > summary {
+  display: inline-block;
   font-size: 0.85em;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -73,15 +77,21 @@ author_profile: false
   border-radius: 999px;
   padding: 0.4em 0.95em;
   cursor: pointer;
+  list-style: none;
+  user-select: none;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.research-thrust__toggle:hover {
+.research-thrust__more > summary::-webkit-details-marker { display: none; }
+.research-thrust__more > summary::marker { content: ""; }
+.research-thrust__more > summary:hover {
   background: #c0392b;
   color: #fff;
   border-color: #c0392b;
 }
+.research-thrust__more > summary .summary-open  { display: none; }
+.research-thrust__more[open] > summary .summary-closed { display: none; }
+.research-thrust__more[open] > summary .summary-open   { display: inline; }
 .research-thrust__details {
-  display: none;
   margin-top: 1em;
   padding-top: 1em;
   border-top: 1px dashed #e5e7eb;
@@ -89,7 +99,6 @@ author_profile: false
   line-height: 1.65;
   color: #2a2d34;
 }
-.research-thrust__details.open { display: block; }
 .research-thrust__details a {
   color: #c0392b;
   border-bottom: 1px solid rgba(192,57,43,0.25);
@@ -108,60 +117,35 @@ author_profile: false
       <div class="research-thrust__num">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</div>
       <h3 class="research-thrust__title">{{ post.title }}</h3>
       <p class="research-thrust__excerpt">{{ post.excerpt }}</p>
-      <button class="research-thrust__toggle" data-target="thrust-{{ forloop.index }}-details" aria-expanded="false">Read more</button>
-      <div class="research-thrust__details" id="thrust-{{ forloop.index }}-details">
-        {{ post.content }}
-      </div>
+      <details class="research-thrust__more">
+        <summary><span class="summary-closed">Read more</span><span class="summary-open">Show less</span></summary>
+        <div class="research-thrust__details">
+          {{ post.content }}
+        </div>
+      </details>
     </article>
   {% endfor %}
 </div>
 
 <script>
+// Hash deep-link support: /research/#thrust-3 opens the matching card.
+// (The card open/close behavior itself is native <details>; this only
+// programmatically opens via the `open` attribute.)
 (function() {
-  function toggleThrust(btn) {
-    if (!btn) return;
-    var targetId = btn.getAttribute('data-target');
-    var details = document.getElementById(targetId);
-    if (!details) return;
-    var isOpen = details.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    btn.textContent = isOpen ? 'Show less' : 'Read more';
-    return isOpen;
-  }
-  function openThrustCard(card) {
+  function openFromHash() {
+    var h = (window.location.hash || '').replace(/^#/, '');
+    if (!/^thrust-[1-6]$/.test(h)) return;
+    var card = document.getElementById(h);
     if (!card) return;
-    var btn = card.querySelector('.research-thrust__toggle');
-    var details = card.querySelector('.research-thrust__details');
-    if (!btn || !details || details.classList.contains('open')) return;
-    details.classList.add('open');
-    btn.setAttribute('aria-expanded', 'true');
-    btn.textContent = 'Show less';
+    var detailsEl = card.querySelector('details.research-thrust__more');
+    if (detailsEl) detailsEl.open = true;
+    setTimeout(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   }
-  // Event delegation — one handler on document, survives Turbo navigation.
-  if (!window.__aitpThrustsBound) {
-    window.__aitpThrustsBound = true;
-    document.addEventListener('click', function(e) {
-      var btn = e.target.closest('.research-thrust__toggle');
-      if (!btn) return;
-      e.preventDefault();
-      toggleThrust(btn);
-    });
-    var openFromHash = function() {
-      var h = (window.location.hash || '').replace(/^#/, '');
-      if (!/^thrust-[1-6]$/.test(h)) return;
-      var card = document.getElementById(h);
-      if (!card) return;
-      openThrustCard(card);
-      setTimeout(function() {
-        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50);
-    };
-    var runFromHash = function() { openFromHash(); };
-    document.addEventListener('DOMContentLoaded', runFromHash);
-    document.addEventListener('turbo:load', runFromHash);
-    window.addEventListener('hashchange', runFromHash);
-    // Also run immediately in case the document is already loaded
-    if (document.readyState !== 'loading') runFromHash();
-  }
+  document.addEventListener('DOMContentLoaded', openFromHash);
+  document.addEventListener('turbo:load', openFromHash);
+  window.addEventListener('hashchange', openFromHash);
+  if (document.readyState !== 'loading') openFromHash();
 })();
 </script>

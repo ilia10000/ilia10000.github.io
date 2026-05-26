@@ -277,11 +277,6 @@ body::before {
   position: relative;
   z-index: 1;
 }
-.aitp-hero__eyebrow::before {
-  content: "§ ";
-  color: $aitp-accent;
-  font-weight: 600;
-}
 .aitp-hero__title {
   font-family: $aitp-display;
   font-variation-settings: "opsz" 144, "wght" 760, "SOFT" 40;
@@ -313,27 +308,30 @@ body::before {
   z-index: 1;
 }
 .aitp-hero__pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  margin: 0 0 1.8em 0;
-  font-family: $aitp-mono;
-  font-size: 0.82em;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  margin: -0.2em 0 1.9em 0;
+  font-family: $aitp-display;
+  font-style: italic;
+  font-variation-settings: "opsz" 18, "wght" 400, "SOFT" 60;
+  font-size: 1em;
+  line-height: 1.5;
+  color: rgba($aitp-ink, 0.62);
   position: relative;
   z-index: 1;
+  max-width: 54ch;
 }
 .aitp-hero__pill {
-  padding: 0.2em 0.95em;
-  border-right: 1px solid $aitp-rule;
-  color: $aitp-ink;
-  font-weight: 500;
+  display: block;
+  margin: 0;
+  padding: 0;
   background: none;
+  border: none;
   border-radius: 0;
 }
-.aitp-hero__pill:first-child { padding-left: 0; }
-.aitp-hero__pill:last-child  { border-right: none; }
+.aitp-hero__pill em {
+  font-style: normal;
+  color: $aitp-accent-dark;
+  font-variation-settings: "opsz" 18, "wght" 500, "SOFT" 50;
+}
 .aitp-hero__ctas {
   display: flex;
   flex-wrap: wrap;
