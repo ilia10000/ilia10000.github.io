@@ -2,7 +2,7 @@
   "pi": {
     "name": "Ilia Sucholutsky",
     "image": "/images/people/profile.jpeg",
-    "bio": "Faculty Fellow/Assistant Professor, NYU Center for Data Science. Incoming Assistant Professor, Department of Computer Science, Purdue University.",
+    "bio": "Assistant Professor in the Department of Computer Science at Purdue University. Previously a Faculty Fellow / Assistant Professor at the NYU Center for Data Science.",
     "research_keywords": [
       "representational alignment",
       "few-shot learning",
@@ -105,6 +105,16 @@
       ],
       "fun_fact": "I have a small gray Teddy puppy!",
       "website": "https://www.linkedin.com/in/xiao-hu-aa215419b/",
+      "role": "PhD Student",
+      "section": "current_members"
+    },
+    {
+      "name": "Mihir Upadhyay",
+      "image": "/images/people/placeholder.png",
+      "bio": "",
+      "research_keywords": [],
+      "fun_fact": "",
+      "website": "",
       "role": "PhD Student",
       "section": "current_members"
     },
@@ -224,16 +234,6 @@
       "fun_fact": "I am very afraid of winds of 65+ mph (recently pushed up from 60 mph!).",
       "website": "https://collinskatie.github.io/",
       "role": "Postdoc",
-      "section": "visitors"
-    },
-    {
-      "name": "Katherine M. Collins",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
-      "role": "",
       "section": "visitors"
     },
     {
