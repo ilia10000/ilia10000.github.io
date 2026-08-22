@@ -28,7 +28,7 @@
       ],
       "fun_fact": "I love crocheting! My most frequent internal monologue being, 'I can definitely make that in crochet.' I also love hiking, going on long walks and running!",
       "website": "https://divya603.github.io/",
-      "role": "Lab Manager",
+      "role": "Lab Manager (NYU)",
       "section": "current_members"
     },
     {
@@ -38,7 +38,74 @@
       "research_keywords": [],
       "fun_fact": "",
       "website": "",
-      "role": "Postdoc",
+      "role": "Postdoc (NYU)",
+      "section": "current_members"
+    },
+    {
+      "name": "Abel Gurung",
+      "image": "/images/people/AbelG.png",
+      "bio": "I'm a CS Ph.D. student at Purdue. Currently my research focus is understanding deep neural representations and broadly improving foundation models. In my undergrad, I majored in mathematics and was also involved in Bio + AI research.",
+      "research_keywords": [
+        "Neural Representations",
+        "Foundation Models"
+      ],
+      "fun_fact": "I've solo climbed a mountain without a map.",
+      "website": "https://abelgurung.github.io/",
+      "role": "PhD Student (co-advised)",
+      "section": "current_members"
+    },
+    {
+      "name": "Yinqi (Bill) Sun",
+      "image": "/images/people/YinqiS.jpg",
+      "bio": "My research area is Machine Learning and Cognitive Science. I'm interested in finding better ways for AI to interact with humans. I have also done research on Databases and Visualization. Prior to Purdue, I received a master's degree in CS at NYU Courant. As a world model myself, I love learning about the world, the cultures, the languages, and the science which tries to explain how it works.",
+      "research_keywords": [
+        "Machine Learning",
+        "Cognitive Science",
+        "Human-AI Interaction"
+      ],
+      "fun_fact": "I lost my phone on the top of a mountain and found it the next day.",
+      "website": "https://billsun.dev",
+      "role": "PhD Student",
+      "section": "current_members"
+    },
+    {
+      "name": "Amir Tahmasbi",
+      "image": "/images/people/AmirT.png",
+      "bio": "I'm a PhD student in the department. My background is in planning algorithms, with a focus on Reinforcement Learning. Over the past year, I've shifted my research focus toward HCI, and I'm particularly interested in Collective Intelligence in Human-AI hybrid networks and thinking about what the future of firms might look like.",
+      "research_keywords": [
+        "Reinforcement Learning",
+        "HCI",
+        "Collective Intelligence"
+      ],
+      "fun_fact": "My last name means 'a guy who has a strong horse,' which is not true... yet.",
+      "website": "https://amirmtahmasbi.github.io",
+      "role": "PhD Student (co-advised)",
+      "section": "current_members"
+    },
+    {
+      "name": "Uma Kulkarni",
+      "image": "/images/people/UmaK.jpg",
+      "bio": "Uma Kulkarni is a first-year CS Ph.D. student studying Human-Computer Interaction at Purdue University. Her research investigates the biases, decision-making patterns, and broader social impacts that emerge during interactions between AI systems and human users. Prior to arriving at Purdue, she received a B.A. from the University of Michigan in Computer Science and English.",
+      "research_keywords": [
+        "Human-Computer Interaction",
+        "AI Bias & Decision-Making"
+      ],
+      "fun_fact": "In my free time, I love baking, writing, and listening to musical soundtracks!",
+      "website": "https://www.linkedin.com/in/uma--kulkarni/",
+      "role": "PhD Student",
+      "section": "current_members"
+    },
+    {
+      "name": "Xiao Hu",
+      "image": "/images/people/XiaoH.png",
+      "bio": "My research interests include the robustness of visual in-context learning models (VICL), as well as their alignment across models and with human representations.",
+      "research_keywords": [
+        "Visual In-Context Learning",
+        "Representational Alignment"
+      ],
+      "fun_fact": "I have a small gray Teddy puppy!",
+      "website": "https://www.linkedin.com/in/xiao-hu-aa215419b/",
+      "role": "PhD Student",
       "section": "current_members"
     },
     {
@@ -142,11 +209,21 @@
     {
       "name": "Raja Marjieh",
       "image": "/images/people/RajaM.jpg",
-      "bio": "Raja is a PhD candidate at Princeton Psychology working in the Griffiths Computational Cognitive Science Lab. In September 2026, he will be joining the Kempner Institute at Harvard as a Research Fellow. Prior to Princeton, Raja completed an MSc in Physics, and a joint BSc in Physics and Electrical Engineering at the Technion. Raja's work is broadly focused on the study of representations in natural and artificial minds using tools from cognitive science, AI, and physics.",
+      "bio": "Raja is a Research Fellow at the Kempner Institute at Harvard. He completed his PhD at Princeton in the Griffiths Computational Cognitive Science Lab. Prior to Princeton, Raja completed an MSc in Physics, and a joint BSc in Physics and Electrical Engineering at the Technion. Raja's work is broadly focused on the study of representations in natural and artificial minds using tools from cognitive science, AI, and physics.",
       "research_keywords": ["Cognitive Science", "Representations", "AI"],
       "fun_fact": "Check out Raja's list of recommended short reads: https://raja-marjieh.github.io/short/",
       "website": "https://raja-marjieh.github.io/",
-      "role": "PhD Candidate",
+      "role": "Kempner Fellow, Harvard",
+      "section": "collaborators"
+    },
+    {
+      "name": "Katie Collins",
+      "image": "/images/people/KatieC.jpg",
+      "bio": "",
+      "research_keywords": ["Cognitive Science", "Applied CoCoSci", "Thought Partners"],
+      "fun_fact": "I am very afraid of winds of 65+ mph (recently pushed up from 60 mph!).",
+      "website": "https://collinskatie.github.io/",
+      "role": "Postdoc",
       "section": "visitors"
     },
     {
