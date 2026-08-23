@@ -110,10 +110,14 @@
     },
     {
       "name": "Mihir Upadhyay",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
+      "image": "/images/people/MihirU.jpeg",
+      "bio": "I'm a first-year CS PhD student at Purdue. I'm interested in understanding human-AI interactions, particularly their complementary and competitive aspects. I'm also interested in building strong, useful multi-agent systems based on these insights, as well as understanding the role of AI systems in scientific discovery and workflows. Before this, I did my Master's in Data Science at the NYU Center for Data Science.",
+      "research_keywords": [
+        "Human-AI Interaction",
+        "Multi-Agent Systems",
+        "AI for Scientific Discovery"
+      ],
+      "fun_fact": "I used to be a vocalist in a band during undergrad, so if you ever want to jam, hit me up!",
       "website": "",
       "role": "PhD Student",
       "section": "current_members"
