@@ -33,11 +33,15 @@
     },
     {
       "name": "Sevan Harootonian",
-      "image": "/images/people/placeholder.png",
-      "bio": "",
-      "research_keywords": [],
-      "fun_fact": "",
-      "website": "",
+      "image": "/images/people/SevH.jpg",
+      "bio": "I'm a postdoc studying how and when people trust and defer to AI, and what makes AI worth deferring to.",
+      "research_keywords": [
+        "Trust in AI",
+        "Reliance and Deference",
+        "Human-AI Decision Making"
+      ],
+      "fun_fact": "I can hit a fly with nunchucks.",
+      "website": "https://sharootonian.github.io",
       "role": "Postdoc (NYU)",
       "section": "current_members"
     },
