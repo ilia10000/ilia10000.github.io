@@ -233,6 +233,32 @@ body::before {
 }
 
 
+/* ---- Beta banner (link to the v2 preview) ---------------------------- */
+
+.aitp-beta-banner {
+  margin: -1em -1em 1em -1em;
+  padding: 0.7em 1.2em;
+  background: rgba($aitp-accent, 0.08);
+  border: 1px solid $aitp-rule;
+  font-size: 0.9em;
+  color: $aitp-ink;
+  text-align: center;
+}
+.aitp-beta-banner__tag {
+  font-family: $aitp-mono;
+  font-size: 0.8em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $aitp-accent-dark;
+  margin-right: 0.6em;
+}
+.aitp-beta-banner a {
+  color: $aitp-accent-dark;
+  font-weight: 600;
+}
+.aitp-beta-banner + .aitp-hero { margin-top: 0; }
+
+
 /* ---- Hero ------------------------------------------------------------ */
 
 .aitp-hero {

@@ -9,6 +9,8 @@ redirect_from:
   - /about.html
 ---
 
+<div class="aitp-beta-banner"><span class="aitp-beta-banner__tag">Beta</span>We are building a new homepage. It is still in beta, but you can <a href="/v2/">check it out here &rarr;</a></div>
+
 <section class="aitp-hero">
   <span class="aitp-hero__eyebrow">AITP Lab &middot; NYU CDS &middot; Purdue CS (Aug 2026)</span>
   <h1 class="aitp-hero__title">AI that learns and thinks <em>with</em> people.</h1>
