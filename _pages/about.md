@@ -9,9 +9,9 @@ redirect_from:
   - /about.html
 ---
 
-<div class="aitp-beta-banner"><span class="aitp-beta-banner__tag">Beta</span>We are building a new homepage. It is still in beta, but you can <a href="/v2/">check it out here &rarr;</a></div>
+<div class="aitp-beta-banner" style="margin:-1.111em -1.111em 1.111em -1.111em;padding:0.7em 1.2em;background:rgba(177,58,43,0.08);border:1px solid #d9cfb9;font-size:0.9em;color:#16181d;text-align:center;"><span class="aitp-beta-banner__tag" style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:0.8em;letter-spacing:0.14em;text-transform:uppercase;color:#842519;margin-right:0.6em;">Beta</span> We are building a new homepage. It is still in beta, but you can <a href="/v2/" style="color:#842519;font-weight:600;">check it out here &rarr;</a></div>
 
-<section class="aitp-hero">
+<section class="aitp-hero" style="margin-top:0;">
   <span class="aitp-hero__eyebrow">AITP Lab &middot; NYU CDS &middot; Purdue CS (Aug 2026)</span>
   <h1 class="aitp-hero__title">AI that learns and thinks <em>with</em> people.</h1>
   <p class="aitp-hero__tagline">We study humans and machines in mutually informative ways, and build AI thought partners: systems that learn and think with people rather than instead of them.</p>
