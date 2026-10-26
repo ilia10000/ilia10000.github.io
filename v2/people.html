@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>People</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  figure{margin:0}
+  figure img{display:block;width:100%;height:auto}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) figure img{background:var(--plate);padding:var(--u2)} }
+  :root[data-theme="dark"] figure img{background:var(--plate);padding:var(--u2)}
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3);max-width:66ch}
+  .open h1{font-size:var(--s5);line-height:1.08}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0}
+
+  /* principal investigator */
+  .pi{display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:var(--u4);align-items:start;padding:var(--u4) 0 var(--u3);border-top:2px solid var(--edge)}
+  .pi img{width:200px;height:200px;object-fit:cover;display:block}
+  .pi h2{font-size:var(--s3);line-height:1.2}
+  .pi .role{display:block;color:var(--ink-2);margin:4px 0 var(--u2)}
+  .pi .links{display:flex;flex-wrap:wrap;gap:var(--u3);font-size:15px}
+
+  /* groups of people */
+  .group{padding:var(--u5) 0 0}
+  .group h2{font-size:var(--s4);line-height:1.15;margin-bottom:var(--u2)}
+  .group h3{font-size:var(--s2);line-height:1.3;color:var(--ink-2);font-weight:500;margin:var(--u3) 0 var(--u2)}
+  .group .note{color:var(--ink-2);max-width:66ch;margin-bottom:var(--u3)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u5);row-gap:var(--u4)}
+  .person{display:grid;grid-template-columns:120px minmax(0,1fr);column-gap:var(--u3);align-items:start}
+  .person.nophoto{grid-template-columns:1fr}
+  .person img{width:120px;height:120px;object-fit:cover;display:block}
+  .person .nm{display:block;font-size:var(--s2);line-height:1.25}
+  .person .role{display:block;color:var(--ink-2);margin:2px 0 var(--u1)}
+  .person p{margin:0 0 var(--u1);max-width:52ch}
+  .person .kw{color:var(--ink-2);font-size:15px}
+  .person .ff{color:var(--ink-3);font-size:15px}
+  .person a{font-size:15px}
+  .names{font-size:var(--s1);line-height:1.6;max-width:66ch}
+  .names .role{color:var(--ink-3)}
+
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr}
+    .pi{grid-template-columns:1fr;row-gap:var(--u2)}
+    .open h1{font-size:var(--s5)}
+  }
+</style>
+
+<div class="page">
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html" aria-current="page">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open" id="top">
+    <h1>People</h1>
+    <p class="lede">The AI Thought Partner Lab is in the Department of Computer Science at Purdue University and opened in August 2026. Its members work in West Lafayette, Indiana, and in New York.</p>
+  </div>
+
+  <section class="pi" id="pi">
+    <img src="assets/web/people/profile.jpeg" width="200" height="200" alt="">
+    <div>
+      <h2>Ilia Sucholutsky</h2>
+      <span class="role">Assistant Professor, Computer Science, Purdue University</span>
+      <p>Ilia Sucholutsky is an Assistant Professor of Computer Science at Purdue University, where he leads the AI Thought Partner Lab in developing AI that thinks with people rather than instead of them. His research asks what a system must understand about individuals, pairs, and groups to be a good partner, using a combination of theory, simulation, and large-scale human-AI studies. He is also co-PI on the DARPA In the Moment program on algorithmic trust and previously held positions at NYU and Princeton.</p>
+      <div class="links">
+        <a href="cv.html">CV</a>
+        <a href="https://scholar.google.ca/citations?user=6MfHyuMAAAAJ&amp;hl=en">Google Scholar</a>
+        <a href="https://github.com/ilia10000">GitHub</a>
+        <a href="https://www.linkedin.com/in/iliasu/">LinkedIn</a>
+        <a href="https://www.researchgate.net/profile/Ilia_Sucholutsky">ResearchGate</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="group" id="members">
+    <h2>Current members</h2>
+    <h3>Purdue</h3>
+  <div class="grid">
+    <div class="person">
+      <img src="assets/web/people/AbelG.png" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Abel Gurung</b>
+      <span class="role">PhD Student (co-advised)</span>
+      <p>I&#x27;m a CS Ph.D. student at Purdue. Currently my research focus is understanding deep neural representations and broadly improving foundation models.</p>
+      <p class="kw">Neural Representations, Foundation Models</p>
+      <p class="ff">Fun fact: I&#x27;ve solo climbed a mountain without a map.</p>
+      <a href="https://abelgurung.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/YinqiS.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Yinqi (Bill) Sun</b>
+      <span class="role">PhD Student</span>
+      <p>My research area is Machine Learning and Cognitive Science. I&#x27;m interested in finding better ways for AI to interact with humans.</p>
+      <p class="kw">Machine Learning, Cognitive Science, Human-AI Interaction</p>
+      <p class="ff">Fun fact: I lost my phone on the top of a mountain and found it the next day.</p>
+      <a href="https://billsun.dev">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/AmirT.png" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Amir Tahmasbi</b>
+      <span class="role">PhD Student (co-advised)</span>
+      <p>I&#x27;m a PhD student in the department. My background is in planning algorithms, with a focus on Reinforcement Learning.</p>
+      <p class="kw">Reinforcement Learning, HCI, Collective Intelligence</p>
+      <p class="ff">Fun fact: My last name means &#x27;a guy who has a strong horse,&#x27; which is not true... yet.</p>
+      <a href="https://amirmtahmasbi.github.io">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/UmaK.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Uma Kulkarni</b>
+      <span class="role">PhD Student</span>
+      <p>Uma Kulkarni is a first-year CS Ph.D. student studying Human-Computer Interaction at Purdue University. Her research investigates the biases, decision-making patterns, and broader social impacts that emerge during interactions between AI systems and human users.</p>
+      <p class="kw">Human-Computer Interaction, AI Bias &amp; Decision-Making</p>
+      <p class="ff">Fun fact: In my free time, I love baking, writing, and listening to musical soundtracks!</p>
+      <a href="https://www.linkedin.com/in/uma--kulkarni/">LinkedIn</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/XiaoH.png" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Xiao Hu</b>
+      <span class="role">PhD Student</span>
+      <p>My research interests include the robustness of visual in-context learning models (VICL), as well as their alignment across models and with human representations.</p>
+      <p class="kw">Visual In-Context Learning, Representational Alignment</p>
+      <p class="ff">Fun fact: I have a small gray Teddy puppy!</p>
+      <a href="https://www.linkedin.com/in/xiao-hu-aa215419b/">LinkedIn</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/MihirU.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Mihir Upadhyay</b>
+      <span class="role">PhD Student</span>
+      <p>I&#x27;m a first-year CS PhD student at Purdue. I&#x27;m interested in understanding human-AI interactions, particularly their complementary and competitive aspects.</p>
+      <p class="kw">Human-AI Interaction, Multi-Agent Systems, AI for Scientific Discovery</p>
+      <p class="ff">Fun fact: I used to be a vocalist in a band during undergrad, so if you ever want to jam, hit me up!</p>
+      </div>
+    </div>
+  </div>
+    <h3>New York</h3>
+  <div class="grid">
+    <div class="person">
+      <img src="assets/web/people/DivyaS.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Divya Srinivasan</b>
+      <span class="role">Lab Manager (NYU)</span>
+      <p>I am a graduate student majoring in Computer Science at NYU and am broadly interested in formalizing how humans and machines process language and navigate decision making. I study how humans update their beliefs by combining prior knowledge with new information, and the conditions under which this breaks down.</p>
+      <p class="kw">Heuristics and Biases, Diagnostic Inference and Decision Making</p>
+      <p class="ff">Fun fact: I love crocheting! My most frequent internal monologue being, &#x27;I can definitely make that in crochet.&#x27; I also love hiking, going on long walks and running!</p>
+      <a href="https://divya603.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/SevH.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Sevan Harootonian</b>
+      <span class="role">Postdoc (NYU)</span>
+      <p>I&#x27;m a postdoc studying how and when people trust and defer to AI, and what makes AI worth deferring to.</p>
+      <p class="kw">Trust in AI, Reliance and Deference, Human-AI Decision Making</p>
+      <p class="ff">Fun fact: I can hit a fly with nunchucks.</p>
+      <a href="https://sharootonian.github.io">Website</a>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <section class="group" id="visitors">
+    <h2>Visitors and affiliates</h2>
+  <div class="grid">
+    <div class="person">
+      <img src="assets/web/people/AyushRJ.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Ayush Rajesh Jhaveri</b>
+      <span class="role">Master&#x27;s Student</span>
+      <p>I’m a Master’s student in Computer Science at NYU Courant. My research focuses on reasoning in large language models, particularly on improving hypothesis exploration, with inspiration from cognitive science.</p>
+      <p class="kw">Large Language Models, Cognitive Science, Reasoning</p>
+      <p class="ff">Fun fact: Always up for a game of soccer! Love cooking Thai food.</p>
+      <a href="https://ayushjhaveri.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/SashaR.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Sasha Robinson</b>
+      <span class="role">Graduate Student Researcher</span>
+      <p>I&#x27;m a graduate student researcher at UBC interested in synthesizing a more complete understanding of agency and consciousness, both individually and collectively, by combining ideas from computer science, mathematical modelling, and philosophy. Currently, I am particularly interested in how social engineering and hive-mind thinking can influence agents to make irrational decisions, especially with increasing autonomous AI agents and their integration into society.</p>
+      <p class="kw">Cognitive Science, Intelligence, Philosophy</p>
+      <p class="ff">Fun fact: I was on an episode of TVOKids called &#x27;What is AI Anyway?&#x27; where I got to explain my research to kids. I also go backcountry camping and portaging for as long as weeks in the summers in Northern Ontario.</p>
+      <a href="https://sashamrobinson.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/SunnyY.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Sunny Yu</b>
+      <span class="role">Undergraduate Student</span>
+      <p>Sunny Yu is an undergraduate student studying Symbolic Systems and Computer Science at Stanford University, working with the Stanford NLP Group.</p>
+      <p class="kw">Cognitive Science, AI, Large Language Models, Post-Training, Human-AI Interaction</p>
+      <p class="ff">Fun fact: Enjoys running, all racquet sports, outdoor activities, and card games.</p>
+      <a href="https://sunnyych.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/AndyH.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Andy Han</b>
+      <span class="role">PhD Student</span>
+      <p>Andy is a first-year PhD student in computer science at NYU, advised by Claudio Silva and Pavel Izmailov. Before this, he worked in industry as an engineer; before that, he graduated from Pomona College in philosophy and computer science.</p>
+      <p class="kw">AI Safety, AI Welfare, Visualization</p>
+      <p class="ff">Fun fact: When not writing prompts, he&#x27;s writing blog posts and reading Emily Dickinson!</p>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/KaiX.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Kai Xu</b>
+      <span class="role">PhD Student</span>
+      <p>Kai Xu is a second-year PhD student at NYU advised by He He. Through his research, he hopes to contribute to a future where AI can safely and reliably advance human flourishing, especially in scientific domains.</p>
+      <p class="kw">AI for Science, Benchmarking, Safety</p>
+      <p class="ff">Fun fact: He enjoys sprinting, composing music, and learning about human social behavior.</p>
+      <a href="https://scholar.google.com/citations?user=KLJyAMEAAAAJ&amp;hl=en">Google Scholar</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/TianchengY.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Tiancheng Yang</b>
+      <span class="role">PhD Student</span>
+      <p>Tiancheng Yang is a PhD student in the Department of Statistics and Actuarial Science at the University of Waterloo, supervised by Prof. Matthias Schonlau. His research interests include natural language processing, AI agents, and survey research.</p>
+      <p class="kw">Natural Language Processing, AI Agents, Survey Research</p>
+      <p class="ff">Fun fact: He enjoys cooking and exploring good food.</p>
+      <a href="https://www.linkedin.com/in/tianchengyang0423/">LinkedIn</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/ValerieC.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Valerie Chen</b>
+      <span class="role">PhD Student</span>
+      <p>Valerie is a Machine Learning PhD student at CMU. Her work bridges machine learning, natural language processing, and human-computer interaction to advance the design of collaborative AI systems.</p>
+      <p class="kw">Human-AI Collaboration, AI Agents, Interactive Evaluation</p>
+      <p class="ff">Fun fact: I love to travel (the headshot was taken at Granada, Spain).</p>
+      <a href="https://valeriechen.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/ElizabethM.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Elizabeth Mieczkowski</b>
+      <span class="role">PhD Candidate</span>
+      <p>Elizabeth is a PhD candidate at Princeton Computer Science advised by Tom Griffiths and Natalia Vélez. She studies multi-agent teams (human, AI, and both) by developing formal frameworks to characterize optimal collaborative strategies and trade-offs, and testing these models with multiplayer human experiments, LLM teams, and multi-agent reinforcement learning.</p>
+      <p class="kw">Multi-Agent Systems, Cognitive Science</p>
+      <p class="ff">Fun fact: Her cat is named Pascal (as in, the triangle)!</p>
+      <a href="https://emieczkowski.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/KatieC.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Katie Collins</b>
+      <span class="role">Postdoc</span>
+      <p class="kw">Cognitive Science, Applied CoCoSci, Thought Partners</p>
+      <p class="ff">Fun fact: I am very afraid of winds of 65+ mph (recently pushed up from 60 mph!).</p>
+      <a href="https://collinskatie.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/RyanL.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Ryan Liu</b>
+      <span class="role">PhD Student</span>
+      <p>Ryan Liu is a 3rd year PhD student at Princeton University Computer Science advised by Tom Griffiths. His research focuses on understanding the similarities and differences between language models and humans through the lens of cognitive science, and using these insights to shed light on core problems in LLMs and AI agents.</p>
+      <p class="kw">AI Agents, Psychology</p>
+      <p class="ff">Fun fact: I sing A cappella</p>
+      <a href="https://theryanl.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/KietN.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Kiet Nguyen</b>
+      <span class="role">Master&#x27;s Student</span>
+      <p>I&#x27;m a Master&#x27;s student in Data Science at NYU focused on AI safety evaluation and applied LLM research. My current work centers on decoupling safety behaviors from general problem-solving in language models.</p>
+      <p class="kw">AI Safety, LLM Evaluation, Agentic AI Systems</p>
+      <p class="ff">Fun fact: I love hosting themed dinner parties, full commitment: custom menu, playlist, dress code, the works.</p>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/AllisonC.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Allison Chen</b>
+      <span class="role">PhD Student</span>
+      <p>Allison is a 4th year computer science PhD student working with Dr. Olga Russakovsky at Princeton University. Broadly, she is interested in the intersections of computer science, psychology, and cognitive science.</p>
+      <p class="kw">AI, HCI</p>
+      <p class="ff">Fun fact: I love to cook for my friends, play spikeball outside, go rock climbing, and just spend quality time with my friends and family!</p>
+      <a href="https://allisonchen.us">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/MayaM.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Maya Malaviya</b>
+      <span class="role">PhD Student</span>
+      <p>I am a PhD student in the Computation and Decision-Making Lab at NYU. I explore decision-theoretic models of human choices during pedagogy and learning.</p>
+      <p class="kw">Computational Cognitive Science, Pedagogy</p>
+      <p class="ff">Fun fact: I have been making time capsule playlists every season since the start of 2016, so I can remember all the music I&#x27;ve listened to!</p>
+      <a href="https://maya-malaviya.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/ChenyiL.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Chenyi Li</b>
+      <span class="role">PhD Student</span>
+      <p>Chenyi (she/they) is a PhD student in Psychology at Cornell University. Chenyi Li studies creativity and intelligence, especially in the emerging human-AI society.</p>
+      <p class="kw">Creativity, Human-AI Collaboration</p>
+      <p class="ff">Fun fact: Chenyi and her cat Buchi are both good at bouldering.</p>
+      <a href="https://www.chenyi-li.com/about/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/KristinaF.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Kristina Fujimoto</b>
+      <span class="role">Master&#x27;s Student</span>
+      <p>Kristina is a Master&#x27;s in Data Science student at NYU (May 2026) researching LLM safety and bias-resistance. Her work with Professor Ilia focuses on the end-to-end pipeline of on-policy distillation for building LLMs that are resistant to sycophancy.</p>
+      <p class="kw">LLM Sycophancy, Computational Biology, Agentic AI</p>
+      <p class="ff">Fun fact: I love traveling and exploring new countries through cultures and food, taking photos and videos to remember the memories.</p>
+      <a href="https://www.linkedin.com/in/kristinafujimoto/">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+    <h3>Also</h3>
+    <p class="names">Haoyu Hu, Sunayana Rane.</p>
+  </section>
+
+  <section class="group" id="collaborators">
+    <h2>Collaborating labs</h2>
+  <div class="grid">
+    <div class="person">
+      <img src="assets/web/people/RajaM.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Raja Marjieh</b>
+      <span class="role">Kempner Fellow, Harvard</span>
+      <p>Raja is a Research Fellow at the Kempner Institute at Harvard. He completed his PhD at Princeton in the Griffiths Computational Cognitive Science Lab.</p>
+      <p class="kw">Cognitive Science, Representations, AI</p>
+      <p class="ff">Fun fact: Check out Raja&#x27;s list of recommended short reads: https://raja-marjieh.github.io/short/</p>
+      <a href="https://raja-marjieh.github.io/">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/RobertH.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Robert Hawkins</b>
+      <p class="kw">Cognitive Science, Language, Social Interaction</p>
+      <p class="ff">Fun fact: Find me in a jazz kissa</p>
+      <a href="https://scholar.google.com/citations?hl=en&amp;user=7EPsnxEAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Google Scholar</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/MatthiasS.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Matthias Schonlau</b>
+      <span class="role">Professor, University of Waterloo</span>
+      <p>Matthias Schonlau, Ph.D., is a Professor in the Department of Statistics and Actuarial Science at the University of Waterloo, Ontario, Canada. Prior to his current appointment he spent 14 years at the RAND Corporation, the National Institute of Statistical Sciences, AT&amp;T Labs and the German Institute for Economic Research, DIW.</p>
+      <p class="kw">survey methodology, visualization</p>
+      <p class="ff">Fun fact: In my spare time, I write songs about life&#x27;s adventures and play guitar.</p>
+      <a href="https://schonlau.net">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/EunsolC.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Eunsol Choi</b>
+      <span class="role">Assistant Professor, NYU</span>
+      <p>I am an assistant professor in Computer Science and Data Science at New York University. Before I was at UT Austin, Google AI, UW, and Cornell.</p>
+      <p class="kw">Knowledge Rich Tasks, Retrieval, Human-LLM Interaction</p>
+      <p class="ff">Fun fact: I tend to like sad, character-driven movies.</p>
+      <a href="https://eunsol.github.io">Website</a>
+      </div>
+    </div>
+    <div class="person">
+      <img src="assets/web/people/AndreeaB.jpg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Andreea Bobu</b>
+      <span class="role">Assistant Professor, MIT</span>
+      <p>Andreea Bobu is an Assistant Professor at MIT in AeroAstro and CSAIL. She leads the Collaborative Learning and Autonomy Research Lab (CLEAR Lab), where they develop autonomous agents that learn to do tasks for, with, and around people.</p>
+      <p class="kw">Human-Centered Robot Learning, Algorithmic HRI</p>
+      <p class="ff">Fun fact: I dabble in DJing and music production in my free time</p>
+      <a href="https://www.mit.edu/~abobu/">Website</a>
+      </div>
+    </div>
+  </div>
+    <h3>Also</h3>
+    <p class="names">Thomas L. Griffiths, Zach Pardos, Nori Jacoby, Umang Bhatt, Joshua B. Tenenbaum, Kelsey Allen, Mark Ho.</p>
+  </section>
+
+  <section class="group" id="pawrtners">
+    <h2>Thought pawrtners</h2>
+  <div class="grid">
+    <div class="person">
+      <img src="assets/web/people/Piper1.jpeg" width="120" height="120" alt="">
+      <div>
+      <b class="nm">Piper Feygin-Sucholutsky</b>
+      <span class="role">Mental Health Officer</span>
+      <p class="ff">Fun fact: Likes sticks and cuddles</p>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <section class="group" id="network">
+    <h2>Collaborator network</h2>
+    <p class="names">Adrian Weller, Pol van Rijn, Kerem Oktar, Harin Lee, Andi Peng, Theodore R. Sumers, Olga Russakovsky, <a href="https://zhaobn.github.io/index.html">Bonan Zhao</a>.</p>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html" aria-current="page">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>

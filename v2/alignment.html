@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alignment and efficient learning</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+    --fig-bg:transparent; --fig-pad:0; --fig-blend:multiply;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; --fig-bg:#F2F1EA; --fig-pad:16px; --fig-blend:normal; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; --fig-bg:#F2F1EA; --fig-pad:16px; --fig-blend:normal; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  button,input,select,textarea{font-family:var(--font);font-size:var(--s1);color:var(--ink)}
+  .mock{font-size:12px;color:var(--ink-3);padding:var(--u1) 0}
+  .num,.stat,.tab{font-variant-numeric:tabular-nums}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  /* diagram vocabulary */
+  .node{display:inline-block;padding:2px 10px;border:2px solid var(--edge);font-weight:500;line-height:1.3}
+  .node.k{background:var(--khaki);color:var(--khaki-ink)} .node.b{background:var(--blue);color:var(--blue-ink)}
+  .arrow{color:var(--navy);font-weight:400}
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3)}
+  .open h1{font-size:var(--s5);line-height:1.15;max-width:34ch}
+  .open h1 .node{font-weight:700;padding:0 12px}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0;max-width:52ch}
+
+  /* figures */
+  figure{margin:0}
+  figure img{display:block;width:100%;height:auto;background:var(--fig-bg);padding:var(--fig-pad);mix-blend-mode:var(--fig-blend)}
+
+  /* evidence */
+  .part{padding:var(--u3) 0 0}
+  .pair{display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:start}
+  .part .pair{margin-bottom:var(--u4)}
+  .inst .pair{margin-top:var(--u3)}
+  .pair.flip{grid-template-columns:7fr 5fr}
+  .pair.flip figure{order:-1}
+  .pair.flip .box{order:-1}
+  .part .pair h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .pair .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .pair figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:var(--u1)}
+  .pair.stack{grid-template-columns:1fr}
+  .pair.stack figure{max-width:720px}
+  .pair.stack figure img{max-width:720px}
+
+  /* colour field band for the chart */
+  .band{background:var(--blue);color:var(--blue-ink);padding:var(--u4) var(--u4);margin:var(--u2) calc(-1 * var(--u3)) var(--u4);display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:center}
+  .band h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1);color:var(--blue-ink)}
+  .band p{color:var(--blue-ink)}
+  .band svg{width:100%;height:auto;display:block;font-family:var(--font);font-size:13px}
+  .band svg text{fill:var(--blue-ink)} .band svg .ax{stroke:var(--blue-ink);opacity:.4} .band svg .ln{stroke:var(--blue-ink);stroke-width:2;fill:none} .band svg .dot{fill:var(--blue-ink)} .band svg .lab{font-weight:700}
+  .band figcaption{font-size:16px;color:var(--blue-ink);margin-top:var(--u1)}
+
+  /* instruments */
+  .inst{padding-top:var(--u5)}
+  .inst h2{font-size:var(--s4);line-height:1.15;max-width:24ch}
+  .inst .intro{margin-top:var(--u2)}
+  .inst .lead{margin-top:var(--u2);max-width:66ch}
+  .inst .idea{margin-top:var(--u2);max-width:66ch}
+  .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .box{border:2px solid var(--edge);padding:var(--u2) var(--u3) var(--u3)}
+  .box .q{font-weight:700;font-size:var(--s2);line-height:1.3;margin-bottom:var(--u2)}
+  .box .q em{font-style:normal;background:var(--khaki);color:var(--khaki-ink);padding:0 6px}
+  .box .how{color:var(--ink-2);margin:0 0 var(--u3);max-width:66ch}
+  .box .how b{color:var(--ink);font-weight:500}
+  .box .intro{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin:0 0 var(--u2)}
+  .box h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  input[type=number],input[type=text],select,textarea{display:block;width:100%;margin-top:4px;padding:6px 8px;border:2px solid var(--edge);background:var(--ground);color:var(--ink);font-size:var(--s1);line-height:1.3}
+  input[type=number]{max-width:120px}
+  textarea{min-height:76px;resize:vertical}
+  select{appearance:auto}
+  details.more{margin-top:var(--u2);max-width:70ch}
+  details.more summary{display:inline-block;cursor:pointer;list-style:none;font-weight:500;font-size:15px;line-height:1.3;padding:2px 10px 2px 8px;border:2px solid var(--edge)}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::before{content:"+";display:inline-block;width:1em;font-weight:400}
+  details.more[open] summary::before{content:"\2212"}
+  details.more.b summary{background:var(--blue);color:var(--blue-ink)}
+  details.more.k summary{background:var(--khaki);color:var(--khaki-ink)}
+  details.more p{margin:8px 0 0;font-size:15px;color:var(--ink-2);max-width:70ch}
+  details.more .src{margin-top:var(--u1)}
+  details.more .body{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin-top:8px}
+  details.more .body p{max-width:none;margin:0}
+  .model{font-size:14px;color:var(--ink-2);max-width:80ch;margin-top:var(--u2)}
+
+  /* controls */
+  .ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--u2) var(--u3);align-items:end;margin-bottom:var(--u2)}
+  .ctl.three{grid-template-columns:repeat(3,1fr)}
+  .ctl label{display:block;font-size:14px;color:var(--ink-2)}
+  .ctl label b{color:var(--ink);font-weight:500}
+  input[type=range]{width:100%;accent-color:var(--navy);margin:4px 0 0;display:block}
+  input[type=checkbox]{accent-color:var(--navy);width:18px;height:18px;vertical-align:-3px;margin:0 6px 0 0}
+  .btn{border:2px solid var(--edge);background:none;padding:5px 12px;font-size:15px;cursor:pointer;line-height:1.3}
+  .btn:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .btn[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .btn[disabled]{opacity:.45;cursor:default} .btn[disabled]:hover{outline:none}
+  .btns{display:flex;gap:var(--u1);flex-wrap:wrap;align-items:center}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--u2)}
+  .opt{border:2px solid var(--edge);background:none;padding:12px 14px;text-align:left;cursor:pointer;line-height:1.35;font-size:var(--s1)}
+  .opt:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .opt b{display:block;font-weight:700;margin-bottom:2px}
+  .prog{font-size:14px;color:var(--ink-3);margin-top:var(--u2)}
+  .result{margin-top:var(--u2);font-size:var(--s1);max-width:70ch}
+  .result b{font-weight:700}
+  .stats{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3)}
+  .stats b{color:var(--ink);font-weight:700}
+  .key{font-size:14px;color:var(--ink-2);margin-top:var(--u1)}
+  .key i{display:inline-block;width:22px;height:0;border-top:2px solid var(--navy);vertical-align:middle;margin-right:6px}
+  .key i.g{border-top-color:var(--ink-3);border-top-style:dashed}
+  .key i.y{border-top-width:3px;border-top-color:var(--blue);box-shadow:0 -1.5px 0 var(--edge),0 1.5px 0 var(--edge)}
+  .key i.p{border-top-color:var(--khaki-ink)}
+  .key .sq{display:inline-block;width:12px;height:12px;border:2px solid var(--edge);vertical-align:-1px;margin:0 6px 0 14px}
+  .key .sq:first-child{margin-left:0}
+  .sq.c1{background:var(--khaki)} .sq.c2{background:var(--blue)} .sq.c3{background:var(--navy)}
+  canvas{width:100%;height:auto;display:block}
+  table{border-collapse:collapse;font-size:14px;margin-top:var(--u2);color:var(--ink-2)}
+  th,td{text-align:left;padding:3px 14px 3px 0;vertical-align:top;font-weight:400}
+  th{color:var(--ink-3)} td b{color:var(--ink)}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+  .field{display:block;font-size:14px;color:var(--ink-2);margin-bottom:var(--u2)}
+  .field b{color:var(--ink);font-weight:500}
+  .row3{display:grid;grid-template-columns:120px 120px 120px auto;gap:var(--u2);align-items:end}
+  .row3 .field{margin-bottom:0}
+  .log{margin-top:var(--u2);font-size:15px;line-height:1.5;display:grid;grid-template-columns:auto auto 1fr;column-gap:var(--u2);row-gap:2px;color:var(--ink-2)}
+  .log .h{color:var(--ink-3);font-size:14px}
+  .log .m{color:var(--ink);font-weight:700}
+
+  /* u-shape */
+  .ushape .ctl{grid-template-columns:repeat(3,1fr)}
+
+  /* triplets */
+  .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3);margin-top:var(--u2)}
+  .tgrid canvas{width:100%;height:auto;display:block;border:2px solid var(--edge);cursor:crosshair}
+  .tgrid .lab{font-size:14px;color:var(--ink-2);margin-bottom:6px}
+  .tlog{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:repeat(2,1fr);column-gap:var(--u3);row-gap:2px;font-variant-numeric:tabular-nums}
+  .tlog b{color:var(--ink);font-weight:500}
+  .tlog .bits{color:var(--ink-3);font-size:14px}
+
+  /* values bandit */
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3);margin-top:var(--u2)}
+  .strip{display:grid;grid-template-columns:repeat(50,1fr);gap:1px;margin-top:6px}
+  .strip i{display:block;height:14px;border:1px solid var(--edge)}
+  .strip i.good{background:var(--blue)} .strip i.bad{background:var(--khaki)} .strip i.held{opacity:.45}
+
+  /* lo-shot */
+  .lo canvas{width:100%;height:auto;display:block;touch-action:none;cursor:grab}
+  .lo canvas.drag{cursor:grabbing}
+  .lo .ctl{grid-template-columns:1fr 1fr 1fr}
+  .lo .legend{font-size:14px;color:var(--ink-2);margin-top:var(--u1)}
+  .lo .legend .sq{display:inline-block;width:12px;height:12px;border:2px solid var(--edge);vertical-align:-1px;margin:0 6px 0 14px}
+  .lo .legend .sq:first-child{margin-left:0}
+
+
+  /* sub-navigation under the lede */
+  .open .sub{display:flex;flex-wrap:wrap;gap:var(--u1) var(--u4);margin-top:var(--u3);font-size:var(--s1)}
+  .open .sub a{color:var(--ink);text-decoration-color:var(--ink-3)}
+  .open .sub a:hover{text-decoration-color:var(--ink)}
+
+  /* second half */
+  .half{margin-top:var(--u6);padding-top:var(--u4);border-top:2px solid var(--edge)}
+  .half h2{font-size:var(--s5);line-height:1.1;max-width:24ch}
+  .half .lead{margin-top:var(--u3);font-size:var(--s2);line-height:1.4;color:var(--ink-2);max-width:60ch}
+  .half figure{margin-top:var(--u4);max-width:1000px}
+  .half figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:var(--u1);max-width:90ch}
+  sup{font-size:.7em;line-height:0}
+
+  /* aliens */
+  .aliens{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--u2);margin-bottom:var(--u2)}
+  .aliens figure{margin:0;padding:6px;border:2px solid transparent}
+  .aliens figure.hi{border-color:var(--edge);background:var(--khaki)}
+  .aliens figure.hi figcaption{color:var(--khaki-ink)}
+  .aliens svg{width:100%;height:auto;display:block;max-width:140px;margin:0 auto}
+  .aliens figcaption{font-size:16px;color:var(--ink-2);text-align:center;margin-top:4px}
+  .words{display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3)}
+  .wrow{display:grid;grid-template-columns:118px 1fr;gap:var(--u1);align-items:stretch}
+  .wrow input[type=text]{font-size:15px;padding:5px 8px;margin:0}
+  .words .btn{text-align:left;width:100%}
+  .words .btn span{display:block;font-size:13px;color:var(--ink-3);font-weight:400}
+  .words .btn[aria-pressed=true] span{color:var(--khaki-ink)}
+  .a2{display:grid;grid-template-columns:200px 1fr;column-gap:var(--u3);align-items:start}
+  .a2 svg{width:100%;max-width:180px;height:auto;display:block}
+  .toggles{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--u1)}
+  .toggles .btn{width:100%}
+
+  /* dinosaurs */
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3)}
+  .ex figure{margin:0}
+  .ex svg,.who svg{width:100%;height:auto;display:block}
+  .ex svg{max-width:240px}
+  .ex figcaption{font-weight:700;margin-top:4px}
+  .bar{display:flex;height:22px;border:2px solid var(--edge);margin:6px 0 4px}
+  .bar i{display:block;height:100%}
+  .bar .c1{background:var(--khaki)} .bar .c2{background:var(--blue)} .bar .c3{background:var(--navy)}
+  .mix{font-size:14px;color:var(--ink-2)}
+  .test{display:grid;grid-template-columns:210px 1fr;column-gap:var(--u3);align-items:start;margin-top:var(--u3)}
+  .who{border:2px solid var(--edge);background:var(--khaki);padding:8px}
+  .who figcaption{font-weight:700;font-size:15px;color:var(--khaki-ink);text-align:center;margin-top:4px}
+  .cls{display:grid;gap:var(--u1)}
+  .cls .btn{width:100%;text-align:left;padding:9px 12px}
+  .cls .btn .sq{display:inline-block;width:14px;height:14px;border:2px solid var(--edge);vertical-align:-2px;margin-right:8px}
+  .map{margin-top:var(--u3)}
+  .map canvas{max-width:100%}
+
+
+  /* related stories and papers */
+  .related{padding-top:var(--u5)}
+  .related h2{font-size:var(--s4);margin-bottom:var(--u2)}
+  .related p{max-width:70ch}
+  .papers{padding-top:var(--u5)}
+  .papers h2{font-size:var(--s4);margin-bottom:var(--u3)}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u5);row-gap:var(--u3)}
+  .prow{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:var(--u2);margin-bottom:var(--u2)}
+  .prow.noimg{grid-template-columns:1fr}
+  .prow img{width:72px;height:auto;display:block;border:1px solid var(--ink-3)}
+  .prow .t{line-height:1.35}
+  .prow .v{font-size:14px;color:var(--ink-3)}
+  .papers .also{margin-top:var(--u3);font-size:15px;color:var(--ink-2)}
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+
+  /* part dividers */
+  .half.first{margin-top:var(--u4)}
+
+  /* colour triplet instrument (from the homepage) */
+  .try{display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:center;margin:var(--u4) 0;padding-top:var(--u3);border-top:2px solid var(--edge)}
+  .try h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .try p{font-size:16px;color:var(--ink-2)}
+  .task{border:2px solid var(--edge);padding:var(--u2) var(--u3) var(--u3)}
+  .task .q{font-weight:700;font-size:var(--s2);line-height:1.3;margin-bottom:var(--u2)}
+  .task .q em{font-style:normal;background:var(--khaki);color:var(--khaki-ink);padding:0 6px}
+  .sw{display:grid;grid-template-columns:1fr 1fr;gap:var(--u2);align-items:end}
+  .try .chip{max-width:120px}
+  .try .task .q{font-size:var(--s1)}
+  .try .mats{max-width:420px}
+  .sw .ref{grid-column:1 / -1;display:flex;align-items:center;gap:var(--u2);font-size:15px;color:var(--ink-2)}
+  .chip{display:block;width:100%;aspect-ratio:1/1;border:2px solid var(--edge);cursor:pointer;padding:0;background:none}
+  .chip:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .chip.ref{width:56px;aspect-ratio:1/1;cursor:default}
+  .sw label{font-size:14px;color:var(--ink-2);display:block;margin-top:6px}
+  .task .prog{font-size:14px;color:var(--ink-3);margin-top:var(--u2);font-variant-numeric:tabular-nums}
+  .task .prog b{font-family:var(--font);color:var(--ink)}
+  .try .prog{font-variant-numeric:normal;font-size:15px;color:var(--ink-2)}
+  .mats{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3);margin-top:var(--u3);align-items:start}
+  .mat h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  .mat canvas{width:100%;height:auto;display:block}
+  .agree{margin-top:var(--u2);font-size:15px;color:var(--ink-2)}
+  .agree b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  @media (max-width:900px){
+    .pair,.pair.flip,.band,.charts,.stats,.tgrid,.ex,.test,.a2,.words,.try,.pgrid{grid-template-columns:1fr}
+    .toggles{grid-template-columns:1fr 1fr}
+    .pair.flip figure,.pair.flip .box{order:0}
+    .band{margin-left:calc(-1 * var(--u3));margin-right:calc(-1 * var(--u3));padding:var(--u3)}
+    .ctl,.ushape .ctl,.ctl.three,.lo .ctl{grid-template-columns:1fr 1fr}
+    .row3{grid-template-columns:1fr 1fr 1fr}
+    .mast{flex-direction:column;gap:var(--u1)}
+  }
+  @media (max-width:560px){ .ctl,.ushape .ctl,.ctl.three,.lo .ctl{grid-template-columns:1fr} .opts,.two{grid-template-columns:1fr} .row3{grid-template-columns:1fr 1fr} .aliens{grid-template-columns:1fr 1fr} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html" aria-current="page">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open" id="top">
+    <h1>What two minds share sets how little has to be said.</h1>
+    <p class="lede">Representational alignment is how much two agents agree about what is similar to what. It sets the cost of learning from each other, and the floor on that cost is lower than most people expect.</p>
+    <nav class="sub" aria-label="sections of this page"><a href="#what">What alignment is</a><a href="#buys">Alignment buys fast learning</a><a href="#little">How little is enough</a></nav>
+  </div>
+
+  <section class="half first" id="what">
+    <h2>What alignment is.</h2>
+    <p class="lead">Two agents are aligned to the extent that they agree about what is similar to what. The lab measures that agreement directly, by putting the same similarity questions to people and to models, and then asks what the agreement buys.</p>
+  </section>
+
+  <section class="part">
+      <div class="pair">
+        <div>
+          <h3>Alignment is agreement about what is similar to what.</h3>
+          <p>The NeurIPS 2023 paper describes a representation by its similarity judgments, whether an item is closer to a second item than to a third, and defines the alignment of two agents as how far those judgments agree. Scored that way against more than 425,000 human similarity judgments, 491 vision models spread across the whole range. Alignment is a quantity a pair has more or less of, and it can be measured before either side has learned anything from the other.</p>
+          <div class="src"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a>, NeurIPS 2023.</div>
+        </div>
+        <figure>
+          <img src="assets/web/alignment_alice_bob.jpg" width="1000" height="399" loading="lazy" alt="Panel A, shared data: photographs of a chimp, a wolf, an eagle and a lemur. Panel B: Alice and Bob each place the animals in their own mental space. Panel C: each space becomes a four-by-four similarity matrix, and an arrow labelled alignment compares the two.">
+          <figcaption>How alignment is measured, the same way the colour task below measures it: two agents see the same items, report pairwise similarities, and the agreement between the two similarity structures is their alignment. Figure 1 from <a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a> (NeurIPS 2023).</figcaption>
+        </figure>
+      </div>
+  </section>
+
+  <div class="try" id="instrument">
+    <div>
+      <h3>Measure alignment yourself</h3>
+      <p>This is the measurement in the figure above, in miniature. We ask which of two colours is closer to a third; sixteen answers give your similarity structure over eight colours, drawn beside Claude Fable 5.1's answers to the same questions, and the correlation between the two is your alignment with that model. The question is the one used in <a href="#papers">Large language models predict human sensory judgments across six modalities</a> (Scientific Reports, 2024), where GPT-4's colour judgments reached r = .84 with people's.</p>
+      <details class="more b"><summary>What the paper found</summary>
+        <p>The paper put pairwise similarity questions to GPT-3, GPT-3.5 and GPT-4 for six kinds of sensory stimuli, pitch, loudness, colour, vocal consonants, taste and timbre, and compared the answers with human judgments. GPT-4's correlations with people were r = .92 for pitch, .89 for loudness and .84 for colours, and lower for consonants (.57), taste (.54) and timbre (.42). Multidimensional scaling of the model's judgments recovers the colour wheel and the pitch helix with its octave peaks. GPT-4's gain over the earlier models was about the same size in every modality, so multimodal training is not what drives it.</p>
+        <div class="src"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a>, Scientific Reports 2024.</div>
+      </details>
+      <details class="more k"><summary>What you just did</summary>
+        <p>You answered sixteen triplet questions, which of two colours is closer to a reference. Each answer adds a count for the pair you chose, and the left matrix fills in as your similarity structure over eight colours. The right matrix holds Claude Fable 5.1's ratings for the same 28 pairs, collected with the paper's pairwise prompt, and the correlation between the two is your alignment with that model, the quantity the rest of this page is about.</p>
+      </details>
+    </div>
+      <div class="task" id="task">
+      <div class="q">Which of these two colours is closer to the <em id="refname">reference</em>?</div>
+      <div class="sw">
+        <div class="ref"><button class="chip ref" id="refchip" aria-label="reference colour" tabindex="-1"></button><span>reference</span></div>
+        <div><button class="chip" id="optA" aria-label="option A"></button><label>A</label></div>
+        <div><button class="chip" id="optB" aria-label="option B"></button><label>B</label></div>
+        <div></div>
+      </div>
+      <div class="prog"><span id="done">0</span> of 16 triplets</div>
+      <div class="mats">
+        <div class="mat"><h3>Your similarity matrix</h3><canvas id="you" width="200" height="200" aria-label="your similarity matrix, filling in as you answer"></canvas></div>
+        <div class="mat"><h3>Claude Fable 5.1</h3><canvas id="model" width="200" height="200" aria-label="a model's similarity matrix over the same colours"></canvas></div>
+      </div>
+      <div class="agree">Agreement with Claude Fable 5.1: <b id="agree">answer to see</b></div>
+    </div>
+  </div>
+
+  <section class="half" id="buys">
+    <h2>Alignment buys fast learning.</h2>
+    <p class="lead">When a teacher and a student share a representation, each message lands where it was aimed. The evidence below runs from 491 vision models, to a theorem about teaching over a noisy channel and a game built on it, to people teaching each other on a number grid, to an agent learning what people value.</p>
+  </section>
+
+  <section class="part">
+      <div class="band">
+        <div>
+          <h3>Medium alignment can underperform both low and high alignment.</h3>
+          <p>Across 491 vision models, few-shot learning followed a U-shaped relationship with alignment to human similarity judgments, and robustness under domain shift followed the same U. The most-aligned models were also the most robust to natural adversarial examples.</p>
+        </div>
+        <figure>
+          <svg viewBox="0 0 640 250" role="img" aria-label="ImageNet-A top-1 accuracy by alignment group: low 30.9 percent, middle 10.3 percent, high 59.9 percent.">
+            <line class="ax" x1="70" y1="16" x2="70" y2="200"/><line class="ax" x1="70" y1="200" x2="600" y2="200"/>
+            <text x="60" y="204" text-anchor="end">0</text><text x="60" y="143" text-anchor="end">20</text><text x="60" y="82" text-anchor="end">40</text><text x="60" y="21" text-anchor="end">60</text>
+            <text x="16" y="110" transform="rotate(-90 16 110)" text-anchor="middle">ImageNet-A top-1, %</text>
+            <polyline class="ln" points="160,106 335,169 510,17"/>
+            <circle class="dot" cx="160" cy="106" r="6"/><circle class="dot" cx="335" cy="169" r="6"/><circle class="dot" cx="510" cy="17" r="6"/>
+            <text class="lab" x="160" y="92" text-anchor="middle">30.9</text><text class="lab" x="335" y="190" text-anchor="middle">10.3</text><text class="lab" x="510" y="42" text-anchor="middle">59.9</text>
+            <text x="160" y="228" text-anchor="middle">least aligned five</text><text x="335" y="228" text-anchor="middle">middle five</text><text x="510" y="228" text-anchor="middle">most aligned five</text>
+          </svg>
+          <figcaption>Top-1 accuracy on ImageNet-A for three groups of five models out of 491, drawn from the numbers reported in <a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a> (NeurIPS 2023). The line only connects the group values.</figcaption>
+        </figure>
+      </div>
+  </section>
+
+  <section class="inst ushape" id="ushape">
+    <div class="pair flip">
+      <div>
+        <h2>Why alignment is U-shaped.</h2>
+        <p class="intro">When a teacher and a student see the world differently, teaching takes longer, but only up to a point. The paper's theorem says a student who disagrees with the teacher on half of all similarity judgments can learn nothing, while a student who disagrees on nearly all of them can flip every message and learn as fast as one who agrees. We care because how much a person and an AI share in how they see things sets how cheaply they can teach each other. Here you set the disagreement rate and watch how much the student needs to be told.</p>
+        <details class="more b"><summary>What the paper found</summary>
+          <p>Supervision from a teacher to a student is modelled as a noisy channel whose flip rate &epsilon; is the misalignment, so the bits a student needs scale as d log n / C(&epsilon;), largest at &epsilon; = 0.5 and smallest at &epsilon; = 0 or 1. Across 491 ImageNet-1k models scored against more than 425,000 human similarity judgments, the five most aligned models beat the middle five and the bottom five at every shot count on CIFAR-100 and on every robustness set. On ImageNet-A, top-1 accuracy was 59.9 for the high group, 10.3 for the middle group and 30.9 for the low group. Alignment explained about 20% of one-shot variance in distribution.</p>
+          <div class="src"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a>, NeurIPS 2023.</div>
+        </details>
+        <details class="more k"><summary>What you just did</summary>
+          <p>You moved along the theorem. At &epsilon; = 0 the teacher's triplets are the student's, so every label lands where it should; at &epsilon; = 1 every triplet is flipped, which is the same message with its sign reversed, and a student who knows that decodes it just as cheaply. At &epsilon; = 0.5 each flip is a coin toss, the channel carries nothing, and no number of labels is enough. The middle group of models in the paper, at 10.3 on ImageNet-A against 59.9 and 30.9 for the ends, is that trough.</p>
+        </details>
+      </div>
+      <div class="box">
+        <div class="q">How much a student needs to be told</div>
+        <p class="how">Drag the first slider to set how often the teacher's judgments disagree with the student's.</p>
+        <div class="ctl">
+          <label><b>How often they disagree, &epsilon;</b>: <span class="num" id="u-e-v">0.20</span><input type="range" id="u-e" min="0" max="1" step="0.01" value="0.2" aria-label="disagreement rate epsilon"></label>
+          <label><b>Features in the concept, d</b>: <span class="num" id="u-d-v">25</span><input type="range" id="u-d" min="1" max="125" step="1" value="25" aria-label="number of features d"></label>
+          <label><b>Items to learn about, n</b>: <span class="num" id="u-n-v">10</span><input type="range" id="u-n" min="2" max="90" step="1" value="10" aria-label="number of items n"></label>
+        </div>
+        <canvas id="u-cv" width="640" height="320" aria-label="curve of how much the student must be told against the disagreement rate from 0 to 1, rising without limit at 0.5 and equal at the two ends; a marker shows the chosen rate"></canvas>
+        <div class="stats" style="grid-template-columns:1fr">
+          <div>Each label gets <b class="stat" id="u-c">0.00</b> bits through to the student</div>
+          <div>The student needs <b class="stat" id="u-b">0</b> bits in all, <b class="stat" id="u-r">1.0</b> times what a student who agrees with the teacher every time would need</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="triplets">
+    <div class="pair">
+      <div>
+        <h2>Teach a location with yes-or-no questions.</h2>
+        <p class="intro">Two people each have their own mental map of the same familiar objects. One sees a new object and may only say things like "it is closer to A than to F"; the other has to work out where it is. Each message is worth up to one bit, and it is worth that much only when it splits what the receiver still believes in half on the receiver's map, so any gap between the two maps shows up as messages that miss. Here you play either role and count how many messages it takes.</p>
+        <details class="more b"><summary>What the paper found</summary>
+          <p>Each message of the form "closer to this than to that" cuts the receiver's map in half along the line midway between the two objects. When the two maps agree, about log n messages pin the object down; when they disagree on a fraction &epsilon; of such judgments, each message carries only C(&epsilon;) of a bit and the count grows as 1 / C(&epsilon;). A receiver who knows that most messages arrive reversed can flip them all and learn as fast as an aligned pair.</p>
+          <div class="src"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a>, NeurIPS 2023, Proposition 3.8.</div>
+        </details>
+        <details class="more k"><summary>What you just did</summary>
+          <p>As the teacher you chose which pairs to ask about without seeing how the student would read them; the good pairs are the ones whose midline splits what the student still believes in half, on the student's map. As the student you decoded messages that were true on a map you could not see. Revealing the other player's map is a shortcut the paper's theorem does not allow, and it is worth trying: an accurate model of the other player can substitute for agreeing with them.</p>
+        </details>
+      </div>
+      <div class="box">
+        <div class="q">Where is the new object?</div>
+        <p class="how">Eight familiar objects, A to H, sit on each player's map, and the two maps do not quite agree. Messages take one form only: "the new object is closer to A than to F", judged on the sender's own map. Choose a role. The slider sets how different the two maps are.</p>
+        <div class="btns" style="margin-bottom:var(--u2)">
+          <button class="btn" id="t-teach" aria-pressed="true">Be the teacher</button>
+          <button class="btn" id="t-learn" aria-pressed="false">Be the student</button>
+          <button class="btn" id="t-new">New object</button>
+        </div>
+        <div class="ctl" style="grid-template-columns:1fr">
+          <label><b>How different the two maps are</b>: <span class="num" id="t-e-v">0.20</span> (they disagree on <span class="num" id="t-dis">0%</span> of closer-or-farther judgments)<input type="range" id="t-e" min="0" max="1" step="0.05" value="0.2" aria-label="map difference"></label>
+        </div>
+        <p class="how" id="t-instr" style="margin-top:var(--u2)"></p>
+        <div class="tgrid">
+          <div>
+            <div class="lab" id="t-lab-l">Your map</div>
+            <canvas id="t-cv" width="360" height="360" aria-label="your map with eight familiar objects"></canvas>
+          </div>
+          <div>
+            <div class="lab" id="t-lab-r">The other player's map</div>
+            <canvas id="t-cv2" width="360" height="360" aria-label="the other player's map, hidden unless revealed"></canvas>
+            <div class="btns" style="margin-top:var(--u1)"><button class="btn" id="t-peek" aria-pressed="false">Show me the other player's map</button><button class="btn" id="t-check">Check the student</button></div>
+          </div>
+        </div>
+        <div class="tlog" id="t-log"></div>
+        <div class="stats" style="grid-template-columns:1fr;margin-top:var(--u2)"><div id="t-res"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" style="padding-top:var(--u5)">
+      <div class="pair stack">
+        <div>
+          <h3>Teaching as a function of alignment.</h3>
+          <p>In the GRADE study, a teacher and a student work on a number grid. Student accuracy falls as the teacher's error rate rises, and rises with representational alignment between the two; assigning students to teachers by alignment beats random and course-style assignment.</p>
+          <div class="src"><a href="https://arxiv.org/abs/2406.04302">Representational Alignment Supports Effective Teaching</a>, PMLR 273, 2025.</div>
+        </div>
+        <figure>
+          <img src="assets/web/education_grade.jpg" width="1000" height="1085" loading="lazy" alt="GRADE study overview: a number-grid task, a causal model linking teacher expertise, class size, matching procedure and representational alignment to learning outcomes, three settings, and three results panels.">
+          <figcaption>Task, causal model, three settings and results of the GRADE study. Figure from <a href="https://arxiv.org/abs/2406.04302">Representational Alignment Supports Effective Teaching</a> (PMLR 273, 2025).</figcaption>
+        </figure>
+      </div>
+  </section>
+
+  <section class="inst" id="values">
+    <h2>Learning values with aligned representations.</h2>
+    <p class="intro">An agent that learns what people value has to guess about actions it has never tried, and it does that by knowing which actions resemble each other. The paper shows that the closer the agent's sense of similarity is to a person's, the faster it learns their values and the fewer bad actions it takes along the way. We care because getting an AI to see things the way a person does may matter more than showing it more examples. Here you set how accurate the agent's similarity table is and watch it learn.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">An agent learns which actions are bad</div>
+      <p class="how">Each turn the agent picks one of 50 actions and gets a score back; scores below 50 count as bad. The slider sets how accurate its table of similar actions is: at 1 the table is right, at 0 it is scrambled.</p>
+      <div class="ctl three">
+        <label><b>Accuracy of the similarity table</b>: <span class="num" id="v-a-v">0.60</span><input type="range" id="v-a" min="0" max="1" step="0.05" value="0.6" aria-label="accuracy of the similarity table"></label>
+        <div style="font-size:14px;color:var(--ink-2)">Match between this table and the true similarities: <b class="stat" style="color:var(--ink)" id="v-r">0.00</b></div>
+        <div class="btns"><button class="btn" id="v-new">New hidden scores</button></div>
+      </div>
+      <div style="font-size:14px;color:var(--ink-2)">The 50 actions. Blue scores 50 or above, khaki is bad. The faded ones are kept back for the second half. Bad actions among all 50: <b class="stat" style="color:var(--ink)" id="v-nbad">0</b>.</div>
+      <div class="strip" id="v-strip" aria-label="fifty actions coloured by whether their hidden score is 50 or above"></div>
+      <div class="charts">
+        <div>
+          <h3>Score of the action taken each turn, averaged over 30 runs</h3>
+          <canvas id="v-rew" width="480" height="260" aria-label="line chart of the score of the action taken each turn for four similarity tables over 25 turns of learning then 25 turns on new actions; a horizontal line marks the score of 50"></canvas>
+        </div>
+        <div>
+          <h3>Bad actions taken so far, averaged over 30 runs</h3>
+          <canvas id="v-bad" width="480" height="260" aria-label="line chart of the cumulative number of bad actions for four similarity tables over the same 50 turns"></canvas>
+        </div>
+      </div>
+      <div class="key"><i class="y"></i>your table <i style="margin-left:14px"></i>the true similarities <i class="p" style="margin-left:14px"></i>a scrambled table <i class="g" style="margin-left:14px"></i>no table, every action treated as unrelated</div>
+      <div style="overflow-x:auto;max-width:100%"><table id="v-tab" aria-label="mean score and bad actions by phase for each similarity table">
+        <thead><tr><th>Similarity table</th><th class="n">Match with truth</th><th class="n">Score, first 25 turns</th><th class="n">Bad, first 25</th><th class="n">Score, new 25 actions</th><th class="n">Bad, new 25</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </div>
+    <details class="more b"><summary>What the paper found</summary>
+      <p>Bandit agents learned a scalar value function by Thompson sampling over 50 actions, with a frozen similarity kernel guiding their guesses about untried actions. In more than 2,300 synthetic runs with corrupted kernels, reward fell and bad actions rose as alignment dropped, with a crossover below which a representation is worse than plain Thompson sampling. On human morality scores for 50 actions rewritten from ETHICS Justice, higher representational alignment gave higher reward and fewer immoral actions in both phases, and the effect held for 9 of 10 rated values.</p>
+      <div class="src"><a href="https://arxiv.org/abs/2312.14106">Learning Human-like Representations to Enable Learning Human Values</a>, NeurIPS 2024.</div>
+    </details>
+    <details class="more k"><summary>What you just did</summary>
+      <p>You varied the one thing the paper's theory is about, how well the agent's similarity matches the true one, and watched both of its metrics move. The paper's finding was that reward falls and bad actions rise as alignment drops, in the personalisation phase and again in generalisation, with a crossover below which the kernel is worse than plain Thompson sampling; with human morality scores the more aligned representations gave higher reward and fewer immoral actions in both phases.</p>
+    </details>
+  </section>
+
+  <section class="half" id="little">
+    <h2>How little is enough.</h2>
+    <p class="lead">Shared representations set how much a learner needs to be told. The floor is lower than most people expect. The lab introduced less-than-one-shot learning, where a learner extracts more categories from a training set than there are examples in it (<a href="https://ojs.aaai.org/index.php/AAAI/article/view/17171">'Less Than One'-Shot Learning</a>, AAAI 2021), and has since mapped how far that goes for machines and for people.</p>
+    <figure>
+      <img src="assets/web/fslspace.jpg" width="1000" height="597" loading="lazy" alt="Scatter plot of number of categories against number of labelled examples, both on log scales. A diagonal 1-shot line divides the plot; the lab's results sit above it in the less-than-one-shot region, capped by a steep doubly-exponential bound, while MNIST, CIFAR-10, ImageNet, BabyLM and GPT and LLaMA pretraining sit far below it.">
+      <figcaption>The few-shot landscape. Number of categories learned against number of labelled examples, both on log scales. Above the 1-shot line a learner gets more categories than examples; the lab's results sit in that wedge, up to the doubly-exponential bound from <a href="https://escholarship.org/uc/item/011374xq">Learning a doubly-exponential number of concepts from few examples</a> (CogSci 2025). Standard benchmarks and language-model pretraining sit far below the line.</figcaption>
+    </figure>
+  </section>
+
+  <section class="inst" id="loshot">
+    <h2>Two examples can teach three classes.</h2>
+    <p class="lead">A classifier usually needs at least one example of every class it is meant to recognise. If each example carries a mix of labels, saying how much it belongs to each class, two examples can mark out three classes, and a few examples can mark out many more. We care because a teacher and a learner who share a space can say a lot with a few well-placed examples, and this is one route to machines that learn new categories from as few examples as people do. Below, the two dots are the only examples the classifier has seen; drag them or move the sliders, and count the coloured stretches of the line.</p>
+
+    <div class="box lo" style="margin-top:var(--u3)">
+      <div class="q">Two examples, three classes.</div>
+      <canvas id="l-cv" width="840" height="230" aria-label="a line coloured by predicted class with two draggable prototypes, each carrying a stacked bar of class probabilities"></canvas>
+      <div class="legend"><span class="sq c1"></span>class 1 <span class="sq c2"></span>class 2 <span class="sq c3"></span>class 3 <span style="margin-left:14px">Regions on the line: <b class="stat" id="l-n">3</b></span></div>
+      <div class="ctl" style="margin-top:var(--u2);margin-bottom:0">
+        <label><b>Example A position</b>: <span class="num" id="l-a-v">2.5</span><input type="range" id="l-a" min="0" max="8" step="0.1" value="2.5" aria-label="prototype A position"></label>
+        <label><b>Example B position</b>: <span class="num" id="l-b-v">5.5</span><input type="range" id="l-b" min="0" max="8" step="0.1" value="5.5" aria-label="prototype B position"></label>
+        <label><b>Share of each label given to class 2</b>: <span class="num" id="l-m-v">0.40</span><input type="range" id="l-m" min="0" max="0.5" step="0.01" value="0.4" aria-label="probability each prototype assigns to class 2"></label>
+      </div>
+    </div>
+    <details class="more b"><summary>What the paper found</summary>
+      <p>A nearest-neighbour classifier whose prototypes carry a probability over classes instead of a single label can separate more classes than it has prototypes. Two prototypes 3 units apart with labels (3/5, 2/5, 0) and its mirror separate three classes (Theorem 1). For N concentric circles, hard-label nearest neighbour needs on the order of N squared prototypes; the soft-label version separates six circles with five.</p>
+      <div class="src"><a href="https://arxiv.org/abs/2009.08449">'Less Than One'-Shot Learning: Learning N Classes From M&lt;N Samples</a>, AAAI 2021.</div>
+    </details>
+    <details class="more k"><summary>What you just did</summary>
+      <p>You built the two-prototype classifier from Theorem 1 and read off its decision regions. A third region appears because, between the prototypes, both labels count and class 2 is the runner-up in each of them: their two second places add up to a first place, which happens exactly when the weight on class 2 is above one third.</p>
+    </details>
+  </section>
+
+  <section class="inst" id="aliens">
+    <h2>Learning 256 concepts from four examples.</h2>
+    <p class="lead">A few examples can carry a lot if a teacher chooses them well. In the paper, four alien pictures and eight made-up words were enough for people to learn eight body features and combine them into 256 possible aliens. We study this because a partner that teaches should be able to say a great deal with a handful of well-chosen examples. Here you learn the eight words from the four aliens, then label six new ones.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">Learn eight alien words</div>
+      <p class="how">Press a word and the aliens it applies to light up. Write what you think each word means next to it.</p>
+      <div class="aliens" id="a-train"></div>
+      <div class="words" id="a-words"></div>
+
+      <div class="q" style="margin-top:var(--u4)">Now label new aliens</div>
+      <p class="how">New alien <b class="num" id="a-k">1</b> of 6. Press every word that describes it, then press <b>Label this alien</b>.</p>
+      <div class="a2">
+        <div id="a-cur" aria-label="the alien to label"></div>
+        <div>
+          <div class="toggles" id="a-tog"></div>
+          <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="a-submit">Label this alien</button><button class="btn" id="a-reset" hidden>Start again</button></div>
+          <label style="display:block;font-size:14px;color:var(--ink-2);margin-top:var(--u2)"><input type="checkbox" id="a-hide"><b style="font-weight:500;color:var(--ink)">Hide the four aliens and your notes while labelling</b></label>
+          <div class="prog"><span class="num" id="a-done">0</span> of 6 labelled.</div>
+        </div>
+      </div>
+      <div class="result" id="a-res" hidden></div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Four well-chosen aliens can distinguish 2<sup>4&minus;1</sup> = 8 binary features, and those compose into 2<sup>8</sup> = 256 concepts. Participants learned the features at 0.65 accuracy from the four examples, and 23 of 48 inferred "yolm", the feature present in all four with no negative example. They then labelled a new alien fully correctly 0.40 of the time, against 0.20 for a control group that skipped the examples (p = 0.02). OpenAI o1 scored 0.76 with the examples and 0.50 without.</p><div class="src"><a href="https://escholarship.org/uc/item/011374xq">Learning a Doubly-Exponential Number of Concepts From Few Examples</a>, CogSci 2025.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You learned by compare and contrast: a word's meaning is whatever the aliens it applies to share and the others lack, so each pointing gesture rules out every feature that fails to split the group that way. The examples came from a cooperative teacher who chose four aliens so that every feature splits them differently, which is what lets eight words, and 256 combinations of them, ride on four pictures. The score the paper reports is the share of new aliens labelled fully correctly, 0.40 with the examples against 0.20 without, and the paper found that o1 benefited from the same scaffolding, 0.76 against 0.50.</p></div></details>
+  </section>
+
+  <section class="inst" id="dinos">
+    <div class="pair">
+      <div>
+        <h2>Three categories from two examples.</h2>
+        <p class="lead">People can learn a category without ever seeing an example of it. In the paper, two dinosaurs came with mixed labels such as 60% species 1, 30% species 2, 10% species 3, and people then sorted new dinosaurs into all three species, including the one neither example mostly belonged to. We care because partial, uncertain labels are how people and machines often describe things to each other. Here you see two example creatures with mixed labels and sort twelve new ones.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>70 participants saw two dinosaurs with soft labels and classified 20 new ones from each of two shape families, with 14 different label pairs. Their answers followed the labels: a participant agreed with their own answers across the two families 74.1% of the time and with other participants 68.2%, against 33.3% by chance. A prototype model with three fitted prototypes fit the responses best (R&sup2; = .61), ahead of exemplar models using the nearest one (.28) or two (.30) examples.</p><div class="src"><a href="https://arxiv.org/abs/2202.04670">Can Humans Do Less-Than-One-Shot Learning?</a>, CogSci 2022.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You did the paper's task on a plane instead of a line: two examples, three species, and a series of new creatures to sort. The paper's question was whether people's answers follow the soft labels at all, and which model of the learner predicts them; its answer was that they do, and that three prototypes predict people better than the examples themselves do.</p></div></details>
+      </div>
+      <div class="box">
+        <div class="q">Sort new creatures into three species</div>
+        <p class="how" id="d-how">Twelve new creatures arrive one at a time. Pick the species each most likely belongs to.</p>
+        <div class="ex">
+          <figure><div id="d-exA"></div><figcaption>Example A</figcaption><div class="bar"><i class="c1" style="width:60%"></i><i class="c2" style="width:30%"></i><i class="c3" style="width:10%"></i></div><div class="mix">60% species 1, 30% species 2, 10% species 3</div></figure>
+          <figure><div id="d-exB"></div><figcaption>Example B</figcaption><div class="bar"><i class="c1" style="width:10%"></i><i class="c2" style="width:30%"></i><i class="c3" style="width:60%"></i></div><div class="mix">10% species 1, 30% species 2, 60% species 3</div></figure>
+        </div>
+        <div class="key"><span class="sq c1"></span>species 1 <span class="sq c2"></span>species 2 <span class="sq c3"></span>species 3</div>
+        <div class="test">
+          <figure class="who" id="d-who"><div id="d-cur"></div><figcaption>New creature <span class="num" id="d-k">1</span> of 12</figcaption></figure>
+          <div>
+            <div class="cls" id="d-cls">
+              <button class="btn" data-c="0"><span class="sq c1"></span>Most likely species 1</button>
+              <button class="btn" data-c="1"><span class="sq c2"></span>Most likely species 2</button>
+              <button class="btn" data-c="2"><span class="sq c3"></span>Most likely species 3</button>
+            </div>
+            <div class="prog"><span class="num" id="d-done">0</span> of 12 sorted</div>
+            <div id="d-after" hidden>
+              <h3 style="margin-top:var(--u2)">Compare with a model</h3>
+              <div class="btns"><button class="btn" id="d-proto" aria-pressed="true">Prototype model</button><button class="btn" id="d-exem" aria-pressed="false">Nearest example</button></div>
+              <div class="stats" style="grid-template-columns:1fr">
+                <div>Your answers that match the prototype model: <b class="stat" id="d-agp">0</b> of 12</div>
+                <div>that match the nearest example: <b class="stat" id="d-age">0</b> of 12</div>
+                <div>Creatures you gave to species 2, which neither example is mostly: <b class="stat" id="d-two">0</b></div>
+              </div>
+              <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="d-reset">Start again</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="map">
+          <h3>Where every creature sits. Longer neck to the right, longer legs upward. The one you are sorting now is marked.</h3>
+          <canvas id="d-cv" width="540" height="250" aria-label="a map of neck length against leg length with the two examples A and B marked, the creature being sorted marked large, and sorted creatures coloured by your answer"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related" id="related">
+    <h2>Related stories</h2>
+    <p>The two sides of every alignment measured here have pages of their own: <a href="understanding-people.html">understanding people</a> measures what a particular person represents, perceives and chooses, and <a href="understanding-ai.html">understanding AI systems</a> runs the same tasks on a model. <a href="working-with-ai.html">Working with AI</a> takes up what alignment buys once the two are a pair: whether the help leaves the person more capable, how they take its advice, and what it costs them.</p>
+  </section>
+
+  <section class="papers" id="papers">
+    <h2>Papers on this page</h2>
+    <div class="pgrid">
+      <div>
+        <div class="prow"><img src="assets/web/titles/sucholutsky2023alignment.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a></div><div class="v">NeurIPS, 2023</div></div></div>
+        <div class="prow"><img src="assets/web/titles/wynn2024learning.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2312.14106">Learning Human-like Representations to Enable Learning Human Values</a></div><div class="v">NeurIPS, 2024</div></div></div>
+        <div class="prow"><img src="assets/web/titles/sucholutsky2025representational.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2406.04302">Representational Alignment Supports Effective Teaching</a></div><div class="v">Proceedings of Machine Learning Research, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/marjieh2024llms.jpg" width="480" height="252" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a></div><div class="v">Scientific Reports, 2024</div></div></div>
+      </div>
+      <div>
+        <div class="prow"><img src="assets/web/titles/sucholutsky2021less.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/17171">'Less Than One'-Shot Learning: Learning N Classes From M&lt;N Samples</a></div><div class="v">AAAI, 2021</div></div></div>
+        <div class="prow"><img src="assets/web/titles/sucholutsky2025doubly.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://escholarship.org/uc/item/011374xq">Learning a Doubly-Exponential Number of Concepts From Few Examples</a></div><div class="v">CogSci, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/malaviya2022less.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2202.04670">Can Humans Do Less-Than-One-Shot Learning?</a></div><div class="v">CogSci, 2022</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html" aria-current="page">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>
+
+<script>
+const NV=()=>{const h=getComputedStyle(document.documentElement).getPropertyValue('--navy').trim();return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)).join(',');};
+function reveal(id){document.querySelectorAll('#'+id+' details.more').forEach(d=>{d.open=true;});}
+/* colour triplets (v14_homepage) */
+(function(){
+  const C=[['red','#D5352E'],['orange','#E68A2E'],['yellow','#E4C63A'],['green','#4A9E5C'],['teal','#2E9E9A'],['blue','#3A6FD8'],['violet','#7C4FC4'],['pink','#D5589A']];
+  const n=C.length;
+  const T=[[0,1,5],[5,4,7],[2,1,3],[3,4,0],[6,5,7],[7,0,6],[1,2,4],[4,3,6],[0,7,2],[5,6,1],[2,3,7],[3,2,5],[1,0,6],[6,3,2],[4,1,5],[7,4,3]];
+  // sRGB -> CIELAB
+  function lab(hex){let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
+    const f=c=>c>0.04045?Math.pow((c+0.055)/1.055,2.4):c/12.92; r=f(r);g=f(g);b=f(b);
+    let x=(r*0.4124+g*0.3576+b*0.1805)/0.95047,y=(r*0.2126+g*0.7152+b*0.0722),z=(r*0.0193+g*0.1192+b*0.9505)/1.08883;
+    const t=v=>v>0.008856?Math.cbrt(v):7.787*v+16/116; x=t(x);y=t(y);z=t(z);return [116*y-16,500*(x-y),200*(y-z)];}
+  // CIEDE2000
+  function de2000(l1,l2){const [L1,a1,b1]=l1,[L2,a2,b2]=l2;const rad=Math.PI/180,deg=180/Math.PI;
+    const C1=Math.hypot(a1,b1),C2=Math.hypot(a2,b2),Cb=(C1+C2)/2,G=0.5*(1-Math.sqrt(Math.pow(Cb,7)/(Math.pow(Cb,7)+Math.pow(25,7))));
+    const a1p=(1+G)*a1,a2p=(1+G)*a2,C1p=Math.hypot(a1p,b1),C2p=Math.hypot(a2p,b2);
+    const h=(a,b)=>{let v=Math.atan2(b,a)*deg;return v<0?v+360:v;};const h1p=h(a1p,b1),h2p=h(a2p,b2);
+    const dL=L2-L1,dC=C2p-C1p;let dh=h2p-h1p;if(C1p*C2p===0)dh=0;else if(dh>180)dh-=360;else if(dh<-180)dh+=360;
+    const dH=2*Math.sqrt(C1p*C2p)*Math.sin(dh/2*rad);const Lb=(L1+L2)/2,Cbp=(C1p+C2p)/2;
+    let hb;if(C1p*C2p===0)hb=h1p+h2p;else{hb=(h1p+h2p)/2;if(Math.abs(h1p-h2p)>180)hb+=(h1p+h2p<360?180:-180);}
+    const Tt=1-0.17*Math.cos((hb-30)*rad)+0.24*Math.cos(2*hb*rad)+0.32*Math.cos((3*hb+6)*rad)-0.20*Math.cos((4*hb-63)*rad);
+    const dth=30*Math.exp(-Math.pow((hb-275)/25,2)),Rc=2*Math.sqrt(Math.pow(Cbp,7)/(Math.pow(Cbp,7)+Math.pow(25,7)));
+    const Sl=1+0.015*Math.pow(Lb-50,2)/Math.sqrt(20+Math.pow(Lb-50,2)),Sc=1+0.045*Cbp,Sh=1+0.015*Cbp*Tt,Rt=-Math.sin(2*dth*rad)*Rc;
+    return Math.sqrt(Math.pow(dL/Sl,2)+Math.pow(dC/Sc,2)+Math.pow(dH/Sh,2)+Rt*(dC/Sc)*(dH/Sh));}
+  const L=C.map(c=>lab(c[1]));let dmax=0;const D=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>{const d=de2000(L[i],L[j]);dmax=Math.max(dmax,d);return d;}));
+  const cie=D.map(row=>row.map(d=>1-d/dmax));
+  // Claude Fable 5.1 pairwise similarity judgments (0-1), collected 2026-09-05 with the paper's prompt; order matches C
+  const J={'0,1':0.6,'0,2':0.3,'0,3':0.1,'0,4':0.1,'0,5':0.1,'0,6':0.3,'0,7':0.6,'1,2':0.6,'1,3':0.2,'1,4':0.1,'1,5':0.1,'1,6':0.1,'1,7':0.3,'2,3':0.3,'2,4':0.2,'2,5':0.1,'2,6':0.1,'2,7':0.2,'3,4':0.6,'3,5':0.3,'3,6':0.1,'3,7':0.1,'4,5':0.5,'4,6':0.2,'4,7':0.1,'5,6':0.6,'5,7':0.2,'6,7':0.5};
+  const model=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?1:J[i<j?`${i},${j}`:`${j},${i}`]));
+  const you=Array.from({length:n},()=>Array(n).fill(0)), seen=Array.from({length:n},()=>Array(n).fill(0));
+  const $=id=>document.getElementById(id); let k=0;
+  const refchip=$('refchip'),A=$('optA'),B=$('optB'),refname=$('refname'),done=$('done'),agree=$('agree');
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  function draw(cv,M,mx){const ctx=cv.getContext('2d');const m=28,s=(cv.width-m)/n;ctx.clearRect(0,0,cv.width,cv.height);
+    for(let i=0;i<n;i++){ctx.fillStyle=C[i][1];ctx.fillRect(m+i*s+2,2,s-4,m-8);ctx.fillRect(2,m+i*s+2,m-8,s-4);}
+    for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=mx?M[i][j]/mx:M[i][j];ctx.fillStyle=`rgba(${NV()},${i===j?1:Math.max(0,Math.min(1,v))})`;ctx.fillRect(m+j*s+1,m+i*s+1,s-2,s-2);}
+    ctx.strokeStyle=css('--edge');ctx.lineWidth=2;ctx.strokeRect(m+1,m+1,cv.width-m-2,cv.height-m-2);}
+  function render(){ if(k>=T.length){$('task').querySelector('.q').textContent='Sixteen triplets done. Your structure and Claude Fable 5.1\'s are below.';A.hidden=B.hidden=true;refchip.hidden=true;reveal('instrument');return;}
+    const [r,a,b]=T[k];refchip.style.background=C[r][1];A.style.background=C[a][1];B.style.background=C[b][1];refname.textContent=C[r][0]; }
+  function answer(pick){const [r,a,b]=T[k];const c=pick===0?a:b,o=pick===0?b:a;you[r][c]+=1;you[c][r]+=1;seen[r][c]+=1;seen[c][r]+=1;seen[r][o]+=1;seen[o][r]+=1;k++;done.textContent=k;
+    const mx=Math.max(1,...you.flat());draw($('you'),you,mx);
+    let xs=[],ys=[];for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)if(seen[i][j]){xs.push(you[i][j]/seen[i][j]);ys.push(model[i][j]);}
+    const corr=(xs,ys)=>{const m=v=>v.reduce((p,q)=>p+q,0)/v.length;const mx_=m(xs),my=m(ys);let num=0,dx=0,dy=0;for(let i=0;i<xs.length;i++){num+=(xs[i]-mx_)*(ys[i]-my);dx+=(xs[i]-mx_)**2;dy+=(ys[i]-my)**2;}return dx&&dy?num/Math.sqrt(dx*dy):0;};
+    if(xs.length>=3){const r1=corr(xs,ys);const f=r=>(r>=0?'+':'')+r.toFixed(2);agree.textContent=f(r1)+' (correlation over the '+xs.length+' of 28 colour pairs your triplets have covered)';}
+    render();}
+  A.addEventListener('click',()=>answer(0));B.addEventListener('click',()=>answer(1));
+  draw($('you'),you,1);draw($('model'),model,1);render();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{draw($('you'),you,Math.max(1,...you.flat()));draw($('model'),model,1);});
+})();
+/* learning and teaching (v13_instruments_learning) */
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+  /* 3. U-shape */
+  (function(){
+    const cv=$('u-cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+    const eI=$('u-e'),dI=$('u-d'),nI=$('u-n');
+    const C=e=>{if(e<=0||e>=1)return 1;const l=Math.log2;return 1+e*l(e)+(1-e)*l(1-e);};
+    const CAP=8;
+    function draw(){
+      const e=+eI.value,d=+dI.value,n=+nI.value,base=d*Math.log2(n);
+      ctx.clearRect(0,0,W,H);
+      const L=64,R=W-20,T=16,Bm=H-40;const px=x=>L+(R-L)*x,py=v=>Bm-(Bm-T)*Math.min(v,CAP)/CAP;
+      ctx.strokeStyle=css('--ink-3');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,Bm);ctx.lineTo(R,Bm);ctx.stroke();
+      ctx.fillStyle=css('--ink-2');ctx.font='13px '+css('--font');ctx.textAlign='right';
+      [1,2,4,8].forEach(v=>{ctx.fillText(Math.round(v*base).toLocaleString(),L-8,py(v)+4);ctx.beginPath();ctx.moveTo(L-4,py(v));ctx.lineTo(L,py(v));ctx.stroke();});
+      ctx.textAlign='center';[0,0.25,0.5,0.75,1].forEach(x=>{ctx.fillText(x.toFixed(2),px(x),Bm+18);ctx.beginPath();ctx.moveTo(px(x),Bm);ctx.lineTo(px(x),Bm+4);ctx.stroke();});
+      ctx.fillText('how often teacher and student disagree, ε',(L+R)/2,H-4);
+      ctx.save();ctx.translate(14,(T+Bm)/2);ctx.rotate(-Math.PI/2);ctx.fillText('bits the student needs',0,0);ctx.restore();
+      // asymptote
+      ctx.setLineDash([4,4]);ctx.strokeStyle=css('--ink-3');ctx.beginPath();ctx.moveTo(px(0.5),T);ctx.lineTo(px(0.5),Bm);ctx.stroke();ctx.setLineDash([]);
+      if(e<0.5){ctx.textAlign='left';ctx.fillText('at 0.5 nothing gets through',px(0.5)+8,py(2)+4);}else{ctx.textAlign='right';ctx.fillText('at 0.5 nothing gets through',px(0.5)-8,py(2)+4);}
+      // curve
+      ctx.strokeStyle=css('--navy');ctx.lineWidth=2.5;ctx.beginPath();let pen=false;
+      for(let i=0;i<=400;i++){const x=i/400,v=1/C(x);if(v>CAP){pen=false;continue;}const X=px(x),Y=py(v);if(pen)ctx.lineTo(X,Y);else{ctx.moveTo(X,Y);pen=true;}}
+      ctx.stroke();
+      // marker
+      const v=1/C(e);const X=px(e),Y=py(v);
+      ctx.strokeStyle=css('--edge');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X,Bm);ctx.lineTo(X,Y);ctx.stroke();
+      ctx.fillStyle=css('--khaki');ctx.beginPath();ctx.arc(X,Y,7,0,7);ctx.fill();ctx.stroke();
+      if(v>CAP){ctx.fillStyle=css('--ink');ctx.font='700 13px '+css('--font');ctx.textAlign=e<0.5?'right':'left';ctx.fillText('off the chart',X+(e<0.5?-10:10),T+30);}
+      $('u-e-v').textContent=e.toFixed(2);$('u-d-v').textContent=d;$('u-n-v').textContent=n;
+      $('u-c').textContent=C(e).toFixed(2);$('u-b').textContent=isFinite(v)&&C(e)>0?Math.round(base*v).toLocaleString():'unbounded';$('u-r').textContent=C(e)>0?v.toFixed(1):'unbounded';
+    }
+    redraws.push(draw);
+    [eI,dI,nI].forEach(i=>i.addEventListener('input',draw));
+    [eI,dI,nI].forEach(i=>i.addEventListener('input',()=>reveal('ushape'),{once:true}));
+    draw();
+  })();
+
+  /* 4. Values bandit */
+  (function(){
+    const N=50,NP=25,STEPS=25,SEEDS=30,NOISE=0.1,ELL=0.25;
+    const aI=$('v-a');let valueSeed=5;
+    let pts,Ktrue,Kperm,scores,perso,held;
+    function normal(r){let u=0,v=0;while(u===0)u=r();v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+    function chol(M,n){const L=new Float64Array(n*n);for(let i=0;i<n;i++){for(let j=0;j<=i;j++){let s=M[i*n+j];for(let k=0;k<j;k++)s-=L[i*n+k]*L[j*n+k];if(i===j){L[i*n+i]=Math.sqrt(Math.max(s,1e-10));}else L[i*n+j]=s/L[j*n+j];}}return L;}
+    function solveL(L,n,b){const x=new Float64Array(n);for(let i=0;i<n;i++){let s=b[i];for(let k=0;k<i;k++)s-=L[i*n+k]*x[k];x[i]=s/L[i*n+i];}return x;}
+    function solveLT(L,n,b){const x=new Float64Array(n);for(let i=n-1;i>=0;i--){let s=b[i];for(let k=i+1;k<n;k++)s-=L[k*n+i]*x[k];x[i]=s/L[i*n+i];}return x;}
+    function setup(){
+      const r=mulberry(valueSeed);pts=[];for(let i=0;i<N;i++)pts.push([r(),r()]);
+      Ktrue=new Float64Array(N*N);for(let i=0;i<N;i++)for(let j=0;j<N;j++){const d2=(pts[i][0]-pts[j][0])**2+(pts[i][1]-pts[j][1])**2;Ktrue[i*N+j]=Math.exp(-d2/(2*ELL*ELL));}
+      const Lt=chol(Ktrue.map((v,i)=>v+(i%(N+1)===0?1e-6:0)),N);const z=new Float64Array(N);for(let i=0;i<N;i++)z[i]=normal(r);
+      const g=new Float64Array(N);for(let i=0;i<N;i++){let s=0;for(let k=0;k<=i;k++)s+=Lt[i*N+k]*z[k];g[i]=s;}
+      const m=g.reduce((s,v)=>s+v,0)/N,sd=Math.sqrt(g.reduce((s,v)=>s+(v-m)**2,0)/N);
+      scores=Array.from(g,v=>Math.max(0,Math.min(100,50+22*(v-m)/sd)));
+      const perm=Array.from({length:N},(_,i)=>i);const rp=mulberry(77);for(let i=N-1;i>0;i--){const j=Math.floor(rp()*(i+1));[perm[i],perm[j]]=[perm[j],perm[i]];}
+      Kperm=new Float64Array(N*N);for(let i=0;i<N;i++)for(let j=0;j<N;j++)Kperm[i*N+j]=Ktrue[perm[i]*N+perm[j]];
+      const idx=Array.from({length:N},(_,i)=>i);const rs=mulberry(101);for(let i=N-1;i>0;i--){const j=Math.floor(rs()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}
+      perso=idx.slice(0,NP);held=idx.slice(NP);
+      const strip=$('v-strip');strip.innerHTML='';let nb=0;for(let i=0;i<N;i++){const s=document.createElement('i');const bad=scores[i]<50;if(bad)nb++;s.className=(bad?'bad':'good')+(held.includes(i)?' held':'');s.title='action '+(i+1)+': '+Math.round(scores[i]);strip.appendChild(s);}
+      $('v-nbad').textContent=nb;
+    }
+    function mix(a){if(a==null)return null;const K=new Float64Array(N*N);for(let i=0;i<N*N;i++)K[i]=a*Ktrue[i]+(1-a)*Kperm[i];return K;}
+    function corr(K){if(!K)return 0;let sx=0,sy=0,sxx=0,syy=0,sxy=0,m=0;for(let i=0;i<N;i++)for(let j=0;j<i;j++){const x=K[i*N+j],y=Ktrue[i*N+j];sx+=x;sy+=y;sxx+=x*x;syy+=y*y;sxy+=x*y;m++;}const c=(m*sxy-sx*sy)/Math.sqrt((m*sxx-sx*sx)*(m*syy-sy*sy));return isFinite(c)?c:0;}
+    const kget=(K,i,j)=>K?K[i*N+j]:(i===j?1:0);
+    function run(K,seed){
+      const r=mulberry(seed*7919+13);const S=[],Y=[];const rew=[],bad=[];
+      function sample(cand){
+        const m=S.length,c=cand.length;const mu=new Float64Array(c);const Sig=new Float64Array(c*c);
+        for(let a=0;a<c;a++)for(let b=0;b<c;b++)Sig[a*c+b]=kget(K,cand[a],cand[b]);
+        if(m){const A=new Float64Array(m*m);for(let i=0;i<m;i++)for(let j=0;j<m;j++)A[i*m+j]=kget(K,S[i],S[j])+(i===j?NOISE*NOISE:0);
+          const L=chol(A,m);const alpha=solveLT(L,m,solveL(L,m,Y));
+          const V=[];for(let a=0;a<c;a++){const ks=new Float64Array(m);for(let i=0;i<m;i++)ks[i]=kget(K,cand[a],S[i]);let s=0;for(let i=0;i<m;i++)s+=ks[i]*alpha[i];mu[a]=s;V.push(solveL(L,m,ks));}
+          for(let a=0;a<c;a++)for(let b=0;b<c;b++){let s=0;for(let i=0;i<m;i++)s+=V[a][i]*V[b][i];Sig[a*c+b]-=s;}}
+        for(let a=0;a<c;a++)Sig[a*c+a]+=1e-6;const Ls=chol(Sig,c);const z=new Float64Array(c);for(let a=0;a<c;a++)z[a]=normal(r);
+        let best=0,bv=-1e9;for(let a=0;a<c;a++){let s=mu[a];for(let k=0;k<=a;k++)s+=Ls[a*c+k]*z[k];if(s>bv){bv=s;best=a;}}return cand[best];
+      }
+      for(let t=0;t<STEPS;t++){const i=sample(perso);rew.push(scores[i]);bad.push(scores[i]<50?1:0);S.push(i);Y.push((scores[i]-50)/25+NOISE*normal(r));}
+      for(let t=0;t<STEPS;t++){const i=sample(held);rew.push(scores[i]);bad.push(scores[i]<50?1:0);}
+      return{rew,bad};
+    }
+    function avg(K){const rew=new Float64Array(2*STEPS),bad=new Float64Array(2*STEPS);for(let s=0;s<SEEDS;s++){const o=run(K,s);for(let t=0;t<2*STEPS;t++){rew[t]+=o.rew[t]/SEEDS;bad[t]+=o.bad[t]/SEEDS;}}
+      const cum=[];let c=0;for(let t=0;t<2*STEPS;t++){c+=bad[t];cum.push(c);}
+      const mean=(a,lo,hi)=>{let s=0;for(let t=lo;t<hi;t++)s+=a[t];return s/(hi-lo);};
+      return{rew,cum,rP:mean(rew,0,STEPS),rG:mean(rew,STEPS,2*STEPS),bP:cum[STEPS-1],bG:cum[2*STEPS-1]-cum[STEPS-1]};}
+    let R={};
+    function computeFixed(){R.t=avg(Ktrue);R.p=avg(Kperm);R.n=avg(null);}
+    function computeYours(){const a=+aI.value;const K=mix(a);R.y=avg(K);R.yr=corr(K);}
+    function line(ctx,px,py,arr,col,w,dash){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.setLineDash(dash||[]);ctx.beginPath();arr.forEach((v,i)=>{const x=px(i),y=py(v);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();ctx.setLineDash([]);}
+    function chart(cv,key,ymax,yticks,thresh){
+      const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);
+      const L=40,Rr=W-12,T=12,Bm=H-36;const px=i=>L+(Rr-L)*i/(2*STEPS-1),py=v=>Bm-(Bm-T)*v/ymax;
+      ctx.strokeStyle=css('--ink-3');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,Bm);ctx.lineTo(Rr,Bm);ctx.stroke();
+      ctx.fillStyle=css('--ink-2');ctx.font='12px '+css('--font');ctx.textAlign='right';yticks.forEach(v=>{ctx.fillText(String(v),L-6,py(v)+4);ctx.beginPath();ctx.moveTo(L-4,py(v));ctx.lineTo(L,py(v));ctx.stroke();});
+      ctx.textAlign='center';[1,25,50].forEach(s=>ctx.fillText(String(s),px(s-1),Bm+16));
+      ctx.fillText('learning, first 25 actions',px(12),H-4);ctx.fillText('new 25 actions, no more learning',px(37),H-4);
+      ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(px(24.5),T);ctx.lineTo(px(24.5),Bm);ctx.stroke();
+      if(thresh!=null){ctx.strokeStyle=css('--khaki-ink');ctx.beginPath();ctx.moveTo(L,py(thresh));ctx.lineTo(Rr,py(thresh));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=css('--khaki-ink');ctx.textAlign='right';ctx.fillText('bad below 50',Rr-2,py(thresh)+14);}
+      ctx.setLineDash([]);
+      line(ctx,px,py,R.n[key],css('--ink-3'),1.5,[3,3]);line(ctx,px,py,R.p[key],css('--khaki-ink'),2);line(ctx,px,py,R.t[key],css('--navy'),2);line(ctx,px,py,R.y[key],css('--edge'),6);line(ctx,px,py,R.y[key],css('--blue'),3);
+    }
+    function draw(){
+      chart($('v-rew'),'rew',100,[0,50,100],50);chart($('v-bad'),'cum',30,[0,10,20,30],null);
+      $('v-a-v').textContent=(+aI.value).toFixed(2);$('v-r').textContent=R.yr.toFixed(2);
+      const rows=[['Your table',R.yr,R.y],['True similarities',1,R.t],['Scrambled table',corr(Kperm),R.p],['No table',0,R.n]];
+      $('v-tab').querySelector('tbody').innerHTML=rows.map(([n,r,o])=>'<tr><td><b>'+n+'</b></td><td class="n">'+r.toFixed(2)+'</td><td class="n">'+o.rP.toFixed(1)+'</td><td class="n">'+o.bP.toFixed(1)+'</td><td class="n">'+o.rG.toFixed(1)+'</td><td class="n">'+o.bG.toFixed(1)+'</td></tr>').join('');
+    }
+    redraws.push(draw);
+    let pending=0;
+    aI.addEventListener('input',()=>{$('v-a-v').textContent=(+aI.value).toFixed(2);cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>{computeYours();draw();});});
+    aI.addEventListener('input',()=>reveal('values'),{once:true});
+    $('v-new').addEventListener('click',()=>{valueSeed+=1;setup();computeFixed();computeYours();draw();});
+    setup();computeFixed();computeYours();draw();
+  })();
+})();
+/* triplet communication game */
+(function(){
+  const cv=document.getElementById('t-cv'); if(!cv) return;
+  const cv2=document.getElementById('t-cv2'), g=cv.getContext('2d'), g2=cv2.getContext('2d');
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const L=[[0.16,0.20],[0.52,0.12],[0.86,0.26],[0.30,0.48],[0.68,0.52],[0.14,0.80],[0.48,0.86],[0.84,0.80]], NAMES='ABCDEFGH';
+  const N=48, W=360; let seed=7; const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  let role='teach', amp=0.2, c=null, post=null, tpost=null, bits=[], msgs=[], guesses=[], ideal=[], done=false, revealed=false, sel=null, peek=false, ph=[];
+  const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+  // the other player's map is a smooth warp of yours
+  const warp=p=>[Math.min(0.94,Math.max(0.06,p[0]+amp*0.3*Math.sin(3.1*p[1]+ph[0])*Math.cos(2.3*p[0]+ph[1]))),Math.min(0.94,Math.max(0.06,p[1]+amp*0.3*Math.sin(2.7*p[0]+ph[2])*Math.cos(3.3*p[1]+ph[3])))];
+  let LO=L; // other player's landmarks
+  const tripOn=(p,LL,j,k)=>dist(p,LL[j])<dist(p,LL[k]);
+  const trip=(p,j,k)=>tripOn(p,L,j,k);
+  function disagreement(){ let d=0,n=0; for(let t=0;t<600;t++){ const p=[rnd(),rnd()]; const j=Math.floor(rnd()*8); let k=Math.floor(rnd()*7); if(k>=j)k++; if(tripOn(p,L,j,k)!==tripOn(warp(p),LO,j,k)) d++; n++; } return d/n; }
+  function reset(){ ph=[rnd()*6.3,rnd()*6.3,rnd()*6.3,rnd()*6.3]; LO=L.map(warp); do{c=[0.08+0.84*rnd(),0.08+0.84*rnd()];}while(L.some(l=>dist(l,c)<0.12)); post=new Float64Array(N*N).fill(1/(N*N)); tpost=new Float64Array(N*N).fill(1/(N*N)); msgs=[];guesses=[];ideal=[];bits=[];done=false;revealed=false;sel=null; document.getElementById('t-dis').textContent=Math.round(100*disagreement())+'%'; draw(); }
+  const cell=i=>[(i%N+0.5)/N,(Math.floor(i/N)+0.5)/N];
+  // the receiver's belief lives on the receiver's own map; the receiver treats each message as true with probability 0.8
+  function update(LL,j,k,bit){ let s=0; for(let i=0;i<N*N;i++){const ok=tripOn(cell(i),LL,j,k)===bit; post[i]*= ok?0.8:0.2; s+=post[i];} for(let i=0;i<N*N;i++)post[i]/=s; }
+  function mean(){ let mx=0; for(let i=0;i<N*N;i++) mx=Math.max(mx,post[i]); let x=0,y=0,n=0; for(let i=0;i<N*N;i++){ if(post[i]<0.5*mx) continue; const p=cell(i); x+=p[0]; y+=p[1]; n++; } return [x/n,y/n]; }
+  function area(){ let mx=0; for(let i=0;i<N*N;i++) mx=Math.max(mx,post[i]); let n=0; for(let i=0;i<N*N;i++) if(post[i]>=0.5*mx) n++; return n; }
+  function bestPair(LL){ let best=null,bs=1; for(let j=0;j<8;j++)for(let k=j+1;k<8;k++){ if(msgs.some(m=>(m.j===j&&m.k===k)||(m.j===k&&m.k===j))) continue; let m=0; for(let i=0;i<N*N;i++) if(tripOn(cell(i),LL,j,k)) m+=tpost[i]; const sc=Math.abs(m-0.5); if(sc<bs){bs=sc;best=[j,k];} } return best||[0,1]; }
+  function tupdate(j,k,bit){ let s=0; for(let i=0;i<N*N;i++){ const ok=tripOn(cell(i),LO,j,k)===bit; tpost[i]*= ok?0.8:0.2; s+=tpost[i]; } for(let i=0;i<N*N;i++) tpost[i]/=s; }
+  // teacher mode: you judge on L, the student decodes on LO; the object sits at warp(c) on the student's map
+  // student mode: the teacher judges on LO where the object sits at warp(c); you decode on L where it sits at c
+  function splitBits(LL,j,k){ let m=0; for(let i=0;i<N*N;i++) if(tripOn(cell(i),LL,j,k)) m+=post[i]; if(m<=0||m>=1) return 0; return -(m*Math.log2(m)+(1-m)*Math.log2(1-m)); }
+  function send(j,k){ let bit; if(role==='teach'){ bits.push(splitBits(LO,j,k)); bit=tripOn(c,L,j,k); msgs.push({j,k,bit}); update(LO,j,k,bit); ideal.push(dist(mean(),warp(c))); } else { bits.push(splitBits(L,j,k)); bit=tripOn(warp(c),LO,j,k); msgs.push({j,k,bit}); update(L,j,k,bit); tupdate(j,k,bit); ideal.push(dist(mean(),c)); } }
+  function cellRect(ctx,i){ const cx=i%N, cy=Math.floor(i/N); const x0=Math.round(cx*W/N), x1=Math.round((cx+1)*W/N), y0=Math.round(cy*W/N), y1=Math.round((cy+1)*W/N); ctx.fillRect(x0,y0,x1-x0,y1-y0); }
+  function drawMap(ctx,LL,opts){
+    ctx.clearRect(0,0,W,W); ctx.fillStyle=css('--ground'); ctx.fillRect(0,0,W,W);
+    if(opts.hidden){ ctx.fillStyle=css('--ink-3'); ctx.font='15px '+css('--font'); ctx.textAlign='center'; ctx.fillText('hidden',W/2,W/2); return; }
+    if(opts.belief){ let mx=0; for(let i=0;i<N*N;i++) mx=Math.max(mx,post[i]); for(let i=0;i<N*N;i++){ const a=post[i]/mx; if(a<0.02) continue; ctx.fillStyle=`rgba(${NV()},${0.85*a})`; cellRect(ctx,i); } }
+    if(opts.shade&&msgs.length){ const cnt=new Uint8Array(N*N); let mx=0; for(let i=0;i<N*N;i++){ const p=cell(i); let k=0; msgs.forEach(m=>{ if(tripOn(p,LL,m.j,m.k)===m.bit) k++; }); cnt[i]=k; if(k>mx) mx=k; } for(let i=0;i<N*N;i++){ const a=cnt[i]/mx; if(a<=0) continue; ctx.fillStyle=`rgba(${NV()},${0.08+0.72*a*a})`; cellRect(ctx,i); } }
+    ctx.strokeStyle=css('--ink-3'); ctx.lineWidth=1; msgs.forEach(m=>{ const a=LL[m.j],b=LL[m.k]; const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2]; const d=[-(b[1]-a[1]),b[0]-a[0]]; const n=Math.hypot(d[0],d[1]); const u=[d[0]/n*2,d[1]/n*2]; ctx.beginPath();ctx.moveTo((mid[0]-u[0])*W,(mid[1]-u[1])*W);ctx.lineTo((mid[0]+u[0])*W,(mid[1]+u[1])*W);ctx.stroke(); });
+    LL.forEach((l,i)=>{ const x=l[0]*W,y=l[1]*W; ctx.fillStyle=(opts.sel===i)?css('--khaki'):css('--ground'); ctx.strokeStyle=css('--edge'); ctx.lineWidth=2; ctx.beginPath(); ctx.rect(x-13,y-13,26,26); ctx.fill(); ctx.stroke(); ctx.fillStyle=css('--ink'); ctx.font='700 14px '+css('--font'); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(NAMES[i],x,y+1); });
+    if(opts.obj){ ctx.fillStyle=css('--khaki'); ctx.strokeStyle=css('--edge'); ctx.lineWidth=2; ctx.beginPath(); ctx.arc(opts.obj[0]*W,opts.obj[1]*W,9,0,7); ctx.fill(); ctx.stroke(); }
+    if(opts.cross){ const x=opts.cross[0]*W,y=opts.cross[1]*W; ctx.strokeStyle=css('--navy'); ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(x-7,y-7); ctx.lineTo(x+7,y+7); ctx.moveTo(x+7,y-7); ctx.lineTo(x-7,y+7); ctx.stroke(); }
+    if(opts.ring){ ctx.strokeStyle=css('--khaki-ink'); ctx.lineWidth=2; ctx.beginPath(); ctx.arc(opts.ring[0]*W,opts.ring[1]*W,11,0,7); ctx.stroke(); }
+  }
+  function draw(){
+    const teach=role==='teach', show=peek||done;
+    if(done&&!revealed){ revealed=true; reveal('triplets'); }
+    document.getElementById('t-lab-l').textContent=teach?'Your map, with the new object (filled circle)':'Your map; darker where more messages agree the object could be';
+    document.getElementById('t-lab-r').textContent=teach?(show?'The student\'s map and belief (darker is likelier; ring is the middle of the darkest region)':'The student\'s map (hidden)'):(show?'The teacher\'s map, with the object':'The teacher\'s map (hidden)');
+    document.getElementById('t-instr').textContent=teach
+      ?'You can see the new object. Click two familiar objects to send one message about which of them it is nearer to. The student decodes each message on its own map, which you cannot see. Press "Check the student" when you think it has enough.'
+      :'You cannot see the new object. A teacher sends messages about it, judged on the teacher\'s map. After each message, click where you now think the object is. Twelve messages, then the answer.';
+    document.getElementById('t-check').hidden=!teach||done; document.getElementById('t-peek').setAttribute('aria-pressed',String(peek));
+    if(teach){ drawMap(g,L,{obj:c,sel}); drawMap(g2,LO,{hidden:!show,belief:show,ring:show?mean():null,obj:done?warp(c):null}); }
+    else { drawMap(g,L,{shade:true,cross:guesses.length?guesses[guesses.length-1]:null,obj:done?c:null,ring:done?mean():null}); drawMap(g2,LO,{hidden:!show,obj:show?warp(c):null}); }
+    const showBits=(role==='learn')||show; const lg=document.getElementById('t-log'); lg.innerHTML=msgs.map((m,i)=>`<div>${i+1}. closer to <b>${NAMES[m.j]}</b> than to <b>${NAMES[m.k]}</b>${showBits?` <span class="bits">${bits[i].toFixed(2)} bits</span>`:''}</div>`).join('')+(msgs.length&&showBits?`<div class="bits" style="grid-column:1 / -1;margin-top:6px">Up to ${bits.reduce((a,b)=>a+b,0).toFixed(1)} bits in all. A message is worth one bit when its midline splits what the receiver still believes in half, and less the more one-sided the split; when the maps differ, some of that is spent on messages that are wrong on the receiver's map.</div>`:'');
+    const res=document.getElementById('t-res');
+    if(teach){ if(done){ const d=ideal[ideal.length-1]; res.innerHTML=`After ${msgs.length} message${msgs.length>1?'s':''} the student's best guess is <b class="stat">${(d*100).toFixed(0)}</b> map units from the object on its map${d<0.06?': found.':': not found yet (under 6 counts as found).'} The filled circle on the student's map is where the student's own judgments place the object among its landmarks, so it need not match the spot on your map. Try again with the student's map shown, and see whether you need fewer messages.`; } else res.innerHTML=msgs.length?`${msgs.length} message${msgs.length>1?'s':''} sent.`:'No messages yet.'; }
+    else { if(done){ const you=guesses.map(gp=>dist(gp,c)); res.innerHTML=`The object was at the filled circle on your map; on the teacher's map it sits where the teacher's own judgments place it, which need not be the same spot. Your last guess was <b class="stat">${(you[you.length-1]*100).toFixed(0)}</b> map units away; a student who simply trusts each message on this map would be <b class="stat">${(ideal[ideal.length-1]*100).toFixed(0)}</b> away. Your error by message: ${you.map(v=>(v*100).toFixed(0)).join(', ')}.`; } else res.innerHTML=msgs.length?`Message ${msgs.length} of 12. Click your guess.`:'Click the map to receive the first message.'; }
+  }
+  function hit(ev){ const r=cv.getBoundingClientRect(); return [(ev.clientX-r.left)/r.width,(ev.clientY-r.top)/r.height]; }
+  cv.addEventListener('click',ev=>{ if(done) return; const p=hit(ev);
+    if(role==='teach'){ let hi=-1; L.forEach((l,i)=>{ if(dist(l,p)<0.05) hi=i; }); if(hi<0) return; if(sel===null){sel=hi;} else if(sel!==hi){ send(sel,hi); sel=null; } draw(); }
+    else { if(msgs.length===0){ const b=bestPair(LO); send(b[0],b[1]); draw(); return; } guesses.push(p); if(msgs.length>=12){ done=true; } else { const b=bestPair(LO); send(b[0],b[1]); } draw(); }
+  });
+  document.getElementById('t-check').addEventListener('click',()=>{ if(msgs.length){ done=true; draw(); } });
+  document.getElementById('t-peek').addEventListener('click',()=>{ peek=!peek; draw(); });
+  document.getElementById('t-e').addEventListener('input',e=>{ amp=+e.target.value; document.getElementById('t-e-v').textContent=amp.toFixed(2); reset(); });
+  document.getElementById('t-teach').addEventListener('click',()=>{ role='teach'; document.getElementById('t-teach').setAttribute('aria-pressed','true'); document.getElementById('t-learn').setAttribute('aria-pressed','false'); reset(); });
+  document.getElementById('t-learn').addEventListener('click',()=>{ role='learn'; document.getElementById('t-learn').setAttribute('aria-pressed','true'); document.getElementById('t-teach').setAttribute('aria-pressed','false'); reset(); });
+  document.getElementById('t-new').addEventListener('click',reset);
+  reset();
+})();
+/* lo-shot (v12_instruments_page) */
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+  /* 4. Less than one shot */
+  (function(){
+    const cv=$('l-cv'),ctx=cv.getContext('2d');const W=cv.width,H=cv.height;
+    const aI=$('l-a'),bI=$('l-b'),mI=$('l-m');
+    let a=+aI.value,b=+bI.value,m=+mI.value;
+    const X0=30,X1=W-30,LY=170,LH=26,BW=30,BH=70,BY=36;
+    const xpx=x=>X0+(X1-X0)*x/8,xu=p=>Math.max(0,Math.min(8,(p-X0)/(X1-X0)*8));
+    const labels=()=>[[1-m,m,0],[0,m,1-m]];
+    function cls(x){const [ya,yb]=labels();const wa=1/Math.max(Math.abs(x-a),1e-6),wb=1/Math.max(Math.abs(x-b),1e-6);const s=[wa*ya[0]+wb*yb[0],wa*ya[1]+wb*yb[1],wa*ya[2]+wb*yb[2]];let k=0;for(let i=1;i<3;i++)if(s[i]>s[k]+1e-12)k=i;return k;}
+    function draw(){
+      const col=[css('--khaki'),css('--blue'),css('--navy')],edge=css('--edge');ctx.clearRect(0,0,W,H);
+      let regions=0,prev=-1;
+      for(let p=X0;p<=X1;p++){const c=cls(xu(p));ctx.fillStyle=col[c];ctx.fillRect(p,LY,1,LH);if(c!==prev){regions++;prev=c;}}
+      ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.strokeRect(X0,LY,X1-X0,LH);
+      ctx.font='13px '+css('--font');ctx.fillStyle=css('--ink-2');ctx.textAlign='center';for(let i=0;i<=8;i+=2){ctx.fillText(String(i),xpx(i),LY+LH+18);}
+      const [ya,yb]=labels();
+      [[a,ya,'A'],[b,yb,'B']].forEach(([x,y,name])=>{const px=xpx(x);
+        let top=BY+BH;[0,1,2].forEach(i=>{const h=BH*y[i];ctx.fillStyle=col[i];ctx.fillRect(px-BW/2,top-h,BW,h);top-=h;});
+        ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.strokeRect(px-BW/2,BY,BW,BH);
+        ctx.fillStyle=css('--ink');ctx.font='700 14px '+css('--font');ctx.textAlign='center';ctx.fillText(name,px,BY-10);
+        ctx.fillStyle=css('--ink-2');ctx.font='12px '+css('--font');ctx.fillText(y.map(v=>v.toFixed(2)).join(', '),px,BY+BH+16);
+        ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(px,BY+BH+22);ctx.lineTo(px,LY-8);ctx.stroke();
+        ctx.fillStyle=css('--ground');ctx.fillRect(px-8,LY+LH/2-8,16,16);ctx.strokeRect(px-8,LY+LH/2-8,16,16);
+      });
+      $('l-n').textContent=regions;$('l-a-v').textContent=a.toFixed(1);$('l-b-v').textContent=b.toFixed(1);$('l-m-v').textContent=m.toFixed(2);
+    }
+    redraws.push(draw);
+    aI.addEventListener('input',()=>{a=+aI.value;draw();reveal('loshot');});bI.addEventListener('input',()=>{b=+bI.value;draw();reveal('loshot');});mI.addEventListener('input',()=>{m=+mI.value;draw();reveal('loshot');});
+    let drag=null;
+    const toUnits=e=>{const r=cv.getBoundingClientRect();return xu((e.clientX-r.left)*W/r.width);};
+    cv.addEventListener('pointerdown',e=>{const x=toUnits(e);const da=Math.abs(x-a),db=Math.abs(x-b);if(Math.min(da,db)>0.6)return;drag=da<=db?'a':'b';reveal('loshot');cv.classList.add('drag');cv.setPointerCapture(e.pointerId);e.preventDefault();});
+    cv.addEventListener('pointermove',e=>{if(!drag)return;const x=Math.round(toUnits(e)*10)/10;if(drag==='a'){a=x;aI.value=x;}else{b=x;bI.value=x;}draw();});
+    const end=()=>{drag=null;cv.classList.remove('drag');};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+    draw();
+  })();
+})();
+/* data-efficient learning (from v14_research_you) */
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+  /* 5. Aliens */
+  (function(){
+    const F=[
+      {w:'blick',name:'a round body',code:[1,1,0,0]},
+      {w:'dax',name:'a blue body',code:[1,0,1,0]},
+      {w:'wug',name:'two antennae',code:[1,0,0,1]},
+      {w:'fep',name:'two eyes',code:[1,0,0,0]},
+      {w:'tulver',name:'four legs',code:[0,1,0,0]},
+      {w:'zorp',name:'a tail',code:[0,0,1,0]},
+      {w:'gorp',name:'arms',code:[0,0,0,1]},
+      {w:'yolm',name:'spots',code:[1,1,1,1]}
+    ];
+    const train=[0,1,2,3].map(i=>F.map(f=>f.code[i]));
+    const novel=[[0,0,0,1,1,0,0,0],[1,1,0,0,0,1,1,1],[0,1,1,1,0,0,0,0],[1,0,1,0,1,1,0,1],[0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,0]];
+    function alien(b,label){
+      const [round,blue,ant2,eye2,leg4,tail,arms,spots]=b;
+      const fill=blue?'var(--blue)':'var(--khaki)';
+      let s='<svg viewBox="0 0 120 140" role="img" aria-label="'+label+'" style="overflow:visible">';
+      const st='stroke="var(--edge)" stroke-width="2.5" stroke-linecap="round" fill="none"';
+      if(arms)s+='<path d="M32 86 L10 68 M88 86 L110 68" '+st+'/>';
+      if(tail)s+='<path d="M88 100 C104 104 110 114 116 124" stroke="var(--edge)" stroke-width="3.5" stroke-linecap="round" fill="none"/>';
+      s+=leg4?'<path d="M42 110 V128 M54 110 V128 M66 110 V128 M78 110 V128" '+st+'/>':'<path d="M50 110 V128 M70 110 V128" '+st+'/>';
+      s+=ant2?'<path d="M48 51 L40 26 M72 51 L80 26" '+st+'/><circle cx="40" cy="24" r="3.5" fill="var(--edge)"/><circle cx="80" cy="24" r="3.5" fill="var(--edge)"/>':'<path d="M60 51 V24" '+st+'/><circle cx="60" cy="22" r="3.5" fill="var(--edge)"/>';
+      s+=round?'<circle cx="60" cy="80" r="30" fill="'+fill+'" stroke="var(--edge)" stroke-width="2"/>':'<rect x="30" y="50" width="60" height="60" fill="'+fill+'" stroke="var(--edge)" stroke-width="2"/>';
+      s+=eye2?'<circle cx="50" cy="70" r="4" fill="var(--ink)"/><circle cx="70" cy="70" r="4" fill="var(--ink)"/>':'<circle cx="60" cy="70" r="5" fill="var(--ink)"/>';
+      if(spots)s+='<circle cx="48" cy="92" r="3" fill="var(--edge)"/><circle cx="60" cy="99" r="3" fill="var(--edge)"/><circle cx="73" cy="91" r="3" fill="var(--edge)"/>';
+      s+='</svg>';return s;
+    }
+    const desc=b=>F.map((f,i)=>b[i]?f.name:null).filter(Boolean).join(', ')||'none of the features';
+    const tr=$('a-train');
+    train.forEach((b,i)=>{const fg=document.createElement('figure');fg.innerHTML=alien(b,'alien '+(i+1)+': '+desc(b))+'<figcaption>Alien '+(i+1)+'</figcaption>';tr.appendChild(fg);});
+    const figs=[...tr.children];
+    const words=$('a-words');const sticky=new Set();const notes=F.map(()=>'');
+    const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    function hi(){const on=new Set();sticky.forEach(i=>F[i].code.forEach((c,j)=>{if(c)on.add(j);}));if(hover!=null)F[hover].code.forEach((c,j)=>{if(c)on.add(j);});figs.forEach((f,j)=>f.classList.toggle('hi',on.has(j)));}
+    let hover=null;
+    F.forEach((f,i)=>{const row=document.createElement('div');row.className='wrow';const b=document.createElement('button');b.className='btn';b.setAttribute('aria-pressed','false');
+      const who=f.code.map((c,j)=>c?j+1:null).filter(Boolean);
+      b.innerHTML=f.w+'<span>'+(who.length===4?'aliens 1, 2, 3 and 4':'alien'+(who.length>1?'s ':' ')+who.join(' and '))+'</span>';
+      b.addEventListener('mouseenter',()=>{hover=i;hi();});b.addEventListener('mouseleave',()=>{hover=null;hi();});
+      b.addEventListener('focus',()=>{hover=i;hi();});b.addEventListener('blur',()=>{hover=null;hi();});
+      b.addEventListener('click',()=>{if(sticky.has(i))sticky.delete(i);else sticky.add(i);b.setAttribute('aria-pressed',sticky.has(i)?'true':'false');hi();});
+      const inp=document.createElement('input');inp.type='text';inp.placeholder='what does "'+f.w+'" mean?';inp.setAttribute('aria-label','your note on what '+f.w+' means');inp.maxLength=60;
+      inp.addEventListener('input',()=>{notes[i]=inp.value.trim();});
+      inp.addEventListener('focus',()=>{hover=i;hi();});inp.addEventListener('blur',()=>{hover=null;hi();});
+      row.appendChild(b);row.appendChild(inp);words.appendChild(row);});
+    // phase 2
+    let k=0;const answers=[];const cur=$('a-cur'),tog=$('a-tog'),sub=$('a-submit'),res=$('a-res'),rst=$('a-reset');
+    const tb=F.map((f,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=f.w;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true'));tog.appendChild(b);return b;});
+    function show(){
+      if(k>=novel.length){cur.innerHTML='';tog.hidden=true;sub.hidden=true;
+        const per=F.map((f,i)=>answers.reduce((s,a,j)=>s+(a[i]===novel[j][i]?1:0),0));
+        const full=answers.reduce((s,a,j)=>s+(a.every((v,i)=>v===novel[j][i])?1:0),0);
+        const acc=per.reduce((s,v)=>s+v,0)/(8*novel.length);
+        let t='<b>'+full+' of 6</b> aliens labelled fully correctly, and <b>'+Math.round(acc*100)/100+'</b> of the 48 word decisions right. The paper’s participants labelled 0.40 of new aliens fully correctly after learning the words and 0.20 without. Below, what you wrote for each word next to what it means.';
+        t+='<table aria-label="per word: your note, the true meaning, and how many of the six new aliens you got right on it"><thead><tr><th>Word</th><th>You wrote</th><th>It means</th><th class="n">Right</th></tr></thead><tbody>'+F.map((f,i)=>'<tr><td><b>'+f.w+'</b></td><td>'+(notes[i]?esc(notes[i]):'<span style="color:var(--ink-3)">nothing</span>')+'</td><td>'+f.name+'</td><td class="n">'+per[i]+' of 6</td></tr>').join('')+'</tbody></table>';
+        res.innerHTML=t;res.hidden=false;rst.hidden=false;rst.focus();reveal('aliens');return;}
+      $('a-k').textContent=k+1;cur.innerHTML=alien(novel[k],'new alien '+(k+1));tb.forEach(b=>b.setAttribute('aria-pressed','false'));
+    }
+    sub.addEventListener('click',()=>{if(k>=novel.length)return;answers.push(tb.map(b=>b.getAttribute('aria-pressed')==='true'?1:0));k++;$('a-done').textContent=k;show();});
+    rst.addEventListener('click',()=>{k=0;answers.length=0;res.hidden=true;rst.hidden=true;tog.hidden=false;sub.hidden=false;$('a-done').textContent=0;show();tb[0].focus();});
+    $('a-hide').addEventListener('change',e=>{tr.style.visibility=e.target.checked?'hidden':'visible';words.style.visibility=e.target.checked?'hidden':'visible';});
+    show();
+  })();
+
+  /* 6. Dinosaurs */
+  (function(){
+    const cv=$('d-cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+    const P=28,S=W-2*P,SH=H-2*P;const px=x=>P+x*S,py=y=>P+(1-y)*SH;
+    const EX=[{x:0.28,y:0.42,l:[0.6,0.3,0.1],n:'A'},{x:0.72,y:0.62,l:[0.1,0.3,0.6],n:'B'}];
+    const r=mulberry(19);const T=[];while(T.length<12){const x=0.08+0.84*r(),y=0.08+0.84*r();if(EX.every(e=>Math.hypot(e.x-x,e.y-y)>0.1))T.push({x,y});}
+    const proto=[0,1,2].map(c=>{let wx=0,wy=0,w=0;EX.forEach(e=>{wx+=e.l[c]*e.x;wy+=e.l[c]*e.y;w+=e.l[c];});return{x:wx/w,y:wy/w};});
+    const argmax=a=>a.indexOf(Math.max(...a));
+    const nearestProto=(x,y)=>{let b=0,bd=1e9;proto.forEach((p,c)=>{const d=Math.hypot(p.x-x,p.y-y);if(d<bd){bd=d;b=c;}});return b;};
+    const nearestEx=(x,y)=>{const d=EX.map(e=>Math.hypot(e.x-x,e.y-y));return argmax(EX[d[0]<=d[1]?0:1].l);};
+    // creature drawing: x sets neck length, y sets leg length
+    function creature(x,y,label){
+      const st='stroke="var(--edge)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+      const G=196,leg=22+70*y,bb=G-leg,cy=bb-26,cx=96;
+      const nl=18+72*x,nx0=cx+42,ny0=cy-14,hx=nx0+nl*0.62,hy=ny0-nl*0.78;
+      let s='<svg viewBox="0 -8 210 210" role="img" aria-label="'+label+'" style="overflow:visible">';
+      s+='<path d="M'+(cx-26)+' '+bb+' V'+G+' M'+(cx+26)+' '+bb+' V'+G+'" '+st+'/>';
+      s+='<path d="M'+(cx-30)+' '+(bb-5)+' V'+G+' M'+(cx+30)+' '+(bb-5)+' V'+G+'" '+st+'/>';
+      s+='<path d="M'+(cx-48)+' '+(cy-4)+' C'+(cx-78)+' '+(cy-6)+' '+(cx-86)+' '+(cy-34)+' '+(cx-94)+' '+(cy-46)+'" '+st+'/>';
+      s+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="52" ry="26" fill="var(--ground)" stroke="var(--edge)" stroke-width="3"/>';
+      s+='<path d="M'+nx0+' '+ny0+' L'+hx+' '+hy+'" stroke="var(--edge)" stroke-width="8" stroke-linecap="round"/>';
+      s+='<ellipse cx="'+(hx+5)+'" cy="'+(hy-4)+'" rx="14" ry="9" fill="var(--ground)" stroke="var(--edge)" stroke-width="3"/>';
+      s+='<circle cx="'+(hx+9)+'" cy="'+(hy-6)+'" r="2.4" fill="var(--ink)"/>';
+      s+='<path d="M10 '+G+' H200" stroke="var(--ink-3)" stroke-width="1.5"/>';
+      return s+'</svg>';
+    }
+    $('d-exA').innerHTML=creature(EX[0].x,EX[0].y,'example A: a short neck and medium legs');
+    $('d-exB').innerHTML=creature(EX[1].x,EX[1].y,'example B: a long neck and long legs');
+    let k=0;const ans=[];let mode='proto',done=false;
+    const cur=$('d-cur'),who=$('d-who');
+    function draw(){
+      const col=[css('--khaki'),css('--blue'),css('--navy')],edge=css('--edge'),ink=css('--ink'),ink2=css('--ink-2'),ground=css('--ground');
+      ctx.clearRect(0,0,W,H);
+      if(done){const f=mode==='proto'?nearestProto:nearestEx;const step=4;ctx.globalAlpha=0.35;
+        for(let i=P;i<P+S;i+=step)for(let j=P;j<P+SH;j+=step){const c=f((i-P)/S,1-(j-P)/SH);ctx.fillStyle=col[c];ctx.fillRect(i,j,step,step);}
+        ctx.globalAlpha=1;}
+      ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.strokeRect(P,P,S,SH);
+      ctx.fillStyle=ink2;ctx.font='12px '+css('--font');ctx.textAlign='center';ctx.fillText('neck length',W/2,H-8);
+      ctx.save();ctx.translate(11,H/2);ctx.rotate(-Math.PI/2);ctx.fillText('leg length',0,0);ctx.restore();
+      if(done&&mode==='proto'){proto.forEach((p,c)=>{const x=px(p.x),y=py(p.y);ctx.fillStyle=col[c];ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y-9);ctx.lineTo(x+9,y);ctx.lineTo(x,y+9);ctx.lineTo(x-9,y);ctx.closePath();ctx.fill();ctx.stroke();});
+        ctx.fillStyle=ink2;ctx.font='12px '+css('--font');ctx.textAlign='left';ctx.fillText('diamonds: the three prototypes',P+6,P+SH-8);}
+      T.forEach((t,i)=>{const x=px(t.x),y=py(t.y);
+        if(i<ans.length){ctx.fillStyle=col[ans[i]];ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fill();ctx.stroke();}
+        else if(i===k&&!done){ctx.fillStyle=css('--khaki');ctx.strokeStyle=edge;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,13,0,7);ctx.fill();ctx.stroke();ctx.fillStyle=ink;ctx.font='700 15px '+css('--font');ctx.textAlign='center';ctx.fillText('?',x,y+5);ctx.font='700 12px '+css('--font');ctx.fillText('sorting now',x,y-19);}
+        else{ctx.globalAlpha=0.3;ctx.strokeStyle=css('--ink-3');ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,3,0,7);ctx.stroke();ctx.globalAlpha=1;}});
+      EX.forEach(e=>{const x=px(e.x),y=py(e.y);ctx.fillStyle=ground;ctx.strokeStyle=edge;ctx.lineWidth=2.5;ctx.fillRect(x-12,y-12,24,24);ctx.strokeRect(x-12,y-12,24,24);
+        ctx.fillStyle=ink;ctx.font='700 16px '+css('--font');ctx.textAlign='center';ctx.fillText(e.n,x,y+6);});
+    }
+    redraws.push(draw);
+    function show(){if(k<T.length){cur.innerHTML=creature(T[k].x,T[k].y,'new creature '+(k+1));$('d-k').textContent=k+1;}}
+    const cls=$('d-cls'),after=$('d-after');
+    function finish(){done=true;cls.hidden=true;after.hidden=false;who.hidden=true;reveal('dinos');
+      const agp=ans.reduce((s,a,i)=>s+(a===nearestProto(T[i].x,T[i].y)?1:0),0),age=ans.reduce((s,a,i)=>s+(a===nearestEx(T[i].x,T[i].y)?1:0),0);
+      $('d-agp').textContent=agp;$('d-age').textContent=age;$('d-two').textContent=ans.filter(a=>a===1).length;
+      $('d-how').textContent='All twelve sorted. On the map, each dot is coloured with the species you chose. The shading shows what a model would choose at every position: the prototype model sorts by distance to three species prototypes placed between A and B, the nearest-example model copies the majority species of whichever example is closer.';$('d-proto').focus();}
+    cls.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(done)return;ans.push(+b.dataset.c);k++;$('d-done').textContent=k;if(k>=T.length)finish();else show();draw();}));
+    $('d-proto').addEventListener('click',()=>{mode='proto';$('d-proto').setAttribute('aria-pressed','true');$('d-exem').setAttribute('aria-pressed','false');draw();});
+    $('d-exem').addEventListener('click',()=>{mode='exem';$('d-proto').setAttribute('aria-pressed','false');$('d-exem').setAttribute('aria-pressed','true');draw();});
+    $('d-reset').addEventListener('click',()=>{k=0;ans.length=0;done=false;cls.hidden=false;after.hidden=true;who.hidden=false;$('d-done').textContent=0;$('d-how').textContent='Twelve new creatures arrive one at a time. Pick the species each most likely belongs to.';show();draw();cls.querySelector('button').focus();});
+    show();draw();
+  })();
+})();
+</script>

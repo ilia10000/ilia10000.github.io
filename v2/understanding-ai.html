@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding AI systems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  button,input,select,textarea{font-family:var(--font);font-size:var(--s1);color:var(--ink)}
+  .mock{font-size:12px;color:var(--ink-3);padding:var(--u1) 0}
+  .num,.stat,.tab{font-variant-numeric:tabular-nums}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  /* diagram vocabulary */
+  .node{display:inline-block;padding:2px 10px;border:2px solid var(--edge);font-weight:500;line-height:1.3}
+  .node.k{background:var(--khaki);color:var(--khaki-ink)} .node.b{background:var(--blue);color:var(--blue-ink)}
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3)}
+  .open h1{font-size:var(--s5);line-height:1.15;max-width:34ch}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0;max-width:52ch}
+
+  /* figures */
+  figure{margin:0}
+  figure img{display:block;width:100%;height:auto}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) figure img{background:var(--plate);padding:var(--u2)} }
+  :root[data-theme="dark"] figure img{background:var(--plate);padding:var(--u2)}
+  @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) figure img{padding:0;mix-blend-mode:multiply} }
+  :root[data-theme="light"] figure img{padding:0;mix-blend-mode:multiply}
+
+  /* evidence */
+  .part{padding:var(--u3) 0 0}
+  .pair{display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:start}
+  .part .pair{margin-bottom:var(--u4)}
+  .inst .pair{margin-top:var(--u3)}
+  .pair.flip{grid-template-columns:7fr 5fr}
+  .pair.flip figure{order:-1}
+  .pair.flip .box{order:-1}
+  .part .pair h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .pair .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .pair figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:var(--u1)}
+  .pair.stack{grid-template-columns:1fr}
+  .pair.stack figure{max-width:720px}
+  .pair.stack figure img{max-width:720px}
+  .part .after{padding-top:var(--u4)}
+
+  /* instruments */
+  .inst{padding-top:var(--u5)}
+  .inst h2{font-size:var(--s4);line-height:1.15;max-width:24ch}
+  .inst .intro{margin-top:var(--u2)}
+  .inst .lead{margin-top:var(--u2);max-width:66ch}
+  .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .box{border:2px solid var(--edge);padding:var(--u2) var(--u3) var(--u3)}
+  .box .q{font-weight:700;font-size:var(--s2);line-height:1.3;margin-bottom:var(--u2)}
+  .box .q em{font-style:normal;background:var(--khaki);color:var(--khaki-ink);padding:0 6px}
+  .box .how{color:var(--ink-2);margin:0 0 var(--u3);max-width:66ch}
+  .box .how b{color:var(--ink);font-weight:500}
+  .box .intro{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin:0 0 var(--u2)}
+  .box h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  input[type=number],input[type=text],select,textarea{display:block;width:100%;margin-top:4px;padding:6px 8px;border:2px solid var(--edge);background:var(--ground);color:var(--ink);font-size:var(--s1);line-height:1.3}
+  input[type=number]{max-width:120px}
+  textarea{min-height:76px;resize:vertical}
+  select{appearance:auto}
+  details.more{margin-top:var(--u2);max-width:70ch}
+  details.more summary{display:inline-block;cursor:pointer;list-style:none;font-weight:500;font-size:15px;line-height:1.3;padding:2px 10px 2px 8px;border:2px solid var(--edge)}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::before{content:"+";display:inline-block;width:1em;font-weight:400}
+  details.more[open] summary::before{content:"\2212"}
+  details.more p{margin:8px 0 0;font-size:15px;color:var(--ink-2);max-width:70ch}
+  details.more .src{margin-top:var(--u1)}
+  details.more .body{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin-top:8px}
+  details.more .body p{max-width:none;margin:0}
+  .model{font-size:14px;color:var(--ink-2);max-width:80ch;margin-top:var(--u2)}
+
+  /* controls */
+  .btn{border:2px solid var(--edge);background:none;padding:5px 12px;font-size:15px;cursor:pointer;line-height:1.3}
+  .btn:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .btn[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .btn[disabled]{opacity:.45;cursor:default} .btn[disabled]:hover{outline:none}
+  .btns{display:flex;gap:var(--u1);flex-wrap:wrap;align-items:center}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--u2)}
+  .opt{border:2px solid var(--edge);background:none;padding:12px 14px;text-align:left;cursor:pointer;line-height:1.35;font-size:var(--s1)}
+  .opt:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .opt[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .opt b{display:block;font-weight:700;margin-bottom:2px}
+  .opt.big{font-size:var(--s3);font-weight:700;text-align:center;padding:16px}
+  .prog{font-size:14px;color:var(--ink-3);margin-top:var(--u2)}
+  .result{margin-top:var(--u2);font-size:var(--s1);max-width:70ch}
+  .result b{font-weight:700}
+  .field{display:block;font-size:14px;color:var(--ink-2);margin-bottom:var(--u2)}
+  .field b{color:var(--ink);font-weight:500}
+  .row3{display:grid;grid-template-columns:120px 120px 120px auto;gap:var(--u2);align-items:end}
+  .row3 .field{margin-bottom:0}
+  .log{margin-top:var(--u2);font-size:15px;line-height:1.5;display:grid;grid-template-columns:auto auto 1fr;column-gap:var(--u2);row-gap:2px;color:var(--ink-2)}
+  .log .h{color:var(--ink-3);font-size:14px}
+  .log .m{color:var(--ink);font-weight:700}
+  .log.gb{grid-template-columns:auto 1fr auto}
+  canvas{width:100%;height:auto;display:block}
+
+  /* numbers */
+  .mats{display:grid;grid-template-columns:1.4fr 1fr 1fr;column-gap:var(--u3);align-items:start;margin-top:var(--u2)}
+  .mats canvas{width:100%;height:auto;display:block}
+  .mats h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px;min-height:2.6em}
+  .task{margin-bottom:var(--u2)}
+
+  /* falsify */
+  .hyp{margin-bottom:var(--u2)}
+
+  /* grammar */
+  .strings{display:flex;flex-wrap:wrap;gap:var(--u1) var(--u2);margin:var(--u1) 0 var(--u2)}
+  .strings span{display:inline-block;border:2px solid var(--edge);background:var(--khaki);color:var(--khaki-ink);padding:2px 10px;font-weight:500;letter-spacing:.12em}
+  .probe{font-size:var(--s5);font-weight:700;letter-spacing:.14em;line-height:1.1;margin:var(--u2) 0;font-variant-numeric:tabular-nums}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3);font-size:15px;color:var(--ink-2);margin-top:var(--u2)}
+  .two b{color:var(--ink);font-weight:700}
+
+  /* closing */
+  .close{margin-top:var(--u6);padding-top:var(--u4);border-top:2px solid var(--edge)}
+  .close p{font-size:var(--s2);line-height:1.4;color:var(--ink-2);max-width:60ch}
+  .related{padding-top:var(--u4)}
+  .related h2{font-size:var(--s3);margin-bottom:var(--u2)}
+
+  /* papers */
+  .papers{padding-top:var(--u5)}
+  .papers h2{font-size:var(--s4);margin-bottom:var(--u3)}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u5);row-gap:var(--u3)}
+  .prow{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:var(--u2);margin-bottom:var(--u2)}
+  .prow.noimg{grid-template-columns:1fr}
+  .prow img{width:72px;height:auto;display:block;border:1px solid var(--ink-3)}
+  .prow .t{line-height:1.35}
+  .prow .v{font-size:14px;color:var(--ink-3)}
+  .papers .also{margin-top:var(--u3);font-size:15px;color:var(--ink-2)}
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){
+    .pair,.pair.flip,.mats,.pgrid{grid-template-columns:1fr}
+    .pair.flip figure,.pair.flip .box{order:0}
+    .mats canvas{max-width:360px}
+    .row3{grid-template-columns:1fr 1fr 1fr}
+    .mast{flex-direction:column;gap:var(--u1)}
+  }
+  @media (max-width:560px){ .opts,.two{grid-template-columns:1fr} .row3{grid-template-columns:1fr 1fr} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html" aria-current="page">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open" id="top">
+    <h1>A model's concepts and habits are not ours, so we study it like a subject.</h1>
+    <p class="lede">The tasks cognitive science built to study people work on language models too: similarity judgments, association tests, rule-discovery games, risky bets. Run on a model, they show concepts, reasoning habits and failure modes that a partner has to know about.</p>
+  </div>
+
+  <!-- 1. Numbers -->
+  <section class="part">
+    <div class="pair">
+      <div>
+        <h3>A language model's idea of a number is partly a string.</h3>
+        <p>Ask a model how similar every pair of integers from 0 to 999 is, and two patterns explain its answers: distance on a log scale, which is how people treat magnitude, and how many digit edits separate the two numbers written out. Together they explain 73% of the variance in six models' judgments; magnitude alone explains 61% and digit edits alone 21%. The string habit has a cost. On a task where the numerically closest option and the string-closest option disagree, Llama-3.1-8B gave the string-based wrong answer 37% of the time with three-digit numbers and 47% with five-digit numbers, while GPT-4o almost never did.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a>, arXiv 2025.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/marjieh2025what.jpg" width="1000" height="458" loading="lazy" alt="Eight similarity matrices over the integers 0 to 999: six from language models (GPT-4o, Llama-3.1-8B, Claude-3.5-Sonnet, DeepSeek-V3, Llama-3.1-70B, Mixtral-8x22B) and two reference patterns, Levenshtein edit distance and log-linear numerical distance.">
+        <figcaption>Similarity judgments over every pair of integers from 0 to 999 for six language models, beside the two reference patterns: string edit distance (Levenshtein) and distance on a log scale. The off-diagonal stripes in the models' matrices are the string pattern showing through. Figure from <a href="https://arxiv.org/abs/2502.01540">the 2025 paper</a>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="numbers">
+    <h2>A language model's idea of 12 is partly a magnitude and partly a string.</h2>
+    <p class="lead">When a person says 12 is close to 13, they mean size. A language model also reads numbers as strings of digits, so to it 12 can look close to 21. The lab studies where a model's concepts match ours and where they quietly diverge, because a partner that counts differently makes a poor thought partner. In this game you compare numbers by feel, and the page checks whether your choices follow size or shared digits.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <p class="intro">Click whichever of the two numbers feels more similar to the highlighted one; the grids fill in as you go.</p>
+      <div class="task" id="n-task">
+        <div class="q" id="n-q">Question <span class="num" id="n-k">1</span> of 16. Is <em id="n-ref">12</em> more similar to <span id="n-a-t">13</span> or to <span id="n-b-t">24</span>?</div>
+        <div class="opts" id="n-opts"><button class="opt big" id="n-a">13</button><button class="opt big" id="n-b">24</button></div>
+        <div class="prog"><span class="num" id="n-done">0</span> of 16 answered</div>
+      </div>
+      <div class="mats">
+        <div><h3>Your choices: how often you picked the pair as the more similar one</h3><canvas id="n-you" width="360" height="360" aria-label="your similarity matrix over eight numbers, filled in as you answer; darker means you picked that pair as more similar more often"></canvas></div>
+        <div><h3>Size: numbers close in value count as similar</h3><canvas id="n-mag" width="360" height="360" aria-label="reference similarity matrix from log-linear numerical distance"></canvas></div>
+        <div><h3>Digits: numbers that share digits count as similar</h3><canvas id="n-str" width="360" height="360" aria-label="reference similarity matrix from Levenshtein edit distance between the decimal strings"></canvas></div>
+      </div>
+      <div class="result" id="n-res" aria-live="polite">Answer three or more questions to see which pattern your choices follow.</div>
+      <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="n-reset" hidden>Start again</button></div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Six language models were asked how similar every pair of integers from 0 to 999 is. Two reference structures explain those judgments: distance on a log scale, which is how people treat magnitudes, and the string-edit distance between the digits. Together they account for 73% of the variance, and magnitude alone for 61%. On a task where the numerically closest option and the string-closest option disagree, Llama-3.1-8B gave the string-based wrong answer 37% of the time with three-digit numbers, and GPT-4o almost never.</p><div class="src"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a>, arXiv 2025.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You produced the same kind of data the paper collected from the models, a similarity structure over numbers, and the page fitted the same two references to it. Five of the sixteen triplets pit magnitude against string (24 against 30 or 4, for instance); those decide which reference wins. In the paper, all six models leaned mostly on magnitude in the default setting, and the smaller Llama model leaned on strings most often when the two disagreed.</p></div></details>
+  </section>
+
+  <!-- 2. Biased associations; 3. Confirmation bias -->
+  <section class="part">
+    <div class="pair stack after">
+      <div>
+        <h3>Explicitly unbiased models still form biased associations.</h3>
+        <p>Two tests borrowed from social psychology were put to eight language models tuned to give unbiased answers when asked directly. In the word-association test the model sorts words such as wedding or office between two names; in the relative-decision test it writes two profiles and decides who should do which of two tasks. GPT-4 looks unbiased on standard benchmarks, answering "not enough info" 98% of the time on one of them, yet it showed stereotype-consistent associations in 19 of 21 stereotypes across race, gender, religion and health, and biased decisions in 19 of 21 as well, over more than 33,000 prompts. Larger models were more biased than smaller ones, and how biased a model's word associations were predicted how biased its decisions were. Asked to moderate its own outputs, GPT-4 did not detect the bias.</p>
+        <div class="src"><a href="https://doi.org/10.1073/pnas.2416228122">Explicitly unbiased large language models still form biased associations</a>, PNAS 2025.</div>
+      </div>
+    </div>
+
+    <div class="pair stack">
+      <div>
+        <h3>Models test the rules they already believe.</h3>
+        <p>Wason's rule-discovery game, where the player sees 2, 4, 6 and has to find the hidden rule by proposing triples, was given to eleven language models acting as agents, alternating guesses and tests over 45 turns. Confirmation bias was measured as the ratio of tests that would break the model's current guess to tests that fit it, and that ratio tracked success (Spearman 0.75 for models in thinking mode). Success ranged from 6% for Qwen3-8B without thinking to 78% for Gemini 2.5 Pro. A prompt taken from human psychology, think in opposites, improved success in all eleven settings and raised the average rule-discovery rate from 42% to 56%; distilling that behaviour into an 8B model raised its success from 21% to 59%.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a>, arXiv 2026.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="falsify">
+    <div class="pair">
+      <div>
+        <h2>Models test the rule they already believe.</h2>
+        <p class="lead">Once you have a guess about how something works, it is tempting to run tests that agree with it and skip the tests that could prove it wrong. Language models do this too when they act as agents, and the ones that test against their own guess find the answer more often. The lab cares because a partner that only confirms what it already believes cannot help you catch your own mistakes. Here you start from 2, 4, 6, pick a hypothesis, and propose triples; the page scores each test by whether it could have falsified your guess.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Eleven language models played Wason's rule-discovery game as agents, alternating guesses and tests with yes or no feedback. Confirmation bias was measured as the ratio of tests incompatible with the model's current guess to tests compatible with it, and that ratio predicted success. Success ranged from 6% for Qwen3-8B without thinking to 78% for Gemini 2.5 Pro. A prompt borrowed from human psychology, think in opposites, raised the average rule-discovery rate from 42% to 56%.</p><div class="src"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a>, arXiv 2026.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>Each triple you proposed was scored against the hypothesis you had selected at the time: a triple that fits your hypothesis can only confirm it; a triple that breaks it can falsify it. The ratio of the second kind to the first is the paper's measure. Most people, and most models, run far more confirming tests than falsifying ones.</p></div></details>
+      </div>
+      <div class="box">
+        <div class="q">Find the secret rule behind <em>2, 4, 6</em>.</div>
+        <p class="intro">Pick the rule you suspect, propose triples to test it, and name the rule when you are confident. Up to 12 tests.</p>
+        <label class="field hyp"><b>Your current hypothesis</b>
+          <select id="w-hyp">
+            <option value="">Pick one to start</option>
+          </select>
+        </label>
+        <div class="row3">
+          <label class="field"><b>First</b><input type="number" id="w-a" step="1" aria-label="first number"></label>
+          <label class="field"><b>Second</b><input type="number" id="w-b" step="1" aria-label="second number"></label>
+          <label class="field"><b>Third</b><input type="number" id="w-c" step="1" aria-label="third number"></label>
+          <div class="btns"><button class="btn" id="w-test">Test</button><button class="btn" id="w-guess">Guess the rule</button></div>
+        </div>
+        <div class="prog" id="w-msg" aria-live="polite">No tests yet.</div>
+        <div class="log" id="w-log" aria-live="polite"><div class="h">triple</div><div class="h">rule says</div><div class="h">for your hypothesis</div></div>
+        <div class="result" id="w-res" hidden></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="w-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Mind your step -->
+  <section class="part">
+    <div class="pair flip after">
+      <div>
+        <h3>Reasoning step by step can make a model worse at what makes people worse.</h3>
+        <p>Psychology knows several kinds of task where thinking in words makes people worse, among them learning an artificial grammar, recognising faces, and classifying with a rule that has exceptions. Six such tasks were scaled into benchmarks and run on nine models, answering directly and with chain-of-thought reasoning. Chain of thought hurt on three of them. On grammar learning GPT-4o lost 23.1 points and 8 of 9 models dropped; on face recognition all six vision-language models fell, GPT-4o from 64.0% to 51.2%; on the exceptions task GPT-4o needed 12.5 passes with chain of thought against 2.9 answering directly. On the other three, the human failures come from limits models do not share: models have seen formal logic, lack the motor intuition that words override, and hold many features in a long context, so reasoning mostly helped or made no difference.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a>, ICML 2025.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/liu2025mindyourstep.jpg" width="1000" height="440" loading="lazy" alt="Six panels, one per task archetype: implicit statistical learning of letter strings, face recognition among similar faces, classifying cars with an exception, judging whether two statements can both be true, predicting which tilted cup spills, and choosing an apartment from many feature statements.">
+        <figcaption>The six kinds of task in the benchmark, each one where thinking in words is known to make people worse or to leave them unaffected: learning a letter-string grammar, recognising a face among look-alikes, classifying with an exception, spotting a logical inconsistency, predicting which cup spills, and choosing an apartment from many features. Figure from <a href="https://arxiv.org/abs/2410.21333">the ICML 2025 paper</a>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="grammar">
+    <h2>Writing the rule down can make you worse at using it.</h2>
+    <p class="lead">People can learn a pattern well enough to use it without being able to say what it is, and being made to state it can make them worse at using it. The same thing happens to language models when they are made to reason step by step on tasks of this kind. The lab uses what psychology knows about people to predict where a model's reasoning will help and where it will hurt. In this game you sort strings by feel, then write the rule you think you see and sort again.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div id="g-0">
+        <div class="q">Twelve strings made by a hidden rule.</div>
+        <p class="intro">Look at the twelve strings, then judge twelve new ones by feel. Do not try to work the rule out yet.</p>
+        <div class="strings" id="g-train" aria-label="example strings"></div>
+        <div class="btns"><button class="btn" id="g-start">Start round 1</button></div>
+      </div>
+      <div id="g-1" hidden>
+        <div class="q"><span id="g-round">Round 1</span>, string <span class="num" id="g-k">1</span> of 12. Does it follow the rule?</div>
+        <div class="probe" id="g-probe" aria-live="polite">MTTXV</div>
+        <div class="opts"><button class="opt" id="g-yes"><b>Follows the rule</b>press Y</button><button class="opt" id="g-no"><b>Does not</b>press N</button></div>
+        <div class="prog"><span class="num" id="g-done">0</span> of 12 judged</div>
+      </div>
+      <div id="g-2" hidden>
+        <div class="q">Round 1 done. Now write the rule as you understand it.</div>
+        <div class="strings" id="g-train2" aria-label="example strings again"></div>
+        <label class="field"><b>Your rule, in your own words</b><textarea id="g-rule" placeholder="For example: strings start with ..."></textarea></label>
+        <div class="btns"><button class="btn" id="g-start2" disabled>Start round 2</button><span style="font-size:14px;color:var(--ink-3)">Write at least a sentence to continue.</span></div>
+      </div>
+      <div id="g-3" hidden>
+        <div class="result" id="g-res"></div>
+        <div class="two" id="g-two"></div>
+        <p class="model" id="g-truth"></p>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="g-reset">Start again</button></div>
+      </div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Six kinds of task where thinking in words hurts people were scaled into benchmarks and run on nine models, answering directly and with chain-of-thought reasoning. Chain of thought hurt on three of them: learning an artificial grammar, recognising faces, and classifying with a rule that has exceptions. On grammar learning, GPT-4o with chain of thought lost 23.1 points and 8 of 9 models dropped. On the other three, the human failures come from limits models do not share, such as a small working memory, so reasoning mostly helped or made no difference.</p><div class="src"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a>, ICML 2025.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You classified strings on feel, then wrote a rule and classified again. In people, stating the rule tends to lower accuracy on this task, because the learned structure is not the stated rule. The paper's point is that the same pattern shows up in language models when they are made to reason step by step, and that the psychology literature predicts where.</p></div></details>
+  </section>
+
+  <!-- 5. Gambles: the model's picture of a person -->
+  <section class="part">
+    <div class="pair flip after">
+      <div>
+        <h3>A model's picture of a person is more rational than the person.</h3>
+        <p>Asked to predict how a person will choose between two risky bets, on 9,831 problems from the choices13k dataset, five language models predicted a chooser closer to the expected-value maximiser than people are. Reasoning step by step, GPT-4o's predictions tracked expected value at 0.94 and GPT-4-Turbo's at 0.93, where people's own choices track it at 0.48, and the models' agreement with what people actually chose topped out at 0.64. Asked the inverse question, what a person prefers given the choices they made, the same models matched human inferences closely, at 0.97 in the positive context, because people also assume that others are rational. The model's picture of a person is an idealised one.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/liu2025large.jpg" width="1000" height="351" loading="lazy" alt="Two cartoon panels: a language model and a person each choose between two gambles; a language model and a person each infer what another person prefers from that person's choices.">
+        <figcaption>The two tasks in the study: predicting a person's choice between gambles, and inferring what a person prefers from the choices they made. Figure from <a href="https://arxiv.org/abs/2406.17055">the ICLR 2025 paper</a>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="gambles">
+    <div class="pair">
+      <div>
+        <h2>Models expect you to take the better bet.</h2>
+        <p class="lead">Asked to predict what a person will choose between two risky bets, language models mostly predict the option with the higher expected value. Real people take the sure thing, avoid losses and overweight small chances far more often than that. The lab cares because a partner that predicts an idealised you will keep being surprised by the actual you. Take the six bets in the box and see how often your pick matched the expected-value maximiser the models resemble.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Language models were asked to predict human choices on risky-choice problems from the choices13k dataset. When the models reasoned step by step, their predictions correlated with expected value at 0.94 for GPT-4o, against 0.48 for people's actual choices, and their correlation with what people actually chose topped out at 0.64. The models predicted an idealised chooser better than a real one.</p><div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You made six choices between risky bets, the kind of problem in choices13k. For each one the log shows which option had the higher expected value, which is what the models tended to predict a person would take. The tally is how often you agreed with that idealised chooser. Every disagreement is a case where the models' picture of a person would have missed you.</p></div></details>
+      </div>
+      <div class="box">
+        <div class="q" id="gb-q">Bet <span class="num" id="gb-k">1</span> of 6. Which would you take?</div>
+        <div class="opts" id="gb-opts">
+          <button class="opt" id="gb-a"><b>A</b><span id="gb-a-t"></span></button>
+          <button class="opt" id="gb-b"><b>B</b><span id="gb-b-t"></span></button>
+        </div>
+        <div class="prog"><span class="num" id="gb-done">0</span> of 6 answered</div>
+        <div class="log gb" id="gb-log" aria-live="polite"><div class="h">bet</div><div class="h">your pick</div><div class="h">higher expected value</div></div>
+        <div class="result" id="gb-res" hidden></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="gb-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Closing -->
+  <section class="close">
+    <p>A model's idea of a number, the associations it forms, the way it tests its own beliefs, what happens to it when it reasons in words, and the person it imagines when asked to predict one: each differs from ours, and each can be measured with a task borrowed from cognitive science. A partner has to know where those differences lie. Mapping them is what this part of the lab's work is for.</p>
+  </section>
+
+  <section class="related">
+    <h2>Related stories</h2>
+    <p>The <a href="understanding-people.html">people page</a> runs the same kinds of task on people, where the object of study is a person's own similarity judgments, categories and choices. <a href="working-with-ai.html">Working with AI</a> asks what these habits mean once a person and a model are working on the same problem. <a href="alignment.html">Alignment and learning</a> measures how far a model's concepts sit from ours and what that distance costs when one tries to teach the other.</p>
+  </section>
+
+  <section class="papers" id="papers">
+    <h2>Papers on this page</h2>
+    <div class="pgrid">
+      <div>
+        <div class="prow"><img src="assets/web/titles/marjieh2025what.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a></div><div class="v">arXiv, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/bai2025unbiased.jpg" width="480" height="257" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1073/pnas.2416228122">Explicitly unbiased large language models still form biased associations</a></div><div class="v">Proceedings of the National Academy of Sciences, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/jhaveri2026failing.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a></div><div class="v">arXiv, 2026</div></div></div>
+      </div>
+      <div>
+        <div class="prow"><img src="assets/web/titles/liu2025mindyourstep.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a></div><div class="v">ICML, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/liu2025large.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a></div><div class="v">ICLR, 2025</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html" aria-current="page">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>
+
+<script>
+function reveal(id){document.querySelectorAll('#'+id+' details.more').forEach(d=>{d.open=true;});}
+/* numbers (from v14_research_you) */
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  const corr=(xs,ys)=>{const m=v=>v.reduce((p,q)=>p+q,0)/v.length;const mx=m(xs),my=m(ys);let num=0,dx=0,dy=0;for(let i=0;i<xs.length;i++){num+=(xs[i]-mx)*(ys[i]-my);dx+=(xs[i]-mx)**2;dy+=(ys[i]-my)**2;}return dx&&dy?num/Math.sqrt(dx*dy):0;};
+  const fmt=r=>(r>=0?'+':'')+r.toFixed(2);
+
+  /* 1. What is a number */
+  (function(){
+    const N=[3,4,7,12,13,24,30,100],n=N.length;
+    const T=[[4,3,5],[6,5,0],[1,2,5],[7,6,3],[4,0,2],[5,6,1],[0,1,6],[3,2,7],[6,7,0],[2,3,6],[3,4,5],[7,4,1],[1,0,5],[5,3,1],[0,4,7],[2,1,7]];
+    function lev(a,b){a=String(a);b=String(b);const d=[];for(let i=0;i<=a.length;i++){d[i]=[i];}for(let j=1;j<=b.length;j++)d[0][j]=j;
+      for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length];}
+    let dmax=0,lmax=0;const DL=[],DS=[];
+    for(let i=0;i<n;i++){DL[i]=[];DS[i]=[];for(let j=0;j<n;j++){DL[i][j]=Math.abs(Math.log(N[i])-Math.log(N[j]));DS[i][j]=lev(N[i],N[j]);dmax=Math.max(dmax,DL[i][j]);lmax=Math.max(lmax,DS[i][j]);}}
+    const mag=DL.map(r=>r.map(d=>1-d/dmax)),str=DS.map(r=>r.map(d=>1-d/lmax));
+    let you,seen,k;
+    function draw(cv,M,mx){const ctx=cv.getContext('2d'),W=cv.width;const m=34,s=(W-m)/n;ctx.clearRect(0,0,W,W);
+      ctx.font='500 13px '+css('--font');ctx.fillStyle=css('--ink-2');ctx.textAlign='center';ctx.textBaseline='middle';
+      for(let i=0;i<n;i++){ctx.fillText(String(N[i]),m+i*s+s/2,m/2);ctx.textAlign='right';ctx.fillText(String(N[i]),m-6,m+i*s+s/2);ctx.textAlign='center';}
+      const navy=css('--navy');const rgb=hex=>[parseInt(hex.slice(1,3),16),parseInt(hex.slice(3,5),16),parseInt(hex.slice(5,7),16)];const [r,g,b]=rgb(navy);
+      for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=i===j?1:(mx?M[i][j]/mx:M[i][j]);ctx.fillStyle=`rgba(${r},${g},${b},${Math.max(0,Math.min(1,v))})`;ctx.fillRect(m+j*s+1,m+i*s+1,s-2,s-2);}
+      ctx.strokeStyle=css('--edge');ctx.lineWidth=2;ctx.strokeRect(m+1,m+1,W-m-2,W-m-2);}
+    const A=$('n-a'),B=$('n-b'),res=$('n-res'),rst=$('n-reset');
+    function drawAll(){draw($('n-you'),you,Math.max(1,...you.flat()));draw($('n-mag'),mag,0);draw($('n-str'),str,0);}
+    redraws.push(drawAll);
+    function show(){
+      if(k>=T.length){$('n-q').textContent='Sixteen triplets done. Your structure and the two references are below.';$('n-opts').hidden=true;rst.hidden=false;reveal('numbers');return;}
+      const [r,a,b]=T[k];$('n-k').textContent=k+1;$('n-ref').textContent=N[r];$('n-a-t').textContent=N[a];$('n-b-t').textContent=N[b];A.textContent=N[a];B.textContent=N[b];
+    }
+    function report(){
+      const xs=[],ym=[],ys=[];for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)if(seen[i][j]){xs.push(you[i][j]/seen[i][j]);ym.push(mag[i][j]);ys.push(str[i][j]);}
+      if(xs.length<3)return;
+      const rm=corr(xs,ym),rs=corr(xs,ys);const d=rm-rs;
+      let verdict=Math.abs(d)<0.05?'The two are about even so far.':(d>0?'Your choices follow size more than digits.':'Your choices follow digits more than size.');
+      res.innerHTML='Agreement with the size pattern <b class="stat">'+fmt(rm)+'</b>, with the digits pattern <b class="stat">'+fmt(rs)+'</b>, over the '+xs.length+' of 28 pairs your answers have covered. '+verdict;
+    }
+    function answer(pick){const [r,a,b]=T[k];const c=pick===0?a:b,o=pick===0?b:a;you[r][c]+=1;you[c][r]+=1;seen[r][c]+=1;seen[c][r]+=1;seen[r][o]+=1;seen[o][r]+=1;k++;$('n-done').textContent=k;
+      draw($('n-you'),you,Math.max(1,...you.flat()));report();show();}
+    function reset(){you=Array.from({length:n},()=>Array(n).fill(0));seen=Array.from({length:n},()=>Array(n).fill(0));k=0;$('n-done').textContent=0;$('n-opts').hidden=false;rst.hidden=true;
+      $('n-q').innerHTML='Question <span class="num" id="n-k">1</span> of 16. Is <em id="n-ref">12</em> more similar to <span id="n-a-t">13</span> or to <span id="n-b-t">24</span>?';
+      res.textContent='Answer three or more questions to see which pattern your choices follow.';drawAll();show();}
+    A.addEventListener('click',()=>answer(0));B.addEventListener('click',()=>answer(1));
+    rst.addEventListener('click',()=>{reset();A.focus();});
+    reset();
+  })();
+})();
+
+/* judgment (from v14_research_world) */
+(function(){
+  const $=id=>document.getElementById(id);
+
+  /* 2. Failing to falsify */
+  (function(){
+    const H=[
+      {id:'even2',t:'Even numbers going up by 2',f:(a,b,c)=>a%2===0&&b===a+2&&c===b+2},
+      {id:'by2',t:'Numbers going up by 2',f:(a,b,c)=>b===a+2&&c===b+2},
+      {id:'const',t:'Numbers going up by the same amount each time',f:(a,b,c)=>b-a===c-b&&b>a},
+      {id:'even',t:'Three even numbers',f:(a,b,c)=>a%2===0&&b%2===0&&c%2===0},
+      {id:'sum',t:'The last number is the sum of the first two',f:(a,b,c)=>a+b===c},
+      {id:'inc',t:'Any three numbers that increase',f:(a,b,c)=>a<b&&b<c},
+      {id:'avg',t:'The middle number is the average of the other two',f:(a,b,c)=>2*b===a+c},
+      {id:'pos',t:'Three positive numbers',f:(a,b,c)=>a>0&&b>0&&c>0}
+    ];
+    const HIDDEN='inc',MAX=12;
+    const sel=$('w-hyp'),ia=$('w-a'),ib=$('w-b'),ic=$('w-c'),tB=$('w-test'),gB=$('w-guess'),msg=$('w-msg'),log=$('w-log'),res=$('w-res'),rst=$('w-reset');
+    H.forEach(h=>{const o=document.createElement('option');o.value=h.id;o.textContent=h.t;sel.appendChild(o);});
+    let tests,conf,fals,guesses,over;
+    const hyp=()=>H.find(h=>h.id===sel.value);
+    function tally(){const ratio=conf?(fals/conf).toFixed(2):(fals?'all falsifying':'none yet');return '<b>'+tests+'</b> tests: <b>'+conf+'</b> could only confirm your hypothesis, <b>'+fals+'</b> could have falsified it. Incompatible-to-compatible ratio: <b class="stat">'+ratio+'</b>.';}
+    function finish(found){over=true;tB.disabled=true;gB.disabled=true;ia.disabled=ib.disabled=ic.disabled=sel.disabled=true;
+      res.hidden=false;res.innerHTML=(found?'That is the rule: any three numbers that increase. ':'Out of tests. The rule was: any three numbers that increase. ')+tally()+' In the paper this ratio ranged widely across models and tracked whether they found the rule; the think-in-opposites prompt raised the average discovery rate from 42% to 56%.';
+      rst.hidden=false;reveal('falsify');}
+    function test(){if(over)return;const h=hyp();if(!h){msg.textContent='Pick a hypothesis first, so the test can be scored against it.';sel.focus();return;}
+      const a=parseInt(ia.value,10),b=parseInt(ib.value,10),c=parseInt(ic.value,10);if([a,b,c].some(v=>Number.isNaN(v))){msg.textContent='Enter three whole numbers.';return;}
+      const fits=H.find(x=>x.id===HIDDEN).f(a,b,c);const compat=h.f(a,b,c);tests++;if(compat)conf++;else fals++;
+      [a+', '+b+', '+c,fits?'yes':'no',compat?'fits it, so can only confirm':'breaks it, so could falsify'].forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;if(i===1)d.className='m';log.appendChild(d);});
+      msg.textContent=tests+' of '+MAX+' tests used. '+conf+' confirming, '+fals+' falsifying.';ia.value=ib.value=ic.value='';ia.focus();
+      if(tests>=MAX)finish(false);}
+    function guess(){if(over)return;const h=hyp();if(!h){msg.textContent='Pick the rule you want to guess.';sel.focus();return;}guesses++;
+      if(h.id===HIDDEN)finish(true);else{msg.textContent='"'+h.t+'" is not the rule. '+(MAX-tests)+' tests left; change your hypothesis and keep testing.';}}
+    tB.addEventListener('click',test);gB.addEventListener('click',guess);
+    [ia,ib,ic].forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();test();}}));
+    function reset(){tests=conf=fals=guesses=0;over=false;tB.disabled=gB.disabled=false;ia.disabled=ib.disabled=ic.disabled=sel.disabled=false;sel.value='';ia.value=ib.value=ic.value='';
+      while(log.children.length>3)log.removeChild(log.lastChild);res.hidden=true;rst.hidden=true;msg.textContent='No tests yet.';}
+    rst.addEventListener('click',()=>{reset();sel.focus();});
+    reset();
+  })();
+
+  /* 4. Mind your step */
+  (function(){
+    const G={0:{M:1,V:2},1:{T:1,X:3},2:{R:2,X:3},3:{V:'E',M:4},4:{T:4,X:'E'}};
+    function acc(s){let st=0;for(const ch of s){if(st==='E'||!(ch in G[st]))return false;st=G[st][ch];}return st==='E';}
+    const train='MXV MTXV MTTXMX VRXV VXMTX MXMX VRRXV MTXMTTX VXV MTTTXV VRXMX VRRXMTX'.split(' ');
+    const S1='MTTXV MXR VRXMTX VTXV MXMTTX MRXV VRRRXV VXMV MTXMX XMV VXMX MTXVX'.split(' ');
+    const S2='MTXT MTTTXMX VRXX VRRXMX MTMXV VXMTTX VRXMR MTTTTXV VRRXMTV VRXMTTX MXMTXT MXMTX'.split(' ');
+    [$('g-train'),$('g-train2')].forEach(el=>train.forEach(s=>{const sp=document.createElement('span');sp.textContent=s;el.appendChild(sp);}));
+    const panels=[0,1,2,3].map(i=>$('g-'+i));function go(i){panels.forEach((p,j)=>p.hidden=j!==i);}
+    let round,set,k,hits,times,shown,r1,r2,t1,t2;
+    function show(){if(k>=set.length){if(round===1){r1=hits;t1=times;go(2);$('g-rule').focus();}else{r2=hits;t2=times;finish();}return;}
+      $('g-k').textContent=k+1;$('g-probe').textContent=set[k];shown=performance.now();}
+    function judge(yes){if(panels[1].hidden)return;const ok=acc(set[k])===yes;if(ok)hits++;times.push(performance.now()-shown);k++;$('g-done').textContent=k;show();}
+    function start(r){round=r;set=r===1?S1:S2;k=0;hits=0;times=[];$('g-round').textContent='Round '+r;$('g-done').textContent=0;go(1);show();$('g-yes').focus();}
+    $('g-start').addEventListener('click',()=>start(1));
+    $('g-start2').addEventListener('click',()=>start(2));
+    $('g-rule').addEventListener('input',e=>{$('g-start2').disabled=e.target.value.trim().length<15;});
+    $('g-yes').addEventListener('click',()=>judge(true));$('g-no').addEventListener('click',()=>judge(false));
+    document.addEventListener('keydown',e=>{if(panels[1].hidden||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;if(e.key==='y'||e.key==='Y')judge(true);else if(e.key==='n'||e.key==='N')judge(false);});
+    const med=a=>{const b=[...a].sort((x,y)=>x-y);return b.length?(b[Math.floor(b.length/2)]/1000):0;};
+    function finish(){const d=r2-r1;
+      $('g-res').innerHTML='Round 1, on feel: <b>'+r1+' of 12</b>. Round 2, after writing a rule: <b>'+r2+' of 12</b>. '+(d<0?'Writing the rule went with a drop of '+(-d)+'.':d>0?'You improved by '+d+', which practice on the same grammar can explain.':'No change.')+' In the paper, chain of thought lowered grammar-learning accuracy in 8 of 9 models, by 23.1 points for GPT-4o.';
+      $('g-two').innerHTML='<div>Median time per judgment, round 1: <b class="stat">'+med(t1).toFixed(1)+' s</b></div><div>round 2: <b class="stat">'+med(t2).toFixed(1)+' s</b></div><div style="grid-column:1 / -1">Your rule: <b>'+$('g-rule').value.replace(/[<>&]/g,ch=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[ch]))+'</b></div>';
+      $('g-truth').textContent='The rule: start with M or V. After M, any number of T, then X. After V, any number of R, then X. After that X, either V and stop, or M followed by any number of T and then X, and stop.';
+      go(3);reveal('grammar');}
+    $('g-reset').addEventListener('click',()=>{$('g-rule').value='';$('g-start2').disabled=true;go(0);$('g-start').focus();});
+    go(0);
+  })();
+})();
+
+/* gambles (from v15_people, ids renamed) */
+(function(){
+  const $=id=>document.getElementById(id);
+  const G=[
+    [['$40 for sure',40],['A 60% chance of $75, otherwise nothing',45]],
+    [['$50 for sure',50],['A 50% chance of $90, otherwise nothing',45]],
+    [['An 80% chance of $30, otherwise nothing',24],['A 20% chance of $110, otherwise nothing',22]],
+    [['$20 for sure',20],['A 25% chance of $100, otherwise nothing',25]],
+    [['Lose $30 for sure',-30],['A 40% chance of losing $80, otherwise nothing',-32]],
+    [['$42 for sure',42],['A 90% chance of $50, otherwise nothing',45]]
+  ];
+  let k=0,match=0;
+  const aB=$('gb-a'),bB=$('gb-b'),log=$('gb-log'),res=$('gb-res'),rst=$('gb-reset');
+  function show(){
+    if(k>=G.length){$('gb-q').textContent='Six bets done.';$('gb-opts').hidden=true;
+      res.hidden=false;res.innerHTML='<b>'+match+' of 6</b> of your picks matched the expected-value maximiser, the chooser the models most resembled. In the paper, models reasoning step by step tracked expected value at 0.93 to 0.94 while people\u2019s choices tracked it at 0.48.';
+      rst.hidden=false;reveal('gambles');return;}
+    $('gb-k').textContent=k+1;$('gb-a-t').textContent=G[k][0][0];$('gb-b-t').textContent=G[k][1][0];
+  }
+  function pick(j){const [a,b]=G[k];const evj=a[1]>=b[1]?0:1;const ok=j===evj;if(ok)match++;
+    const row=[String(k+1),(j?'B':'A')+', '+(j?b[0]:a[0]).toLowerCase(),(evj?'B':'A')+' ('+(evj?b[1]:a[1])+' vs '+(evj?a[1]:b[1])+')'+(ok?', matched':'')];
+    row.forEach((t,i)=>{const d=document.createElement('div');d.textContent=t;if(i===2&&ok)d.className='m';log.appendChild(d);});
+    k++;$('gb-done').textContent=k;show();}
+  aB.addEventListener('click',()=>pick(0));bB.addEventListener('click',()=>pick(1));
+  rst.addEventListener('click',()=>{k=0;match=0;while(log.children.length>3)log.removeChild(log.lastChild);res.hidden=true;rst.hidden=true;$('gb-opts').hidden=false;$('gb-q').innerHTML='Bet <span class="num" id="gb-k">1</span> of 6. Which would you take?';$('gb-done').textContent=0;show();aB.focus();});
+  show();
+})();
+</script>

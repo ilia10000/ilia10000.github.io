@@ -245,6 +245,11 @@ defaults:
       layout: talk
       author_profile: false
       share: false
+  # v2/ redesign preview: static HTML (no front matter), kept out of sitemap.xml
+  - scope:
+      path: "v2"
+    values:
+      sitemap: false
 
 # Sass/SCSS
 sass:

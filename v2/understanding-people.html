@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding people</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+    --fig-bg:transparent; --fig-pad:0; --fig-blend:multiply;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; --fig-bg:var(--plate); --fig-pad:16px; --fig-blend:normal; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; --fig-bg:var(--plate); --fig-pad:16px; --fig-blend:normal; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  button,input,select,textarea{font-family:var(--font);font-size:var(--s1);color:var(--ink)}
+  .mock{font-size:12px;color:var(--ink-3);padding:var(--u1) 0}
+  .num,.stat,.tab{font-variant-numeric:tabular-nums}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  /* diagram vocabulary */
+  .node{display:inline-block;padding:2px 10px;border:2px solid var(--edge);font-weight:500;line-height:1.3}
+  .node.k{background:var(--khaki);color:var(--khaki-ink)} .node.b{background:var(--blue);color:var(--blue-ink)}
+  .arrow{color:var(--navy);font-weight:400}
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3)}
+  .open h1{font-size:var(--s5);line-height:1.15;max-width:34ch}
+  .open h1 .node{font-weight:700;padding:0 12px}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0;max-width:52ch}
+
+  /* figures */
+  figure{margin:0}
+  figure img{display:block;width:100%;height:auto}
+  .part figure img{background:var(--fig-bg);padding:var(--fig-pad);mix-blend-mode:var(--fig-blend)}
+
+  /* evidence */
+  .part{padding:var(--u5) 0 0}
+  .pair{display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:start}
+  .part .pair{margin-bottom:var(--u4)}
+  .inst .pair{margin-top:var(--u3)}
+  .pair.flip{grid-template-columns:7fr 5fr}
+  .pair.flip > figure{order:-1}
+  .pair.flip .box{order:-1}
+  .part .pair h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .pair .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .pair > figure figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:var(--u1)}
+  .pair.stack{grid-template-columns:1fr}
+  .pair.stack figure{max-width:720px}
+  .pair.stack figure img{max-width:720px}
+
+  /* instruments */
+  .inst{padding-top:var(--u5)}
+  .inst h2{font-size:var(--s4);line-height:1.15;max-width:24ch}
+  .inst .intro{margin-top:var(--u2)}
+  .inst .lead{margin-top:var(--u2);max-width:66ch}
+  .inst .idea{margin-top:var(--u2);max-width:66ch}
+  .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .box{border:2px solid var(--edge);padding:var(--u2) var(--u3) var(--u3)}
+  .box .q{font-weight:700;font-size:var(--s2);line-height:1.3;margin-bottom:var(--u2)}
+  .box .q em{font-style:normal;background:var(--khaki);color:var(--khaki-ink);padding:0 6px}
+  .box .how{color:var(--ink-2);margin:0 0 var(--u3);max-width:66ch}
+  .box .how b{color:var(--ink);font-weight:500}
+  .box .intro{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin:0 0 var(--u2)}
+  .box .prompt{font-weight:500;margin-bottom:var(--u1)}
+  .box h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  input[type=number],input[type=text],select,textarea{display:block;width:100%;margin-top:4px;padding:6px 8px;border:2px solid var(--edge);background:var(--ground);color:var(--ink);font-size:var(--s1);line-height:1.3}
+  input[type=number]{max-width:120px}
+  input[type=text]{padding:6px 10px;min-width:0;margin:0}
+  input[type=text]::placeholder{color:var(--ink-3)}
+  textarea{min-height:76px;resize:vertical}
+  select{appearance:auto}
+  details.more{margin-top:var(--u2);max-width:70ch}
+  details.more summary{display:inline-block;cursor:pointer;list-style:none;font-weight:500;font-size:15px;line-height:1.3;padding:2px 10px 2px 8px;border:2px solid var(--edge)}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::before{content:"+";display:inline-block;width:1em;font-weight:400}
+  details.more[open] summary::before{content:"\2212"}
+  details.more.b summary{background:var(--blue);color:var(--blue-ink)}
+  details.more.k summary{background:var(--khaki);color:var(--khaki-ink)}
+  details.more p{margin:8px 0 0;font-size:15px;color:var(--ink-2);max-width:70ch}
+  details.more .src{margin-top:var(--u1)}
+  details.more .body{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin-top:8px}
+  details.more .body p{max-width:none;margin:0}
+
+  /* controls */
+  .btn{border:2px solid var(--edge);background:none;padding:5px 12px;font-size:15px;cursor:pointer;line-height:1.3}
+  .btn:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .btn[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .btn[disabled]{opacity:.45;cursor:default} .btn[disabled]:hover{outline:none}
+  .btns{display:flex;gap:var(--u1);flex-wrap:wrap;align-items:center}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--u2)}
+  .opt{border:2px solid var(--edge);background:none;padding:12px 14px;text-align:left;cursor:pointer;line-height:1.35;font-size:var(--s1)}
+  .opt:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .opt[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .opt b{display:block;font-weight:700;margin-bottom:2px}
+  .prog{font-size:14px;color:var(--ink-3);margin-top:var(--u2)}
+  .result{margin-top:var(--u2);font-size:var(--s1);max-width:70ch}
+  .result b{font-weight:700}
+  .status{font-size:14px;color:var(--ink-2);min-height:1.5em;margin-top:var(--u1)}
+  .stats{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3)}
+  .stats b{color:var(--ink);font-weight:700}
+  .key{font-size:14px;color:var(--ink-2);margin-top:var(--u1)}
+  .key .sq{display:inline-block;width:12px;height:12px;border:2px solid var(--edge);vertical-align:-1px;margin:0 6px 0 14px}
+  .key .sq:first-child{margin-left:0}
+  .key .sq.b{background:var(--blue)} .key .sq.k{background:var(--khaki)} .key .sq.n{background:var(--navy)}
+  canvas{width:100%;height:auto;display:block}
+  table{border-collapse:collapse;font-size:14px;margin-top:var(--u2);color:var(--ink-2)}
+  th,td{text-align:left;padding:3px 14px 3px 0;vertical-align:top;font-weight:400}
+  th{color:var(--ink-3)} td b{color:var(--ink)}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+  .log{margin-top:var(--u2);font-size:15px;line-height:1.5;display:grid;grid-template-columns:auto 1fr auto;column-gap:var(--u2);row-gap:2px;color:var(--ink-2)}
+  .log .h{color:var(--ink-3);font-size:14px}
+  .log .m{color:var(--ink);font-weight:700}
+
+  /* rating scale */
+  .scale{margin-top:var(--u2)}
+  .scale .lab{font-size:14px;color:var(--ink-2);margin-bottom:6px}
+  .scale .row{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--u1);max-width:420px}
+  .scale.seven .row{grid-template-columns:repeat(7,1fr);max-width:520px}
+  .scale .btn{padding:8px 0;text-align:center}
+  .scale .ends{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-3);max-width:420px;margin-top:4px}
+  .scale.seven .ends{max-width:520px}
+
+  /* colour triplets (from the homepage instrument; classes prefixed cs-) */
+  .cs-sw{display:grid;grid-template-columns:1fr 1fr;gap:var(--u2);align-items:end;max-width:420px}
+  .cs-sw .ref{grid-column:1 / -1;display:flex;align-items:center;gap:var(--u2);font-size:15px;color:var(--ink-2)}
+  .cs-chip{display:block;width:100%;max-width:120px;aspect-ratio:1/1;border:2px solid var(--edge);cursor:pointer;padding:0;background:none}
+  .cs-chip:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .cs-chip.ref{width:56px;aspect-ratio:1/1;cursor:default}
+  .cs-sw label{font-size:14px;color:var(--ink-2);display:block;margin-top:6px}
+  .cs-mats{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3);margin-top:var(--u3);align-items:start;max-width:420px}
+  .cs-mat h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  .cs-mat canvas{width:100%;height:auto;display:block}
+  .agree{margin-top:var(--u2);font-size:15px;color:var(--ink-2)}
+  .agree b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* words */
+  .desc{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3)}
+  .desc figure{margin:0}
+  .desc img{display:block;width:100%;height:auto;max-width:240px;border:2px solid var(--edge)}
+  .desc label{display:block;font-size:14px;color:var(--ink-2);margin:var(--u1) 0 4px}
+  .desc textarea{font-family:var(--font);font-size:15px;line-height:1.4;color:var(--ink);background:var(--ground);border:2px solid var(--edge);padding:6px 10px;width:100%;margin:0;resize:vertical;min-height:5.6em}
+  .desc .count{font-size:13px;color:var(--ink-3);margin-top:4px;font-variant-numeric:tabular-nums}
+  .desc .count.ok{color:var(--ink-2)}
+  .pairq{font-size:var(--s2);font-weight:700;margin-top:var(--u2)}
+  .pairq .ph{display:flex;gap:var(--u2);margin-top:var(--u1)}
+  .pairq img{width:150px;height:150px;border:2px solid var(--edge)}
+  table.cmp img{width:40px;height:40px;border:2px solid var(--edge);vertical-align:middle;margin-right:4px}
+  .credit{font-size:14px;color:var(--ink-3);margin-top:var(--u2)}
+  table.cmp{border-collapse:collapse;margin-top:var(--u2);font-size:15px;width:100%;max-width:720px}
+  table.cmp th{text-align:left;font-weight:500;color:var(--ink-3);font-size:14px;padding:4px 12px 4px 0;border-bottom:2px solid var(--edge)}
+  table.cmp td{padding:6px 12px 6px 0;vertical-align:top;color:var(--ink-2)}
+  table.cmp td.n{text-align:right;color:var(--ink);font-weight:700}
+  table.cmp th.n{text-align:right}
+
+  /* colour naming */
+  .chipwrap{display:grid;grid-template-columns:150px 1fr;column-gap:var(--u3);align-items:start}
+  .chip{width:150px;height:110px;border:2px solid var(--edge)}
+  .chipwrap label{display:block;font-size:14px;color:var(--ink-2);margin-bottom:6px}
+  .groups{margin-top:var(--u2);display:grid;grid-template-columns:auto 1fr;column-gap:var(--u2);row-gap:var(--u1);align-items:center}
+  .groups .term{font-weight:700}
+  .groups .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .groups .sw{width:26px;height:26px;border:2px solid var(--edge)}
+  .strip{display:flex;gap:4px;flex-wrap:wrap;margin-top:var(--u2)}
+  .strip .sw{width:22px;height:22px;border:2px solid var(--edge)}
+  .strip .sw.done{outline:2px solid var(--navy);outline-offset:1px}
+
+  /* lexical decision */
+  .word{font-size:var(--s5);font-weight:700;text-align:center;padding:var(--u3) 0 var(--u3);letter-spacing:.01em;font-variant-ligatures:none}
+  .tally{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3);max-width:520px}
+  .tally b{color:var(--ink);font-weight:700}
+  .items{margin-top:var(--u2);font-size:14px;color:var(--ink-2);columns:2;column-gap:var(--u3);max-width:520px}
+  .items div{break-inside:avoid}
+  .items .miss{color:var(--ink);font-weight:700}
+
+  /* goal */
+  .grid3{display:flex;gap:var(--u3);flex-wrap:wrap;margin-bottom:var(--u2)}
+  .grid3 figure{margin:0}
+  .grid3 figcaption{font-size:13px;color:var(--ink-3);margin-top:4px}
+  .grid3 svg{display:block;width:208px;height:auto}
+  .ask{margin-top:var(--u2)}
+  .ask .qq{font-size:15px;color:var(--ink-2);margin-bottom:6px}
+
+  /* related, papers */
+  .related{padding-top:var(--u5)}
+  .related h2{font-size:var(--s4);margin-bottom:var(--u2)}
+  .papers{padding-top:var(--u5)}
+  .papers h2{font-size:var(--s4);margin-bottom:var(--u3)}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u5);row-gap:var(--u3)}
+  .prow{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:var(--u2);margin-bottom:var(--u2)}
+  .prow.noimg{grid-template-columns:1fr}
+  .prow img{width:72px;height:auto;display:block;border:1px solid var(--ink-3)}
+  .prow .t{line-height:1.35}
+  .prow .v{font-size:14px;color:var(--ink-3)}
+  .papers .also{margin-top:var(--u3);font-size:15px;color:var(--ink-2)}
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){
+    .pair,.pair.flip,.stats,.desc,.cs-mats,.pgrid{grid-template-columns:1fr}
+    .pair.flip > figure,.pair.flip .box{order:0}
+    .mast{flex-direction:column;gap:var(--u1)}
+  }
+  @media (max-width:560px){ .opts,.tally{grid-template-columns:1fr} .chipwrap{grid-template-columns:1fr;row-gap:var(--u2)} .items{columns:1} .cs-sw{max-width:none} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html" aria-current="page">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open" id="top">
+    <h1>A partner needs an accurate model of <span class="node k">the person</span>.</h1>
+    <p class="lede">People do not represent, perceive, choose or judge the way idealised agents do. A system can reproduce a person's answers without recovering the concepts and preferences behind them, so we measure what a particular person actually represents. Each task here takes one of those measurements on you.</p>
+  </div>
+
+  <!-- 1. Colour triplets -->
+  <section class="inst" id="instrument">
+    <div class="pair">
+      <div>
+        <h2>How do you represent colour?</h2>
+        <p class="lead">We measure how a mind represents things by asking about similarity: which of two items is closer to a third. Sixteen of those questions are enough for a structure to appear, and that structure, rather than any single answer, is the first thing a partner needs to know about a person. The same question can be put to a language model with the paper's prompt. Answer the sixteen in the box and your similarity matrix over eight colours fills in beside Claude Fable 5.1's.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>The paper put pairwise similarity questions to GPT-3, GPT-3.5 and GPT-4 for six kinds of sensory stimuli, pitch, loudness, colour, vocal consonants, taste and timbre, and compared the answers with human judgments. GPT-4's correlations with people were r = .92 for pitch, .89 for loudness and .84 for colours, and lower for consonants (.57), taste (.54) and timbre (.42). Multidimensional scaling of the model's judgments recovers the colour wheel and the pitch helix with its octave peaks. GPT-4's gain over the earlier models was about the same size in every modality, so multimodal training is not what drives it.</p><div class="src"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a>, Scientific Reports 2024.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You answered sixteen triplet questions, which of two colours is closer to a reference. Each answer adds a count for the pair you chose, and the left matrix fills in as your similarity structure over eight colours. The right matrix holds Claude Fable 5.1's ratings for the same 28 pairs, collected with the paper's pairwise prompt, and the correlation between the two is one person's version of the paper's comparison, where GPT-4 reached r = .84 with people's colour judgments.</p></div></details>
+      </div>
+      <div class="box" id="cs-task">
+        <div class="q">Which of these two colours is closer to the <em id="cs-refname">reference</em>?</div>
+        <div class="cs-sw">
+          <div class="ref"><button class="cs-chip ref" id="cs-refchip" aria-label="reference colour" tabindex="-1"></button><span>reference</span></div>
+          <div><button class="cs-chip" id="cs-a" aria-label="option A"></button><label>A</label></div>
+          <div><button class="cs-chip" id="cs-b" aria-label="option B"></button><label>B</label></div>
+        </div>
+        <div class="prog"><span class="num" id="cs-done">0</span> of 16 triplets</div>
+        <div class="cs-mats">
+          <div class="cs-mat"><h3>Your similarity matrix</h3><canvas id="cs-you" width="200" height="200" aria-label="your similarity matrix, filling in as you answer"></canvas></div>
+          <div class="cs-mat"><h3>Claude Fable 5.1</h3><canvas id="cs-model" width="200" height="200" aria-label="a model's similarity matrix over the same colours"></canvas></div>
+        </div>
+        <div class="agree">Agreement with Claude Fable 5.1: <b id="cs-agree">answer to see</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="words">
+    <div class="pair flip">
+      <div>
+        <h2>A sentence about each object predicts how similar people find them.</h2>
+        <p class="lead">Ask people to describe things in a few sentences, and the words they use already predict how similar they will say those things are. The paper tested this for images, sounds, and videos, comparing descriptions against hundreds of neural networks, and the descriptions came out ahead. That matters to us because language is the channel a person and an AI share, and this result says it carries much of what people mean by similar. You will describe four photos, rate how similar each pair is, and see whether your own words predicted your ratings.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Across five stimulus sets in three modalities (images, emotional-speech clips, and short videos), 1,492 participants rated pairwise similarity and wrote free descriptions of each stimulus. Similarity was then predicted from 611 pretrained neural networks, from language-model embeddings of the descriptions, and from plain word statistics over the descriptions. In every modality the ordering was the same: stacking language and network embeddings came closest to inter-rater reliability, language-based predictors came next, and network-based predictors last, with word-frequency methods competitive without any pretrained model. Because descriptions grow with the number of stimuli rather than the number of pairs, the method approximates 1,000 by 1,000 audio and video similarity matrices that would take about 2.5 million judgments to collect directly.</p><div class="src"><a href="https://arxiv.org/abs/2206.04105">Words are all you need? Language as an approximation for human similarity judgments</a>, ICLR 2023.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You produced both halves of the paper's comparison for four photos: the descriptions and the similarity judgments. The rank correlation between your six ratings and the word overlap of your six pairs of sentences is a one-person version of the paper's question, whether language about the things is enough to recover how similar people find them.</p></div></details>
+      </div>
+      <div class="box">
+        <div class="q" id="w-q">Describe four photos</div>
+        <p class="intro">At least 20 words per photo; longer descriptions give a fairer test.</p>
+        <div id="w-step1">
+          <div class="desc" id="w-desc">
+            <figure><img src="assets/web/stimuli/fox.jpg" width="480" height="480" alt="photo 1"><label for="w-in1">Describe this in a few sentences</label><textarea id="w-in1" maxlength="800" autocomplete="off" aria-label="a description of photo 1, at least 20 words" aria-describedby="w-c1"></textarea><div class="count" id="w-c1">0 of 20 words</div></figure>
+            <figure><img src="assets/web/stimuli/wolf.jpg" width="480" height="480" alt="photo 2"><label for="w-in2">Describe this in a few sentences</label><textarea id="w-in2" maxlength="800" autocomplete="off" aria-label="a description of photo 2, at least 20 words" aria-describedby="w-c2"></textarea><div class="count" id="w-c2">0 of 20 words</div></figure>
+            <figure><img src="assets/web/stimuli/cabbage.jpg" width="480" height="480" alt="photo 3"><label for="w-in3">Describe this in a few sentences</label><textarea id="w-in3" maxlength="800" autocomplete="off" aria-label="a description of photo 3, at least 20 words" aria-describedby="w-c3"></textarea><div class="count" id="w-c3">0 of 20 words</div></figure>
+            <figure><img src="assets/web/stimuli/chair.jpg" width="480" height="480" alt="photo 4"><label for="w-in4">Describe this in a few sentences</label><textarea id="w-in4" maxlength="800" autocomplete="off" aria-label="a description of photo 4, at least 20 words" aria-describedby="w-c4"></textarea><div class="count" id="w-c4">0 of 20 words</div></figure>
+          </div>
+          <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="w-go" disabled>Rate the pairs</button></div>
+          <div class="status" id="w-hint">Each description needs at least 20 words before rating.</div>
+        </div>
+        <div id="w-step2" hidden>
+          <div class="pairq" id="w-pair"></div>
+          <div class="scale seven">
+            <div class="lab">How similar are these two photos?</div>
+            <div class="row" role="group" aria-label="similarity rating, 1 not at all similar to 7 very similar" id="w-row"><button class="btn" data-v="1">1</button><button class="btn" data-v="2">2</button><button class="btn" data-v="3">3</button><button class="btn" data-v="4">4</button><button class="btn" data-v="5">5</button><button class="btn" data-v="6">6</button><button class="btn" data-v="7">7</button></div>
+            <div class="ends"><span>not at all similar</span><span>very similar</span></div>
+          </div>
+          <div class="prog"><span class="num" id="w-done">0</span> of 6 pairs rated</div>
+        </div>
+        <div class="result" id="w-res" hidden></div>
+        <div id="w-table"></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="w-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="colours">
+    <div class="pair">
+      <div>
+        <h2>How many colour words do you use, and where do you draw the lines?</h2>
+        <p class="lead">Every language cuts the colour spectrum into words, and the cuts differ: Italian keeps blu, azzurro, and celeste apart where English has blue. The paper collected colour names from speakers of 22 languages online, and asked GPT-4 for the same names, to see whether a shared internet is flattening those differences and whether the model knows them. We care because an AI that works with you needs to know where a word you both use means something slightly different to each of you. You will name thirty colour patches, one word each, and see how many terms you used and which patches share one.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>2,280 native speakers of 22 languages, recruited online and screened with a vocabulary test and an Ishihara test, freely named Munsell colour chips. Languages still differ in structure: Italian keeps blu, azzurro, and celeste apart, and Russian and Japanese split light blue from blue. Online speakers use more terms than the World Color Survey found, 8.54 against 5.71 per language, yet the two sets of counts track each other closely. Given the same prompt in each language, GPT-4 produces language-specific maps with more terms than people use, correlated with the human term counts across languages at r = .39, and reaches for lower-frequency words such as peach, maroon, and burgundy.</p><div class="src"><a href="https://escholarship.org/uc/item/4hs755zz">Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models</a>, CogSci 2024.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You did the paper's task for 30 chips instead of 50: name each colour with one word, and let the names partition the chips. The paper compares those partitions across 22 languages and against GPT-4; this page has only your own, in one language, so the comparison here is between your term count and the paper's averages.</p></div></details>
+      </div>
+      <div class="box">
+        <div class="q">Name thirty colours</div>
+        <p class="intro">Use a basic colour word (red, orange, yellow, green, blue, purple, pink, brown, black, white, grey) where one fits, and a more specific word only when none does.</p>
+        <div class="prompt" id="c-q">Patch <span class="num" id="c-k">1</span> of 30. What colour is this? One word.</div>
+        <div id="c-task">
+          <div class="chipwrap">
+            <div class="chip" id="c-chip" role="img" aria-label="a colour chip to name"></div>
+            <div>
+              <label for="c-in">Colour term</label>
+              <input type="text" id="c-in" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="24" aria-describedby="c-hint">
+              <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="c-next">Next patch</button></div>
+              <div class="status" id="c-hint">Type a single colour term and press Enter.</div>
+            </div>
+          </div>
+          <div class="strip" id="c-strip" aria-hidden="true"></div>
+        </div>
+        <div class="result" id="c-res" hidden></div>
+        <div class="groups" id="c-groups" hidden></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="c-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="vocab">
+    <h2>Twenty yes-or-no items are enough to see a vocabulary.</h2>
+    <p class="lead">How many words you know in a language is a good measure of how well you know it, and a short test of rare words mixed with invented look-alikes can measure it in a minute. The papers build such a test automatically for any language from its own texts, so that online studies across dozens of languages can check who speaks the language they claim to. What a person knows, starting with which words, is part of the model a partner needs, and our own experiments recruit across languages and need a fast screen that works the same everywhere. You will see twenty words, say yes or no to each, and get your score.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">Real word or made up?</div>
+      <div class="prompt">Item <span class="num" id="v-k">1</span> of 20. Is this an English word?</div>
+      <div id="v-task">
+        <div class="word" id="v-word" aria-live="polite"></div>
+        <div class="opts"><button class="opt" id="v-yes"><b>Yes</b>a real English word</button><button class="opt" id="v-no"><b>No</b>not a word</button></div>
+        <div class="prog"><span class="num" id="v-done">0</span> of 20 answered</div>
+      </div>
+      <div class="result" id="v-res" hidden></div>
+      <div class="tally" id="v-tally" hidden></div>
+      <div class="items" id="v-items" hidden></div>
+      <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="v-reset" hidden>Start again</button></div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>The 2023 paper builds a vocabulary test for any language from Wikipedia: rare nouns paired with pseudowords generated from the language's own letter statistics. In eight languages the new test correlated r = .86 with an established test, and native accuracy was higher than second-language accuracy in every language. The 2026 paper automates the pipeline for any text corpus and applies it to Wikipedia in 60 languages and to Bible translations in 1,939, across four online experiments. Native speakers scored 88% against 62% for non-native speakers, and scores fell step by step with typological distance.</p><div class="src"><a href="https://arxiv.org/abs/2302.01614">Around the world in 60 words</a>, CogSci 2023; <a href="https://doi.org/10.1073/pnas.2420179123">One test, many tongues</a>, PNAS 2026.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You took a 20-item lexical decision test of the paper's kind: rare real nouns mixed with pseudowords, answered yes or no. The score reports accuracy and a sensitivity index, d prime, which rewards saying yes to real words and no to invented ones.</p></div></details>
+  </section>
+
+  <section class="part">
+    <div class="pair flip">
+      <div>
+        <h3>For risky choices, models predict ideals better than behaviour.</h3>
+        <p>Asked to predict human decisions, language models treated people as closer to rational expected-value maximisers than participants were. The same models more accurately matched how people inferred others' preferences. Reproducing expectations about behaviour is not the same as reproducing behaviour.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People Are More Rational Than We Really Are</a>, ICLR 2025.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/liu2025large.jpg" width="1000" height="351" loading="lazy" alt="Two cartoon panels: a language model and a person each choose between two gambles; a language model and a person each infer what another person prefers from that person's choices.">
+        <figcaption>The two tasks in the study: predicting a person's choice between gambles, and inferring what a person prefers from the choices they made. Figure from <a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="gambles">
+    <div class="pair">
+      <div>
+        <h2>Would a language model predict your choice?</h2>
+        <p class="lead">People choosing between risky bets are not the expected-value maximisers that models tend to assume. Asked to predict what a person will choose, language models mostly predict the higher-payoff option, so their picture of the chooser is more rational than the person. A partner that wants to predict you needs the pattern in your actual choices. Take the six bets in the box and see how often your pick had the higher expected value.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Language models were asked to predict human choices on risky-choice problems from the choices13k dataset. When the models reasoned step by step, their predictions correlated with expected value at 0.94 for GPT-4o, against 0.48 for people's actual choices, and their correlation with what people actually chose topped out at 0.64. The models predicted an idealised chooser better than a real one.</p><div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You made six risky choices of the kind in choices13k. The paper's measure is how well a predictor's choice rates correlate with expected value and with real human choice rates; the tally compares your picks with the expected-value maximiser, which is what the models most resembled.</p></div></details>
+      </div>
+      <div class="box">
+        <div class="q" id="g-q">Bet <span class="num" id="g-k">1</span> of 6. Which would you take?</div>
+        <div class="opts" id="g-opts">
+          <button class="opt" id="g-a"><b>A</b><span id="g-a-t"></span></button>
+          <button class="opt" id="g-b"><b>B</b><span id="g-b-t"></span></button>
+        </div>
+        <div class="prog"><span class="num" id="g-done">0</span> of 6 answered</div>
+        <div class="log" id="g-log" aria-live="polite"><div class="h">pair</div><div class="h">your pick</div><div class="h">higher expected value</div></div>
+        <div class="result" id="g-res" hidden></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="g-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="song">
+    <h2>Say a sentence enough times and it starts to sound like song.</h2>
+    <p class="idea">Hear a short phrase repeated several times and it can start to sound like singing. Perception runs on statistics: repetition is common in song and rare in talk, so a listener who keeps track of those odds hears song once a phrase repeats enough. A partner that predicts what a person will perceive has to model those statistics, and this paper shows how far the statistics of text alone get you. You will hear a phrase once, rate it, then hear it ten times and rate it again.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">Speech or song?</div>
+      <p class="intro">Headphones help, and Keep looping lets you listen longer before you rate.</p>
+      <div id="sg-body">
+        <div class="btns"><span style="font-size:14px;color:var(--ink-2)">Phrase:</span><button class="btn" id="sg-p1" aria-pressed="true">sometimes behave so strangely</button><button class="btn" id="sg-p2" aria-pressed="false">I love you</button><button class="btn" id="sg-p3" aria-pressed="false">go away</button></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="sg-once">Hear it once</button><button class="btn" id="sg-ten" hidden>Hear it ten times</button><button class="btn" id="sg-loop" hidden>Keep looping</button><button class="btn" id="sg-stop" hidden>Stop</button><button class="btn" id="sg-reset" hidden>Start again</button></div>
+        <div class="status" id="sg-status" aria-live="polite"></div>
+        <div class="scale" id="sg-r1" hidden>
+          <div class="lab">After one hearing, how did it sound?</div>
+          <div class="row" role="group" aria-label="rating after one hearing, 1 speech to 5 song"><button class="btn" data-v="1">1</button><button class="btn" data-v="2">2</button><button class="btn" data-v="3">3</button><button class="btn" data-v="4">4</button><button class="btn" data-v="5">5</button></div>
+          <div class="ends"><span>speech</span><span>song</span></div>
+        </div>
+        <div class="scale" id="sg-r2" hidden>
+          <div class="lab">After the repetitions, how did it sound?</div>
+          <div class="row" role="group" aria-label="rating after the repetitions, 1 speech to 5 song"><button class="btn" data-v="1">1</button><button class="btn" data-v="2">2</button><button class="btn" data-v="3">3</button><button class="btn" data-v="4">4</button><button class="btn" data-v="5">5</button></div>
+          <div class="ends"><span>speech</span><span>song</span></div>
+        </div>
+        <div class="result" id="sg-res" hidden></div>
+      </div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>The paper recasts the speech-to-song illusion as the log-odds of a repeated utterance under a model of song against a model of speech, with the two likelihoods estimated from repetition statistics in text corpora. Song corpora have heavier repetition tails, so the odds favour song after two repetitions and keep rising, and sentences differ: "I love you" transforms faster than "go away". The analysis predicts a text-only prose-to-lyrics illusion, and 120 UK participants confirmed it: the mean rating rose from .31 (speech-like) to .58 (song-like) with repetition. GPT-4's ratings of the same items correlated r = .64 with people's.</p><div class="src"><a href="https://arxiv.org/abs/2402.06992">A Rational Analysis of the Speech-to-Song Illusion</a>, CogSci 2024.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You rated the same utterance before and after repetition, the contrast the illusion turns on. In the paper's account, a listener weighs how likely that much repetition is under song against how likely it is under speech; because song corpora repeat far more, the odds tip toward song after only two repetitions and keep moving with each one. Your two ratings are one listener's version of the mean shift from .31 to .58.</p></div></details>
+  </section>
+
+  <section class="part">
+    <div class="pair">
+      <div>
+        <h3>Matching answers can conceal different ways of understanding the world.</h3>
+        <p>Two people, or a person and an AI, can reach the same conclusion while relying on different concepts and relationships. Output agreement cannot establish shared understanding, and inferring someone's values may fail unless their underlying concepts are modelled too.</p>
+        <div class="src"><a href="https://doi.org/10.1037/dec0000244">Dimensions of Disagreement: Divergence and Misalignment</a>, Decision 2024. <a href="https://arxiv.org/abs/2310.20059">Concept Alignment as a Prerequisite for Value Alignment</a>, CogSci 2024.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/rane2024concept.jpg" width="1000" height="413" loading="lazy" alt="Four gridworld maps in which a demonstrator who does or does not understand the notches walks a route; observers who infer reward alone pick the wrong goal when the demonstrator's concept is wrong.">
+        <figcaption>A demonstrator who does or does not understand the notches in a gridworld walks similar routes. Inferring reward alone picks the wrong goal; inferring the demonstrator's concept of the world together with the reward recovers it. Figure from <a href="https://arxiv.org/abs/2310.20059">Concept Alignment as a Prerequisite for Value Alignment</a>, CogSci 2024.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="goal">
+    <div class="pair">
+      <div>
+        <h2>You cannot read a goal off a path without knowing what the walker knew.</h2>
+        <p class="lead">Watching someone act, we try to work out what they want. That inference goes wrong when the person understood their situation differently from us, because a detour that looks like a preference may only be a gap in their map. We care because an AI that helps people has to read their goals through what they know. Look at three trips by the same walker and say which square it wanted and whether it knew about the gap in the wall.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body">Inverse reinforcement learning usually assumes the demonstrator sees the world as the observer does; the paper adds construals, so the observer infers the goal and the demonstrator's simplified model of the world jointly. In gridworlds with walls and notches, reward-only inference confidently picks the wrong goal when the demonstrator does not understand notches, while the joint model recovers the right goal. One hundred people judged the same twelve trajectories; they picked the correct goal in 99%, 70%, 98% and 98% of the four scenarios, and their judgments correlated with the joint model (r = .97) and not significantly with reward-only inference (r = .76).<div class="src"><a href="https://arxiv.org/abs/2310.20059">Concept alignment as a prerequisite for value alignment</a>, CogSci 2024.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body">You answered the two questions the paper's participants answered: which goal did the demonstrator want, and did it know about the notch. In the hard scenario the walker wants A but cannot see the way through, so from a start beside the notch it settles for B, and from a start near the bottom of the wall it walks round to A. An observer who assumes the walker shares its map reads the first trip as a preference for B. Asking what the walker knew turns the same three trips into one consistent story.</div></details>
+      </div>
+      <div class="box">
+        <div class="q">Where did the walker want to go? Trial <span class="num" id="gl-k">1</span> of 2.</div>
+        <p class="how">Each map is the same room from above: a navy wall with a thin gap (the notch), a khaki square A and a blue square B. The open circle is the start and the black line the path; the three maps are three trips by one walker. Some walkers know they can pass through the notch and others treat it as solid wall; the walker likes one square twice as much as the other but will not take a detour of five or more extra steps to reach it.</p>
+        <div class="grid3" id="gl-grids"></div>
+        <div class="key"><span class="sq k"></span>goal A <span class="sq b" style="margin-left:14px"></span>goal B <span class="sq n" style="margin-left:14px"></span>wall</div>
+        <div class="ask">
+          <div class="qq">Which goal did the walker prefer?</div>
+          <div class="opts"><button class="opt" id="gl-a"><b>Goal A</b>the khaki square</button><button class="opt" id="gl-b"><b>Goal B</b>the blue square</button></div>
+        </div>
+        <div class="ask">
+          <div class="qq">Did the walker know the notch was passable?</div>
+          <div class="opts"><button class="opt" id="gl-y"><b>Yes</b>it could use the notch</button><button class="opt" id="gl-n"><b>No</b>it treated the notch as wall</button></div>
+        </div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="gl-go" disabled>Reveal</button><button class="btn" id="gl-next" hidden>Next trial</button><button class="btn" id="gl-reset" hidden>Start again</button></div>
+        <div class="result" id="gl-res" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related" id="related">
+    <h2>Related stories</h2>
+    <p>The same tasks, run on a language model instead of a person, are the subject of <a href="understanding-ai.html">understanding AI systems</a>, which shows what a model's answers to these tasks reveal about its concepts and habits. The colour task returns on <a href="alignment.html">alignment and learning</a> as a measure of how far two agents agree about what is similar to what, which sets how much one can learn from the other. Once a system has a model of a person, how that person takes its advice is the subject of <a href="working-with-ai.html">working with AI</a>.</p>
+  </section>
+
+  <section class="papers" id="papers">
+    <h2>Papers on this page</h2>
+    <div class="pgrid">
+      <div>
+        <div class="prow"><img src="assets/web/titles/marjieh2024llms.jpg" width="480" height="252" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a></div><div class="v">Scientific Reports, 2024</div></div></div>
+        <div class="prow"><img src="assets/web/titles/marjieh2023words.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2206.04105">Words are all you need? Language as an approximation for human similarity judgments</a></div><div class="v">ICLR, 2023</div></div></div>
+        <div class="prow"><img src="assets/web/titles/niedermann2024studying.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://escholarship.org/uc/item/4hs755zz">Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models</a></div><div class="v">CogSci, 2024</div></div></div>
+        <div class="prow"><img src="assets/web/titles/vanrijn2023around.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2302.01614">Around the world in 60 words: A generative vocabulary test for online research</a></div><div class="v">CogSci, 2023</div></div></div>
+        <div class="prow"><img src="assets/web/titles/vanrijn2026one.jpg" width="480" height="257" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1073/pnas.2420179123">One test, many tongues: Surveying language proficiency across the globe</a></div><div class="v">Proceedings of the National Academy of Sciences, 2026</div></div></div>
+      </div>
+      <div>
+        <div class="prow"><img src="assets/web/titles/liu2025large.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a></div><div class="v">ICLR, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/marjieh2024speech.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2402.06992">A Rational Analysis of the Speech-to-Song Illusion</a></div><div class="v">CogSci, 2024</div></div></div>
+        <div class="prow"><img src="assets/web/titles/oktar2024dimensions.jpg" width="480" height="274" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1037/dec0000244">Dimensions of Disagreement: Divergence and Misalignment in Cognitive Science and Artificial Intelligence</a></div><div class="v">Decision, 2024</div></div></div>
+        <div class="prow"><img src="assets/web/titles/rane2024concept.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2310.20059">Concept Alignment as a Prerequisite for Value Alignment</a></div><div class="v">CogSci, 2024</div></div></div>
+      </div>
+    </div>
+    <p class="credit">Photos in the description task: Wikimedia Commons, CC BY-SA (ClaudiaTen, Mas3cf, fir0002, Dominik Matus).</p>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html" aria-current="page">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>
+
+<script>
+const NV=()=>{const h=getComputedStyle(document.documentElement).getPropertyValue('--navy').trim();return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)).join(',');};
+function reveal(id){document.querySelectorAll('#'+id+' details.more').forEach(d=>{d.open=true;});}
+/* colour triplets (from v14_homepage, ids prefixed cs-) */
+(function(){
+  const C=[['red','#D5352E'],['orange','#E68A2E'],['yellow','#E4C63A'],['green','#4A9E5C'],['teal','#2E9E9A'],['blue','#3A6FD8'],['violet','#7C4FC4'],['pink','#D5589A']];
+  const n=C.length;
+  const T=[[0,1,5],[5,4,7],[2,1,3],[3,4,0],[6,5,7],[7,0,6],[1,2,4],[4,3,6],[0,7,2],[5,6,1],[2,3,7],[3,2,5],[1,0,6],[6,3,2],[4,1,5],[7,4,3]];
+  // sRGB -> CIELAB
+  function lab(hex){let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
+    const f=c=>c>0.04045?Math.pow((c+0.055)/1.055,2.4):c/12.92; r=f(r);g=f(g);b=f(b);
+    let x=(r*0.4124+g*0.3576+b*0.1805)/0.95047,y=(r*0.2126+g*0.7152+b*0.0722),z=(r*0.0193+g*0.1192+b*0.9505)/1.08883;
+    const t=v=>v>0.008856?Math.cbrt(v):7.787*v+16/116; x=t(x);y=t(y);z=t(z);return [116*y-16,500*(x-y),200*(y-z)];}
+  // CIEDE2000
+  function de2000(l1,l2){const [L1,a1,b1]=l1,[L2,a2,b2]=l2;const rad=Math.PI/180,deg=180/Math.PI;
+    const C1=Math.hypot(a1,b1),C2=Math.hypot(a2,b2),Cb=(C1+C2)/2,G=0.5*(1-Math.sqrt(Math.pow(Cb,7)/(Math.pow(Cb,7)+Math.pow(25,7))));
+    const a1p=(1+G)*a1,a2p=(1+G)*a2,C1p=Math.hypot(a1p,b1),C2p=Math.hypot(a2p,b2);
+    const h=(a,b)=>{let v=Math.atan2(b,a)*deg;return v<0?v+360:v;};const h1p=h(a1p,b1),h2p=h(a2p,b2);
+    const dL=L2-L1,dC=C2p-C1p;let dh=h2p-h1p;if(C1p*C2p===0)dh=0;else if(dh>180)dh-=360;else if(dh<-180)dh+=360;
+    const dH=2*Math.sqrt(C1p*C2p)*Math.sin(dh/2*rad);const Lb=(L1+L2)/2,Cbp=(C1p+C2p)/2;
+    let hb;if(C1p*C2p===0)hb=h1p+h2p;else{hb=(h1p+h2p)/2;if(Math.abs(h1p-h2p)>180)hb+=(h1p+h2p<360?180:-180);}
+    const Tt=1-0.17*Math.cos((hb-30)*rad)+0.24*Math.cos(2*hb*rad)+0.32*Math.cos((3*hb+6)*rad)-0.20*Math.cos((4*hb-63)*rad);
+    const dth=30*Math.exp(-Math.pow((hb-275)/25,2)),Rc=2*Math.sqrt(Math.pow(Cbp,7)/(Math.pow(Cbp,7)+Math.pow(25,7)));
+    const Sl=1+0.015*Math.pow(Lb-50,2)/Math.sqrt(20+Math.pow(Lb-50,2)),Sc=1+0.045*Cbp,Sh=1+0.015*Cbp*Tt,Rt=-Math.sin(2*dth*rad)*Rc;
+    return Math.sqrt(Math.pow(dL/Sl,2)+Math.pow(dC/Sc,2)+Math.pow(dH/Sh,2)+Rt*(dC/Sc)*(dH/Sh));}
+  const L=C.map(c=>lab(c[1]));let dmax=0;const D=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>{const d=de2000(L[i],L[j]);dmax=Math.max(dmax,d);return d;}));
+  const cie=D.map(row=>row.map(d=>1-d/dmax));
+  // Claude Fable 5.1 pairwise similarity judgments (0-1), collected 2026-09-05 with the paper's prompt; order matches C
+  const J={'0,1':0.6,'0,2':0.3,'0,3':0.1,'0,4':0.1,'0,5':0.1,'0,6':0.3,'0,7':0.6,'1,2':0.6,'1,3':0.2,'1,4':0.1,'1,5':0.1,'1,6':0.1,'1,7':0.3,'2,3':0.3,'2,4':0.2,'2,5':0.1,'2,6':0.1,'2,7':0.2,'3,4':0.6,'3,5':0.3,'3,6':0.1,'3,7':0.1,'4,5':0.5,'4,6':0.2,'4,7':0.1,'5,6':0.6,'5,7':0.2,'6,7':0.5};
+  const model=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?1:J[i<j?`${i},${j}`:`${j},${i}`]));
+  const you=Array.from({length:n},()=>Array(n).fill(0)), seen=Array.from({length:n},()=>Array(n).fill(0));
+  const $=id=>document.getElementById(id); let k=0;
+  const refchip=$('cs-refchip'),A=$('cs-a'),B=$('cs-b'),refname=$('cs-refname'),done=$('cs-done'),agree=$('cs-agree');
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  function draw(cv,M,mx){const ctx=cv.getContext('2d');const m=28,s=(cv.width-m)/n;ctx.clearRect(0,0,cv.width,cv.height);
+    for(let i=0;i<n;i++){ctx.fillStyle=C[i][1];ctx.fillRect(m+i*s+2,2,s-4,m-8);ctx.fillRect(2,m+i*s+2,m-8,s-4);}
+    for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=mx?M[i][j]/mx:M[i][j];ctx.fillStyle=`rgba(${NV()},${i===j?1:Math.max(0,Math.min(1,v))})`;ctx.fillRect(m+j*s+1,m+i*s+1,s-2,s-2);}
+    ctx.strokeStyle=css('--edge');ctx.lineWidth=2;ctx.strokeRect(m+1,m+1,cv.width-m-2,cv.height-m-2);}
+  function render(){ if(k>=T.length){$('cs-task').querySelector('.q').textContent='Sixteen triplets done. Your structure and Claude Fable 5.1\'s are below.';A.hidden=B.hidden=true;refchip.hidden=true;reveal('instrument');return;}
+    const [r,a,b]=T[k];refchip.style.background=C[r][1];A.style.background=C[a][1];B.style.background=C[b][1];refname.textContent=C[r][0]; }
+  function answer(pick){const [r,a,b]=T[k];const c=pick===0?a:b,o=pick===0?b:a;you[r][c]+=1;you[c][r]+=1;seen[r][c]+=1;seen[c][r]+=1;seen[r][o]+=1;seen[o][r]+=1;k++;done.textContent=k;
+    const mx=Math.max(1,...you.flat());draw($('cs-you'),you,mx);
+    let xs=[],ys=[];for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)if(seen[i][j]){xs.push(you[i][j]/seen[i][j]);ys.push(model[i][j]);}
+    const corr=(xs,ys)=>{const m=v=>v.reduce((p,q)=>p+q,0)/v.length;const mx_=m(xs),my=m(ys);let num=0,dx=0,dy=0;for(let i=0;i<xs.length;i++){num+=(xs[i]-mx_)*(ys[i]-my);dx+=(xs[i]-mx_)**2;dy+=(ys[i]-my)**2;}return dx&&dy?num/Math.sqrt(dx*dy):0;};
+    if(xs.length>=3){const r1=corr(xs,ys);const f=r=>(r>=0?'+':'')+r.toFixed(2);agree.textContent=f(r1)+' (correlation over the '+xs.length+' of 28 colour pairs your triplets have covered)';}
+    render();}
+  A.addEventListener('click',()=>answer(0));B.addEventListener('click',()=>answer(1));
+  draw($('cs-you'),you,1);draw($('cs-model'),model,1);render();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{draw($('cs-you'),you,Math.max(1,...you.flat()));draw($('cs-model'),model,1);});
+})();
+/* instruments from v14_research_you */
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function shuffle(a,rng){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function bindScale(el,cb){el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));cb(+b.dataset.v);}));}
+  function clearScale(el){el.querySelectorAll('button').forEach(x=>x.removeAttribute('aria-pressed'));}
+  const corr=(xs,ys)=>{const m=v=>v.reduce((p,q)=>p+q,0)/v.length;const mx=m(xs),my=m(ys);let num=0,dx=0,dy=0;for(let i=0;i<xs.length;i++){num+=(xs[i]-mx)*(ys[i]-my);dx+=(xs[i]-mx)**2;dy+=(ys[i]-my)**2;}return dx&&dy?num/Math.sqrt(dx*dy):0;};
+  const fmt=r=>(r>=0?'+':'')+r.toFixed(2);
+
+  /* 2. Words are all you need */
+  (function(){
+    const N=4;
+    const PAIRS=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+    const STOP=new Set('a an the it is are was were be been being am and or but of with that this these those to in on at by for from into than as its it\'s has have had having do does did which who whom whose you your they their them there here where when what while because can could will would may might shall should not no nor very so too also one two some any all both each own same other such only just about over under up down out off more most like look looks looking seem seems appear appears photo photograph picture image show shows showing thing things something'.split(' '));
+    const desc=$('w-desc'),go=$('w-go'),hint=$('w-hint'),s1=$('w-step1'),s2=$('w-step2'),pairEl=$('w-pair'),row=$('w-row'),res=$('w-res'),tbl=$('w-table'),rst=$('w-reset'),q=$('w-q');
+    const inputs=[1,2,3,4].map(i=>$('w-in'+i));
+    const imgs=[...desc.querySelectorAll('img')];
+    const pic=(i,w)=>'<img src="'+imgs[i].src+'" width="'+w+'" height="'+w+'" alt="photo '+(i+1)+'">';
+    const MIN=20;const wc=s=>s.trim().split(/\s+/).filter(Boolean).length;
+    function check(){let ok=true;inputs.forEach((inp,i)=>{const n=wc(inp.value);const c=$('w-c'+(i+1));c.textContent=n+' of '+MIN+' words';c.classList.toggle('ok',n>=MIN);if(n<MIN)ok=false;});go.disabled=!ok;hint.textContent=ok?'':'Each description needs at least '+MIN+' words before rating.';}
+    inputs.forEach(i=>i.addEventListener('input',check));
+    let p=0;const ratings=[];
+    function stem(w){
+      if(w.length>4&&w.endsWith('ies'))return w.slice(0,-3)+'y';
+      if(w.length>5&&w.endsWith('ing'))return w.slice(0,-3);
+      if(w.length>4&&w.endsWith('ed'))return w.slice(0,-2);
+      if(w.length>4&&w.endsWith('ly'))return w.slice(0,-2);
+      if(w.length>4&&/(ss|x|z|ch|sh)es$/.test(w))return w.slice(0,-2);
+      if(w.length>3&&w.endsWith('s')&&!w.endsWith('ss')&&!w.endsWith('us'))return w.slice(0,-1);
+      return w;
+    }
+    function tokens(s){return new Set(s.toLowerCase().replace(/['’]/g,'').replace(/[^a-z\s]/g,' ').split(/\s+/).filter(w=>w.length>1&&!STOP.has(w)).map(stem).filter(w=>w.length>1&&!STOP.has(w)));}
+    function jaccard(A,B){const inter=[...A].filter(x=>B.has(x));const uni=new Set([...A,...B]);return{j:uni.size?inter.length/uni.size:0,shared:inter};}
+    function ranks(a){const idx=a.map((v,i)=>[v,i]).sort((x,y)=>x[0]-y[0]);const r=new Array(a.length);let i=0;while(i<idx.length){let j=i;while(j+1<idx.length&&idx[j+1][0]===idx[i][0])j++;const avg=(i+j)/2+1;for(let t=i;t<=j;t++)r[idx[t][1]]=avg;i=j+1;}return r;}
+    function spearman(a,b){const ra=ranks(a),rb=ranks(b);const n=a.length,ma=ra.reduce((s,v)=>s+v,0)/n,mb=rb.reduce((s,v)=>s+v,0)/n;let num=0,da=0,db=0;for(let i=0;i<n;i++){num+=(ra[i]-ma)*(rb[i]-mb);da+=(ra[i]-ma)**2;db+=(rb[i]-mb)**2;}return da&&db?num/Math.sqrt(da*db):NaN;}
+    function showPair(){if(p>=PAIRS.length){finish();return;}const [i,j]=PAIRS[p];pairEl.innerHTML='Pair '+(p+1)+' of 6<div class="ph">'+pic(i,150)+pic(j,150)+'</div>';clearScale(row);}
+    go.addEventListener('click',()=>{if(go.disabled)return;s1.hidden=true;s2.hidden=false;p=0;ratings.length=0;showPair();row.querySelector('button').focus();});
+    bindScale(row,v=>{ratings.push(v);p++;$('w-done').textContent=p;showPair();});
+    function finish(){
+      s2.hidden=true;
+      const toks=inputs.map(i=>tokens(i.value));
+      const ov=PAIRS.map(([i,j])=>jaccard(toks[i],toks[j]));
+      const rho=spearman(ratings,ov.map(o=>o.j));
+      let html='<table class="cmp"><thead><tr><th>photos</th><th class="n">your rating</th><th class="n">word overlap</th><th>shared words</th></tr></thead><tbody>';
+      PAIRS.forEach(([i,j],t)=>{html+='<tr><td>'+pic(i,40)+pic(j,40)+'</td><td class="n">'+ratings[t]+'</td><td class="n">'+Math.round(ov[t].j*100)+'%</td><td>'+(ov[t].shared.length?ov[t].shared.join(', '):'none')+'</td></tr>';});
+      html+='</tbody></table>';tbl.innerHTML=html;
+      const allSame=ratings.every(r=>r===ratings[0]),noOv=ov.every(o=>o.j===0);
+      let verdict;
+      if(allSame)verdict='You gave every pair the same rating, so no rank correlation can be computed.';
+      else if(noOv)verdict='None of your sentence pairs shared a word after common words were removed, so the overlap measure is flat and no rank correlation can be computed. The paper’s embeddings would still find similarity between different words; this page’s overlap cannot.';
+      else verdict='The rank correlation between your six ratings and the six word overlaps is <b>'+(isNaN(rho)?'undefined':rho.toFixed(2))+'</b> (Spearman, 6 pairs, so treat it as a sketch).';
+      res.hidden=false;res.innerHTML=verdict+' In the paper, predictors built from people’s free descriptions came closer to the human similarity judgments than 611 pretrained networks in every modality, and simple word statistics over the descriptions stayed competitive without any pretrained model.';
+      rst.hidden=false;reveal('words');rst.focus();
+    }
+    rst.addEventListener('click',()=>{inputs.forEach(i=>i.value='');check();s1.hidden=false;s2.hidden=true;res.hidden=true;tbl.innerHTML='';rst.hidden=true;$('w-done').textContent=0;inputs[0].focus();});
+    check();
+  })();
+
+  /* 3. Colour naming */
+  (function(){
+    const HEX=['#F25F5F','#F2A85F','#F2E65F','#B5F25F','#5FF25F','#5FF2D9','#5FC1F2','#5F77F2','#A85FF2','#F25FD9','#970C0C','#97520C','#978B0C','#5D970C','#0C970C','#0C9780','#0C6997','#0C2397','#520C97','#970C80','#808080','#C4C4C4','#111111','#F7F7F7','#8B5A2B','#5C3A1E','#F4A6C1','#E75480','#808000','#008080'];
+    const order=shuffle(HEX.map((_,i)=>i),mulberry(23));
+    const BASIC=['red','orange','yellow','green','blue','purple','pink','brown','black','white','grey','gray'];
+    let k=0;const names=[];
+    const chip=$('c-chip'),inp=$('c-in'),next=$('c-next'),strip=$('c-strip'),res=$('c-res'),groups=$('c-groups'),rst=$('c-reset'),task=$('c-task'),q=$('c-q'),hint=$('c-hint');
+    function drawStrip(){strip.innerHTML='';order.forEach((ci,i)=>{const d=document.createElement('div');d.className='sw'+(i<k?' done':'');d.style.background=HEX[ci];strip.appendChild(d);});}
+    function show(){
+      if(k>=order.length){finish();return;}
+      $('c-k').textContent=k+1;chip.style.background=HEX[order[k]];chip.setAttribute('aria-label','colour patch '+(k+1)+' of 30');inp.value='';drawStrip();
+    }
+    function norm(s){return s.toLowerCase().replace(/\s+/g,' ').trim();}
+    function accept(){const t=norm(inp.value);if(!t){hint.textContent='Type a colour term first.';inp.focus();return;}hint.textContent='Type a single colour term and press Enter.';names.push(t);k++;show();if(k<order.length)inp.focus();}
+    next.addEventListener('click',accept);
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();accept();}});
+    function finish(){
+      task.hidden=true;q.textContent='Thirty patches named.';
+      const map=new Map();names.forEach((t,i)=>{if(!map.has(t))map.set(t,[]);map.get(t).push(order[i]);});
+      const n=map.size;const rare=[...map.keys()].filter(t=>!BASIC.includes(t));const nb=names.filter(t=>BASIC.includes(t)).length;
+      groups.innerHTML='';map.forEach((idx,t)=>{const a=document.createElement('div');a.className='term';a.textContent=t;const b=document.createElement('div');b.className='chips';idx.forEach(ci=>{const s=document.createElement('div');s.className='sw';s.style.background=HEX[ci];s.setAttribute('role','img');s.setAttribute('aria-label',t);b.appendChild(s);});groups.appendChild(a);groups.appendChild(b);});
+      groups.hidden=false;
+      res.hidden=false;res.innerHTML='You used <b>'+n+(n===1?' term':' terms')+'</b> for 30 patches and named <b>'+nb+' of 30</b> ('+Math.round(nb/30*100)+'%) with a basic colour word'+(rare.length?'. Your other terms: '+rare.join(', '):'')+'. Across 330 chips and many speakers, the paper’s online participants averaged 8.54 terms per language against 5.71 in the World Color Survey, and GPT-4 used more terms still, reaching for words such as peach, maroon, and burgundy. The partition below is your colour map for these patches.';
+      rst.hidden=false;reveal('colours');rst.focus();
+    }
+    rst.addEventListener('click',()=>{k=0;names.length=0;task.hidden=false;res.hidden=true;groups.hidden=true;rst.hidden=true;q.innerHTML='Patch <span class="num" id="c-k">1</span> of 30. What colour is this? One word.';show();inp.focus();});
+    show();
+  })();
+
+  /* 4. Lexical decision */
+  (function(){
+    const REAL=['abattoir','bellwether','cartouche','escarpment','gantry','hummock','kestrel','lintel','mandrel','parapet'];
+    const DONOR=['lantern','pelican','saddle','turnip','marble','goblet','trellis','pillow','compass','anchor'];
+    const ALL=new Set(REAL.concat(DONOR));
+    const V='aeiou',C='bcdfghklmnprst';
+    const rng=mulberry(19);
+    const PSEUDO=DONOR.map(w=>{for(let t=0;t<30;t++){const i=1+Math.floor(rng()*(w.length-1));const ch=w[i];const pool=V.includes(ch)?V:C;const n=pool[Math.floor(rng()*pool.length)];if(n===ch)continue;const o=w.slice(0,i)+n+w.slice(i+1);if(!ALL.has(o))return o;}return w+'e';});
+    const ITEMS=shuffle(REAL.map(w=>({w,real:true})).concat(PSEUDO.map(w=>({w,real:false}))),mulberry(5));
+    function qnorm(p){
+      const a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+      const b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+      const c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+      const d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+      const pl=0.02425,ph=1-pl;let q,r;
+      if(p<pl){q=Math.sqrt(-2*Math.log(p));return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
+      if(p<=ph){q=p-0.5;r=q*q;return(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}
+      q=Math.sqrt(-2*Math.log(1-p));return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    }
+    let k=0;const ans=[];
+    const word=$('v-word'),yes=$('v-yes'),no=$('v-no'),task=$('v-task'),res=$('v-res'),tally=$('v-tally'),items=$('v-items'),rst=$('v-reset');
+    function show(){if(k>=ITEMS.length){finish();return;}$('v-k').textContent=k+1;word.textContent=ITEMS[k].w;}
+    function pick(said){ans.push(said);k++;$('v-done').textContent=k;show();}
+    yes.addEventListener('click',()=>pick(true));no.addEventListener('click',()=>pick(false));
+    function finish(){
+      task.hidden=true;
+      let hits=0,fa=0,nR=0,nP=0;ITEMS.forEach((it,i)=>{if(it.real){nR++;if(ans[i])hits++;}else{nP++;if(ans[i])fa++;}});
+      const correct=hits+(nP-fa),acc=correct/ITEMS.length;
+      const H=(hits+0.5)/(nR+1),F=(fa+0.5)/(nP+1);const dp=qnorm(H)-qnorm(F);
+      res.hidden=false;res.innerHTML='<b>'+correct+' of 20</b> correct ('+Math.round(acc*100)+'%), d prime <b>'+dp.toFixed(2)+'</b>. In the 2026 paper’s first experiment, native speakers scored 88% on the 60-item test and non-native speakers 62%; in the 2023 paper native accuracy ran from .83 to .93, and GPT-3 scored .98 on the English items.';
+      tally.hidden=false;tally.innerHTML='<div>Real words called real: <b>'+hits+' of '+nR+'</b></div><div>Pseudowords called real: <b>'+fa+' of '+nP+'</b></div>';
+      items.hidden=false;items.innerHTML='';ITEMS.forEach((it,i)=>{const d=document.createElement('div');const ok=ans[i]===it.real;d.textContent=it.w+': '+(it.real?'real':'not a word')+(ok?'':', you said '+(ans[i]?'yes':'no'));if(!ok)d.className='miss';items.appendChild(d);});
+      rst.hidden=false;reveal('vocab');rst.focus();
+    }
+    rst.addEventListener('click',()=>{k=0;ans.length=0;task.hidden=false;res.hidden=true;tally.hidden=true;items.hidden=true;rst.hidden=true;$('v-done').textContent=0;show();yes.focus();});
+    show();
+  })();
+
+  /* 5. Gambles */
+  (function(){
+    const G=[
+      [['$40 for sure',40],['A 60% chance of $75, otherwise nothing',45]],
+      [['$50 for sure',50],['A 50% chance of $90, otherwise nothing',45]],
+      [['An 80% chance of $30, otherwise nothing',24],['A 20% chance of $110, otherwise nothing',22]],
+      [['$20 for sure',20],['A 25% chance of $100, otherwise nothing',25]],
+      [['Lose $30 for sure',-30],['A 40% chance of losing $80, otherwise nothing',-32]],
+      [['$42 for sure',42],['A 90% chance of $50, otherwise nothing',45]]
+    ];
+    let k=0,match=0;const picks=[];
+    const aB=$('g-a'),bB=$('g-b'),log=$('g-log'),res=$('g-res'),rst=$('g-reset');
+    function show(){
+      if(k>=G.length){$('g-q').textContent='Six pairs done.';$('g-opts').hidden=true;
+        res.hidden=false;res.innerHTML='<b>'+match+' of 6</b> of your picks matched the expected-value maximiser. In the paper, models reasoning step by step tracked expected value at 0.93 to 0.94 while people’s choices tracked it at 0.48.';
+        rst.hidden=false;reveal('gambles');return;}
+      $('g-k').textContent=k+1;$('g-a-t').textContent=G[k][0][0];$('g-b-t').textContent=G[k][1][0];
+    }
+    function pick(j){const [a,b]=G[k];const evj=a[1]>=b[1]?0:1;const ok=j===evj;if(ok)match++;picks.push(j);
+      const row=[String(k+1),(j?'B':'A')+', '+(j?b[0]:a[0]).toLowerCase(),(evj?'B':'A')+' ('+(evj?b[1]:a[1])+' vs '+(evj?a[1]:b[1])+')'+(ok?', matched':'')];
+      row.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;if(i===2&&ok)d.className='m';log.appendChild(d);});
+      k++;$('g-done').textContent=k;show();}
+    aB.addEventListener('click',()=>pick(0));bB.addEventListener('click',()=>pick(1));
+    rst.addEventListener('click',()=>{k=0;match=0;picks.length=0;while(log.children.length>3)log.removeChild(log.lastChild);res.hidden=true;rst.hidden=true;$('g-opts').hidden=false;$('g-q').innerHTML='Pair <span class="num" id="g-k">1</span> of 6. Which would you take?';$('g-done').textContent=0;show();aB.focus();});
+    show();
+  })();
+
+  /* 6. Whose goal is it */
+  (function(){
+    const W=8,H=6,WALL=new Set(['4,0','4,1','4,2','4,3','4,4']),NOTCH='4,1';
+    const GOALS={A:[5,1],B:[2,1]},STARTS=[[3,4],[3,2],[7,3]],G=0.85;
+    const key=(x,y)=>x+','+y;
+    function bfs(s,g,aware,via){
+      const blocked=k=>WALL.has(k)&&!(aware&&k===NOTCH);
+      function run(from,to){const q=[from],prev={};prev[key(from[0],from[1])]=null;
+        while(q.length){const [x,y]=q.shift();if(x===to[0]&&y===to[1])break;
+          for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy,k=key(nx,ny);
+            if(nx<0||ny<0||nx>=W||ny>=H||blocked(k)||k in prev)continue;prev[k]=key(x,y);q.push([nx,ny]);}}
+        const tk=key(to[0],to[1]);if(!(tk in prev))return null;const p=[];let c=tk;while(c){p.unshift(c.split(',').map(Number));c=prev[c];}return p;}
+      if(via){const a=run(s,[4,1]),b=run([4,1],g);if(!a||!b)return null;return a.concat(b.slice(1));}
+      return run(s,g);}
+    function trip(s,aware,pref){const R={A:pref==='A'?1:0.5,B:pref==='B'?1:0.5};let best=null;
+      for(const goal of ['A','B']){let p=bfs(s,GOALS[goal],aware);if(!p)continue;if(aware){const v=bfs(s,GOALS[goal],true,true);if(v&&v.length<=p.length)p=v;}
+        const val=Math.pow(G,p.length-1)*R[goal];if(!best||val>best.val)best={goal,val,path:p};}
+      return best;}
+    const SC=[{aware:false,pref:'A',name:'wanted A and did not know about the notch'},{aware:true,pref:'A',name:'wanted A and knew about the notch'},{aware:true,pref:'B',name:'wanted B and knew about the notch'},{aware:false,pref:'B',name:'wanted B and did not know about the notch'}];
+    let order,k,ansG=null,ansN=null;
+    const rng=mulberry(5);
+    function build(){const other=1+Math.floor(rng()*3);order=rng()<0.5?[0,other]:[other,0];k=0;}
+    const C=26;
+    function svgFor(si,sc){const trips=STARTS.map(s=>trip(s,sc.aware,sc.pref));const t=trips[si];
+      let s='<svg viewBox="0 0 '+(W*C)+' '+(H*C)+'" role="img" aria-label="trip '+(si+1)+': the walker starts at column '+(STARTS[si][0]+1)+', row '+(STARTS[si][1]+1)+' and ends at goal '+t.goal+'">';
+      for(let x=0;x<W;x++)for(let y=0;y<H;y++){const kk=key(x,y);let fill='none';if(WALL.has(kk))fill='var(--navy)';if(x===GOALS.A[0]&&y===GOALS.A[1])fill='var(--khaki)';if(x===GOALS.B[0]&&y===GOALS.B[1])fill='var(--blue)';
+        s+='<rect x="'+(x*C)+'" y="'+(y*C)+'" width="'+C+'" height="'+C+'" fill="'+fill+'" stroke="var(--ink-3)" stroke-width="0.5"/>';
+        if(kk===NOTCH){s+='<rect x="'+(x*C+C*0.42)+'" y="'+(y*C)+'" width="'+(C*0.16)+'" height="'+C+'" fill="var(--ground)"/>';}}
+      s+='<polyline points="'+t.path.map(([x,y])=>(x*C+C/2)+','+(y*C+C/2)).join(' ')+'" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+      const [sx,sy]=STARTS[si];s+='<circle cx="'+(sx*C+C/2)+'" cy="'+(sy*C+C/2)+'" r="6" fill="var(--ground)" stroke="var(--ink)" stroke-width="3"/>';
+      s+='<text x="'+(GOALS.A[0]*C+C/2)+'" y="'+(GOALS.A[1]*C+C/2+5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--khaki-ink)">A</text>';
+      s+='<text x="'+(GOALS.B[0]*C+C/2)+'" y="'+(GOALS.B[1]*C+C/2+5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--blue-ink)">B</text>';
+      return s+'</svg>';}
+    const grids=$('gl-grids'),res=$('gl-res'),go=$('gl-go'),nextB=$('gl-next'),rst=$('gl-reset');
+    const opts={'gl-a':['g','A'],'gl-b':['g','B'],'gl-y':['n',true],'gl-n':['n',false]};
+    function show(){const sc=SC[order[k]];$('gl-k').textContent=k+1;grids.innerHTML=[0,1,2].map(i=>'<figure>'+svgFor(i,sc)+'<figcaption>Trip '+(i+1)+', from the open circle</figcaption></figure>').join('');
+      ansG=null;ansN=null;Object.keys(opts).forEach(id=>{$(id).setAttribute('aria-pressed','false');$(id).disabled=false;});go.disabled=true;go.hidden=false;nextB.hidden=true;rst.hidden=true;res.hidden=true;}
+    Object.keys(opts).forEach(id=>{$(id).addEventListener('click',()=>{const [which,v]=opts[id];if(which==='g'){ansG=v;$('gl-a').setAttribute('aria-pressed',v==='A');$('gl-b').setAttribute('aria-pressed',v==='B');}else{ansN=v;$('gl-y').setAttribute('aria-pressed',v);$('gl-n').setAttribute('aria-pressed',!v);}go.disabled=!(ansG&&ansN!==null);});});
+    go.addEventListener('click',()=>{const sc=SC[order[k]];const okG=ansG===sc.pref,okN=ansN===sc.aware;
+      let t='The walker <b>'+sc.name+'</b>. You were '+(okG?'right':'wrong')+' about the goal and '+(okN?'right':'wrong')+' about the notch. ';
+      if(sc===SC[0])t+='This is the hard scenario. Trip 1 shows it prefers A: it walked seven steps round the bottom of the wall to A when B was four steps away. Trip 2 shows it did not know the notch was passable: from there A was three steps away through the notch, but on its map A was nine steps away round the wall, so it settled for B, two steps away. An observer who assumes the walker knew about the notch reads trip 2 as a preference for B and cannot square it with trip 1. Asking what the walker knew gives one answer that fits all three trips. In the paper, people picked the right goal in 70% of trials in this scenario, against 98% or more in the other three.';
+      else if(sc.pref==='A')t+='It went to A on every trip and used the notch on trips 1 and 2, where that was the shorter way. Using the notch gives its map away.';
+      else if(sc.aware)t+='It went to B on every trip. On trip 3 it came from the right side through the notch to B, seven steps, which only a walker that knows the notch is passable would do.';
+      else t+='It went to B on trips 1 and 2. On trip 3, from the right side, B was eleven steps away round the wall on its map and A only four, so it settled for A. A walker that knew about the notch would have come through it to B in seven steps.';
+      res.hidden=false;res.innerHTML=t;reveal('goal');Object.keys(opts).forEach(id=>$(id).disabled=true);go.hidden=true;k++;if(k<order.length)nextB.hidden=false;else rst.hidden=false;});
+    nextB.addEventListener('click',()=>{show();$('gl-a').focus();});
+    rst.addEventListener('click',()=>{build();show();$('gl-a').focus();});
+    build();show();
+  })();
+})();
+/* speech to song (v13_instruments_language) */
+(function(){
+  const $=id=>document.getElementById(id);
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function shuffle(a,rng){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function bindScale(el,cb){el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));cb(+b.dataset.v);}));}
+  function clearScale(el){el.querySelectorAll('button').forEach(x=>x.removeAttribute('aria-pressed'));}
+
+  /* 1. Speech to song */
+  (function(){
+    const body=$('sg-body');
+    if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){
+      body.innerHTML='<p>This browser does not offer speech synthesis, so the phrase cannot be played here. The task needs a browser with the Web Speech API (most desktop browsers have it). The paper’s own experiment used printed sentences rather than audio; the finding is quoted under the box.</p>';
+      return;
+    }
+    let phrase='sometimes behave so strangely',r1=null,r2=null,busy=false,gen=0,heard=0,count=0;
+    const P=[$('sg-p1'),$('sg-p2'),$('sg-p3')],once=$('sg-once'),ten=$('sg-ten'),loop=$('sg-loop'),stop=$('sg-stop'),rst=$('sg-reset'),st=$('sg-status'),S1=$('sg-r1'),S2=$('sg-r2'),res=$('sg-res');
+    function setPhrase(p){phrase=p;P.forEach(b=>b.setAttribute('aria-pressed',b.textContent===p?'true':'false'));}
+    P.forEach(b=>b.addEventListener('click',()=>{if(!busy)setPhrase(b.textContent);}));
+    function speak(text,done){
+      let fired=false;const fin=()=>{if(fired)return;fired=true;clearTimeout(tm);done();};
+      const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=0.9;u.pitch=1.1;u.volume=1;u.onend=fin;u.onerror=fin;
+      const tm=setTimeout(fin,6000);
+      try{speechSynthesis.speak(u);}catch(e){fin();}
+    }
+    function lock(on){busy=on;once.disabled=on;ten.disabled=on;loop.disabled=on;P.forEach(b=>b.disabled=on);}
+    function run(n,after){
+      lock(true);const my=++gen;count=0;speechSynthesis.cancel();
+      const next=()=>{if(my!==gen)return;count++;st.textContent=n===1?'Playing.':n===Infinity?'Looping, repeat '+count+'. Press Stop when you are ready to rate.':'Playing '+count+' of '+n+'.';
+        speak(phrase,()=>{if(my!==gen)return;if(count<n){setTimeout(next,300);}else{lock(false);st.textContent='';after(count);}});};
+      next();
+    }
+    function askAgain(){S2.hidden=false;S2.querySelector('button').focus();}
+    once.addEventListener('click',()=>{if(busy)return;run(1,()=>{S1.hidden=false;S1.querySelector('button').focus();});});
+    ten.addEventListener('click',()=>{if(busy)return;run(10,n=>{heard+=n;askAgain();});});
+    loop.addEventListener('click',()=>{if(busy)return;loop.hidden=true;stop.hidden=false;stop.focus();run(Infinity,()=>{});});
+    stop.addEventListener('click',()=>{gen++;speechSynthesis.cancel();heard+=count;count=0;lock(false);st.textContent='';stop.hidden=true;loop.hidden=false;askAgain();});
+    bindScale(S1,v=>{r1=v;once.hidden=true;ten.hidden=false;loop.hidden=false;ten.focus();});
+    bindScale(S2,v=>{r2=v;ten.hidden=true;loop.hidden=true;stop.hidden=true;
+      const d=r2-r1;const word=d>0?'moved toward song by '+d+(d===1?' point':' points'):d<0?'moved toward speech by '+(-d)+(-d===1?' point':' points'):'did not move';
+      res.hidden=false;res.innerHTML='"'+phrase+'": <b>'+r1+' of 5</b> after one hearing, <b>'+r2+' of 5</b> after '+heard+' repetitions. Your rating '+word+'. In the paper the mean rating rose from .31 to .58 with repetition, and the rational analysis says why: repetition is far more probable under song than under speech, so each repeat shifts the odds toward hearing song.';
+      rst.hidden=false;reveal('song');rst.focus();});
+    rst.addEventListener('click',()=>{gen++;speechSynthesis.cancel();r1=r2=null;heard=0;count=0;clearScale(S1);clearScale(S2);S1.hidden=true;S2.hidden=true;res.hidden=true;rst.hidden=true;ten.hidden=true;loop.hidden=true;stop.hidden=true;once.hidden=false;lock(false);st.textContent='';once.focus();});
+    window.addEventListener('pagehide',()=>{try{speechSynthesis.cancel();}catch(e){}});
+  })();
+})();
+</script>

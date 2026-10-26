@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thinking together</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,canvas:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  button,input,select,textarea{font-family:var(--font);font-size:var(--s1);color:var(--ink)}
+  .mock{font-size:12px;color:var(--ink-3);padding:var(--u1) 0}
+  .num,.stat,.tab{font-variant-numeric:tabular-nums}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  /* diagram vocabulary */
+  .node{display:inline-block;padding:2px 10px;border:2px solid var(--edge);font-weight:500;line-height:1.3}
+  .node.k{background:var(--khaki);color:var(--khaki-ink)} .node.b{background:var(--blue);color:var(--blue-ink)}
+  .arrow{color:var(--navy);font-weight:400}
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3)}
+  .open h1{font-size:var(--s5);line-height:1.15;max-width:34ch}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0;max-width:52ch}
+
+  /* figures */
+  figure{margin:0}
+  figure img{display:block;width:100%;height:auto}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) figure img{background:var(--plate);padding:var(--u2)} }
+  :root[data-theme="dark"] figure img{background:var(--plate);padding:var(--u2)}
+  @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) figure img{padding:0;mix-blend-mode:multiply} }
+  :root[data-theme="light"] figure img{padding:0;mix-blend-mode:multiply}
+
+  /* evidence */
+  .part{padding:var(--u3) 0 0}
+  .inst + .part{padding-top:var(--u5)}
+  .pair{display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:start}
+  .part .pair{margin-bottom:var(--u4)}
+  .inst .pair{margin-top:var(--u3)}
+  .pair.flip{grid-template-columns:7fr 5fr}
+  .pair.flip figure{order:-1}
+  .pair.flip .box{order:-1}
+  .part .pair h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .pair .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:var(--u1)}
+  .inst figure.stack{max-width:720px;margin-top:var(--u3)}
+  .pair.stack{grid-template-columns:1fr}
+  .pair.stack figure{max-width:720px}
+  .pair.stack figure img{max-width:720px}
+
+  /* instruments */
+  .inst{padding-top:var(--u5)}
+  .inst h2{font-size:var(--s4);line-height:1.15;max-width:24ch}
+  .inst .intro{margin-top:var(--u2)}
+  .inst .lead{margin-top:var(--u2);max-width:66ch}
+  .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .box{border:2px solid var(--edge);padding:var(--u2) var(--u3) var(--u3)}
+  .box .q{font-weight:700;font-size:var(--s2);line-height:1.3;margin-bottom:var(--u2)}
+  .box .q em{font-style:normal;background:var(--khaki);color:var(--khaki-ink);padding:0 6px}
+  .box .how{color:var(--ink-2);margin:0 0 var(--u3);max-width:66ch}
+  .box .how b{color:var(--ink);font-weight:500}
+  .box h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  details.more{margin-top:var(--u2);max-width:70ch}
+  details.more summary{display:inline-block;cursor:pointer;list-style:none;font-weight:500;font-size:15px;line-height:1.3;padding:2px 10px 2px 8px;border:2px solid var(--edge)}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::before{content:"+";display:inline-block;width:1em;font-weight:400}
+  details.more[open] summary::before{content:"\2212"}
+  details.more p{margin:8px 0 0;font-size:15px;color:var(--ink-2);max-width:70ch}
+  details.more .src{margin-top:var(--u1)}
+  details.more .body{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin-top:8px}
+  details.more .body p{max-width:none;margin:0}
+
+  /* controls */
+  .ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--u2) var(--u3);align-items:end;margin-bottom:var(--u2)}
+  .ctl label{display:block;font-size:14px;color:var(--ink-2)}
+  .ctl label b{color:var(--ink);font-weight:500}
+  input[type=range]{width:100%;accent-color:var(--navy);margin:4px 0 0;display:block}
+  input[type=checkbox]{accent-color:var(--navy);width:18px;height:18px;vertical-align:-3px;margin:0 6px 0 0}
+  .btn{border:2px solid var(--edge);background:none;padding:5px 12px;font-size:15px;cursor:pointer;line-height:1.3}
+  .btn:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .btn[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .btn[disabled]{opacity:.45;cursor:default} .btn[disabled]:hover{outline:none}
+  .btns{display:flex;gap:var(--u1);flex-wrap:wrap;align-items:center}
+  .prog{font-size:14px;color:var(--ink-3);margin-top:var(--u2)}
+  .result{margin-top:var(--u2);font-size:var(--s1);max-width:70ch}
+  .result b{font-weight:700}
+  .stats{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3)}
+  .stats b{color:var(--ink);font-weight:700}
+  .key{font-size:14px;color:var(--ink-2);margin-top:var(--u1)}
+  .key i{display:inline-block;width:22px;height:0;border-top:2px solid var(--navy);vertical-align:middle;margin-right:6px}
+  .key i.g{border-top-width:4px;border-top-color:var(--ink-3)}
+  .key .sq{display:inline-block;width:12px;height:12px;border:2px solid var(--edge);vertical-align:-1px;margin-right:6px}
+  .key .sq.b{background:var(--blue)} .key .sq.k{background:var(--khaki)} .key .sq.n{background:var(--navy)}
+  canvas{width:100%;height:auto;display:block}
+  canvas.pick{cursor:crosshair;touch-action:none}
+
+  /* rogers */
+  .sim{display:grid;grid-template-columns:280px 1fr;column-gap:var(--u3);align-items:start}
+  .sim canvas{width:100%;height:auto;display:block}
+  .sim h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+
+  /* search */
+  .srch{display:grid;grid-template-columns:400px 1fr;column-gap:var(--u4);align-items:start}
+  .srch canvas{width:100%;height:auto}
+  .srch h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  .agent{display:grid;grid-template-columns:150px 1fr;column-gap:var(--u3);align-items:start;margin-bottom:var(--u2)}
+  .agent canvas{width:150px;height:150px}
+  .agent .who{font-weight:700}
+  .agent .how{font-size:14px;color:var(--ink-2)}
+  .agent .st{font-size:15px;color:var(--ink-2);margin-top:6px}
+  .agent .st b{color:var(--ink)}
+
+  /* orchestrate */
+  .orch .ctl{grid-template-columns:repeat(3,1fr)}
+  .orch canvas{width:100%;max-width:560px;height:auto;margin-top:var(--u2)}
+  .verdict{margin-top:var(--u2);font-size:var(--s1)}
+  .verdict b{font-weight:700}
+
+  /* serial */
+  .ser{display:grid;grid-template-columns:440px 1fr;column-gap:var(--u4);align-items:start}
+  .ser canvas.main{width:100%;height:auto;border:2px solid var(--edge)}
+  .ser .strip{display:flex;gap:var(--u1);flex-wrap:wrap}
+  .ser .strip div{font-size:13px;color:var(--ink-3);text-align:center}
+  .ser .strip canvas{width:84px;height:84px;border:1px solid var(--ink-3)}
+  .ser canvas.chart{width:100%;max-width:560px;height:auto;margin-top:var(--u2)}
+  .ser h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+
+  /* related */
+  .related{padding-top:var(--u5)}
+  .related h2{font-size:var(--s4);margin-bottom:var(--u2)}
+
+  /* papers */
+  .papers{padding-top:var(--u5)}
+  .papers h2{font-size:var(--s4);margin-bottom:var(--u3)}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u5);row-gap:var(--u3)}
+  .prow{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:var(--u2);margin-bottom:var(--u2)}
+  .prow.noimg{grid-template-columns:1fr}
+  .prow img{width:72px;height:auto;display:block;border:1px solid var(--ink-3)}
+  .prow .t{line-height:1.35}
+  .prow .v{font-size:14px;color:var(--ink-3)}
+  .papers .also{margin-top:var(--u3);font-size:15px;color:var(--ink-2)}
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){
+    .pair,.pair.flip,.srch,.ser,.sim,.stats,.pgrid{grid-template-columns:1fr}
+    .pair.flip figure,.pair.flip .box{order:0}
+    .ctl,.orch .ctl{grid-template-columns:1fr 1fr}
+    .mast{flex-direction:column;gap:var(--u1)}
+  }
+  @media (max-width:560px){ .ctl,.orch .ctl{grid-template-columns:1fr} .agent{grid-template-columns:1fr} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html" aria-current="page">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open" id="top">
+    <h1>A good partner for one person is not automatically good for the group.</h1>
+    <p class="lede">A partnership that helps one person may not improve a team or a population. Collective outcomes depend on how information, expertise, and deference are organised, whether the members are people, AI systems, or both. Here the object of study is the group: what it learns, what it finds, and what it settles on.</p>
+  </div>
+
+  <!-- 1. Rogers' paradox: evidence, then instrument -->
+  <section class="part" id="evidence-rogers">
+    <div class="pair flip">
+      <div>
+        <h3>Adding AI does not automatically improve collective understanding.</h3>
+        <p>In simulation, an AI that learned only socially from the population left equilibrium collective understanding unchanged, even with zero access cost. Gains appeared when learners checked what they copied and fell back on their own learning when it failed, or when the AI also learned for itself. When each use of the AI weakened a learner's own learning, the population settled lower.</p>
+        <div class="src"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the Context of Human-AI Interaction</a>, Philosophical Transactions of the Royal Society A, 2026.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/collins2026revisiting.jpg" width="1000" height="368" loading="lazy" alt="Three panels of people and globes: individual learning from the world, social learning from others, and a mixed population; arrows show who learns from whom.">
+        <figcaption>The learning regimes behind Rogers' paradox: everyone learns from a changing world individually, everyone copies others, or the two mix. The paper adds an AI that learns from the whole population and can be copied for free. Figure from <a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the Context of Human-AI Interaction</a>, 2026.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="rogers">
+    <h2>Does a population learn faster when it can copy an AI for free?</h2>
+    <p class="lead">Learners can work an answer out for themselves, which costs effort, or copy someone who already has it for free. Copying spreads because it is cheap, but a population of copiers has nothing new to copy, and an AI that only copies people does not change that. We care because more and more people now take their answers from AI systems that were themselves trained on human output. Below, each square is a learner in a changing world; set how many learners copy, how often the world changes, and what the AI charges, tick the box to let the AI learn for itself, and watch whether the line with the AI settles above the line without it.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">Watch 400 learners keep up with a changing world.</div>
+      <div class="ctl">
+        <label><b>Social learners</b>: <span class="num" id="r-f-v">70%</span><input type="range" id="r-f" min="0" max="100" step="5" value="70" aria-label="fraction of social learners, percent"></label>
+        <label><b>World changes per step</b>: <span class="num" id="r-u-v">0.01</span><input type="range" id="r-u" min="0" max="0.2" step="0.01" value="0.01" aria-label="environment change rate"></label>
+        <label><b>AI access cost</b>: <span class="num" id="r-c-v">0.000</span><input type="range" id="r-c" min="0" max="0.05" step="0.005" value="0" aria-label="AI access cost, individual learning costs 0.05"></label>
+        <label><input type="checkbox" id="r-ai"><b>AI also learns individually</b></label>
+      </div>
+      <div class="btns" style="margin-bottom:var(--u3)"><button class="btn" id="r-play" aria-pressed="true">Pause</button><button class="btn" id="r-step">Advance 200 steps</button><button class="btn" id="r-reset">Reset</button></div>
+      <div class="sim">
+        <div>
+          <h3>The population this step, with the AI</h3>
+          <canvas id="r-pop" width="280" height="300" aria-label="grid of 400 agents; blue squares are adapted, khaki are not; squares with a heavy edge are individual learners; the AI box on the right shows the AI's chance of being adapted"></canvas>
+          <div class="key"><span class="sq b"></span>adapted <span class="sq k" style="margin-left:14px"></span>not adapted <span style="margin-left:14px">heavy edge = individual learner</span></div>
+        </div>
+        <div>
+          <h3>Share of the population that is adapted, last 600 steps</h3>
+          <canvas id="r-plot" width="840" height="300" aria-label="line chart of the share adapted over the last 600 steps for a population with the AI and the same population without it; ticks on the bottom mark steps where the world changed"></canvas>
+          <div class="key"><i></i>with the AI <i class="g" style="margin-left:14px"></i>the same population without an AI, same world changes (drawn thicker, underneath)</div>
+          <div class="stats">
+            <div>Long-run accuracy, with the AI: <b class="stat" id="r-accA">0.00</b></div>
+            <div>without an AI: <b class="stat" id="r-accB">0.00</b></div>
+            <div>Long-run payoff, with the AI: <b class="stat" id="r-payA">0.000</b></div>
+            <div>without an AI: <b class="stat" id="r-payB">0.000</b></div>
+            <div style="grid-column:1 / -1">Social learners who copied the AI on the last step: <b class="stat" id="r-use">0%</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body">In the paper's simulations, individual learners pay a cost of 0.05 to work out the answer in a slowly changing world, social learners copy for free, and the baseline equilibrium fitness is 0.58. Adding an AI that learns from the whole population each step and can be copied for free did not raise equilibrium fitness, and lowering the AI's cost did not help. An AI that also learned individually raised population fitness substantially when its own learning was cheap and reliable, and lowered it when the AI learned individually often and badly. When each use of the AI weakened the learner's own individual learning, equilibrium fitness fell.<div class="src"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the context of human-AI interaction</a>, Philosophical Transactions of the Royal Society A, 2026.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body">You changed the same four things the paper varies and read the equilibrium off the plot. With the AI copying only, the two lines settle at the same level however cheap the AI is; with the AI learning individually, the navy line settles higher, and the access cost decides whether social learners still use it. Both match the paper: the paradox survives a free copying AI, and an AI that learns for itself can lift the whole population.</div></details>
+  </section>
+
+  <!-- 2. Collective creative search: evidence, then instrument -->
+  <section class="part" id="evidence-search">
+    <div class="pair">
+      <div>
+        <h3>Groups that mixed people and language models found good guesses soonest and reached the highest scores.</h3>
+        <p>People explored broadly while the AI exploited promising regions. Mixed groups reached the highest peak and kept a level of diversity between the all-human and all-AI groups. A group of two different language models scored above either model alone but well below the mixed groups, so most of the gain comes from pairing people with AI rather than from having two different agents. The Nature Computational Science comment sets out why groups like these are worth studying with language models in the loop, as participants, environments, analysts, interviewers, or facilitators.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a>, 2026. <a href="https://doi.org/10.1038/s43588-025-00848-z">Using large language models to advance the cognitive science of collectives</a>, Nature Computational Science, 2025.</div>
+      </div>
+      <figure>
+        <img src="assets/web/collectives.jpg" width="1000" height="365" loading="lazy" alt="Three panels: axes of complexity for collectives; five roles a language model can play in a collective (participant, environment, analyst, interviewer, facilitator); a network integrating the axes.">
+        <figcaption>Five roles a language model can play in a study of a group: participant, environment, analyst, interviewer, facilitator. Figure from <a href="https://doi.org/10.1038/s43588-025-00848-z">Using Large Language Models to Advance the Cognitive Science of Collectives</a>, 2025.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="search">
+    <h2>Search a hidden landscape beside three fixed strategies.</h2>
+    <p class="intro">When people search for something together, each person's guesses feed the others, so what the group finds depends on the mix of strategies in it. This paper set groups of people and language models on a hidden-word game and asked whether mixed groups find better answers than either alone. We care because a good thought partner should widen what a group can find. Here you search a square for a hidden high point while three computer searchers with fixed strategies guess beside you; compare the best point and the spread of guesses for each of the four of you.</p>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">Find the hidden high point.</div>
+      <p class="how">Click to guess. Each guess scores 0 to 100 and you have 20; the three searchers make one guess for each of yours.</p>
+      <div class="srch">
+        <div>
+          <h3>You. Click anywhere in the square, or focus it and use the arrow keys and Enter.</h3>
+          <canvas class="pick" id="s-you" width="400" height="400" tabindex="0" role="img" aria-label="a square field; each of your guesses appears as a circle shaded by its score; the landscape is drawn in after the twentieth guess"></canvas>
+          <div class="stats">
+            <div>Guesses used: <b class="stat" id="s-n">0</b> of 20</div>
+            <div>Last score: <b class="stat" id="s-last">none</b></div>
+            <div>Your best: <b class="stat" id="s-best">none</b></div>
+            <div>Spread of your guesses: <b class="stat" id="s-div">none</b></div>
+          </div>
+          <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="s-reset">Start again</button></div>
+        </div>
+        <div>
+          <div class="agent"><canvas id="s-ex" width="150" height="150" aria-label="the explorer's guesses"></canvas><div><div class="who">Explorer</div><div class="how">Every guess is a fresh random point.</div><div class="st">Best: <b class="stat" id="s-ex-b">none</b>. Spread: <b class="stat" id="s-ex-d">none</b></div></div></div>
+          <div class="agent"><canvas id="s-xp" width="150" height="150" aria-label="the exploiter's guesses"></canvas><div><div class="who">Exploiter</div><div class="how">One random guess, then every guess lands near its best so far.</div><div class="st">Best: <b class="stat" id="s-xp-b">none</b>. Spread: <b class="stat" id="s-xp-d">none</b></div></div></div>
+          <div class="agent"><canvas id="s-hy" width="150" height="150" aria-label="the hybrid's guesses"></canvas><div><div class="who">Hybrid</div><div class="how">Alternates: one exploring guess, one exploiting guess.</div><div class="st">Best: <b class="stat" id="s-hy-b">none</b>. Spread: <b class="stat" id="s-hy-d">none</b></div></div></div>
+          <div class="result" id="s-res" hidden></div>
+        </div>
+      </div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body">In a hidden-word game across 200 games, groups that mixed people with Gemini 2.5 Flash reached the highest scores (M = 87.8) and AI-only groups the lowest (M = 65.3). Diversity of guesses was highest for people working alone (0.86), in between for the mixed groups (0.58), and lowest for AI-only groups (0.37). The AI on its own used exploit strategies 99% of the time; people shifted from exploring to exploiting as hints improved.<div class="src"><a href="https://arxiv.org/abs/2602.10001">Human-AI synergy supports collective creative search</a>, CogSci 2026.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body">You ran a 20-guess search next to a pure explorer, a pure exploiter, and a searcher that alternates. The paper's AI-only groups behaved like the exploiter, 99% exploit moves; its human groups explored early and exploited later; its mixed groups scored highest and kept an intermediate diversity. Compare the best scores and spreads above with that ordering.</div></details>
+  </section>
+
+  <!-- 3. Serial reproduction -->
+  <section class="inst" id="serial">
+    <h2>A chain of reproductions drifts toward what the reproducer expects.</h2>
+    <p class="intro">Pass a message down a chain of people and it drifts until it settles on whatever the people in the chain expect. Where it settles is set by the expectations shared along the chain, which makes the end point a property of the chain rather than of any one member. Cognitive scientists use this drift on purpose to read out shared expectations, and this paper shows that a diffusion model generating an image runs the same kind of chain step by step. Here you play six rounds with a pattern of dots and watch your copies drift.</p>
+    <figure class="stack">
+      <img src="assets/web/figs/marjieh2023analyzing.jpg" width="1000" height="153" loading="lazy" alt="Six panels joined by arrows: points scattered across a square move, panel by panel, into three tight clusters at the corners of a triangle.">
+      <figcaption>A chain of reconstructions: points scattered over the square move, step by step, toward the three clusters the reconstructor expects. Figure from <a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a>, ICML 2023.</figcaption>
+    </figure>
+
+    <div class="box" style="margin-top:var(--u3)">
+      <div class="q">A telephone game with six dots.</div>
+      <p class="how">Six dots appear for two seconds. Place six dots from memory where they were; your copy becomes the next round's pattern.</p>
+      <div class="ser">
+        <div>
+          <canvas class="main pick" id="p-cv" width="360" height="360" tabindex="0" role="img" aria-label="a square in which a pattern of six dots is shown for two seconds and then reproduced by placing six dots; arrow keys move a cursor and Enter places a dot"></canvas>
+          <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="p-show">Show the pattern</button><button class="btn" id="p-undo" hidden>Remove last dot</button><button class="btn" id="p-reset" hidden>Start again</button></div>
+          <div class="prog" id="p-msg">Round 1 of 6. Press the button to see the first pattern.</div>
+        </div>
+        <div>
+          <div class="prog" id="p-wait" style="margin:0">After round six, all seven patterns and a chart of how they changed appear here.</div>
+          <div id="p-reveal" hidden>
+          <h3>The whole chain</h3>
+          <div class="strip" id="p-strip"></div>
+          <h3 style="margin-top:var(--u3)">Two measures of the pattern, by round</h3>
+          <canvas class="chart" id="p-chart" width="560" height="200" role="img" aria-label="line chart of pattern spread and unevenness across rounds"></canvas>
+          <div class="key"><i></i>spread: mean distance of the dots from their centre, as a share of the side <i class="g" style="margin-left:14px"></i>unevenness: spread of nearest-neighbour distances divided by their mean</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body">The optimal reverse step of a diffusion model is a Bayesian posterior with the noise kernel as likelihood and the forward marginal as prior, so its sampling loop has the same structure as serial reproduction, the telephone-game method cognitive scientists use to expose priors. The paper proves the sampled distribution approximates the data distribution for any ergodic noise family as long as the schedule keeps successive marginals near-stationary. In simulation, every noise family recovered a Swiss roll when scheduled gradually and failed under abrupt or constant schedules; on real DDPMs the FID improved with more steps and then plateaued.<div class="src"><a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a>, ICML 2023.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body">You ran a six-step serial reproduction chain and watched the two measures move. The paper's point is that a diffusion sampler is doing the same thing: each denoising step is a Bayesian reconstruction whose prior is the forward marginal, and gradual schedules keep those priors close enough between steps that the chain lands on the data distribution.</div></details>
+  </section>
+
+  <!-- 4. When to orchestrate: evidence, then instrument -->
+  <section class="part" id="evidence-orchestrate">
+    <div class="pair">
+      <div>
+        <h3>Routing between several agents pays only when they differ.</h3>
+        <p>The paper gives a rule for sending each question to the agent with the highest expected correctness per unit cost, and a measure of when routing is worth doing at all: the best achievable correctness divided by what a random orchestrator achieves, which is bounded below by how different the agents are. In a simulation that extends the Rogers' paradox model above to a population choosing among three AI systems, learners who picked their strategy at random reached an equilibrium adaptation of 0.578; orchestrating that choice gave 0.926. The group does better when the choice of whom to ask is organised, and the paper says when organising it is worth the trouble.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2503.13577">When should we orchestrate multiple agents?</a>, 2025.</div>
+      </div>
+      <figure style="max-width:504px">
+        <img src="assets/web/figs/bhatt2025orchestrate.jpg" width="504" height="226" loading="lazy" alt="Three heat maps, each with four agents as rows and three input regions as columns, shaded by the probability that the agent is correct in that region: approximately invariant, dominant, and varying.">
+        <figcaption>Three agent profiles used in the paper: four agents, three input regions, shaded by how often each agent is correct in each region. Routing is pointless in the approximately invariant profile (left), reduces to picking the top row in the dominant profile (middle), and pays in the varying profile (right). Figure from <a href="https://arxiv.org/abs/2503.13577">When should we orchestrate multiple agents?</a>, 2025.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="inst" id="orchestrate">
+    <h2>Set two agents against two kinds of question.</h2>
+    <p class="intro">When several AI agents are available, someone has to decide which one handles which question. This paper asks when that routing is worth doing at all and answers: only when the agents are good at different things, and only when the cost of switching does not eat the gain. We care because a thought partner is often a small team of models and people rather than one system. Move the sliders to set how good two agents are on easy and hard questions and see whether routing beats using the better one for everything.</p>
+
+    <div class="box orch" style="margin-top:var(--u3)">
+      <div class="q">When is it worth switching between two AI agents?</div>
+      <p class="how">Agents A and B answer easy and hard questions. Set how often each is right, the share of hard questions, and what B costs compared with A.</p>
+      <div class="ctl">
+        <label><b>A right on easy questions</b>: <span class="num" id="o-ae-v">0.80</span><input type="range" id="o-ae" min="0.3" max="1" step="0.01" value="0.80" aria-label="agent A correctness on easy inputs"></label>
+        <label><b>A right on hard questions</b>: <span class="num" id="o-ah-v">0.55</span><input type="range" id="o-ah" min="0.3" max="1" step="0.01" value="0.55" aria-label="agent A correctness on hard inputs"></label>
+        <label><b>Share of hard questions</b>: <span class="num" id="o-p-v">50%</span><input type="range" id="o-p" min="0" max="100" step="5" value="50" aria-label="share of hard inputs, percent"></label>
+        <label><b>B right on easy questions</b>: <span class="num" id="o-be-v">0.70</span><input type="range" id="o-be" min="0.3" max="1" step="0.01" value="0.70" aria-label="agent B correctness on easy inputs"></label>
+        <label><b>B right on hard questions</b>: <span class="num" id="o-bh-v">0.85</span><input type="range" id="o-bh" min="0.3" max="1" step="0.01" value="0.85" aria-label="agent B correctness on hard inputs"></label>
+        <label><b>Cost of B, if A costs 1</b>: <span class="num" id="o-c-v">1.0</span><input type="range" id="o-c" min="0.5" max="3" step="0.1" value="1" aria-label="cost of agent B relative to agent A"></label>
+      </div>
+      <canvas id="o-cv" width="560" height="250" role="img" aria-label="bar chart of how often agent A and agent B are right on easy and hard questions; the heavy edge marks the agent the cost rule sends each kind to; a dashed line marks the best single agent overall"></canvas>
+      <div class="key"><span class="sq k"></span>agent A <span class="sq b" style="margin-left:14px"></span>agent B <span style="margin-left:14px">heavy edge = the agent the cost rule routes to</span> <i style="margin-left:14px;border-top-style:dashed"></i>best single agent overall</div>
+      <div class="stats">
+        <div>Best single agent: <b class="stat" id="o-single">0.00</b></div>
+        <div>Random orchestrator: <b class="stat" id="o-rand">0.00</b></div>
+        <div>Best possible routing: <b class="stat" id="o-oracle">0.00</b></div>
+        <div>Cost-rule routing: <b class="stat" id="o-rule">0.00</b></div>
+        <div style="grid-column:1 / -1">Appropriateness ratio, best routing over random: <b class="stat" id="o-ratio">0.00</b></div>
+      </div>
+      <div class="verdict" id="o-verdict"></div>
+    </div>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body">On synthetic profiles of four agents over three input regions, routing added nothing when the agents were about equally correct everywhere, and misaligned costs wiped out its benefit even when one agent dominated. In a user study (N = 80) on maths questions, people alone scored about 60%, 58% when handed agents without orchestration, 61% with orchestration suggestions, and 65.2% when outsourcing was enforced after an unaided error. People are poor orchestrators of their own help, so the routing rule matters in practice as well as in theory.<div class="src"><a href="https://arxiv.org/abs/2503.13577">When should we orchestrate multiple agents?</a>, 2025.</div></div></details>
+    <details class="more"><summary class="node k">What you just did</summary><div class="body">You set two agents' correctness in two regions and a cost, and read off whether routing beats the best single agent. The ratio on the chart is the paper's measure of when orchestration is appropriate; when the two agents are nearly the same the ratio sits near 1 and routing adds nothing, and when the cheaper agent is the worse one in a region the cost rule can pick it and lose ground.</div></details>
+  </section>
+
+  <section class="related" id="related">
+    <h2>Related stories</h2>
+    <p>The pair that every group here is built from is the subject of <a href="working-with-ai.html">working with AI</a>, which measures the partnership rather than the person or the model alone. <a href="alignment.html">Alignment and learning</a> asks what representations a whole population shares, which is what a reproduction chain settles on and what an AI trained on everyone inherits. <a href="understanding-people.html">Understanding people</a> studies the individual choices, to copy, explore, or defer, that these simulations add up.</p>
+  </section>
+
+  <section class="papers" id="papers">
+    <h2>Papers on this page</h2>
+    <div class="pgrid">
+      <div>
+        <div class="prow"><img src="assets/web/titles/collins2026revisiting.jpg" width="480" height="271" loading="lazy" alt=""><div><div class="t"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the Context of Human-AI Interaction</a></div><div class="v">Philosophical Transactions of the Royal Society A, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/li2026humanai.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a></div><div class="v">CogSci, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/sucholutsky2025using.jpg" width="480" height="254" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1038/s43588-025-00848-z">Using Large Language Models to Advance the Cognitive Science of Collectives</a></div><div class="v">Nature Computational Science, 2025</div></div></div>
+      </div>
+      <div>
+        <div class="prow"><img src="assets/web/titles/marjieh2023analyzing.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a></div><div class="v">ICML, 2023</div></div></div>
+        <div class="prow"><img src="assets/web/titles/bhatt2025orchestrate.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2503.13577">When Should We Orchestrate Multiple Agents?</a></div><div class="v">arXiv, 2025</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html" aria-current="page">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>
+
+<script>
+function reveal(id){document.querySelectorAll('#'+id+' details.more').forEach(d=>{d.open=true;});}
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function gauss(r){let u=0,v=0;while(u===0)u=r();while(v===0)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+  function hexA(hex,a){const h=hex.replace('#','');const n=parseInt(h.length===3?h.split('').map(c=>c+c).join(''):h,16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+  function meanPair(pts){let s=0,n=0;for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){s+=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);n++;}return n?s/n:0;}
+  const fmt2=v=>v.toFixed(2);
+
+  /* 1. Rogers' paradox */
+  (function(){
+    const N=400,S_IND=0.66,C_IND=0.05,SURV_A=0.93,SURV_N=0.85,S_AI=0.66,WIN=600,STAT=300;
+    let rng,social,A,B,hist,t;
+    let f=0.7,u=0.01,cAI=0,aiInd=false,useShare=0;
+    const perm=(function(){const r=mulberry(11);const p=Array.from({length:N},(_,i)=>i);for(let i=N-1;i>0;i--){const j=Math.floor(r()*(i+1));[p[i],p[j]]=[p[j],p[i]];}return p;})();
+    function assign(){const k=Math.round(f*N);social=new Uint8Array(N);for(let i=0;i<k;i++)social[perm[i]]=1;}
+    function reset(){rng=mulberry(2026);A=new Uint8Array(N);B=new Uint8Array(N);hist=[];t=0;assign();for(let i=0;i<WIN;i++)step();}
+    function mean(a){let s=0;for(let i=0;i<N;i++)s+=a[i];return s/N;}
+    function step(){
+      const change=rng()<u;
+      if(change){A.fill(0);B.fill(0);}
+      const qA=mean(A),qB=mean(B);
+      const pAI=aiInd?qA+(1-qA)*S_AI:qA;
+      const gain=(pAI-qA)*(SURV_A-SURV_N);
+      const pUse=cAI===0?1:1/(1+Math.exp(-(gain-cAI)/0.003));
+      const nA=new Uint8Array(N),nB=new Uint8Array(N);let payA=0,payB=0,used=0,ns=0;
+      for(let i=0;i<N;i++){
+        if(!social[i]){nA[i]=rng()<S_IND?1:0;nB[i]=rng()<S_IND?1:0;payA+=(nA[i]?SURV_A:SURV_N)-C_IND;payB+=(nB[i]?SURV_A:SURV_N)-C_IND;}
+        else{ns++;
+          if(rng()<pUse){nA[i]=rng()<pAI?1:0;payA+=(nA[i]?SURV_A:SURV_N)-cAI;used++;}
+          else{nA[i]=A[Math.floor(rng()*N)];payA+=nA[i]?SURV_A:SURV_N;}
+          nB[i]=B[Math.floor(rng()*N)];payB+=nB[i]?SURV_A:SURV_N;}
+      }
+      A=nA;B=nB;t++;useShare=ns?used/ns:0;
+      hist.push({a:mean(A),b:mean(B),pa:payA/N,pb:payB/N,ch:change,pAI});
+      if(hist.length>WIN)hist.shift();
+    }
+    const pop=$('r-pop'),plot=$('r-plot');
+    function drawPop(){
+      const ctx=pop.getContext('2d'),W=pop.width,H=pop.height;ctx.clearRect(0,0,W,H);
+      const cols=20,cell=10,gap=1,ox=0,oy=0;const blue=css('--blue'),khaki=css('--khaki'),edge=css('--edge');
+      for(let i=0;i<N;i++){const x=ox+(i%cols)*(cell+gap),y=oy+Math.floor(i/cols)*(cell+gap);ctx.fillStyle=A[i]?blue:khaki;ctx.fillRect(x,y,cell,cell);
+        if(!social[i]){ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.strokeRect(x+1,y+1,cell-2,cell-2);}}
+      // AI box
+      const last=hist[hist.length-1];const bx=236,by=0,bw=44,bh=44;
+      ctx.fillStyle=khaki;ctx.fillRect(bx,by,bw,bh);ctx.fillStyle=blue;ctx.fillRect(bx,by+bh*(1-last.pAI),bw,bh*last.pAI);
+      ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.strokeRect(bx+1,by+1,bw-2,bh-2);
+      ctx.fillStyle=css('--ink');ctx.font='700 14px '+css('--font');ctx.textAlign='center';ctx.fillText('AI',bx+bw/2,by+bh/2+5);
+      ctx.font='13px '+css('--font');ctx.fillStyle=css('--ink-2');ctx.fillText(last.pAI.toFixed(2),bx+bw/2,by+bh+16);
+      ctx.fillText('right',bx+bw/2,by+bh+31);
+      // arrow from population to AI
+      ctx.strokeStyle=css('--navy');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(222,22);ctx.lineTo(232,22);ctx.stroke();
+      ctx.fillStyle=css('--ink-2');ctx.font='13px '+css('--font');ctx.textAlign='left';ctx.fillText('step '+t,0,H-6);
+    }
+    function drawPlot(){
+      const ctx=plot.getContext('2d'),W=plot.width,H=plot.height;ctx.clearRect(0,0,W,H);
+      const L=44,R=W-70,T=12,Bm=H-30;const px=i=>L+(R-L)*i/(WIN-1),py=v=>Bm-(Bm-T)*v;
+      ctx.font='13px '+css('--font');ctx.fillStyle=css('--ink-2');ctx.textAlign='right';
+      ctx.strokeStyle=css('--ink-3');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,Bm);ctx.lineTo(R,Bm);ctx.stroke();
+      [0,0.5,1].forEach(v=>{ctx.fillText(v.toFixed(1),L-8,py(v)+4);ctx.beginPath();ctx.moveTo(L-4,py(v));ctx.lineTo(L,py(v));ctx.stroke();});
+      ctx.textAlign='center';ctx.fillText('600 steps ago',L+50,H-8);ctx.fillText('now',R,H-8);
+      // change ticks
+      ctx.strokeStyle=css('--khaki-ink');ctx.lineWidth=1;hist.forEach((h,i)=>{if(h.ch){const x=px(i);ctx.beginPath();ctx.moveTo(x,Bm);ctx.lineTo(x,Bm+6);ctx.stroke();}});
+      const line=(k,col,w)=>{ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();hist.forEach((h,i)=>{const x=px(i),y=py(h[k]);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();};
+      line('b',css('--ink-3'),4);line('a',css('--navy'),2);
+      // long-run means
+      const n=Math.min(STAT,hist.length),sl=hist.slice(-n);const m=k=>sl.reduce((s,h)=>s+h[k],0)/n;
+      const mA=m('a'),mB=m('b'),pA=m('pa'),pB=m('pb');
+      ctx.lineWidth=2;ctx.textAlign='left';
+      ctx.strokeStyle=css('--ink-3');ctx.beginPath();ctx.moveTo(R+4,py(mB));ctx.lineTo(R+14,py(mB));ctx.stroke();
+      ctx.strokeStyle=css('--navy');ctx.beginPath();ctx.moveTo(R+4,py(mA));ctx.lineTo(R+14,py(mA));ctx.stroke();
+      ctx.fillStyle=css('--ink');ctx.font='700 13px '+css('--font');
+      const yA=py(mA),yB=py(mB);let ya=yA+4,yb=yB+4;if(Math.abs(yA-yB)<14){ya=Math.min(yA,yB)-4;yb=Math.max(yA,yB)+12;}
+      ctx.fillText(mA.toFixed(2),R+18,ya);ctx.fillStyle=css('--ink-2');ctx.font='13px '+css('--font');if(Math.abs(mA-mB)>=0.005)ctx.fillText(mB.toFixed(2),R+18,yb);
+      $('r-accA').textContent=mA.toFixed(2);$('r-accB').textContent=mB.toFixed(2);$('r-payA').textContent=pA.toFixed(3);$('r-payB').textContent=pB.toFixed(3);$('r-use').textContent=Math.round(useShare*100)+'%';
+    }
+    function draw(){drawPop();drawPlot();}
+    redraws.push(draw);
+    const fI=$('r-f'),uI=$('r-u'),cI=$('r-c'),aI=$('r-ai');
+    document.querySelectorAll('#rogers .ctl, #rogers .btns').forEach(el=>{el.addEventListener('input',()=>reveal('rogers'));el.addEventListener('click',e=>{if(e.target.closest('button,input'))reveal('rogers');});});
+    fI.addEventListener('input',()=>{f=+fI.value/100;$('r-f-v').textContent=fI.value+'%';assign();if(!running)draw();});
+    uI.addEventListener('input',()=>{u=+uI.value;$('r-u-v').textContent=u.toFixed(2);if(!running)draw();});
+    cI.addEventListener('input',()=>{cAI=+cI.value;$('r-c-v').textContent=cAI.toFixed(3);if(!running)draw();});
+    aI.addEventListener('change',()=>{aiInd=aI.checked;if(!running)draw();});
+    let running=!reduced,visible=true,raf=0;
+    const playB=$('r-play');
+    function setRun(v){running=v;playB.textContent=v?'Pause':'Play';playB.setAttribute('aria-pressed',v?'true':'false');if(v)loop();}
+    function loop(){if(!running)return;if(visible){step();draw();}raf=requestAnimationFrame(loop);}
+    playB.addEventListener('click',()=>setRun(!running));
+    $('r-step').addEventListener('click',()=>{for(let i=0;i<200;i++)step();draw();});
+    $('r-reset').addEventListener('click',()=>{reset();draw();});
+    if('IntersectionObserver' in window){new IntersectionObserver(e=>{visible=e[0].isIntersecting;}).observe(plot);}
+    reset();draw();
+    if(running)setRun(true);else setRun(false);
+  })();
+
+  /* 2. Collective creative search */
+  (function(){
+    const PEAKS=[[0.72,0.30,1.00,0.09],[0.25,0.70,0.80,0.13],[0.50,0.50,0.55,0.20],[0.15,0.20,0.65,0.07],[0.85,0.85,0.45,0.10]];
+    function raw(x,y){let s=0;for(const [px,py,h,sg] of PEAKS){const d2=(x-px)*(x-px)+(y-py)*(y-py);s+=h*Math.exp(-d2/(2*sg*sg));}return s;}
+    let fmax=0;for(let i=0;i<=120;i++)for(let j=0;j<=120;j++)fmax=Math.max(fmax,raw(i/120,j/120));
+    const score=(x,y)=>Math.round(100*raw(x,y)/fmax);
+    const MAXG=20;
+    let seed=7;
+    const you={g:[],best:null,cv:$('s-you'),cur:{x:0.5,y:0.5}};
+    const agents=[{kind:'explore',cv:$('s-ex'),b:'s-ex-b',d:'s-ex-d'},{kind:'exploit',cv:$('s-xp'),b:'s-xp-b',d:'s-xp-d'},{kind:'hybrid',cv:$('s-hy'),b:'s-hy-b',d:'s-hy-d'}];
+    let done=false,focused=false;
+    function reset(){you.g=[];you.best=null;done=false;agents.forEach((a,i)=>{a.g=[];a.best=null;a.rng=mulberry(seed*100+i);});seed++;
+      $('s-n').textContent='0';$('s-last').textContent='none';$('s-best').textContent='none';$('s-div').textContent='none';
+      agents.forEach(a=>{$(a.b).textContent='none';$(a.d).textContent='none';});$('s-res').hidden=true;drawAll();}
+    function add(t,x,y){const s=score(x,y);t.g.push({x,y,s});if(!t.best||s>t.best.s)t.best={x,y,s};return s;}
+    function agentStep(a){const n=a.g.length;let x,y;
+      const explore=n===0||a.kind==='explore'||(a.kind==='hybrid'&&n%2===0);
+      if(explore){x=a.rng();y=a.rng();}else{x=clamp(a.best.x+gauss(a.rng)*0.07,0,1);y=clamp(a.best.y+gauss(a.rng)*0.07,0,1);}
+      add(a,x,y);}
+    function drawField(cv,t,label){
+      const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);
+      const navy=css('--navy'),edge=css('--edge'),ground=css('--ground');
+      ctx.fillStyle=ground;ctx.fillRect(0,0,W,H);
+      if(done){const n=40;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=raw((i+0.5)/n,(j+0.5)/n)/fmax;ctx.fillStyle=hexA(navy,0.08+0.6*v);ctx.fillRect(i*W/n,j*H/n,W/n+0.5,H/n+0.5);}}
+      const r=W>200?7:4;
+      t.g.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x*W,p.y*H,r,0,Math.PI*2);ctx.fillStyle=done?css('--khaki'):hexA(navy,0.15+0.85*p.s/100);ctx.fill();ctx.lineWidth=W>200?2:1;ctx.strokeStyle=done?css('--khaki-ink'):edge;ctx.stroke();});
+      if(t.best){const p=t.best;ctx.beginPath();ctx.arc(p.x*W,p.y*H,r+4,0,Math.PI*2);ctx.lineWidth=2;ctx.strokeStyle=done?css('--khaki-ink'):edge;ctx.stroke();
+        if(W>200){ctx.font='700 14px '+css('--font');ctx.fillStyle=done?css('--plate'):css('--ink');ctx.textAlign=p.x>0.8?'right':'left';ctx.fillText(String(p.s),p.x*W+(p.x>0.8?-14:14),p.y*H+5);}}
+      if(label&&focused&&!done){const c=t.cur;ctx.strokeStyle=edge;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(c.x*W-12,c.y*H);ctx.lineTo(c.x*W+12,c.y*H);ctx.moveTo(c.x*W,c.y*H-12);ctx.lineTo(c.x*W,c.y*H+12);ctx.stroke();}
+      ctx.strokeStyle=edge;ctx.lineWidth=2;ctx.strokeRect(1,1,W-2,H-2);
+    }
+    function drawAll(){drawField(you.cv,you,true);agents.forEach(a=>drawField(a.cv,a,false));}
+    redraws.push(drawAll);
+    function guess(x,y){if(done)return;const s=add(you,x,y);agents.forEach(agentStep);
+      $('s-n').textContent=you.g.length;$('s-last').textContent=s;$('s-best').textContent=you.best.s;$('s-div').textContent=fmt2(meanPair(you.g));
+      agents.forEach(a=>{$(a.b).textContent=a.best.s;$(a.d).textContent=fmt2(meanPair(a.g));});
+      if(you.g.length>=MAXG){done=true;const r=$('s-res');r.hidden=false;
+        r.innerHTML='Twenty guesses each. Best point found: you <b>'+you.best.s+'</b>, explorer <b>'+agents[0].best.s+'</b>, exploiter <b>'+agents[1].best.s+'</b>, hybrid <b>'+agents[2].best.s+'</b>. The landscape is now drawn in. In the paper, mixed human-AI groups scored highest (87.8) and AI-only groups lowest (65.3), while diversity ran the other way (0.86 for people alone, 0.58 mixed, 0.37 AI-only).';reveal('search');}
+      drawAll();}
+    you.cv.addEventListener('pointerdown',e=>{const r=you.cv.getBoundingClientRect();const x=clamp((e.clientX-r.left)/r.width,0,1),y=clamp((e.clientY-r.top)/r.height,0,1);you.cur={x,y};guess(x,y);e.preventDefault();});
+    you.cv.addEventListener('keydown',e=>{const st=e.shiftKey?0.1:0.025;let h=true;
+      if(e.key==='ArrowLeft')you.cur.x=clamp(you.cur.x-st,0,1);else if(e.key==='ArrowRight')you.cur.x=clamp(you.cur.x+st,0,1);
+      else if(e.key==='ArrowUp')you.cur.y=clamp(you.cur.y-st,0,1);else if(e.key==='ArrowDown')you.cur.y=clamp(you.cur.y+st,0,1);
+      else if(e.key==='Enter'||e.key===' ')guess(you.cur.x,you.cur.y);else h=false;
+      if(h){e.preventDefault();drawAll();}});
+    you.cv.addEventListener('focus',()=>{focused=true;drawAll();});you.cv.addEventListener('blur',()=>{focused=false;drawAll();});
+    $('s-reset').addEventListener('click',()=>{reset();you.cv.focus();});
+    reset();
+  })();
+
+  /* 3. Serial reproduction */
+  (function(){
+    const K=6,ND=6,SHOW=2000;
+    const cv=$('p-cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+    const chart=$('p-chart'),strip=$('p-strip'),msg=$('p-msg'),showB=$('p-show'),undoB=$('p-undo'),rstB=$('p-reset'),reveal=$('p-reveal'),wait=$('p-wait');
+    let chain,placing,cur,mode,focused=false,timer=0;
+    function firstPattern(){const rng=mulberry(31);const pts=[];let tries=0;while(pts.length<ND&&tries<2000){tries++;const x=0.1+rng()*0.8,y=0.1+rng()*0.8;if(pts.every(p=>Math.hypot(p.x-x,p.y-y)>0.18))pts.push({x,y});}return pts;}
+    function measures(pts){const cx=pts.reduce((s,p)=>s+p.x,0)/pts.length,cy=pts.reduce((s,p)=>s+p.y,0)/pts.length;
+      const spread=pts.reduce((s,p)=>s+Math.hypot(p.x-cx,p.y-cy),0)/pts.length;
+      const nn=pts.map((p,i)=>Math.min(...pts.filter((q,j)=>j!==i).map(q=>Math.hypot(p.x-q.x,p.y-q.y))));
+      const m=nn.reduce((s,x)=>s+x,0)/nn.length;const sd=Math.sqrt(nn.reduce((s,x)=>s+(x-m)*(x-m),0)/nn.length);
+      return {spread,uneven:m>0?sd/m:0};}
+    function drawMain(){ctx.clearRect(0,0,W,H);ctx.fillStyle=css('--ground');ctx.fillRect(0,0,W,H);
+      const pts=mode==='show'?chain[chain.length-1]:mode==='place'?placing:[];
+      ctx.fillStyle=css('--ink');pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x*W,p.y*H,7,0,Math.PI*2);ctx.fill();});
+      if(mode==='place'&&focused){ctx.strokeStyle=css('--edge');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cur.x*W-12,cur.y*H);ctx.lineTo(cur.x*W+12,cur.y*H);ctx.moveTo(cur.x*W,cur.y*H-12);ctx.lineTo(cur.x*W,cur.y*H+12);ctx.stroke();}
+      if(mode==='done'){ctx.fillStyle=css('--ink-2');ctx.font='15px '+css('--font');ctx.textAlign='center';ctx.fillText('Chain complete.',W/2,H/2+5);}}
+    function drawStrip(){strip.innerHTML='';chain.forEach((pts,i)=>{const d=document.createElement('div');const c=document.createElement('canvas');c.width=84;c.height=84;c.setAttribute('aria-label','pattern '+i);const x=c.getContext('2d');x.fillStyle=css('--ground');x.fillRect(0,0,84,84);x.fillStyle=css('--ink');pts.forEach(p=>{x.beginPath();x.arc(p.x*84,p.y*84,2.5,0,Math.PI*2);x.fill();});d.appendChild(c);d.appendChild(document.createTextNode(i===0?'start':'round '+i));strip.appendChild(d);});}
+    function drawChart(){const c=chart.getContext('2d'),CW=chart.width,CH=chart.height;c.clearRect(0,0,CW,CH);
+      const L=40,R=CW-16,T=16,B=CH-30;const px=i=>L+(R-L)*i/K,py=v=>B-(B-T)*Math.min(v,1);
+      c.strokeStyle=css('--ink-3');c.lineWidth=1;c.beginPath();c.moveTo(L,T);c.lineTo(L,B);c.lineTo(R,B);c.stroke();
+      c.font='13px '+css('--font');c.fillStyle=css('--ink-2');c.textAlign='right';[0,0.5,1].forEach(v=>{c.fillText(v.toFixed(1),L-8,py(v)+4);});
+      c.textAlign='center';for(let i=0;i<=K;i++)c.fillText(i===0?'start':String(i),px(i),CH-10);
+      const ms=chain.map(measures);
+      const line=(key,col,w)=>{c.strokeStyle=col;c.lineWidth=w;c.beginPath();ms.forEach((m,i)=>{i?c.lineTo(px(i),py(m[key])):c.moveTo(px(i),py(m[key]));});c.stroke();
+        c.fillStyle=css('--ink');c.font='12px '+css('--font');c.textAlign='center';ms.forEach((m,i)=>{c.textAlign=i===0?'left':'center';c.fillText(fmt2(m[key]),px(i)+(i===0?6:0),py(m[key])-8);});};
+      line('uneven',css('--ink-3'),4);line('spread',css('--navy'),2);}
+    function drawAll(){drawMain();drawStrip();drawChart();}
+    redraws.push(drawAll);
+    function reset(){clearTimeout(timer);chain=[firstPattern()];placing=[];cur={x:0.5,y:0.5};mode='idle';showB.hidden=false;showB.disabled=false;showB.textContent='Show the pattern';undoB.hidden=true;rstB.hidden=true;reveal.hidden=true;wait.hidden=false;msg.textContent='Round 1 of 6. Press the button to see the first pattern.';drawAll();}
+    showB.addEventListener('click',()=>{mode='show';showB.disabled=true;msg.textContent='Look.';drawMain();
+      timer=setTimeout(()=>{mode='place';placing=[];showB.hidden=true;undoB.hidden=false;msg.textContent='Round '+chain.length+' of 6. Place six dots where they were.';drawMain();cv.focus();},SHOW);});
+    function place(x,y){if(mode!=='place'||placing.length>=ND)return;placing.push({x,y});drawMain();
+      if(placing.length===ND){chain.push(placing.slice());placing=[];undoB.hidden=true;
+        if(chain.length>K){mode='done';msg.textContent='Six rounds done. The whole chain is on the right.';rstB.hidden=false;reveal.hidden=false;wait.hidden=true;window.reveal('serial');}
+        else{mode='idle';showB.hidden=false;showB.disabled=false;showB.textContent='Show the next pattern';msg.textContent='Round '+chain.length+' of 6. Your reproduction is the next pattern.';showB.focus();}
+        drawAll();}}
+    cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect();const x=clamp((e.clientX-r.left)/r.width,0,1),y=clamp((e.clientY-r.top)/r.height,0,1);cur={x,y};place(x,y);e.preventDefault();});
+    cv.addEventListener('keydown',e=>{if(mode!=='place')return;const st=e.shiftKey?0.1:0.025;let h=true;
+      if(e.key==='ArrowLeft')cur.x=clamp(cur.x-st,0,1);else if(e.key==='ArrowRight')cur.x=clamp(cur.x+st,0,1);
+      else if(e.key==='ArrowUp')cur.y=clamp(cur.y-st,0,1);else if(e.key==='ArrowDown')cur.y=clamp(cur.y+st,0,1);
+      else if(e.key==='Enter'||e.key===' ')place(cur.x,cur.y);else h=false;
+      if(h){e.preventDefault();drawMain();}});
+    cv.addEventListener('focus',()=>{focused=true;drawMain();});cv.addEventListener('blur',()=>{focused=false;drawMain();});
+    undoB.addEventListener('click',()=>{placing.pop();drawMain();cv.focus();});
+    rstB.addEventListener('click',()=>{reset();showB.focus();});
+    reset();
+  })();
+
+  /* 4. When to orchestrate */
+  (function(){
+    const ids=['o-ae','o-ah','o-p','o-be','o-bh','o-c'];const I={};ids.forEach(i=>I[i]=$(i));
+    const cv=$('o-cv'),ctx=cv.getContext('2d');
+    function draw(){
+      const ae=+I['o-ae'].value,ah=+I['o-ah'].value,p=+I['o-p'].value/100,be=+I['o-be'].value,bh=+I['o-bh'].value,c=+I['o-c'].value;
+      $('o-ae-v').textContent=fmt2(ae);$('o-ah-v').textContent=fmt2(ah);$('o-p-v').textContent=Math.round(p*100)+'%';$('o-be-v').textContent=fmt2(be);$('o-bh-v').textContent=fmt2(bh);$('o-c-v').textContent=c.toFixed(1);
+      const A=(1-p)*ae+p*ah,B=(1-p)*be+p*bh;const single=Math.max(A,B),rand=(A+B)/2;
+      const oracle=(1-p)*Math.max(ae,be)+p*Math.max(ah,bh);
+      const pickE=ae/1>=be/c?'A':'B',pickH=ah/1>=bh/c?'A':'B';
+      const rule=(1-p)*(pickE==='A'?ae:be)+p*(pickH==='A'?ah:bh);
+      const ratio=rand>0?oracle/rand:1;
+      $('o-single').textContent=fmt2(single);$('o-rand').textContent=fmt2(rand);$('o-oracle').textContent=fmt2(oracle);$('o-rule').textContent=fmt2(rule);$('o-ratio').textContent=fmt2(ratio);
+      const v=$('o-verdict');const gain=rule-single;
+      const invariant=Math.abs(ae-be)<0.05&&Math.abs(ah-bh)<0.05;
+      if(invariant)v.innerHTML='<b>Routing adds nothing.</b> The two agents are nearly the same in both regions, so any way of choosing between them scores about the same. The paper calls these approximately invariant agents.';
+      else if(oracle-single<0.005)v.innerHTML='<b>One agent dominates.</b> The best routing is to use it everywhere, so routing cannot beat the single best agent here'+(rule<single-0.005?'; and the cost rule, drawn to the cheaper agent, does worse than that (a misaligned cost).':'.');
+      else if(gain>0.005)v.innerHTML='<b>Routing pays.</b> Sending easy inputs to '+pickE+' and hard inputs to '+pickH+' scores '+fmt2(rule)+' against '+fmt2(single)+' for the best single agent, a gain of '+Math.round(gain*100)+' points, because the agents differ in where they are good.';
+      else v.innerHTML='<b>Routing could pay, but the cost rule gives it away.</b> The best routing scores '+fmt2(oracle)+', yet the cost of B pulls the rule toward '+(pickE===pickH?'agent '+pickE+' everywhere':'the cheaper agent in one region')+', so it scores '+fmt2(rule)+' against '+fmt2(single)+' for the best single agent. The paper: misaligned costs can destroy the benefit even with a dominant agent.';
+      const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);
+      const L=40,R=W-20,T=16,Bm=H-36;const py=y=>Bm-(Bm-T)*y;
+      ctx.font='13px '+css('--font');ctx.fillStyle=css('--ink-2');ctx.textAlign='right';ctx.strokeStyle=css('--ink-3');ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,Bm);ctx.lineTo(R,Bm);ctx.stroke();
+      [0,0.5,1].forEach(y=>{ctx.fillText(y.toFixed(1),L-8,py(y)+4);ctx.beginPath();ctx.moveTo(L-4,py(y));ctx.lineTo(L,py(y));ctx.stroke();});
+      const groups=[['Easy questions',ae,be,pickE],['Hard questions',ah,bh,pickH]];const gw=(R-L)/2,bw=56;
+      groups.forEach(([name,a,b,pick],gi)=>{const cx=L+gw*gi+gw/2;
+        [['A',a,css('--khaki'),css('--khaki-ink')],['B',b,css('--blue'),css('--blue-ink')]].forEach(([n,val,fill,ink],bi)=>{const x=cx+(bi?8:-8-bw);
+          ctx.fillStyle=fill;ctx.fillRect(x,py(val),bw,Bm-py(val));ctx.strokeStyle=css('--edge');ctx.lineWidth=pick===n?3:1;ctx.strokeRect(x,py(val),bw,Bm-py(val));
+          ctx.fillStyle=css('--ink');ctx.textAlign='center';ctx.font=(pick===n?'700 ':'')+'13px '+css('--font');ctx.fillText(n+' '+fmt2(val),x+bw/2,py(val)-6);});
+        ctx.fillStyle=css('--ink-2');ctx.font='13px '+css('--font');ctx.textAlign='center';ctx.fillText(name+(pick?', routed to '+pick:''),cx,H-14);});
+      ctx.strokeStyle=css('--navy');ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(L,py(single));ctx.lineTo(R,py(single));ctx.stroke();ctx.setLineDash([]);
+    }
+    redraws.push(draw);let touched=false;ids.forEach(i=>I[i].addEventListener('input',()=>{draw();if(!touched){touched=true;reveal('orchestrate');}}));draw();
+  })();
+})();
+</script>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  .open{padding:var(--u4) 0 var(--u4);max-width:66ch}
+  .open h1{font-size:var(--s5);line-height:1.08}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0}
+  .blk{padding:var(--u5) 0 var(--u2);border-top:2px solid var(--edge)}
+  .blk:first-of-type{padding-top:var(--u4)}
+  .blk h2{font-size:var(--s4);line-height:1.15;margin-bottom:var(--u3)}
+  .blk h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .split{display:grid;grid-template-columns:7fr 5fr;column-gap:var(--u5);align-items:start}
+  .cols{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u4)}
+  .btnrow{display:flex;flex-wrap:wrap;gap:var(--u2);margin-top:var(--u3)}
+  .cta{display:inline-block;background:var(--navy);color:var(--ground);padding:10px 18px;font-weight:500;text-decoration:none;font-size:15px}
+  :root[data-theme="dark"] .cta{color:#10141F}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cta{color:#10141F} }
+  .learn{display:inline-block;border:2px solid var(--edge);color:var(--ink);padding:6px 14px;font-size:15px;font-weight:500;text-decoration:none}
+  .learn:hover{background:var(--navy);color:var(--ground)}
+  :root[data-theme="dark"] .learn:hover{color:#10141F}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .learn:hover{color:#10141F} }
+  .node{display:inline-block;padding:2px 10px;border:2px solid var(--edge);font-weight:500;line-height:1.3}
+  .node.k{background:var(--khaki);color:var(--khaki-ink)}
+  dl.facts{margin:0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:var(--u1) var(--u3)}
+  dl.facts dt{font-weight:700} dl.facts dd{margin:0;color:var(--ink-2)}
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  .yr{display:grid;grid-template-columns:2fr 10fr;column-gap:var(--u4);padding:var(--u4) 0;border-top:2px solid var(--edge)}
+  .yr h2{font-size:var(--s4);line-height:1.15;font-variant-numeric:tabular-nums}
+  .yr .items{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3) var(--u5)}
+  .yr .items div{line-height:1.5;max-width:48ch}
+  .yr .items span{display:block;font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){ .split,.cols,.yr,.yr .items,.course{grid-template-columns:1fr;row-gap:var(--u2)} }
+</style>
+
+<div class="page">
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html" aria-current="page">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open">
+    <h1>News</h1>
+  </div>
+  <section class="yr">
+    <h2>2026</h2>
+    <div class="items">
+      <div><span>October 2026</span>Ilia is co-chairing CogSci 2027, "Human Cognition in the Age of AI", in Bilbao, Spain, July 28&ndash;31, 2027.</div>
+      <div><span>August 2026</span>The lab opens at Purdue with six PhD students; the graduate seminar "AI Thought Partners" begins.</div>
+      <div><span>July 2026</span>Four lab papers at CogSci 2026, and the workshop "The Cognitive Science of AI Alignment" runs at the conference.</div>
+      <div><span>May 2026</span><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the context of human-AI interaction</a> is published in Philosophical Transactions of the Royal Society A.</div>
+      <div><span>April 2026</span>New preprint: <a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a> (Mieczkowski et al.) reframes multi-agent LLM workflows using distributed-systems primitives.</div>
+      <div><span>March 2026</span><a href="https://dl.acm.org/doi/10.1145/3803024">Identifying, evaluating, and mitigating risks of AI thought partnerships</a> is published in ACM AI Letters.</div>
+      <div><span>March 2026</span>New preprints: <a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a> and <a href="https://arxiv.org/abs/2602.10473">Why Human Guidance Matters in Collaborative Vibe Coding</a>.</div>
+      <div><span>January 2026</span>Ilia is serving as Area Chair for ICLR 2026, ICML 2026, and NeurIPS 2026.</div>
+    </div>
+  </section>
+  <section class="yr">
+    <h2>2025</h2>
+    <div class="items">
+      <div><span>December 2025</span>Awarded a Google Gemini Academic Program Award and a Tinker Research Award.</div>
+      <div><span>September 2025</span>Co-PI on a new $5M DARPA "In the Moment" (ITM) program on algorithmic trust at scale.</div>
+      <div><span>April 2025</span>Community paper <a href="https://arxiv.org/abs/2310.13018">Getting aligned on representational alignment</a> accepted at TMLR.</div>
+      <div><span>March 2025</span><a href="https://www.pnas.org/doi/abs/10.1073/pnas.2416228122">Explicitly unbiased LLMs still form biased associations</a> published in PNAS.</div>
+    </div>
+  </section>
+  <section class="yr">
+    <h2>2024</h2>
+    <div class="items">
+      <div><span>September 2024</span>Ilia starts as a Faculty Fellow / Assistant Professor at NYU CDS.</div>
+      <div><span>August 2024</span>Collins, Sucholutsky et al.'s <a href="https://www.nature.com/articles/s41562-024-01991-9">Building Machines That Learn and Think with People</a> (Nature Human Behaviour) sets out what it takes for an AI system to be a thought partner.</div>
+    </div>
+  </section>
+  <section class="yr">
+    <h2>2023</h2>
+    <div class="items">
+      <div><span>December 2023</span><a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html">Alignment with human representations supports robust few-shot learning</a> is a NeurIPS Spotlight.</div>
+    </div>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html" aria-current="page">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>

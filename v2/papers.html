@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Papers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+    --fig-bg:transparent; --fig-pad:0; --fig-blend:multiply;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; --fig-bg:var(--plate); --fig-pad:0; --fig-blend:normal; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; --fig-bg:var(--plate); --fig-pad:0; --fig-blend:normal; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  .mock{font-size:12px;color:var(--ink-3);padding:var(--u1) 0}
+  .num{font-variant-numeric:tabular-nums}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3)}
+  .open h1{font-size:var(--s5);line-height:1.15}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u2) 0 0;max-width:52ch}
+
+  /* filter row */
+  .filters{display:flex;flex-wrap:wrap;gap:var(--u1) var(--u3);align-items:baseline;font-size:15px;padding:var(--u2) 0;border-top:2px solid var(--edge);border-bottom:2px solid var(--edge);margin-top:var(--u3)}
+  .filters a{color:var(--ink-2);text-decoration:none} .filters a:hover{text-decoration:underline}
+  .filters a[aria-current=true]{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+  .filters .count{margin-left:auto;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+  /* year groups */
+  .year{display:grid;grid-template-columns:2fr 10fr;column-gap:var(--u4);padding-top:var(--u4)}
+  .year h2{font-size:var(--s4);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+  .list{display:grid;row-gap:var(--u3)}
+  .entry{display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:var(--u3);align-items:start}
+  .thumb img{display:block;width:96px;height:auto;background:var(--fig-bg);mix-blend-mode:var(--fig-blend);outline:1px solid var(--ink-3);outline-offset:-1px}
+  .entry .t{font-size:var(--s1);line-height:1.35;font-weight:500;max-width:66ch}
+  .entry .t a{color:var(--ink)} .entry .t a:hover{color:var(--navy)}
+  .entry .au{font-size:15px;color:var(--ink-2);line-height:1.45;margin-top:2px;max-width:80ch}
+  .entry .v{font-size:14px;color:var(--ink-3);line-height:1.4;margin-top:2px}
+
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){
+    .year{grid-template-columns:1fr;row-gap:var(--u2)}
+    .entry{grid-template-columns:72px minmax(0,1fr);column-gap:var(--u2)} .thumb img{width:72px}
+  }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html" aria-current="page">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open">
+    <h1>Papers</h1>
+    <p class="lede">Every published or arXiv-posted paper by Ilia Sucholutsky and collaborators, newest first. Pick a research story to see the papers behind it, or read the whole list.</p>
+  </div>
+
+  <nav class="filters" aria-label="Filter papers by research story">
+      <a href="#all" data-filter="all" aria-current="true">All</a>
+      <a href="#people" data-filter="people">Understanding people</a>
+      <a href="#ai" data-filter="ai">Understanding AI systems</a>
+      <a href="#alignment" data-filter="alignment">Alignment and efficient learning</a>
+      <a href="#working" data-filter="working">Working with AI</a>
+      <a href="#together" data-filter="together">Thinking together</a>
+      <a href="#earlier" data-filter="earlier">Earlier work</a>
+      <span class="count" id="count">71 papers</span>
+  </nav>
+
+  <div id="papers">
+    <section class="year" data-year="2026">
+      <h2>2026</h2>
+      <div class="list">
+      <div class="entry" data-story="together">
+        <div class="thumb"><img src="assets/web/titles/li2026humanai.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a></div><div class="au">Chenyi Li, Raja Marjieh, Haoyu Hu, Mark Steyvers, Katherine M Collins, Ilia Sucholutsky, Nori Jacoby</div><div class="v">arXiv:2602.10001, 2026</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/hle2026benchmark.jpg" width="480" height="254" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2501.14249">Humanity&#x27;s last exam</a></div><div class="au">HLE Contributors Consortium</div><div class="v">Nature, 2026</div></div>
+      </div>
+      <div class="entry" data-story="together">
+        <div class="thumb"><img src="assets/web/titles/mieczkowski2026language.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a></div><div class="au">Elizabeth Mieczkowski, Katherine M Collins, Ilia Sucholutsky, Natalia Vélez, Thomas L Griffiths</div><div class="v">arXiv:2603.12229, 2026</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/yu2026efficiency.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2605.22687">The efficiency-gain illusion: People underestimate the rate of AI use and overestimate its benefits on simple tasks</a></div><div class="au">Sunny Yu, Myra Cheng, Ahmad Jabbar, Ilia Sucholutsky, Katherine M Collins, Dan Jurafsky, Robert D Hawkins</div><div class="v">arXiv:2605.22687, 2026</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/yu2026cognitive.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2605.23177">Cognitive offloading and the speedup illusion in human-AI interaction</a></div><div class="au">Sunny Yu, Myra Cheng, Ahmad Jabbar, Ilia Sucholutsky, Katherine M Collins, Dan Jurafsky, Robert D Hawkins</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2026</div></div>
+      </div>
+      <div class="entry" data-story="working ai">
+        <div class="thumb"><img src="assets/web/titles/robinson2026persuasion.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2602.21262">Under the Influence: Quantifying Persuasion and Vigilance in Large Language Models</a></div><div class="au">Sasha Robinson, Kerem Oktar, Katherine M Collins, Ilia Sucholutsky, Kelsey R Allen</div><div class="v">arXiv:2602.21262, 2026</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/hu2026vibecoding.jpg" width="480" height="271" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2602.10473">Why Human Guidance Matters in Collaborative Vibe Coding</a></div><div class="au">Haoyu Hu, Raja Marjieh, Katherine M Collins, Chenyi Li, Thomas L Griffiths, Ilia Sucholutsky, Nori Jacoby</div><div class="v">arXiv:2602.10473, 2026</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/oktar2026risks.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://dl.acm.org/doi/10.1145/3803024">Identifying, Evaluating, and Mitigating Risks of AI Thought Partnerships</a></div><div class="au">Kerem Oktar, Katherine M Collins, Jose Hernandez-Orallo, Diane Coyle, Stephen Cave, Adrian Weller, Ilia Sucholutsky</div><div class="v">ACM AI Letters, 2026</div></div>
+      </div>
+      <div class="entry" data-story="together">
+        <div class="thumb"><img src="assets/web/titles/collins2026revisiting.jpg" width="480" height="271" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers&#x27; Paradox in the Context of Human-AI Interaction</a></div><div class="au">Katherine M Collins, Umang Bhatt, Ilia Sucholutsky</div><div class="v">Philosophical Transactions of the Royal Society A, 2026</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2025">
+      <h2>2025</h2>
+      <div class="list">
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/collins2025ai.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://openreview.net/forum?id=D7I8fVkMVs">AI Impact on Human Proof Formalization Workflows</a></div><div class="au">Katherine M Collins, Simon Frieder, Jonas Bayer, Jacob Loader, Jeck Lim, Peiyang Song, Fabian Zaiser, Lexin Zhou, Shanda Li, Shi-Zhuo Looi, Jose Hernandez-Orallo, Joshua B Tenenbaum, Cameron Freer, Umang Bhatt, Adrian Weller, Valerie Chen, Ilia Sucholutsky</div><div class="v">The 5th Workshop on Mathematical Reasoning and AI at NeurIPS 2025, 2025</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/marjieh2025large.jpg" width="480" height="277" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/cogs.70131">Characterizing the Large‐Scale Structure of Multimodal Semantic Networks</a></div><div class="au">Raja Marjieh, Pol van Rijn, Ilia Sucholutsky, Harin Lee, Nori Jacoby, Thomas L Griffiths</div><div class="v">Cognitive science, 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/bai2025unbiased.jpg" width="480" height="257" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://www.pnas.org/doi/abs/10.1073/pnas.2416228122">Explicitly unbiased large language models still form biased associations</a></div><div class="au">Xuechunzi Bai, Angelina Wang, Ilia Sucholutsky, Thomas L Griffiths</div><div class="v">Proceedings of the National Academy of Sciences, 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/luo2024llms.jpg" width="480" height="254" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://www.nature.com/articles/s41562-024-02046-9">Large language models surpass human experts in predicting neuroscience results</a></div><div class="au">Xiaoliang Luo, Akilles Rechardt, Guangzhi Sun, Kevin K Nejad, Felipe Yáñez, Bati Yilmaz, Kangjoo Lee, Alexandra O Cohen, Valentina Borghesani, Anton Pashkov, Daniele Marinazzo, Jonathan Nicholas, Alessandro Salatiello, Ilia Sucholutsky, Pasquale Minervini, Sepehr Razavi, Roberta Rocca, Elkhan Yusifov, Tereza Okalova, Nianlong Gu, Martin Ferianc, Mikail Khona, Kaustubh R Patil, Pui-Shee Lee, Rui Mata, Nicholas E Myers, Jennifer K Bizley, Sebastian Musslick, Isil Poyraz Bilgin, Guiomar Niso, Justin M Ales, Michael Gaebler, N Apurva Ratan Murty, Leyla Loued-Khenissi, Anna Behler, Chloe M Hall, Jessica Dafflon, Sherry Dongqi Bao, Bradley C Love</div><div class="v">Nature human behaviour, 2025</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2025doubly.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://escholarship.org/uc/item/011374xq">Learning a Doubly-Exponential Number of Concepts From Few Examples</a></div><div class="au">Ilia Sucholutsky, Bonan Zhao, Hee Seung Hwang, Allison Chen, Olga Russakovsky, Tom Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2025</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/ibrahim2025measuring.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2509.08010">Measuring and mitigating overreliance is necessary for building human-compatible AI</a></div><div class="au">Lujain Ibrahim, Katherine M Collins, Sunnie SY Kim, Anka Reuel, Max Lamparth, Kevin Feng, Lama Ahmad, Prajna Soni, Alia El Kattan, Merlin Stein, Siddharth Swaroop, Ilia Sucholutsky, Andrew Strait, Q Vera Liao, Umang Bhatt</div><div class="v">arXiv:2509.08010, 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/ying2025benchmarking.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2502.20502">On benchmarking human-like intelligence in machines</a></div><div class="au">Lance Ying, Katherine M Collins, Lionel Wong, Ilia Sucholutsky, Ryan Liu, Adrian Weller, Tianmin Shu, Thomas L Griffiths, Joshua B Tenenbaum</div><div class="v">arXiv:2502.20502, 2025</div></div>
+      </div>
+      <div class="entry" data-story="alignment working">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2025representational.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://openreview.net/forum?id=7zxUVXFPez">Representational Alignment Supports Effective Teaching</a></div><div class="au">Ilia Sucholutsky, Katherine M Collins, Maya Malaviya, Nori Jacoby, Weiyang Liu, Theodore Sumers, Michalis Korakakis, Umang Bhatt, Mark K Ho, Joshua B Tenenbaum, Bradley C Love, Zachary Pardos, Adrian Weller, Thomas L Griffiths</div><div class="v">Proceedings of Machine Learning Research, 2025</div></div>
+      </div>
+      <div class="entry" data-story="together">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2025using.jpg" width="480" height="254" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://www.nature.com/articles/s43588-025-00848-z">Using LLMs to advance the cognitive science of collectives</a></div><div class="au">Ilia Sucholutsky, Katherine M Collins, Nori Jacoby, Bill D Thompson, Robert D Hawkins</div><div class="v">Nature Computational Science, 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/ku2026levels.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250313401K/abstract">Using the tools of cognitive science to understand large language models at different levels of analysis</a></div><div class="au">Alexander Ku, Declan Campbell, Xuechunzi Bai, Jiayi Geng, Ryan Liu, Raja Marjieh, R Thomas McCoy, Andrew Nam, Ilia Sucholutsky, Veniamin Veselovsky, Liyi Zhang, Jian-Qiao Zhu, Thomas L Griffiths</div><div class="v">arXiv e-prints, 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/marjieh2025what.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a></div><div class="au">Raja Marjieh, Veniamin Veselovsky, Thomas L Griffiths, Ilia Sucholutsky</div><div class="v">arXiv:2502.01540, 2025</div></div>
+      </div>
+      <div class="entry" data-story="together">
+        <div class="thumb"><img src="assets/web/titles/bhatt2025orchestrate.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2503.13577">When should we orchestrate multiple agents?</a></div><div class="au">Umang Bhatt, Sanyam Kapoor, Mihir Upadhyay, Ilia Sucholutsky, Francesco Quinzan, Katherine M Collins, Adrian Weller, Andrew Gordon Wilson, Muhammad Bilal Zafar</div><div class="v">arXiv:2503.13577, 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai people">
+        <div class="thumb"><img src="assets/web/titles/liu2025large.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2406.17055">Large language models assume people are more rational than we really are</a></div><div class="au">Ryan Liu, Jiayi Geng, Joshua C Peterson, Ilia Sucholutsky, Thomas L Griffiths</div><div class="v">International Conference on Learning Representations (ICLR), 2025</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/liu2025mindyourstep.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2410.21333">Mind your step (by step): Chain-of-thought can reduce performance on tasks where thinking makes humans worse</a></div><div class="au">Ryan Liu, Jiayi Geng, Addison J Wu, Ilia Sucholutsky, Tania Lombrozo, Thomas L Griffiths</div><div class="v">International Conference on Machine Learning (ICML), 2025</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/dissanayake2025knowledge.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2411.07483">Quantifying knowledge distillation using partial information decomposition</a></div><div class="au">Pasan Dissanayake, Faisal Hamman, Barproda Halder, Ilia Sucholutsky, Qiuyi Zhang, Sanghamitra Dutta</div><div class="v">AISTATS, 2025</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/halder2025towards.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2407.00482">Towards formalizing spuriousness of biased datasets using partial information decomposition</a></div><div class="au">Barproda Halder, Faisal Hamman, Pasan Dissanayake, Qiuyi Zhang, Ilia Sucholutsky, Sanghamitra Dutta</div><div class="v">Transactions on Machine Learning Research, 2025</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2025getting.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2310.13018">Getting aligned on representational alignment</a></div><div class="au">Ilia Sucholutsky, Lukas Muttenthaler, Adrian Weller, Andi Peng, Andreea Bobu, Been Kim, Bradley C Love, Erin Grant, Iris Groen, Jascha Achterberg, Joshua B Tenenbaum, Katherine M Collins, Katherine L Hermann, Kerem Oktar, Klaus Greff, Martin N Hebart, Nori Jacoby, Qiuyi Zhang, Raja Marjieh, Robert Geirhos, Sherol Chen, Simon Kornblith, Sunayana Rane, Talia Konkle, Thomas P O&#x27;Connell, Thomas Unterthiner, Andrew K Lampinen, Klaus-Robert Müller, Mariya Toneva, Thomas L Griffiths</div><div class="v">Transactions on Machine Learning Research, 2025</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2024">
+      <h2>2024</h2>
+      <div class="list">
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/marjieh2024speech.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2402.06992">A rational analysis of the speech-to-song illusion</a></div><div class="au">Raja Marjieh, Pol van Rijn, Ilia Sucholutsky, Harin Lee, Thomas L Griffiths, Nori Jacoby</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2024</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/peng2024adaptive.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2409.08212">Adaptive language-guided abstraction from contrastive explanations</a></div><div class="au">Andi Peng, Belinda Z Li, Ilia Sucholutsky, Nishanth Kumar, Julie A Shah, Jacob Andreas, Andreea Bobu</div><div class="v">Conference on Robot Learning (CoRL), 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/chen2024analyzing.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2403.19669">Analyzing the roles of language and vision in learning from limited data</a></div><div class="au">Allison Chen, Ilia Sucholutsky, Olga Russakovsky, Thomas L Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2024</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/collins2024building.jpg" width="480" height="254" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://www.nature.com/articles/s41562-024-01991-9">Building machines that learn and think with people</a></div><div class="au">Katherine M Collins, Ilia Sucholutsky, Umang Bhatt, Kartik Chandra, Lionel Wong, Mina Lee, Cedegao E Zhang, Tan Zhi-Xuan, Mark Ho, Vikash Mansinghka, Adrian Weller, Joshua B Tenenbaum, Thomas L Griffiths</div><div class="v">Nature Human Behaviour, 2024</div></div>
+      </div>
+      <div class="entry" data-story="ai people">
+        <div class="thumb"><img src="assets/web/titles/huang2024conversational.jpg" width="480" height="271" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://aclanthology.org/2024.acl-long.565.pdf">Characterizing similarities and divergences in conversational tones in humans and llms by sampling with people</a></div><div class="au">Dun-Ming Huang, Pol Van Rijn, Ilia Sucholutsky, Raja Marjieh, Nori Jacoby</div><div class="v">Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/rane2024concept_position.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2401.08672">Concept alignment</a></div><div class="au">Sunayana Rane, Polyphony J Bruna, Ilia Sucholutsky, Christopher Kello, Thomas L Griffiths</div><div class="v">arXiv:2401.08672, 2024</div></div>
+      </div>
+      <div class="entry" data-story="working ai">
+        <div class="thumb"><img src="assets/web/titles/oktar2024dimensions.jpg" width="480" height="274" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://psycnet.apa.org/record/2025-13905-001">Dimensions of disagreement: Divergence and misalignment in cognitive science and artificial intelligence.</a></div><div class="au">Kerem Oktar, Ilia Sucholutsky, Tania Lombrozo, Thomas L Griffiths</div><div class="v">Decision, 2024</div></div>
+      </div>
+      <div class="entry" data-story="">
+        <div class="thumb"><img src="assets/web/titles/yang2024exkidneybert.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://peerj.com/articles/cs-1888/">exKidneyBERT: a language model for kidney transplant pathology reports and the crucial role of extended vocabularies</a></div><div class="au">Tiancheng Yang, Ilia Sucholutsky, Kuang-Yu Jen, Matthias Schonlau</div><div class="v">PeerJ Computer Science, 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"></div>
+        <div><div class="t"><a href="https://openreview.net/forum?id=bTkdoh5CuG">First Workshop on Representational Alignment (Re-Align)</a></div><div class="au">Erin Grant, Ilia Sucholutsky, Jascha Achterberg, Katherine Hermann, Lukas Muttenthaler</div><div class="v">ICLR 2024 Workshops, 2024</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/rathje2024gpt.jpg" width="480" height="257" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://www.pnas.org/doi/abs/10.1073/pnas.2308950121">GPT is an effective tool for multilingual psychological text analysis</a></div><div class="au">Steve Rathje, Dan-Mircea Mirea, Ilia Sucholutsky, Raja Marjieh, Claire E Robertson, Jay J Van Bavel</div><div class="v">Proceedings of the National Academy of Sciences, 2024</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/marjieh2024llms.jpg" width="480" height="252" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://www.nature.com/articles/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a></div><div class="au">Raja Marjieh, Ilia Sucholutsky, Pol van Rijn, Nori Jacoby, Thomas L Griffiths</div><div class="v">Scientific Reports, 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/wynn2024learning.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/3578fd44b2381db12bf16e28a667c934-Abstract-Conference.html">Learning human-like representations to enable learning human values</a></div><div class="au">Andrea Hui Wynn, Ilia Sucholutsky, Thomas L. Griffiths</div><div class="v">NeurIPS, 2024</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/peng2024learning.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2402.18759">Learning with language-guided state abstractions</a></div><div class="au">Andi Peng, Ilia Sucholutsky, Belinda Z Li, Theodore R Sumers, Thomas L Griffiths, Jacob Andreas, Julie A Shah</div><div class="v">International Conference on Learning Representations (ICLR), 2024</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/collins2024modulating.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2407.12804">Modulating language model experiences through frictions</a></div><div class="au">Katherine M Collins, Valerie Chen, Ilia Sucholutsky, Hannah Rose Kirk, Malak Sadek, Holli Sargeant, Ameet Talwalkar, Adrian Weller, Umang Bhatt</div><div class="v">arXiv:2407.12804, 2024</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/he2024multilevel.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2408.12664">Multilevel interpretability of artificial neural networks: leveraging framework and methods from neuroscience</a></div><div class="au">Zhonghao He, Jascha Achterberg, Katie Collins, Kevin Nejad, Danyal Akarca, Yinzhu Yang, Wes Gurnee, Ilia Sucholutsky, Yuhan Tang, Rebeca Ianov, George Ogden, Chole Li, Kai Sandbrink, Stephen Casper, Anna Ivanova, Grace W Lindsay</div><div class="v">arXiv:2408.12664, 2024</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/peng2024preference.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://dl.acm.org/doi/abs/10.1145/3610977.3634930">Preference-conditioned language-guided abstraction</a></div><div class="au">Andi Peng, Andreea Bobu, Belinda Z Li, Theodore R Sumers, Ilia Sucholutsky, Nishanth Kumar, Thomas L Griffiths, Julie A Shah</div><div class="v">ACM/IEEE International Conference on Human-Robot Interaction, 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"></div>
+        <div><div class="t"><a href="https://ojs.aaai.org/index.php/AAAI-SS/article/view/31276">Pushing the Limits of Learning from Limited Data</a></div><div class="au">Maya Malaviya, Ilia Sucholutsky, Thomas L Griffiths</div><div class="v">Proceedings of the AAAI Symposium Series, 2024</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/niedermann2024studying.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://escholarship.org/uc/item/4hs755zz">Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models</a></div><div class="au">Jakob Niedermann, Ilia Sucholutsky, Raja Marjieh, Elif Celen, Thomas L Griffiths, Nori Jacoby, Pol van Rijn</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2024compositionality.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://escholarship.org/uc/item/6kj0s042">Using compositionality to learn many categories from few examples</a></div><div class="au">Ilia Sucholutsky, Bonan Zhao, Tom Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"></div>
+        <div><div class="t"><a href="https://cocosci.princeton.edu/papers/Sucholutsky2024a.pdf">Why should we care if machines learn human-like representations?</a></div><div class="au">Ilia Sucholutsky, Thomas L Griffiths</div><div class="v">AAAI-24 Spring Symposium on Human-Like Learning, 2024</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/rane2024concept.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2310.20059">Concept alignment as a prerequisite for value alignment</a></div><div class="au">Sunayana Rane, Mark Ho, Ilia Sucholutsky, Thomas L Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2024</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2023">
+      <h2>2023</h2>
+      <div class="list">
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2023alignment.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/e8ddc03b001d4c4b44b29bc1167e7fdd-Abstract-Conference.html">Alignment with human representations supports robust few-shot learning</a></div><div class="au">Ilia Sucholutsky, Tom Griffiths</div><div class="v">Advances in Neural Information Processing Systems, 2023</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/vanrijn2023around.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2302.01614">Around the world in 60 words: A generative vocabulary test for online research</a></div><div class="au">Pol van Rijn, Yue Sun, Harin Lee, Raja Marjieh, Ilia Sucholutsky, Francesca Lanzarini, Elisabeth André, Nori Jacoby</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2023</div></div>
+      </div>
+      <div class="entry" data-story="">
+        <div class="thumb"><img src="assets/web/titles/shetty2023adaptive.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://openreview.net/forum?id=EyliiBqhFz">End-to-End Learnable Masks With Differentiable Indexing</a></div><div class="au">Dibyanshu Shekhar, Sree Harsha Nelaturu, Ashwath Shetty, Ilia Sucholutsky</div><div class="v">ICLR Tiny Papers, 2023</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/collins2023human.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://dl.acm.org/doi/abs/10.1145/3600211.3604692">Human uncertainty in concept-based ai systems</a></div><div class="au">Katherine Maeve Collins, Matthew Barker, Mateo Espinosa Zarlenga, Naveen Raman, Umang Bhatt, Mateja Jamnik, Ilia Sucholutsky, Adrian Weller, Krishnamurthy Dvijotham</div><div class="v">AAAI/ACM Conference on AI, Ethics, and Society, 2023</div></div>
+      </div>
+      <div class="entry" data-story="">
+        <div class="thumb"></div>
+        <div><div class="t">Introducing deep learning and interpreting the patterns – a mineral  deposit perspective</div><div class="au">David First, Ilia Sucholutsky, Daniel Mogilny, Farzi Yusufali</div><div class="v">Mineral Resource Estimation Conference 2023, 2023</div></div>
+      </div>
+      <div class="entry" data-story="ai people">
+        <div class="thumb"></div>
+        <div><div class="t"><a href="https://escholarship.org/uc/item/6dp9k2gz">Large language models meet cognitive science: LLMs as tools, models, and participants</a></div><div class="au">Mathew Hardy, Ilia Sucholutsky, Bill Thompson, Tom Griffiths</div><div class="v">Proceedings of the annual meeting of the cognitive science society, 2023</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2023informativeness.jpg" width="480" height="255" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://proceedings.mlr.press/v216/sucholutsky23a.html">On the informativeness of supervision signals</a></div><div class="au">Ilia Sucholutsky, Ruairidh M Battleday, Katherine M Collins, Raja Marjieh, Joshua Peterson, Pulkit Singh, Umang Bhatt, Nori Jacoby, Adrian Weller, Thomas L Griffiths</div><div class="v">Uncertainty in Artificial Intelligence, 2023</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/marjieh2023language.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://escholarship.org/uc/item/6dk5q565">What language reveals about perception: Distilling psychophysical knowledge from large language models</a></div><div class="au">Raja Marjieh, Ilia Sucholutsky, Pol van Rijn, Nori Jacoby, Tom Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2023</div></div>
+      </div>
+      <div class="entry" data-story="ai">
+        <div class="thumb"><img src="assets/web/titles/marjieh2023analyzing.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2209.14821">Analyzing diffusion as serial reproduction</a></div><div class="au">Raja Marjieh, Ilia Sucholutsky, Thomas A Langlois, Nori Jacoby, Thomas L Griffiths</div><div class="v">International Conference on Machine Learning (ICML), 2023</div></div>
+      </div>
+      <div class="entry" data-story="working">
+        <div class="thumb"><img src="assets/web/titles/collins2023humanmixup.jpg" width="480" height="255" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://proceedings.mlr.press/v216/collins23a.html">Human-in-the-Loop Mixup</a></div><div class="au">Katherine M Collins, Umang Bhatt, Weiyang Liu, Vihari Piratla, Ilia Sucholutsky, Bradley Love, Adrian Weller</div><div class="v">Uncertainty in Artificial Intelligence, 2023</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/marjieh2023words.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2206.04105">Words are all you need? language as an approximation for human similarity judgments</a></div><div class="au">Raja Marjieh, Pol Van Rijn, Ilia Sucholutsky, Theodore R Sumers, Harin Lee, Thomas L Griffiths, Nori Jacoby</div><div class="v">International Conference on Learning Representations (ICLR), 2023</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2022">
+      <h2>2022</h2>
+      <div class="list">
+      <div class="entry" data-story="people alignment">
+        <div class="thumb"><img src="assets/web/titles/malaviya2022less.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2202.04670">Can humans do less-than-one-shot learning?</a></div><div class="au">Maya Malaviya, Ilia Sucholutsky, Kerem Oktar, Thomas L Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2022</div></div>
+      </div>
+      <div class="entry" data-story="together">
+        <div class="thumb"></div>
+        <div><div class="t"><a href="https://escholarship.org/uc/item/21j6j1tg">Playing the Lottery of a Lifetime: The Effect of Socially Induced Aspiration on Q-Learning Agents</a></div><div class="au">Yosi Hatekar, Rachit Dubey, Ted Sumers, Ilia Sucholutsky</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2022</div></div>
+      </div>
+      <div class="entry" data-story="people">
+        <div class="thumb"><img src="assets/web/titles/marjieh2022predicting.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/2202.04728">Predicting human similarity judgments using large language models</a></div><div class="au">Raja Marjieh, Ilia Sucholutsky, Theodore R Sumers, Nori Jacoby, Thomas L Griffiths</div><div class="v">Proceedings of the Annual Meeting of the Cognitive Science Society, 2022</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2021">
+      <h2>2021</h2>
+      <div class="list">
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2021less.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/17171">&#x27;Less Than One&#x27;-Shot Learning: Learning N Classes From M&lt; N Samples</a></div><div class="au">Ilia Sucholutsky, Matthias Schonlau</div><div class="v">Proceedings of the AAAI Conference on Artificial Intelligence, 2021</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"></div>
+        <div><div class="t"><a href="https://uwspace.uwaterloo.ca/items/3c75c1a6-54e7-4b0c-9c68-1b60ddb9c6fb">Learning From Almost No Data</a></div><div class="au">Ilia Sucholutsky</div><div class="v">2021</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2021lo.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://ieeexplore.ieee.org/abstract/document/9534284/">One Line To Rule Them All: Generating LO-Shot Soft-Label Prototypes</a></div><div class="au">Ilia Sucholutsky, Nam-Hwui Kim, Ryan P Browne, Matthias Schonlau</div><div class="v">2021 International Joint Conference on Neural Networks (IJCNN), 2021</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2021optimal.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://peerj.com/articles/cs-464/">Optimal 1-NN prototypes for pathological geometries</a></div><div class="au">Ilia Sucholutsky, Matthias Schonlau</div><div class="v">PeerJ Computer Science, 2021</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2021secdd.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/17945">Secdd: Efficient and secure method for remotely training neural networks (student abstract)</a></div><div class="au">Ilia Sucholutsky, Matthias Schonlau</div><div class="v">Proceedings of the AAAI Conference on Artificial Intelligence, 2021</div></div>
+      </div>
+      <div class="entry" data-story="alignment">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2021soft.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://ieeexplore.ieee.org/abstract/document/9533769/">Soft-Label Dataset Distillation and Text Dataset Distillation</a></div><div class="au">Ilia Sucholutsky, Matthias Schonlau</div><div class="v">International Joint Conference on Neural Networks (IJCNN), 2021</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2019">
+      <h2>2019</h2>
+      <div class="list">
+      <div class="entry" data-story="earlier">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2019deep.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://arxiv.org/abs/1904.05411">Deep Learning for System Trace Restoration</a></div><div class="au">Ilia Sucholutsky, Apurva Narayan, Matthias Schonlau, Sebastian Fischmeister</div><div class="v">2019 International Joint Conference on Neural Networks (IJCNN), 2019</div></div>
+      </div>
+      <div class="entry" data-story="earlier">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2019pay.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://peerj.com/articles/cs-210/">Pay attention and you won’t lose it: a deep learning approach to sequence imputation</a></div><div class="au">Ilia Sucholutsky, Apurva Narayan, Matthias Schonlau, Sebastian Fischmeister</div><div class="v">PeerJ Computer Science, 2019</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2018">
+      <h2>2018</h2>
+      <div class="list">
+      <div class="entry" data-story="earlier">
+        <div class="thumb"><img src="assets/web/titles/sucholutsky2018convart.jpg" width="480" height="271" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://openreview.net/forum?id=SkTqMwkDf">ConvART: Improving Adaptive Resonance Theory for Unsupervised Image Clustering</a></div><div class="au">Ilia Sucholutsky, Matthias Schonlau</div><div class="v">Journal of Computational Vision and Imaging Systems, 2018</div></div>
+      </div>
+      </div>
+    </section>
+    <section class="year" data-year="2017">
+      <h2>2017</h2>
+      <div class="list">
+      <div class="entry" data-story="earlier">
+        <div class="thumb"><img src="assets/web/titles/schonlau2017text.jpg" width="480" height="248" alt="" loading="lazy"></div>
+        <div><div class="t"><a href="https://journals.sagepub.com/doi/abs/10.1177/1536867X1801700406">Text mining with n-gram variables</a></div><div class="au">Matthias Schonlau, Nick Guenther, Ilia Sucholutsky</div><div class="v">The Stata Journal, 2017</div></div>
+      </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html" aria-current="page">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var links=document.querySelectorAll('.filters a[data-filter]');
+  var entries=document.querySelectorAll('.entry');
+  var years=document.querySelectorAll('.year');
+  var count=document.getElementById('count');
+  function apply(key){
+    var n=0;
+    entries.forEach(function(e){
+      var show=key==='all'||(' '+e.dataset.story+' ').indexOf(' '+key+' ')>=0;
+      e.hidden=!show; if(show) n++;
+    });
+    years.forEach(function(y){ y.hidden=!y.querySelector('.entry:not([hidden])'); });
+    links.forEach(function(a){ if(a.dataset.filter===key) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+    count.textContent=n+(n===1?' paper':' papers');
+  }
+  links.forEach(function(a){ a.addEventListener('click',function(ev){ ev.preventDefault(); history.replaceState(null,'','#'+a.dataset.filter); apply(a.dataset.filter); }); });
+  function fromHash(){ var h=location.hash.replace('#',''); apply(document.querySelector('.filters a[data-filter="'+h+'"]')?h:'all'); }
+  window.addEventListener('hashchange',fromHash); fromHash();
+})();
+</script>

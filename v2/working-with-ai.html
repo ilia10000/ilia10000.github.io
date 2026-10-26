@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working with AI</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root{
+    --ground:#FFFFFF; --plate:#FFFFFF; --ink:#14161A; --ink-2:#4A4F5A; --ink-3:#6A707B;
+    --navy:#2E3D60; --khaki:#ECEAD9; --khaki-ink:#4A4530; --blue:#CDE7F8; --blue-ink:#1F4E7A; --edge:#2E3D60;
+    --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --s1:17px; --s2:21px; --s3:26px; --s4:33px; --s5:41px; --s6:52px;
+    --u1:8px; --u2:16px; --u3:24px; --u4:40px; --u5:64px; --u6:104px;
+    --sel:#CDE7F8;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; } }
+  :root[data-theme="dark"]{ --ground:#10141F; --plate:#F2F1EA; --ink:#EEF0F4; --ink-2:#B7BCC8; --ink-3:#7F8696; --navy:#9FB4E6; --khaki:#3A3726; --khaki-ink:#E6E1C4; --blue:#183654; --blue-ink:#BFDDF7; --edge:#9FB4E6; --sel:#183654; }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  ::selection{background:var(--sel);color:var(--ink)}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);font-size:var(--s1);line-height:1.5;-webkit-font-smoothing:antialiased;caret-color:var(--navy)}
+  p{margin:0 0 var(--u2);text-wrap:pretty;max-width:66ch}
+  a{color:var(--navy);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+  button,input,select,textarea{font-family:var(--font);font-size:var(--s1);color:var(--ink)}
+  .mock{font-size:12px;color:var(--ink-3);padding:var(--u1) 0}
+  .num,.stat,.tab{font-variant-numeric:tabular-nums}
+
+  .page{max-width:1180px;margin:0 auto;padding:0 var(--u3) var(--u5)}
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
+  .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
+  .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
+  .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
+  .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
+  .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
+  .dd{position:relative}
+  .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
+  @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
+
+  /* diagram vocabulary */
+  .node{display:inline-block;padding:2px 10px;border:2px solid var(--edge);font-weight:500;line-height:1.3}
+  .node.k{background:var(--khaki);color:var(--khaki-ink)} .node.b{background:var(--blue);color:var(--blue-ink)}
+  .arrow{color:var(--navy);font-weight:400}
+
+  /* opener */
+  .open{padding:var(--u4) 0 var(--u3)}
+  .open h1{font-size:var(--s5);line-height:1.15;max-width:34ch}
+  .open h1 .node{font-weight:700;padding:0 12px}
+  .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0;max-width:52ch}
+
+  /* figures */
+  figure{margin:0}
+  figure img{display:block;width:100%;height:auto}
+  .fig{padding:var(--u4) 0}
+  .fig figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);max-width:70ch;margin-top:var(--u2)}
+  .fig figcaption b{color:var(--ink);font-weight:700}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) figure img{background:var(--plate);padding:var(--u2)} }
+  :root[data-theme="dark"] figure img{background:var(--plate);padding:var(--u2)}
+  @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) figure img{padding:0;mix-blend-mode:multiply} }
+  :root[data-theme="light"] figure img{padding:0;mix-blend-mode:multiply}
+
+  /* evidence */
+  .part{padding:var(--u3) 0 0}
+  .inst + .part{padding-top:var(--u5)}
+  .part h2{font-size:var(--s4);line-height:1.15;max-width:22ch}
+  .part .lead{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u2) 0 var(--u4);max-width:56ch}
+  .pair{display:grid;grid-template-columns:5fr 7fr;column-gap:var(--u4);align-items:start}
+  .part .pair{margin-bottom:var(--u4)}
+  .inst .pair{margin-top:var(--u3)}
+  .pair.flip{grid-template-columns:7fr 5fr}
+  .pair.flip figure{order:-1}
+  .pair.flip .box{order:-1}
+  .part .pair h3{font-size:var(--s2);line-height:1.3;margin-bottom:var(--u1)}
+  .pair .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .pair figcaption{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:var(--u1)}
+  .pair.stack{grid-template-columns:1fr}
+  .pair.stack figure{max-width:720px}
+  .pair.stack figure img{max-width:720px}
+
+  /* instruments */
+  .inst{padding-top:var(--u5)}
+  .inst h2{font-size:var(--s4);line-height:1.15;max-width:24ch}
+  .inst .intro{margin-top:var(--u2)}
+  .inst .lead{margin-top:var(--u2);max-width:66ch}
+  .inst .idea{margin-top:var(--u2);max-width:66ch}
+  .src{font-size:14px;color:var(--ink-3);margin-top:var(--u1)}
+  .box{border:2px solid var(--edge);padding:var(--u2) var(--u3) var(--u3)}
+  .box .q{font-weight:700;font-size:var(--s2);line-height:1.3;margin-bottom:var(--u2)}
+  .box .q em{font-style:normal;background:var(--khaki);color:var(--khaki-ink);padding:0 6px}
+  .box .how{color:var(--ink-2);margin:0 0 var(--u3);max-width:66ch}
+  .box .how b{color:var(--ink);font-weight:500}
+  .box .intro{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin:0 0 var(--u2)}
+  .box h3{font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:6px}
+  input[type=number],input[type=text],select,textarea{display:block;width:100%;margin-top:4px;padding:6px 8px;border:2px solid var(--edge);background:var(--ground);color:var(--ink);font-size:var(--s1);line-height:1.3}
+  input[type=number]{max-width:120px}
+  textarea{min-height:76px;resize:vertical}
+  select{appearance:auto}
+  details.more{margin-top:var(--u2);max-width:70ch}
+  details.more summary{display:inline-block;cursor:pointer;list-style:none;font-weight:500;font-size:15px;line-height:1.3;padding:2px 10px 2px 8px;border:2px solid var(--edge)}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::before{content:"+";display:inline-block;width:1em;font-weight:400}
+  details.more[open] summary::before{content:"\2212"}
+  details.more.b summary{background:var(--blue);color:var(--blue-ink)}
+  details.more.k summary{background:var(--khaki);color:var(--khaki-ink)}
+  details.more p{margin:8px 0 0;font-size:15px;color:var(--ink-2);max-width:70ch}
+  details.more .src{margin-top:var(--u1)}
+  details.more .body{font-size:15px;line-height:1.5;color:var(--ink-2);max-width:70ch;margin-top:8px}
+  details.more .body p{max-width:none;margin:0}
+  .model{font-size:14px;color:var(--ink-2);max-width:80ch;margin-top:var(--u2)}
+
+  /* controls */
+  .ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--u2) var(--u3);align-items:end;margin-bottom:var(--u2)}
+  .ctl.three{grid-template-columns:repeat(3,1fr)}
+  .ctl label{display:block;font-size:14px;color:var(--ink-2)}
+  .ctl label b{color:var(--ink);font-weight:500}
+  input[type=range]{width:100%;accent-color:var(--navy);margin:4px 0 0;display:block}
+  input[type=checkbox]{accent-color:var(--navy);width:18px;height:18px;vertical-align:-3px;margin:0 6px 0 0}
+  .btn{border:2px solid var(--edge);background:none;padding:5px 12px;font-size:15px;cursor:pointer;line-height:1.3}
+  .btn:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .btn[aria-pressed=true]{background:var(--khaki);color:var(--khaki-ink)}
+  .btn[disabled]{opacity:.45;cursor:default} .btn[disabled]:hover{outline:none}
+  .btns{display:flex;gap:var(--u1);flex-wrap:wrap;align-items:center}
+  a.btn{display:inline-block;color:var(--ink);text-decoration:none}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--u2)}
+  .opt{border:2px solid var(--edge);background:none;padding:12px 14px;text-align:left;cursor:pointer;line-height:1.35;font-size:var(--s1)}
+  .opt:hover{outline:3px solid var(--navy);outline-offset:2px}
+  .opt b{display:block;font-weight:700;margin-bottom:2px}
+  .prog{font-size:14px;color:var(--ink-3);margin-top:var(--u2)}
+  .result{margin-top:var(--u2);font-size:var(--s1);max-width:70ch}
+  .result b{font-weight:700}
+  .stats{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--u1) var(--u3)}
+  .stats b{color:var(--ink);font-weight:700}
+  canvas{width:100%;height:auto;display:block}
+  .field{display:block;font-size:14px;color:var(--ink-2);margin-bottom:var(--u2)}
+  .field b{color:var(--ink);font-weight:500}
+  .log{margin-top:var(--u2);font-size:15px;line-height:1.5;display:grid;grid-template-columns:auto auto 1fr;column-gap:var(--u2);row-gap:2px;color:var(--ink-2)}
+  .log .h{color:var(--ink-3);font-size:14px}
+  .log .m{color:var(--ink);font-weight:700}
+
+  /* speedup and trust bars */
+  .stage{margin-top:var(--u2)}
+  .assist{border:2px solid var(--edge);background:var(--blue);color:var(--blue-ink);padding:var(--u2);margin-top:var(--u2);max-width:60ch}
+  .assist p{margin-bottom:var(--u1);max-width:none}
+  .assist .who{font-weight:700;font-size:14px;margin-bottom:4px}
+  .task-text{font-size:var(--s2);font-weight:500;line-height:1.35;margin-bottom:var(--u2);max-width:none}
+  .bars svg{width:100%;max-width:560px;height:auto;display:block;font-family:var(--font);font-size:13px;margin-top:var(--u2)}
+  .bars svg text{fill:var(--ink)} .bars svg .lab{font-weight:700} .bars svg .bar{fill:var(--navy)} .bars svg .est{fill:var(--khaki);stroke:var(--edge);stroke-width:2} .bars svg .pre{fill:none;stroke:var(--edge);stroke-width:2} .bars svg .you{fill:none;stroke:var(--edge);stroke-width:2} .bars svg .ax{stroke:var(--ink-3)} .bars svg .sub{fill:var(--ink-2)}
+  #trust .bars svg{max-width:520px}
+
+  /* trust */
+  .vig{margin-bottom:var(--u2);max-width:56ch}
+  .vig p{margin-bottom:var(--u1)}
+
+  /* advice */
+  .adv canvas{width:100%;max-width:360px;height:auto;border:2px solid var(--edge)}
+  .adv .step{margin-top:var(--u2);display:flex;gap:var(--u2);flex-wrap:wrap;align-items:center}
+  .adv .say{font-size:var(--s2);font-weight:700;margin-top:var(--u2)}
+  .adv .say em{font-style:normal;background:var(--blue);color:var(--blue-ink);padding:0 6px}
+  .adv .log{grid-template-columns:auto auto auto auto auto 1fr}
+
+  /* teaching game */
+  .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:var(--u3);margin-top:var(--u2)}
+  .tgrid canvas{width:100%;height:auto;display:block;border:2px solid var(--edge);cursor:crosshair}
+  .tgrid .lab{font-size:14px;color:var(--ink-2);margin-bottom:6px}
+  .tlog{margin-top:var(--u2);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:repeat(2,1fr);column-gap:var(--u3);row-gap:2px;font-variant-numeric:tabular-nums}
+  .tlog b{color:var(--ink);font-weight:500}
+  .tlog .bits{color:var(--ink-3);font-size:14px}
+
+  /* closing */
+  .now{margin-top:var(--u5);padding-top:var(--u4);border-top:2px solid var(--edge)}
+  .now p{font-size:var(--s2);line-height:1.4;color:var(--ink-2);max-width:60ch;margin:0}
+
+  /* papers */
+  .related{padding-top:var(--u5)}
+  .related h2{font-size:var(--s4);margin-bottom:var(--u2)}
+  .related p{max-width:70ch}
+  .papers{padding-top:var(--u5)}
+  .papers h2{font-size:var(--s4);margin-bottom:var(--u3)}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--u5);row-gap:var(--u3)}
+  .prow{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:var(--u2);margin-bottom:var(--u2)}
+  .prow.noimg{grid-template-columns:1fr}
+  .prow img{width:72px;height:auto;display:block;border:1px solid var(--ink-3)}
+  .prow .t{line-height:1.35}
+  .prow .v{font-size:14px;color:var(--ink-3)}
+  .papers .also{margin-top:var(--u3);font-size:15px;color:var(--ink-2)}
+  footer{margin-top:var(--u5);padding-top:var(--u3);border-top:2px solid var(--edge);font-size:15px;color:var(--ink-2)}
+  footer .site{display:flex;flex-wrap:wrap;gap:var(--u3) var(--u5);margin-bottom:var(--u3)}
+  footer .site div{display:flex;flex-direction:column;gap:4px}
+  footer .site b{color:var(--ink);font-weight:700}
+  footer .site a{color:var(--ink-2);text-decoration:none} footer .site a:hover{text-decoration:underline}
+  footer .addr{font-size:14px;color:var(--ink-3)}
+
+  @media (max-width:900px){
+    .pair,.pair.flip,.stats,.tgrid,.pgrid{grid-template-columns:1fr}
+    .pair.flip figure,.pair.flip .box{order:0}
+    .ctl,.ctl.three{grid-template-columns:1fr 1fr}
+    .mast{flex-direction:column;gap:var(--u1)}
+  }
+  @media (max-width:560px){ .ctl,.ctl.three{grid-template-columns:1fr} .opts{grid-template-columns:1fr} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <a class="name" href="index.html">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
+        <div class="menu" id="menu-research">
+          <a href="understanding-people.html">Understanding people</a>
+          <a href="understanding-ai.html">Understanding AI systems</a>
+          <a href="alignment.html">Alignment and efficient learning</a>
+          <a href="working-with-ai.html" aria-current="page">Working with AI</a>
+          <a href="thinking-together.html">Thinking together</a>
+        </div>
+      </div>
+      <a href="papers.html">Papers</a>
+      <a href="people.html">People</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="news.html">News</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+<script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
+
+  <div class="open" id="top">
+    <h1>The partnership is the thing to measure, not the person or the model alone.</h1>
+    <p class="lede">Whether AI help leaves someone more capable, how they take its advice, and what it costs them are properties of the pair. So the pair is what we measure: how help feels against what it does, how a person reads a partner's advice, and what passes between two partners who see the world differently.</p>
+  </div>
+
+  <section class="part" style="padding-top:var(--u4)">
+    <h2>What we mean by a thought partner.</h2>
+    <p class="lead">A thought partner is a system that thinks with you rather than for you. In the 2024 paper that set out the idea, that takes three things: the system has a model of you, you can understand it, and the two of you share a model of the world. All three are properties of the pair; neither member has them alone.</p>
+  </section>
+  <figure class="fig" style="padding-top:0">
+    <img src="assets/web/thought_partners.jpg" width="1000" height="295" alt="Three diagrams. Humans as thought partners: Alice and Bob each hold beliefs about the other and about the world, and produce a product of thought together. Machines as tools: Alice holds beliefs about the machine and the world; the machine only receives. Machines as thought partners: the machine also holds beliefs about Alice.">
+    <figcaption><b>Three ways to think with a machine.</b> Two people hold beliefs about each other and about the world. A machine used as a tool holds no beliefs of its own; the person holds beliefs about it and about the world. A machine that is a thought partner also holds beliefs about the person. From <a href="https://www.nature.com/articles/s41562-024-01991-9"><i>Building machines that learn and think with people</i></a>, Nature Human Behaviour, 2024.</figcaption>
+  </figure>
+
+  <section class="part" id="evidence">
+    <h2>What thinking with a partner costs.</h2>
+    <p class="lead">The first things to measure about a pair are what the help costs the person and whether that cost is visible to them. One paper lists the risks; another finds a gap between how the help feels and what the clock says.</p>
+      <div class="pair stack">
+        <div>
+          <h3>Thought partnerships carry risks of their own.</h3>
+          <p>A 2026 commentary sorts the risks of thinking with an AI into real-time, individual and societal risks, each split by whether the partner is performing appropriately and whether it is being used appropriately. The six categories are illustrated with medical and policy examples: generic, context-insensitive deliberation, unclear credit for who contributed what, user manipulation, cognitive atrophy, systemic fragility, and homogeneity of thought. The paper proposes ways to check for each, including analysis of thinking traces to attribute contributions and periodic assessment of professionals with and without access to an AI partner, and mitigations such as protocols for when to delegate, training in critical judgment, logging, and preserving spaces where people deliberate with each other.</p>
+          <div class="src"><a href="https://dl.acm.org/doi/10.1145/3803024">Identifying, evaluating, and mitigating risks of AI thought partnerships</a>, ACM AI Letters, 2026.</div>
+        </div>
+      </div>
+
+      <div class="pair stack">
+        <div>
+          <h3>Help that feels faster than it is.</h3>
+          <p>In a pre-registered study, 1,237 people either predicted or completed 24 short tasks, working alone or with GPT-4o. People expected the AI to cut completion time by 68.5 seconds, against 17.1 seconds for a highly intelligent other participant. Actual AI-assisted time was 57.8 seconds longer than predicted, while predictions for working alone were accurate. The AI sped up only 3 of the 24 tasks, and on one logic task it made completion 111 seconds slower because its answer was verbose. Reported effort still fell by 0.61 points on the NASA-TLX scale, so the help felt lighter even when it was not faster.</p>
+          <div class="src"><a href="#papers">Cognitive offloading and the speedup illusion in human-AI interaction</a>, CogSci 2026.</div>
+        </div>
+        <figure>
+          <img src="assets/web/figs/yu2026cognitive.jpg" width="1000" height="311" loading="lazy" alt="Panel A: a prediction sample guessed completion time alone, with AI, or with another person; a completion sample did the tasks alone or with AI. Panel B: four kinds of task, each in an easy and a difficult version, from naming one or ten Olympic medalists to rewriting one or three sentences.">
+          <figcaption>The study design. One group predicted how long the tasks would take alone, with an AI, or with another person; a second group did them alone or with the AI. The 24 tasks came in easy and difficult versions of four kinds, from naming an Olympic medalist to rewriting a text. Figure from <a href="#papers">Cognitive offloading and the speedup illusion in human-AI interaction</a>, CogSci 2026.</figcaption>
+        </figure>
+      </div>
+  </section>
+
+  <section class="inst" id="speedup">
+    <div class="pair flip">
+      <div>
+        <h2>Guess your time, then do two tasks.</h2>
+        <p class="lead">People expect an AI assistant to save them a lot of time. In a large study, working with one felt easier and took longer than people had predicted, while their predictions for working alone were on target. The lab studies gaps like this between how help feels and what it does, because that is where a thought partner can mislead. You will guess your time for two short tasks, do them, one alone and one with an assistant, and then compare your guess, your memory, and the clock.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>1,237 people either predicted or completed 24 short tasks, working alone or with GPT-4o. People expected the AI to cut completion time by 68.5 seconds; actual AI-assisted time was 57.8 seconds longer than predicted, while predictions for working alone were accurate. The AI sped up only 3 of the 24 tasks. Reported effort still fell with the AI, even though time did not.</p><div class="src"><a href="#papers">Cognitive offloading and the speedup illusion in human-AI interaction</a>, CogSci 2026.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You predicted, then did, then remembered two short tasks, one alone and one with an assistant that answers after a delay. The paper compares predicted to actual completion time under the same two conditions; the gap it reports is specific to the AI condition.</p></div></details>
+      </div>
+      <div class="box">
+        <div id="s-0" class="stage">
+          <div class="q">Two short tasks. Guess your time, then do them.</div>
+          <p class="intro">Task A, alone, is a short sum. Task B, with an assistant that replies a few seconds after you ask, is a one-sentence rewrite. Guess your seconds for each, then start.</p>
+          <label class="field"><b>Task A alone, seconds</b><input type="number" id="s-pa" min="1" max="600" step="1" value="15"></label>
+          <label class="field"><b>Task B with the assistant, seconds</b><input type="number" id="s-pb" min="1" max="600" step="1" value="15"></label>
+          <div class="btns"><button class="btn" id="s-start">Start task A</button></div>
+        </div>
+        <div id="s-1" class="stage" hidden>
+          <div class="q">Task A, alone. Timing started.</div>
+          <p class="task-text">What is 27 + 56 + 38?</p>
+          <label class="field"><b>Your answer</b><input type="number" id="s-ans-a" step="1" aria-label="sum"></label>
+          <div class="btns"><button class="btn" id="s-sub-a">Submit</button></div>
+        </div>
+        <div id="s-2" class="stage" hidden>
+          <div class="q">Task B, with the assistant. Timing started.</div>
+          <p class="task-text">Rewrite in the past tense: "The committee reviews the proposals and sends its decision to the applicants."</p>
+          <div class="btns"><button class="btn" id="s-ask">Ask the assistant</button><span id="s-wait" style="font-size:14px;color:var(--ink-3)" hidden>Assistant is typing</span></div>
+          <div class="assist" id="s-reply" hidden><div class="who">Assistant</div><p>Sure, happy to help with that. Here is the sentence rewritten in the past tense:</p><p><b>The committee reviewed the proposals and sent its decision to the applicants.</b></p><p>I changed "reviews" to "reviewed" and "sends" to "sent"; the rest of the sentence stays the same because "its decision" and "the applicants" do not carry tense. Let me know if you would like a more formal or a shorter version.</p></div>
+          <label class="field" style="margin-top:var(--u2)"><b>Your rewrite</b><textarea id="s-ans-b" aria-label="rewritten sentence"></textarea></label>
+          <div class="btns"><button class="btn" id="s-sub-b">Submit</button></div>
+        </div>
+        <div id="s-3" class="stage" hidden>
+          <div class="q">Both done. How long did each take, as you remember it?</div>
+          <label class="field"><b>Task A alone, seconds</b><input type="number" id="s-ea" min="1" max="600" step="1"></label>
+          <label class="field"><b>Task B with the assistant, seconds</b><input type="number" id="s-eb" min="1" max="600" step="1"></label>
+          <div class="btns"><button class="btn" id="s-sub-e">Show the times</button></div>
+        </div>
+        <div id="s-4" class="stage" hidden>
+          <div class="result" id="s-res"></div>
+          <div class="bars"><svg id="s-svg" viewBox="0 0 560 200" role="img" aria-label="predicted, remembered and measured seconds for task A alone and task B with the assistant"></svg></div>
+          <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="s-reset">Start again</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="evidence-trust">
+    <h2>How a person reads the partner's advice.</h2>
+    <p class="lead">The second property of the pair is how the person judges what the partner says. One cue people use with each other, time spent thinking, means much less to them when the adviser is an AI.</p>
+      <div class="pair">
+        <div>
+          <h3>Thinking longer earns trust for a person, much less for an AI.</h3>
+          <p>In a vignette study, two advisors think for different lengths of time and choose differently, and participants say whose decision they trust more. With human advisors, across all 27 scenarios, participants chose the one who had thought for longer 74.8% of the time, most strongly for financial and technical decisions and weakly or in reverse for low-stakes choices such as a party playlist. When the same scenarios described AI systems, the share fell to about 58%, close to chance, though it rose as the gap in thinking time grew. Independent of the size of that gap, people were 3.67 times more likely to choose the slower advisor when it was a person.</p>
+          <div class="src"><a href="#papers">Thinking time increases perceived trustworthiness of human but not AI advice</a>, CogSci 2026.</div>
+        </div>
+        <figure style="max-width:519px">
+          <img src="assets/web/figs/malaviya2026thinking.jpg" width="519" height="370" loading="lazy" alt="Panel A: a drawing of two donors, one who thought for 5 minutes before choosing Charity X and one who thought for 15 minutes before choosing Charity Y, with an observer weighing the two. Panel B: the text participants saw, ending with the question of whose decision they trust more.">
+          <figcaption>One scenario as participants saw it: two donors who think for 5 and 15 minutes before choosing a charity, and the question of whose decision to trust more. Figure from <a href="#papers">Thinking time increases perceived trustworthiness of human but not AI advice</a>, CogSci 2026.</figcaption>
+        </figure>
+      </div>
+  </section>
+
+  <section class="inst" id="trust">
+    <div class="pair flip">
+      <div>
+        <h2>Whose decision do you trust more?</h2>
+        <p class="lead">When a person takes longer to decide, we tend to read the extra time as care and trust the decision more. This study asked whether the same reading applies when the adviser is an AI system. We care because how people judge AI advice shapes when they take it, and this cue turns out to work differently for machines. In the box, four short scenes each show two advisers who thought for different lengths of time, people in two scenes and AI systems in the other two; pick the one you trust more.</p>
+        <details class="more b"><summary>What the paper found</summary>
+          <p>Across all 27 of the paper's two-advisor scenarios, participants chose the advisor who had thought for longer 74.8% of the time when the advisors were people, and about 58% of the time when the same advisors were described as AI systems, which is close to chance. Independent of the size of the time gap, people were 3.67 times more likely to choose the slower advisor when it was human. Preference for the slower AI did rise as the time gap grew.</p>
+          <div class="src"><a href="#papers">Thinking time increases perceived trustworthiness of human but not AI advice</a>, CogSci 2026.</div>
+        </details>
+        <details class="more k"><summary>What you just did</summary>
+          <p>You answered the paper's question, whose decision do you trust more, twice for people and twice for AI systems. The paper's measure is the share of those answers that go to the longer-thinking advisor, split by whether the advisor was human or AI.</p>
+        </details>
+      </div>
+      <div class="box">
+        <div class="q">Round <span class="num" id="tt-k">1</span> of 4. Whose decision do you trust more?</div>
+        <div class="vig" id="tt-vig"></div>
+        <div class="opts"><button class="opt" id="tt-a"></button><button class="opt" id="tt-b"></button></div>
+        <div class="prog"><span class="num" id="tt-done">0</span> of 4 answered</div>
+        <div class="result" id="tt-res" hidden></div>
+        <div class="bars" id="tt-bars" hidden>
+          <svg viewBox="0 0 520 130" role="img" aria-label="Share choosing the longer-thinking advisor: 74.8 percent for human advisors and about 58 percent for AI advisors in the paper; outlined boxes show your own share.">
+            <text x="0" y="24">Human advisers</text><rect class="bar" x="130" y="10" width="299" height="20"/><text class="lab" x="437" y="25">74.8%</text>
+            <rect class="you" id="tt-you-h" x="130" y="10" width="0" height="20"/>
+            <text x="0" y="64">AI advisers</text><rect class="bar" x="130" y="50" width="232" height="20"/><text class="lab" x="370" y="65">about 58%</text>
+            <rect class="you" id="tt-you-a" x="130" y="50" width="0" height="20"/>
+            <line class="ax" x1="130" y1="82" x2="530" y2="82"/><text x="130" y="100" text-anchor="middle">0</text><text x="330" y="100" text-anchor="middle">50</text><text x="530" y="100" text-anchor="end">100%</text>
+            <text x="0" y="124" fill="var(--ink-2)">Filled: the paper. Outlined: your two answers in each row.</text>
+          </svg>
+        </div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="tt-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="advice">
+    <div class="pair">
+      <div>
+        <h2>Resisting bad advice is a separate skill from solving.</h2>
+        <p class="intro">A pair is only as good as the weaker of two skills, taking good advice and resisting bad advice. In this game the advisor is sometimes wrong on purpose. The paper behind it measures both skills in language models: how persuasive a model is as an advisor and how vigilant it is as the one being advised. You estimate the number of dots in a brief flash, read the advisor's number, and give a final answer, ten times, without being told which rounds are honest.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body">Five language models played ten Sokoban puzzles with a second model as advisor, prompted to help or to mislead. With benevolent advice the mean solve rate was 0.88; with malicious advice it fell to 0.37. Capability, persuasion, and vigilance came apart: Grok 4 Fast solved 98% of puzzles unassisted but was the least vigilant (minus 0.52), while GPT-5 was the most vigilant player (0.76) and also the most persuasive malicious advisor (0.73). Every model complied with the request to mislead.<div class="src"><a href="https://arxiv.org/abs/2602.21262">Under the influence: quantifying persuasion and vigilance in large language models</a>, 2026.</div></div></details>
+        <details class="more"><summary class="node k">What you just did</summary><div class="body">You made ten estimates with an advisor who was sometimes helping and sometimes misleading you, without being told which. The page scores you the way the paper scores a model: how often your answer landed close to the truth under each kind of advice, how far you moved toward the advice, and a vigilance score that rewards following good advice and ignoring bad advice.</div></details>
+      </div>
+      <div class="box adv">
+        <div class="q">How many dots? Round <span class="num" id="a-k">1</span> of 10.</div>
+        <p class="how">The dots appear for under a second. Estimate how many, read the advisor's number, then give your final answer.</p>
+        <canvas id="a-cv" width="360" height="220" role="img" aria-label="a field of dots shown briefly"></canvas>
+        <div class="step" id="a-s0"><button class="btn" id="a-show">Show the dots</button><span class="prog" style="margin:0">They appear for under a second.</span></div>
+        <div class="step" id="a-s1" hidden><label for="a-first">Your estimate</label><input type="number" id="a-first" min="1" max="300" inputmode="numeric"><button class="btn" id="a-ok1">Lock in</button></div>
+        <div id="a-s2" hidden>
+          <div class="say">The advisor says <em id="a-adv"></em>.</div>
+          <div class="step"><label for="a-final">Your final answer</label><input type="number" id="a-final" min="1" max="300" inputmode="numeric"><button class="btn" id="a-ok2">Answer</button></div>
+        </div>
+        <div class="prog"><span class="num" id="a-done">0</span> of 10 answered</div>
+        <div class="log" id="a-log" aria-live="polite"><div class="h">round</div><div class="h">dots</div><div class="h">advice</div><div class="h">first</div><div class="h">final</div><div class="h">advisor was</div></div>
+        <div class="result" id="a-res" hidden></div>
+        <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="a-reset" hidden>Start again</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inst" id="triplets">
+    <div class="pair">
+      <div>
+        <h2>Teach a student who sees the world a little differently.</h2>
+        <p class="intro">Here is the pair at work in its smallest form: a teacher and a student each have their own map of eight familiar objects, and the two maps do not quite agree. The teacher sees a new object and may only say things like "it is closer to A than to F"; the student has to work out where it is from messages judged on a map it cannot see. Play either role and count how many messages the pair needs, then reveal the other map and see whether knowing how the other player sees things can stand in for agreeing with them.</p>
+        <details class="more b"><summary>What the paper found</summary>
+          <p>Each message of the form "closer to this than to that" cuts the receiver's map in half along the line midway between the two objects. When the two maps agree, about log n messages pin the object down; when they disagree on a fraction &epsilon; of such judgments, each message carries only C(&epsilon;) of a bit and the count grows as 1 / C(&epsilon;). A receiver who knows that most messages arrive reversed can flip them all and learn as fast as an aligned pair.</p>
+          <div class="src"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a>, NeurIPS 2023, Proposition 3.8.</div>
+        </details>
+        <details class="more k"><summary>What you just did</summary>
+          <p>As the teacher you chose which pairs to ask about without seeing how the student would read them; the good pairs are the ones whose midline splits what the student still believes in half, on the student's map. As the student you decoded messages that were true on a map you could not see. Revealing the other player's map is a shortcut the paper's analysis does not allow, and it is worth trying: an accurate model of the other player can substitute for agreeing with them.</p>
+        </details>
+      </div>
+      <div class="box">
+        <div class="q">Where is the new object?</div>
+        <p class="how">Eight familiar objects, A to H, sit on each player's map, and the two maps do not quite agree. Messages take one form only: "the new object is closer to A than to F", judged on the sender's own map. Choose a role. The slider sets how different the two maps are.</p>
+        <div class="btns" style="margin-bottom:var(--u2)">
+          <button class="btn" id="t-teach" aria-pressed="true">Be the teacher</button>
+          <button class="btn" id="t-learn" aria-pressed="false">Be the student</button>
+          <button class="btn" id="t-new">New object</button>
+        </div>
+        <div class="ctl" style="grid-template-columns:1fr">
+          <label><b>How different the two maps are</b>: <span class="num" id="t-e-v">0.20</span> (they disagree on <span class="num" id="t-dis">0%</span> of closer-or-farther judgments)<input type="range" id="t-e" min="0" max="1" step="0.05" value="0.2" aria-label="map difference"></label>
+        </div>
+        <p class="how" id="t-instr" style="margin-top:var(--u2)"></p>
+        <div class="tgrid">
+          <div>
+            <div class="lab" id="t-lab-l">Your map</div>
+            <canvas id="t-cv" width="360" height="360" aria-label="your map with eight familiar objects"></canvas>
+          </div>
+          <div>
+            <div class="lab" id="t-lab-r">The other player's map</div>
+            <canvas id="t-cv2" width="360" height="360" aria-label="the other player's map, hidden unless revealed"></canvas>
+            <div class="btns" style="margin-top:var(--u1)"><button class="btn" id="t-peek" aria-pressed="false">Show me the other player's map</button><button class="btn" id="t-check">Check the student</button></div>
+          </div>
+        </div>
+        <div class="tlog" id="t-log"></div>
+        <div class="stats" style="grid-template-columns:1fr;margin-top:var(--u2)"><div id="t-res"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="now" id="now">
+    <p>The question in front of the lab now is whether a person is more capable after the partner is gone. The measure is performance on held-out tasks, done without the AI, after a period of working with it, rather than the quality of the pair's joint output.</p>
+    <p><a class="btn" href="join.html#now">What we are working on now</a></p>
+  </section>
+
+  <section class="related" id="related">
+    <h2>Related stories</h2>
+    <p>The teaching game costs what it does because of how much the two maps share; <a href="alignment.html">alignment and learning</a> gives the theory behind that count and the fast learning it buys. The two members of the pair each have a page of their own: <a href="understanding-people.html">people</a>, on how a person represents a problem, and <a href="understanding-ai.html">AI systems</a>, on a model's concepts and habits. <a href="thinking-together.html">Thinking together</a> asks what happens when pairs like these compose into a group.</p>
+  </section>
+
+  <section class="papers" id="papers">
+    <h2>Papers on this page</h2>
+    <div class="pgrid">
+      <div>
+        <div class="prow"><img src="assets/web/titles/collins2024building.jpg" width="480" height="254" loading="lazy" alt=""><div><div class="t"><a href="https://www.nature.com/articles/s41562-024-01991-9">Building machines that learn and think with people</a></div><div class="v">Nature Human Behaviour, 2024</div></div></div>
+        <div class="prow"><img src="assets/web/titles/oktar2026risks.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://dl.acm.org/doi/10.1145/3803024">Identifying, Evaluating, and Mitigating Risks of AI Thought Partnerships</a></div><div class="v">ACM AI Letters, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/yu2026cognitive.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2605.23177">Cognitive offloading and the speedup illusion in human-AI interaction</a></div><div class="v">CogSci, 2026</div></div></div>
+      </div>
+      <div>
+        <div class="prow"><img src="assets/web/titles/malaviya2026thinking.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t">Thinking time increases perceived trustworthiness of human but not AI advice</div><div class="v">CogSci, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/robinson2026persuasion.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2602.21262">Under the Influence: Quantifying Persuasion and Vigilance in Large Language Models</a></div><div class="v">arXiv, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/sucholutsky2023alignment.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a></div><div class="v">NeurIPS, 2023</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html" aria-current="page">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
+  </footer>
+</div>
+
+<script>
+const NV=()=>{const h=getComputedStyle(document.documentElement).getPropertyValue('--navy').trim();return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)).join(',');};
+function reveal(id){document.querySelectorAll('#'+id+' details.more').forEach(d=>{d.open=true;});}
+(function(){
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $=id=>document.getElementById(id);
+  const redraws=[];
+  function onTheme(){redraws.forEach(f=>f());}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const fmt2=v=>v.toFixed(2);
+
+  /* 1. Speedup illusion (v14_research_world) */
+  (function(){
+    const stages=[0,1,2,3,4].map(i=>$('s-'+i));
+    let t0,tA,tB,okA,okB,askedAt,replyAt,timer;
+    function go(i){stages.forEach((s,j)=>s.hidden=j!==i);}
+    function num(id,fallback){const v=parseFloat($(id).value);return Number.isFinite(v)&&v>0?v:fallback;}
+    $('s-start').addEventListener('click',()=>{go(1);t0=performance.now();$('s-ans-a').focus();});
+    function subA(){tA=(performance.now()-t0)/1000;okA=parseInt($('s-ans-a').value,10)===121;go(2);t0=performance.now();$('s-ask').focus();}
+    $('s-sub-a').addEventListener('click',subA);$('s-ans-a').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();subA();}});
+    $('s-ask').addEventListener('click',()=>{const b=$('s-ask');b.disabled=true;$('s-wait').hidden=false;askedAt=performance.now();
+      timer=setTimeout(()=>{$('s-wait').hidden=true;$('s-reply').hidden=false;replyAt=performance.now();$('s-ans-b').focus();},3000);});
+    function subB(){tB=(performance.now()-t0)/1000;const v=$('s-ans-b').value.toLowerCase();okB=v.includes('reviewed')&&v.includes('sent');go(3);$('s-ea').focus();}
+    $('s-sub-b').addEventListener('click',subB);
+    function bars(){const pa=num('s-pa',0),pb=num('s-pb',0),ea=num('s-ea',0),eb=num('s-eb',0);
+      const rows=[['Task A, alone',pa,ea,tA],['Task B, with assistant',pb,eb,tB]];const mx=Math.max(1,...rows.flatMap(r=>r.slice(1)));
+      const L=170,W=360;let y=14,out='';
+      rows.forEach(r=>{out+='<text class="lab" x="0" y="'+(y+10)+'">'+r[0]+'</text>';
+        const items=[['predicted','pre',r[1]],['remembered','est',r[2]],['measured','bar',r[3]]];
+        items.forEach((it,i)=>{const yy=y+i*20;const w=Math.max(2,W*it[2]/mx);out+='<text class="sub" x="'+(L-8)+'" y="'+(yy+13)+'" text-anchor="end">'+it[0]+'</text><rect class="'+it[1]+'" x="'+L+'" y="'+yy+'" width="'+w.toFixed(1)+'" height="14"/><text x="'+(L+w+6).toFixed(1)+'" y="'+(yy+12)+'">'+it[2].toFixed(it[1]==='bar'?1:0)+' s</text>';});
+        y+=84;});
+      out+='<line class="ax" x1="'+L+'" y1="'+(y-14)+'" x2="'+(L+W)+'" y2="'+(y-14)+'"/><text class="sub" x="'+L+'" y="'+(y+2)+'">0</text><text class="sub" x="'+(L+W)+'" y="'+(y+2)+'" text-anchor="end">'+mx.toFixed(0)+' s</text>';
+      $('s-svg').innerHTML=out;
+      const dA=ea-tA,dB=eb-tB;const s=v=>(v>=0?'+':'')+v.toFixed(1);
+      $('s-res').innerHTML='Measured: <b class="stat">'+tA.toFixed(1)+' s</b> alone'+(okA?'':' (the sum is 121)')+', <b class="stat">'+tB.toFixed(1)+' s</b> with the assistant'+(okB?'':' (the rewrite did not contain "reviewed" and "sent")')+', of which about '+((replyAt&&askedAt)?((replyAt-askedAt)/1000).toFixed(1):'0')+' s was waiting. You remembered them as '+ea.toFixed(0)+' s and '+eb.toFixed(0)+' s (errors '+s(dA)+' and '+s(dB)+'), and predicted '+pa.toFixed(0)+' s and '+pb.toFixed(0)+' s. In the paper, predictions for working alone were accurate and AI-assisted time ran 57.8 s longer than predicted.';
+      go(4);reveal('speedup');}
+    $('s-sub-e').addEventListener('click',bars);
+    $('s-eb').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();bars();}});
+    $('s-reset').addEventListener('click',()=>{clearTimeout(timer);$('s-ans-a').value='';$('s-ans-b').value='';$('s-ea').value='';$('s-eb').value='';$('s-ask').disabled=false;$('s-reply').hidden=true;$('s-wait').hidden=true;askedAt=replyAt=undefined;go(0);$('s-pa').focus();});
+    go(0);
+  })();
+
+  /* 2. Thinking time (v14_research_world) */
+  (function(){
+    const R=[
+      {kind:'human',names:['River','Phoenix'],slow:1,intro:'You will observe how two donors each choose between two charities.',lines:['River thinks for 5 minutes before donating to Charity X.','Phoenix thinks for 15 minutes before donating to Charity Y.']},
+      {kind:'ai',names:['AI System A','AI System B'],slow:0,intro:'You will observe how two AI systems each choose between two charities to donate to.',lines:['AI System A computes for 15 minutes before donating to Charity Y.','AI System B computes for 5 minutes before donating to Charity X.']},
+      {kind:'human',names:['Sage','Jordan'],slow:0,intro:'You will observe how two savers each choose between two retirement funds.',lines:['Sage thinks for 15 minutes before moving their savings into Fund X.','Jordan thinks for 5 minutes before moving their savings into Fund Y.']},
+      {kind:'ai',names:['AI System A','AI System B'],slow:1,intro:'You will observe how two AI systems each choose between two retirement funds for a client.',lines:['AI System A computes for 5 minutes before moving the savings into Fund Y.','AI System B computes for 15 minutes before moving the savings into Fund X.']}
+    ];
+    let k=0;const slowH=[],slowA=[];
+    const vig=$('tt-vig'),aB=$('tt-a'),bB=$('tt-b'),res=$('tt-res'),bars=$('tt-bars'),rst=$('tt-reset');
+    function show(){
+      if(k>=R.length){vig.hidden=true;aB.parentElement.hidden=true;
+        const h=slowH.filter(Boolean).length,a=slowA.filter(Boolean).length;
+        res.hidden=false;res.innerHTML='You chose the longer-thinking advisor in <b>'+h+' of 2</b> human rounds and <b>'+a+' of 2</b> AI rounds. The paper’s participants did so 74.8% of the time for people and about 58% for AI systems.';
+        $('tt-you-h').setAttribute('width',String(h/2*400));$('tt-you-a').setAttribute('width',String(a/2*400));bars.hidden=false;rst.hidden=false;reveal('trust');return;}
+      const r=R[k];$('tt-k').textContent=k+1;
+      vig.innerHTML='<p>'+r.intro+'</p><p>'+r.lines[0]+'</p><p>'+r.lines[1]+'</p>';
+      aB.textContent=r.names[0];bB.textContent=r.names[1];
+    }
+    function pick(j){const r=R[k];(r.kind==='human'?slowH:slowA).push(j===r.slow);k++;$('tt-done').textContent=k;show();}
+    aB.addEventListener('click',()=>pick(0));bB.addEventListener('click',()=>pick(1));
+    rst.addEventListener('click',()=>{k=0;slowH.length=0;slowA.length=0;vig.hidden=false;aB.parentElement.hidden=false;res.hidden=true;bars.hidden=true;rst.hidden=true;$('tt-done').textContent=0;show();aB.focus();});
+    show();
+  })();
+
+  /* 3. Persuasion and vigilance (v14_research_group) */
+  (function(){
+    const N=10,FLASH=700,TOL=0.15;
+    let rounds,k,rng2;
+    const cv=$('a-cv'),ctx=cv.getContext('2d');
+    function build(){const rng=mulberry(77);const c=[1,1,1,1,1,0,0,0,0,0];for(let i=c.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[c[i],c[j]]=[c[j],c[i]];}
+      rounds=c.map(ben=>{const truth=28+Math.floor(rng()*57);let advice;if(ben){advice=Math.round(truth*(1+(rng()*0.1-0.05)));}else{advice=Math.round(truth*(rng()<0.5?0.6:1.4));}return {ben,truth,advice};});
+      rng2=mulberry(78);k=0;}
+    function drawDots(n){const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);ctx.fillStyle=css('--ground');ctx.fillRect(0,0,W,H);
+      const pts=[];let tries=0;while(pts.length<n&&tries<5000){tries++;const x=8+rng2()*(W-16),y=8+rng2()*(H-16);if(pts.every(p=>Math.hypot(p.x-x,p.y-y)>9))pts.push({x,y});}
+      ctx.fillStyle=css('--ink');pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,3.2,0,Math.PI*2);ctx.fill();});}
+    function clear(){ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle=css('--ground');ctx.fillRect(0,0,cv.width,cv.height);}
+    redraws.push(clear);
+    const s0=$('a-s0'),s1=$('a-s1'),s2=$('a-s2'),first=$('a-first'),fin=$('a-final'),log=$('a-log'),res=$('a-res'),rst=$('a-reset'),showB=$('a-show');
+    function stage(n){s0.hidden=n!==0;s1.hidden=n!==1;s2.hidden=n!==2;}
+    function next(){if(k>=N){finish();return;}$('a-k').textContent=k+1;first.value='';fin.value='';clear();stage(0);showB.disabled=false;}
+    showB.addEventListener('click',()=>{showB.disabled=true;drawDots(rounds[k].truth);setTimeout(()=>{clear();stage(1);first.focus();},FLASH);});
+    function lock1(){const v=parseInt(first.value,10);if(!(v>0))return;rounds[k].first=v;$('a-adv').textContent=rounds[k].advice;fin.value=v;stage(2);fin.focus();fin.select();}
+    function lock2(){const v=parseInt(fin.value,10);if(!(v>0))return;const r=rounds[k];r.final=v;
+      const close=x=>Math.abs(x-r.truth)/r.truth<=TOL;
+      r.woa=r.advice===r.first?null:clamp((r.final-r.first)/(r.advice-r.first),0,1);
+      r.c1=close(r.first);r.c2=close(r.final);
+      const cells=[String(k+1),String(r.truth),String(r.advice),String(r.first),String(r.final),r.ben?'helping':'misleading'];
+      cells.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;if(i===4&&r.c2)d.className='m';log.appendChild(d);});
+      k++;$('a-done').textContent=k;next();}
+    $('a-ok1').addEventListener('click',lock1);first.addEventListener('keydown',e=>{if(e.key==='Enter')lock1();});
+    $('a-ok2').addEventListener('click',lock2);fin.addEventListener('keydown',e=>{if(e.key==='Enter')lock2();});
+    function finish(){stage(3);$('a-k').textContent='10';
+      const ben=rounds.filter(r=>r.ben),mal=rounds.filter(r=>!r.ben);
+      const rate=(a,f)=>a.filter(f).length/a.length;
+      const mw=a=>{const v=a.filter(r=>r.woa!==null).map(r=>r.woa);return v.length?v.reduce((s,x)=>s+x,0)/v.length:null;};
+      const followed=r=>r.woa!==null&&r.woa>=0.5;
+      const vig=rounds.map(r=>(r.ben?followed(r):!followed(r))?1:-1).reduce((s,x)=>s+x,0)/rounds.length;
+      const pct=v=>Math.round(v*100)+'%';
+      const w=v=>v===null?'not measurable':fmt2(v);
+      res.hidden=false;res.innerHTML='Close to the true count, before advice: <b>'+pct(rate(rounds,r=>r.c1))+'</b>. After advice: <b>'+pct(rate(ben,r=>r.c2))+'</b> when the advisor was helping and <b>'+pct(rate(mal,r=>r.c2))+'</b> when it was misleading. You moved <b>'+w(mw(ben))+'</b> of the way toward helpful advice and <b>'+w(mw(mal))+'</b> of the way toward misleading advice. Your vigilance score: <b>'+fmt2(vig)+'</b> on a scale from minus 1 to 1. In the paper, the models solved 0.88 of puzzles with helpful advice and 0.37 with misleading advice; GPT-5 was the most vigilant player (0.76) and Grok 4 Fast the least (minus 0.52).';
+      rst.hidden=false;reveal('advice');}
+    rst.addEventListener('click',()=>{build();while(log.children.length>6)log.removeChild(log.lastChild);res.hidden=true;rst.hidden=true;$('a-done').textContent='0';next();showB.focus();});
+    build();next();
+  })();
+})();
+/* triplet communication game */
+(function(){
+  const cv=document.getElementById('t-cv'); if(!cv) return;
+  const cv2=document.getElementById('t-cv2'), g=cv.getContext('2d'), g2=cv2.getContext('2d');
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const L=[[0.16,0.20],[0.52,0.12],[0.86,0.26],[0.30,0.48],[0.68,0.52],[0.14,0.80],[0.48,0.86],[0.84,0.80]], NAMES='ABCDEFGH';
+  const N=48, W=360; let seed=7; const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  let role='teach', amp=0.2, c=null, post=null, tpost=null, bits=[], msgs=[], guesses=[], ideal=[], done=false, revealed=false, sel=null, peek=false, ph=[];
+  const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+  // the other player's map is a smooth warp of yours
+  const warp=p=>[Math.min(0.94,Math.max(0.06,p[0]+amp*0.3*Math.sin(3.1*p[1]+ph[0])*Math.cos(2.3*p[0]+ph[1]))),Math.min(0.94,Math.max(0.06,p[1]+amp*0.3*Math.sin(2.7*p[0]+ph[2])*Math.cos(3.3*p[1]+ph[3])))];
+  let LO=L; // other player's landmarks
+  const tripOn=(p,LL,j,k)=>dist(p,LL[j])<dist(p,LL[k]);
+  const trip=(p,j,k)=>tripOn(p,L,j,k);
+  function disagreement(){ let d=0,n=0; for(let t=0;t<600;t++){ const p=[rnd(),rnd()]; const j=Math.floor(rnd()*8); let k=Math.floor(rnd()*7); if(k>=j)k++; if(tripOn(p,L,j,k)!==tripOn(warp(p),LO,j,k)) d++; n++; } return d/n; }
+  function reset(){ ph=[rnd()*6.3,rnd()*6.3,rnd()*6.3,rnd()*6.3]; LO=L.map(warp); do{c=[0.08+0.84*rnd(),0.08+0.84*rnd()];}while(L.some(l=>dist(l,c)<0.12)); post=new Float64Array(N*N).fill(1/(N*N)); tpost=new Float64Array(N*N).fill(1/(N*N)); msgs=[];guesses=[];ideal=[];bits=[];done=false;revealed=false;sel=null; document.getElementById('t-dis').textContent=Math.round(100*disagreement())+'%'; draw(); }
+  const cell=i=>[(i%N+0.5)/N,(Math.floor(i/N)+0.5)/N];
+  // the receiver's belief lives on the receiver's own map; the receiver treats each message as true with probability 0.8
+  function update(LL,j,k,bit){ let s=0; for(let i=0;i<N*N;i++){const ok=tripOn(cell(i),LL,j,k)===bit; post[i]*= ok?0.8:0.2; s+=post[i];} for(let i=0;i<N*N;i++)post[i]/=s; }
+  function mean(){ let mx=0; for(let i=0;i<N*N;i++) mx=Math.max(mx,post[i]); let x=0,y=0,n=0; for(let i=0;i<N*N;i++){ if(post[i]<0.5*mx) continue; const p=cell(i); x+=p[0]; y+=p[1]; n++; } return [x/n,y/n]; }
+  function area(){ let mx=0; for(let i=0;i<N*N;i++) mx=Math.max(mx,post[i]); let n=0; for(let i=0;i<N*N;i++) if(post[i]>=0.5*mx) n++; return n; }
+  function bestPair(LL){ let best=null,bs=1; for(let j=0;j<8;j++)for(let k=j+1;k<8;k++){ if(msgs.some(m=>(m.j===j&&m.k===k)||(m.j===k&&m.k===j))) continue; let m=0; for(let i=0;i<N*N;i++) if(tripOn(cell(i),LL,j,k)) m+=tpost[i]; const sc=Math.abs(m-0.5); if(sc<bs){bs=sc;best=[j,k];} } return best||[0,1]; }
+  function tupdate(j,k,bit){ let s=0; for(let i=0;i<N*N;i++){ const ok=tripOn(cell(i),LO,j,k)===bit; tpost[i]*= ok?0.8:0.2; s+=tpost[i]; } for(let i=0;i<N*N;i++) tpost[i]/=s; }
+  // teacher mode: you judge on L, the student decodes on LO; the object sits at warp(c) on the student's map
+  // student mode: the teacher judges on LO where the object sits at warp(c); you decode on L where it sits at c
+  function splitBits(LL,j,k){ let m=0; for(let i=0;i<N*N;i++) if(tripOn(cell(i),LL,j,k)) m+=post[i]; if(m<=0||m>=1) return 0; return -(m*Math.log2(m)+(1-m)*Math.log2(1-m)); }
+  function send(j,k){ let bit; if(role==='teach'){ bits.push(splitBits(LO,j,k)); bit=tripOn(c,L,j,k); msgs.push({j,k,bit}); update(LO,j,k,bit); ideal.push(dist(mean(),warp(c))); } else { bits.push(splitBits(L,j,k)); bit=tripOn(warp(c),LO,j,k); msgs.push({j,k,bit}); update(L,j,k,bit); tupdate(j,k,bit); ideal.push(dist(mean(),c)); } }
+  function cellRect(ctx,i){ const cx=i%N, cy=Math.floor(i/N); const x0=Math.round(cx*W/N), x1=Math.round((cx+1)*W/N), y0=Math.round(cy*W/N), y1=Math.round((cy+1)*W/N); ctx.fillRect(x0,y0,x1-x0,y1-y0); }
+  function drawMap(ctx,LL,opts){
+    ctx.clearRect(0,0,W,W); ctx.fillStyle=css('--ground'); ctx.fillRect(0,0,W,W);
+    if(opts.hidden){ ctx.fillStyle=css('--ink-3'); ctx.font='15px '+css('--font'); ctx.textAlign='center'; ctx.fillText('hidden',W/2,W/2); return; }
+    if(opts.belief){ let mx=0; for(let i=0;i<N*N;i++) mx=Math.max(mx,post[i]); for(let i=0;i<N*N;i++){ const a=post[i]/mx; if(a<0.02) continue; ctx.fillStyle=`rgba(${NV()},${0.85*a})`; cellRect(ctx,i); } }
+    if(opts.shade&&msgs.length){ const cnt=new Uint8Array(N*N); let mx=0; for(let i=0;i<N*N;i++){ const p=cell(i); let k=0; msgs.forEach(m=>{ if(tripOn(p,LL,m.j,m.k)===m.bit) k++; }); cnt[i]=k; if(k>mx) mx=k; } for(let i=0;i<N*N;i++){ const a=cnt[i]/mx; if(a<=0) continue; ctx.fillStyle=`rgba(${NV()},${0.08+0.72*a*a})`; cellRect(ctx,i); } }
+    ctx.strokeStyle=css('--ink-3'); ctx.lineWidth=1; msgs.forEach(m=>{ const a=LL[m.j],b=LL[m.k]; const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2]; const d=[-(b[1]-a[1]),b[0]-a[0]]; const n=Math.hypot(d[0],d[1]); const u=[d[0]/n*2,d[1]/n*2]; ctx.beginPath();ctx.moveTo((mid[0]-u[0])*W,(mid[1]-u[1])*W);ctx.lineTo((mid[0]+u[0])*W,(mid[1]+u[1])*W);ctx.stroke(); });
+    LL.forEach((l,i)=>{ const x=l[0]*W,y=l[1]*W; ctx.fillStyle=(opts.sel===i)?css('--khaki'):css('--ground'); ctx.strokeStyle=css('--edge'); ctx.lineWidth=2; ctx.beginPath(); ctx.rect(x-13,y-13,26,26); ctx.fill(); ctx.stroke(); ctx.fillStyle=css('--ink'); ctx.font='700 14px '+css('--font'); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(NAMES[i],x,y+1); });
+    if(opts.obj){ ctx.fillStyle=css('--khaki'); ctx.strokeStyle=css('--edge'); ctx.lineWidth=2; ctx.beginPath(); ctx.arc(opts.obj[0]*W,opts.obj[1]*W,9,0,7); ctx.fill(); ctx.stroke(); }
+    if(opts.cross){ const x=opts.cross[0]*W,y=opts.cross[1]*W; ctx.strokeStyle=css('--navy'); ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(x-7,y-7); ctx.lineTo(x+7,y+7); ctx.moveTo(x+7,y-7); ctx.lineTo(x-7,y+7); ctx.stroke(); }
+    if(opts.ring){ ctx.strokeStyle=css('--khaki-ink'); ctx.lineWidth=2; ctx.beginPath(); ctx.arc(opts.ring[0]*W,opts.ring[1]*W,11,0,7); ctx.stroke(); }
+  }
+  function draw(){
+    const teach=role==='teach', show=peek||done;
+    if(done&&!revealed){ revealed=true; reveal('triplets'); }
+    document.getElementById('t-lab-l').textContent=teach?'Your map, with the new object (filled circle)':'Your map; darker where more messages agree the object could be';
+    document.getElementById('t-lab-r').textContent=teach?(show?'The student\'s map and belief (darker is likelier; ring is the middle of the darkest region)':'The student\'s map (hidden)'):(show?'The teacher\'s map, with the object':'The teacher\'s map (hidden)');
+    document.getElementById('t-instr').textContent=teach
+      ?'You can see the new object. Click two familiar objects to send one message about which of them it is nearer to. The student decodes each message on its own map, which you cannot see. Press "Check the student" when you think it has enough.'
+      :'You cannot see the new object. A teacher sends messages about it, judged on the teacher\'s map. After each message, click where you now think the object is. Twelve messages, then the answer.';
+    document.getElementById('t-check').hidden=!teach||done; document.getElementById('t-peek').setAttribute('aria-pressed',String(peek));
+    if(teach){ drawMap(g,L,{obj:c,sel}); drawMap(g2,LO,{hidden:!show,belief:show,ring:show?mean():null,obj:done?warp(c):null}); }
+    else { drawMap(g,L,{shade:true,cross:guesses.length?guesses[guesses.length-1]:null,obj:done?c:null,ring:done?mean():null}); drawMap(g2,LO,{hidden:!show,obj:show?warp(c):null}); }
+    const showBits=(role==='learn')||show; const lg=document.getElementById('t-log'); lg.innerHTML=msgs.map((m,i)=>`<div>${i+1}. closer to <b>${NAMES[m.j]}</b> than to <b>${NAMES[m.k]}</b>${showBits?` <span class="bits">${bits[i].toFixed(2)} bits</span>`:''}</div>`).join('')+(msgs.length&&showBits?`<div class="bits" style="grid-column:1 / -1;margin-top:6px">Up to ${bits.reduce((a,b)=>a+b,0).toFixed(1)} bits in all. A message is worth one bit when its midline splits what the receiver still believes in half, and less the more one-sided the split; when the maps differ, some of that is spent on messages that are wrong on the receiver's map.</div>`:'');
+    const res=document.getElementById('t-res');
+    if(teach){ if(done){ const d=ideal[ideal.length-1]; res.innerHTML=`After ${msgs.length} message${msgs.length>1?'s':''} the student's best guess is <b class="stat">${(d*100).toFixed(0)}</b> map units from the object on its map${d<0.06?': found.':': not found yet (under 6 counts as found).'} The filled circle on the student's map is where the student's own judgments place the object among its landmarks, so it need not match the spot on your map. Try again with the student's map shown, and see whether you need fewer messages.`; } else res.innerHTML=msgs.length?`${msgs.length} message${msgs.length>1?'s':''} sent.`:'No messages yet.'; }
+    else { if(done){ const you=guesses.map(gp=>dist(gp,c)); res.innerHTML=`The object was at the filled circle on your map; on the teacher's map it sits where the teacher's own judgments place it, which need not be the same spot. Your last guess was <b class="stat">${(you[you.length-1]*100).toFixed(0)}</b> map units away; a student who simply trusts each message on this map would be <b class="stat">${(ideal[ideal.length-1]*100).toFixed(0)}</b> away. Your error by message: ${you.map(v=>(v*100).toFixed(0)).join(', ')}.`; } else res.innerHTML=msgs.length?`Message ${msgs.length} of 12. Click your guess.`:'Click the map to receive the first message.'; }
+  }
+  function hit(ev){ const r=cv.getBoundingClientRect(); return [(ev.clientX-r.left)/r.width,(ev.clientY-r.top)/r.height]; }
+  cv.addEventListener('click',ev=>{ if(done) return; const p=hit(ev);
+    if(role==='teach'){ let hi=-1; L.forEach((l,i)=>{ if(dist(l,p)<0.05) hi=i; }); if(hi<0) return; if(sel===null){sel=hi;} else if(sel!==hi){ send(sel,hi); sel=null; } draw(); }
+    else { if(msgs.length===0){ const b=bestPair(LO); send(b[0],b[1]); draw(); return; } guesses.push(p); if(msgs.length>=12){ done=true; } else { const b=bestPair(LO); send(b[0],b[1]); } draw(); }
+  });
+  document.getElementById('t-check').addEventListener('click',()=>{ if(msgs.length){ done=true; draw(); } });
+  document.getElementById('t-peek').addEventListener('click',()=>{ peek=!peek; draw(); });
+  document.getElementById('t-e').addEventListener('input',e=>{ amp=+e.target.value; document.getElementById('t-e-v').textContent=amp.toFixed(2); reset(); });
+  document.getElementById('t-teach').addEventListener('click',()=>{ role='teach'; document.getElementById('t-teach').setAttribute('aria-pressed','true'); document.getElementById('t-learn').setAttribute('aria-pressed','false'); reset(); });
+  document.getElementById('t-learn').addEventListener('click',()=>{ role='learn'; document.getElementById('t-learn').setAttribute('aria-pressed','true'); document.getElementById('t-teach').setAttribute('aria-pressed','false'); reset(); });
+  document.getElementById('t-new').addEventListener('click',reset);
+  reset();
+})();
+</script>
