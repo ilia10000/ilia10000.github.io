@@ -236,7 +236,8 @@ body::before {
 /* ---- Beta banner (link to the v2 preview) ---------------------------- */
 
 .aitp-beta-banner {
-  margin: -1em -1em 1em -1em;
+  // font-size below shrinks em margins; 1.111em = 1em of the parent
+  margin: -1.111em -1.111em 1.111em -1.111em;
   padding: 0.7em 1.2em;
   background: rgba($aitp-accent, 0.08);
   border: 1px solid $aitp-rule;
