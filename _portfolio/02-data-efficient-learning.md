@@ -7,7 +7,7 @@ header:
 ---
 
 <figure class="thrust-figure">
-  <img src="/images/research/fslspace_gadi_square.jpg" alt="Two-axis log-log plot of number of categories versus number of training examples; LO-shot, few-shot, and many-shot regimes shaded; lab contributions plotted in the upper-left wedge; MNIST, CIFAR, ImageNet, BabyLM, GPT-2/3, LLaMA 2/3 plotted for scale." loading="lazy" decoding="async" />
+  <img src="/images/research/fslspace_web.jpg" alt="Two-axis log-log plot of number of categories versus number of training examples; LO-shot, few-shot, and many-shot regimes shaded; lab contributions plotted in the upper-left wedge; MNIST, CIFAR, ImageNet, BabyLM, GPT-2/3, LLaMA 2/3 plotted for scale." loading="lazy" decoding="async" />
   <figcaption>The few-shot landscape. We work in the upper-left wedge, where a learner extracts more categories from a dataset than there are examples in it.</figcaption>
 </figure>
 
