@@ -49,6 +49,13 @@
   .open h1{font-size:var(--s5);line-height:1.08}
   .open .lede{font-size:var(--s2);line-height:1.4;color:var(--ink-2);margin:var(--u3) 0 0}
 
+  /* lab photos */
+  .photo img{background:none!important;padding:0!important}
+  .team-photo{margin:0 0 var(--u4)}
+  .life-row{display:flex;gap:var(--u2);margin-bottom:var(--u2)}
+  .life-row figure{min-width:0}
+  @media (max-width:600px){ .life-row{flex-direction:column} .life-row figure{flex:none!important} }
+
   /* principal investigator */
   .pi{display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:var(--u4);align-items:start;padding:var(--u4) 0 var(--u3);border-top:2px solid var(--edge)}
   .pi img{width:200px;height:200px;object-fit:cover;display:block}
@@ -117,6 +124,8 @@
     <h1>People</h1>
     <p class="lede">The AI Thought Partner Lab is in the Department of Computer Science at Purdue University and opened in August 2026. Its members work in West Lafayette, Indiana, and in New York.</p>
   </div>
+
+  <figure class="photo team-photo"><img src="assets/web/people/social/group_pumpkin_patch_2026-10.jpg" width="1800" height="1013" alt="Lab members holding pumpkins in a field at sunset"></figure>
 
   <section class="pi" id="pi">
     <img src="assets/web/people/profile.jpeg" width="200" height="200" alt="">
@@ -479,6 +488,12 @@
   <section class="group" id="network">
     <h2>Collaborator network</h2>
     <p class="names">Adrian Weller, Pol van Rijn, Kerem Oktar, Harin Lee, Andi Peng, Theodore R. Sumers, Olga Russakovsky, <a href="https://zhaobn.github.io/index.html">Bonan Zhao</a>.</p>
+  </section>
+
+  <section class="group" id="lab-life">
+    <h2>Lab life</h2>
+    <div class="life-row"><figure class="photo" style="flex:1.333 1 0"><img src="assets/web/people/social/lab_dinner_2026-10.jpg" width="1000" height="750" loading="lazy" alt="Lab members around a dinner table"></figure><figure class="photo" style="flex:2.222 1 0"><img src="assets/web/people/social/campfire_2026-10.jpg" width="1400" height="630" loading="lazy" alt="Lab members toasting marshmallows around a campfire"></figure></div>
+    <div class="life-row"><figure class="photo" style="flex:2.222 1 0"><img src="assets/web/people/social/corn_maze_2026-10.jpg" width="1400" height="630" loading="lazy" alt="Lab members posing with cardboard cutouts in front of a corn maze"></figure><figure class="photo" style="flex:1.333 1 0"><img src="assets/web/people/social/maze_maps_2026-10.jpg" width="1000" height="750" loading="lazy" alt="Silhouettes holding up maze maps against the evening sky"></figure></div>
   </section>
 
   <footer>
