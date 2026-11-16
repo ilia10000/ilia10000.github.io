@@ -54,7 +54,8 @@
   :root[data-theme="dark"] .open .cta{color:#10141F}
   @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .open .cta{color:#10141F} }
 
-  .open .who-line{color:var(--ink-2);margin:calc(-1 * var(--u1)) 0 var(--u3);max-width:62ch}
+  .open .who-line{color:var(--ink-2);margin:var(--u3) 0 var(--u4);max-width:62ch;font-size:16px}
+  .open .who-line a{color:inherit;text-underline-offset:3px}
   .part .lead.tight{margin-bottom:var(--u2)}
   .part .body{margin-bottom:var(--u4)}
   .prow .role{font-size:14px;color:var(--ink-2)}
@@ -235,9 +236,7 @@
   <div class="open">
     <h1>AI that thinks with people rather than instead of them.</h1>
     <p class="lede">We build AI cognitive scientists: systems that study how people and AI think, fast enough to keep up with AI itself.</p>
-    <p class="who-line">Ilia Sucholutsky, Assistant Professor of Computer Science at Purdue, directs the lab.</p>
-    <a class="cta" href="#program">Our research</a>
-    <p class="recruit">Recruiting PhD students for Fall 2027. Applications due December 1. <a class="learn" href="join.html">Join the lab</a></p>
+    <p class="who-line">Directed by Ilia Sucholutsky, Assistant Professor of Computer Science at Purdue. <a href="join.html">We are recruiting PhD students for Fall 2027.</a></p>
     <figure class="herofig">
       <img src="assets/web/thought_partners.jpg" width="1000" height="295" alt="Three diagrams. Humans as thought partners: Alice and Bob each hold beliefs about the other and about the world, and produce a product of thought together. Machines as tools: Alice holds beliefs about the machine and the world; the machine only receives. Machines as thought partners: the machine also holds beliefs about Alice.">
       <figcaption><b>From tools to thought partners.</b> Two people hold beliefs about each other and about the world. A tool holds no beliefs of its own. An AI thought partner also holds beliefs about the person. From <a href="https://www.nature.com/articles/s41562-024-01991-9"><i>Building machines that learn and think with people</i></a>, Nature Human Behaviour, 2024.</figcaption>
