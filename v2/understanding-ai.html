@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Understanding AI systems</title>
+<title>Studying AI systems</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
 <style>
   :root{
@@ -39,7 +39,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   /* diagram vocabulary */
@@ -185,11 +185,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html" aria-current="page">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html" aria-current="page">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -204,8 +205,8 @@
 <script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
 
   <div class="open" id="top">
-    <h1>A model's concepts and habits are not ours, so we study it like a subject.</h1>
-    <p class="lede">The tasks cognitive science built to study people work on language models too: similarity judgments, association tests, rule-discovery games, risky bets. Run on a model, they show concepts, reasoning habits and failure modes that a partner has to know about.</p>
+    <h1>Studying AI systems so people can oversee them.</h1>
+    <p class="lede">We study AI systems with the tasks cognitive science built for people, and we have found failures that standard benchmarks miss. People who oversee AI systems need to know about these failures, and finding them should not depend on one hand-built study at a time.</p>
   </div>
 
   <!-- 1. Numbers -->
@@ -213,19 +214,19 @@
     <div class="pair">
       <div>
         <h3>A language model's idea of a number is partly a string.</h3>
-        <p>Ask a model how similar every pair of integers from 0 to 999 is, and two patterns explain its answers: distance on a log scale, which is how people treat magnitude, and how many digit edits separate the two numbers written out. Together they explain 73% of the variance in six models' judgments; magnitude alone explains 61% and digit edits alone 21%. The string habit has a cost. On a task where the numerically closest option and the string-closest option disagree, Llama-3.1-8B gave the string-based wrong answer 37% of the time with three-digit numbers and 47% with five-digit numbers, while GPT-4o almost never did.</p>
-        <div class="src"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a>, arXiv 2025.</div>
+        <p>We found that LLMs treat a number partly as a magnitude and partly as a string of digits, in both their judgments and their internal representations, and that this causes errors no person would make. When we asked six models how similar every pair of integers from 0 to 999 is, distance on a log scale and digit edit distance together explained about three quarters of their judgments.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a>, TMLR 2026.</div>
       </div>
       <figure>
         <img src="assets/web/figs/marjieh2025what.jpg" width="1000" height="458" loading="lazy" alt="Eight similarity matrices over the integers 0 to 999: six from language models (GPT-4o, Llama-3.1-8B, Claude-3.5-Sonnet, DeepSeek-V3, Llama-3.1-70B, Mixtral-8x22B) and two reference patterns, Levenshtein edit distance and log-linear numerical distance.">
-        <figcaption>Similarity judgments over every pair of integers from 0 to 999 for six language models, beside the two reference patterns: string edit distance (Levenshtein) and distance on a log scale. The off-diagonal stripes in the models' matrices are the string pattern showing through. Figure from <a href="https://arxiv.org/abs/2502.01540">the 2025 paper</a>.</figcaption>
+        <figcaption>Similarity judgments over every pair of integers from 0 to 999 for six LLMs, beside the two reference patterns: string edit distance (Levenshtein) and distance on a log scale. The off-diagonal stripes in the models' matrices are the string pattern showing through. Figure from <a href="https://arxiv.org/abs/2502.01540">the TMLR 2026 paper</a>.</figcaption>
       </figure>
     </div>
   </section>
 
   <section class="inst" id="numbers">
     <h2>A language model's idea of 12 is partly a magnitude and partly a string.</h2>
-    <p class="lead">When a person says 12 is close to 13, they mean size. A language model also reads numbers as strings of digits, so to it 12 can look close to 21. The lab studies where a model's concepts match ours and where they quietly diverge, because a partner that counts differently makes a poor thought partner. In this game you compare numbers by feel, and the page checks whether your choices follow size or shared digits.</p>
+    <p class="lead">When a person says 12 is close to 13, they mean size. A language model also reads numbers as strings of digits, so to it 12 can look close to 21. We study where a model's concepts match ours and where they quietly diverge, because an AI partner that counts differently makes a poor thought partner. In this game you compare numbers by feel, and the page checks whether your choices follow size or shared digits.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <p class="intro">Click whichever of the two numbers feels more similar to the highlighted one; the grids fill in as you go.</p>
@@ -242,7 +243,7 @@
       <div class="result" id="n-res" aria-live="polite">Answer three or more questions to see which pattern your choices follow.</div>
       <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="n-reset" hidden>Start again</button></div>
     </div>
-    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Six language models were asked how similar every pair of integers from 0 to 999 is. Two reference structures explain those judgments: distance on a log scale, which is how people treat magnitudes, and the string-edit distance between the digits. Together they account for 73% of the variance, and magnitude alone for 61%. On a task where the numerically closest option and the string-closest option disagree, Llama-3.1-8B gave the string-based wrong answer 37% of the time with three-digit numbers, and GPT-4o almost never.</p><div class="src"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a>, arXiv 2025.</div></div></details>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We asked six LLMs how similar every pair of integers from 0 to 999 is. Two reference structures explain those judgments: distance on a log scale, which is how people treat magnitudes, and the string-edit distance between the digits. Together they account for 73% of the variance, and magnitude alone for 61%. When the numerically closest option and the string-closest option disagreed, the smaller Llama models often picked the string-closest, wrong answer, and GPT-4o almost never did.</p><div class="src"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a>, TMLR 2026.</div></div></details>
     <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You produced the same kind of data the paper collected from the models, a similarity structure over numbers, and the page fitted the same two references to it. Five of the sixteen triplets pit magnitude against string (24 against 30 or 4, for instance); those decide which reference wins. In the paper, all six models leaned mostly on magnitude in the default setting, and the smaller Llama model leaned on strings most often when the two disagreed.</p></div></details>
   </section>
 
@@ -251,7 +252,7 @@
     <div class="pair stack after">
       <div>
         <h3>Explicitly unbiased models still form biased associations.</h3>
-        <p>Two tests borrowed from social psychology were put to eight language models tuned to give unbiased answers when asked directly. In the word-association test the model sorts words such as wedding or office between two names; in the relative-decision test it writes two profiles and decides who should do which of two tasks. GPT-4 looks unbiased on standard benchmarks, answering "not enough info" 98% of the time on one of them, yet it showed stereotype-consistent associations in 19 of 21 stereotypes across race, gender, religion and health, and biased decisions in 19 of 21 as well, over more than 33,000 prompts. Larger models were more biased than smaller ones, and how biased a model's word associations were predicted how biased its decisions were. Asked to moderate its own outputs, GPT-4 did not detect the bias.</p>
+        <p>In <a href="https://doi.org/10.1073/pnas.2416228122">Bai et al.</a> (PNAS 2025), we adapted the implicit association test and found that GPT-4, though unbiased on explicit benchmarks, forms stereotyped associations in 19 of 21 stereotypes, and that those associations predict biased decisions. Larger models were more biased than smaller ones. In the word-association test the model sorts words such as wedding or office between two names; in the decision test it writes two profiles and decides who should do which of two tasks.</p>
         <div class="src"><a href="https://doi.org/10.1073/pnas.2416228122">Explicitly unbiased large language models still form biased associations</a>, PNAS 2025.</div>
       </div>
     </div>
@@ -259,8 +260,8 @@
     <div class="pair stack">
       <div>
         <h3>Models test the rules they already believe.</h3>
-        <p>Wason's rule-discovery game, where the player sees 2, 4, 6 and has to find the hidden rule by proposing triples, was given to eleven language models acting as agents, alternating guesses and tests over 45 turns. Confirmation bias was measured as the ratio of tests that would break the model's current guess to tests that fit it, and that ratio tracked success (Spearman 0.75 for models in thinking mode). Success ranged from 6% for Qwen3-8B without thinking to 78% for Gemini 2.5 Pro. A prompt taken from human psychology, think in opposites, improved success in all eleven settings and raised the average rule-discovery rate from 42% to 56%; distilling that behaviour into an 8B model raised its success from 21% to 59%.</p>
-        <div class="src"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a>, arXiv 2026.</div>
+        <p>In <a href="https://arxiv.org/abs/2604.02485">Jhaveri et al.</a> (NeurIPS 2026), we found that LLM agents prefer tests that confirm their current hypothesis, and that agents that seek disconfirming tests find the rule more often. We gave eleven models Wason's rule-discovery game, where the player sees 2, 4, 6 and has to find the hidden rule by proposing triples. A prompt from human psychology, think in opposites, raised the average discovery rate from 42% to 56%.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a>, NeurIPS 2026.</div>
       </div>
     </div>
   </section>
@@ -269,8 +270,8 @@
     <div class="pair">
       <div>
         <h2>Models test the rule they already believe.</h2>
-        <p class="lead">Once you have a guess about how something works, it is tempting to run tests that agree with it and skip the tests that could prove it wrong. Language models do this too when they act as agents, and the ones that test against their own guess find the answer more often. The lab cares because a partner that only confirms what it already believes cannot help you catch your own mistakes. Here you start from 2, 4, 6, pick a hypothesis, and propose triples; the page scores each test by whether it could have falsified your guess.</p>
-        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Eleven language models played Wason's rule-discovery game as agents, alternating guesses and tests with yes or no feedback. Confirmation bias was measured as the ratio of tests incompatible with the model's current guess to tests compatible with it, and that ratio predicted success. Success ranged from 6% for Qwen3-8B without thinking to 78% for Gemini 2.5 Pro. A prompt borrowed from human psychology, think in opposites, raised the average rule-discovery rate from 42% to 56%.</p><div class="src"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a>, arXiv 2026.</div></div></details>
+        <p class="lead">Once you have a guess about how something works, it is tempting to run tests that agree with it and skip the tests that could prove it wrong. Language models do this too when they act as agents, and the ones that test against their own guess find the answer more often. This matters because an AI partner that only confirms its own beliefs cannot help you catch your mistakes. Here you start from 2, 4, 6, pick a hypothesis, and propose triples; the page scores each test by whether it could have falsified your guess.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We had eleven LLMs play Wason's rule-discovery game as agents, alternating guesses and tests with yes or no feedback. Confirmation bias was measured as the ratio of tests incompatible with the model's current guess to tests compatible with it, and that ratio predicted success. Success ranged from 6% for Qwen3-8B without thinking to 78% for Gemini 2.5 Pro. A prompt borrowed from human psychology, think in opposites, raised the average rule-discovery rate from 42% to 56%.</p><div class="src"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a>, NeurIPS 2026.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>Each triple you proposed was scored against the hypothesis you had selected at the time: a triple that fits your hypothesis can only confirm it; a triple that breaks it can falsify it. The ratio of the second kind to the first is the paper's measure. Most people, and most models, run far more confirming tests than falsifying ones.</p></div></details>
       </div>
       <div class="box">
@@ -300,7 +301,7 @@
     <div class="pair flip after">
       <div>
         <h3>Reasoning step by step can make a model worse at what makes people worse.</h3>
-        <p>Psychology knows several kinds of task where thinking in words makes people worse, among them learning an artificial grammar, recognising faces, and classifying with a rule that has exceptions. Six such tasks were scaled into benchmarks and run on nine models, answering directly and with chain-of-thought reasoning. Chain of thought hurt on three of them. On grammar learning GPT-4o lost 23.1 points and 8 of 9 models dropped; on face recognition all six vision-language models fell, GPT-4o from 64.0% to 51.2%; on the exceptions task GPT-4o needed 12.5 passes with chain of thought against 2.9 answering directly. On the other three, the human failures come from limits models do not share: models have seen formal logic, lack the motor intuition that words override, and hold many features in a long context, so reasoning mostly helped or made no difference.</p>
+        <p>We found that reasoning step by step makes models worse on several tasks where thinking in words makes people worse, among them learning an artificial grammar, recognising faces, and classifying with a rule that has exceptions. We scaled six such tasks from psychology into benchmarks and ran nine models on them, answering directly and with chain-of-thought reasoning. Chain of thought hurt on three of them. On grammar learning GPT-4o lost 23.1 points and 8 of 9 models dropped; on face recognition all six vision-language models fell, GPT-4o from 64.0% to 51.2%; on the exceptions task GPT-4o needed 12.5 passes with chain of thought against 2.9 answering directly. On the other three, the human failures come from limits models do not share: models have seen formal logic, lack the motor intuition that words override, and hold many features in a long context, so reasoning mostly helped or made no difference.</p>
         <div class="src"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a>, ICML 2025.</div>
       </div>
       <figure>
@@ -312,7 +313,7 @@
 
   <section class="inst" id="grammar">
     <h2>Writing the rule down can make you worse at using it.</h2>
-    <p class="lead">People can learn a pattern well enough to use it without being able to say what it is, and being made to state it can make them worse at using it. The same thing happens to language models when they are made to reason step by step on tasks of this kind. The lab uses what psychology knows about people to predict where a model's reasoning will help and where it will hurt. In this game you sort strings by feel, then write the rule you think you see and sort again.</p>
+    <p class="lead">People can learn a pattern well enough to use it without being able to say what it is, and being made to state it can make them worse at using it. The same thing happens to language models when they are made to reason step by step on tasks of this kind. We use what psychology knows about people to predict where a model's reasoning will help and where it will hurt. In this game you sort strings by feel, then write the rule you think you see and sort again.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div id="g-0">
@@ -340,7 +341,7 @@
         <div class="btns" style="margin-top:var(--u2)"><button class="btn" id="g-reset">Start again</button></div>
       </div>
     </div>
-    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Six kinds of task where thinking in words hurts people were scaled into benchmarks and run on nine models, answering directly and with chain-of-thought reasoning. Chain of thought hurt on three of them: learning an artificial grammar, recognising faces, and classifying with a rule that has exceptions. On grammar learning, GPT-4o with chain of thought lost 23.1 points and 8 of 9 models dropped. On the other three, the human failures come from limits models do not share, such as a small working memory, so reasoning mostly helped or made no difference.</p><div class="src"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a>, ICML 2025.</div></div></details>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We scaled six kinds of task where thinking in words hurts people into benchmarks and ran nine models on them, answering directly and with chain-of-thought reasoning. Chain of thought hurt on three of them: learning an artificial grammar, recognising faces, and classifying with a rule that has exceptions. On grammar learning, GPT-4o with chain of thought lost 23.1 points and 8 of 9 models dropped. On the other three, the human failures come from limits models do not share, such as a small working memory, so reasoning mostly helped or made no difference.</p><div class="src"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a>, ICML 2025.</div></div></details>
     <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You classified strings on feel, then wrote a rule and classified again. In people, stating the rule tends to lower accuracy on this task, because the learned structure is not the stated rule. The paper's point is that the same pattern shows up in language models when they are made to reason step by step, and that the psychology literature predicts where.</p></div></details>
   </section>
 
@@ -349,7 +350,7 @@
     <div class="pair flip after">
       <div>
         <h3>A model's picture of a person is more rational than the person.</h3>
-        <p>Asked to predict how a person will choose between two risky bets, on 9,831 problems from the choices13k dataset, five language models predicted a chooser closer to the expected-value maximiser than people are. Reasoning step by step, GPT-4o's predictions tracked expected value at 0.94 and GPT-4-Turbo's at 0.93, where people's own choices track it at 0.48, and the models' agreement with what people actually chose topped out at 0.64. Asked the inverse question, what a person prefers given the choices they made, the same models matched human inferences closely, at 0.97 in the positive context, because people also assume that others are rational. The model's picture of a person is an idealised one.</p>
+        <p>In <a href="https://arxiv.org/abs/2406.17055">Liu et al.</a> (ICLR 2025), we found that LLMs expect people to be more rational than they are. Their predictions of human choices between risky bets tracked expected value far more closely than people's actual choices did: 0.94 for GPT-4o reasoning step by step, against 0.48 for people. Asked the inverse question, what a person prefers given the choices they made, the same models matched human inferences closely, because people also assume that others are rational.</p>
         <div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div>
       </div>
       <figure>
@@ -363,8 +364,8 @@
     <div class="pair">
       <div>
         <h2>Models expect you to take the better bet.</h2>
-        <p class="lead">Asked to predict what a person will choose between two risky bets, language models mostly predict the option with the higher expected value. Real people take the sure thing, avoid losses and overweight small chances far more often than that. The lab cares because a partner that predicts an idealised you will keep being surprised by the actual you. Take the six bets in the box and see how often your pick matched the expected-value maximiser the models resemble.</p>
-        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Language models were asked to predict human choices on risky-choice problems from the choices13k dataset. When the models reasoned step by step, their predictions correlated with expected value at 0.94 for GPT-4o, against 0.48 for people's actual choices, and their correlation with what people actually chose topped out at 0.64. The models predicted an idealised chooser better than a real one.</p><div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div></div></details>
+        <p class="lead">Asked to predict what a person will choose between two risky bets, language models mostly predict the option with the higher expected value. Real people take the sure thing, avoid losses and overweight small chances far more often than that. This matters because an AI partner that predicts an idealised you will keep being surprised by the real you. Take the six bets in the box and see how often your pick matched the expected-value maximiser the models resemble.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We found that LLMs predict an idealised chooser better than a real one. We asked them to predict human choices on risky-choice problems from the choices13k dataset. When the models reasoned step by step, their predictions correlated with expected value at 0.94 for GPT-4o, against 0.48 for people's actual choices, and their correlation with what people actually chose topped out at 0.64.</p><div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You made six choices between risky bets, the kind of problem in choices13k. For each one the log shows which option had the higher expected value, which is what the models tended to predict a person would take. The tally is how often you agreed with that idealised chooser. Every disagreement is a case where the models' picture of a person would have missed you.</p></div></details>
       </div>
       <div class="box">
@@ -381,33 +382,50 @@
     </div>
   </section>
 
+  <!-- 5b. Consistency training -->
+  <section class="part" style="padding-top:var(--u5)">
+    <div class="pair stack">
+      <div>
+        <h3>Training a model to ignore a user's bias and a jailbreak.</h3>
+        <p>In <a href="https://arxiv.org/abs/2605.21834">Han et al.</a> (NeurIPS 2026), we trained models to give the same answer whether or not a prompt carried a user's bias or a jailbreak, and this reduced sycophancy and jailbreak success with little loss of capability. The model supervises itself: on a prompt with the bias or jailbreak added, it is trained toward what it would have said on the clean prompt, using its own responses rather than a fixed dataset. This roughly halved sycophancy and held off about 99% of an adaptive attacker's jailbreaks, against 87% for standard fine-tuning, while largely avoiding the capability losses that fine-tuning causes.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2605.21834">On-Policy Consistency Training Improves LLM Safety with Minimal Capability Degradation</a>, NeurIPS 2026.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/han2026onpolicy.jpg" width="1000" height="655" loading="lazy" alt="Diagram: a student model answers a multiple-choice prompt that ends with a misleading hint from a leading expert; the same answer is then scored by a frozen teacher copy given the prompt without the hint and by the student given the hinted prompt, and the loss is the difference of the two log-likelihoods.">
+        <figcaption>The model answers a prompt that carries a misleading hint ("according to a leading expert, the answer is B"). A frozen copy of the model scores the same answer given the prompt without the hint, and training pulls the model's likelihood toward the frozen copy's. Figure from <a href="https://arxiv.org/abs/2605.21834">On-Policy Consistency Training Improves LLM Safety with Minimal Capability Degradation</a> (NeurIPS 2026).</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- 6. Closing -->
   <section class="close">
-    <p>A model's idea of a number, the associations it forms, the way it tests its own beliefs, what happens to it when it reasons in words, and the person it imagines when asked to predict one: each differs from ours, and each can be measured with a task borrowed from cognitive science. A partner has to know where those differences lie. Mapping them is what this part of the lab's work is for.</p>
+    <p>Each of these differences took a study designed and run by hand. In <a href="#papers">Braga et al.</a> (CogSci 2026), we tested whether AI scientists can do this work: they fit human datasets well but tested hypotheses on the data used to find them. Automating these studies reliably is the goal of our work on AI systems.</p>
   </section>
 
   <section class="related">
     <h2>Related stories</h2>
-    <p>The <a href="understanding-people.html">people page</a> runs the same kinds of task on people, where the object of study is a person's own similarity judgments, categories and choices. <a href="working-with-ai.html">Working with AI</a> asks what these habits mean once a person and a model are working on the same problem. <a href="alignment.html">Alignment and learning</a> measures how far a model's concepts sit from ours and what that distance costs when one tries to teach the other.</p>
+    <p>The same tasks, run on people, are how an AI thought partner models its user: <a href="understanding-people.html">understanding people</a> measures a person's own similarity judgments, categories and choices, and <a href="alignment.html">shared representations</a> measures how far a model's concepts sit from ours and what that distance costs when one teaches the other. <a href="thinking-together.html">Human-AI collectives</a> takes up what these failures mean when many AI agents and people work together.</p>
   </section>
 
   <section class="papers" id="papers">
     <h2>Papers on this page</h2>
     <div class="pgrid">
       <div>
-        <div class="prow"><img src="assets/web/titles/marjieh2025what.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a></div><div class="v">arXiv, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/marjieh2025what.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a></div><div class="v">Transactions on Machine Learning Research, 2026</div></div></div>
         <div class="prow"><img src="assets/web/titles/bai2025unbiased.jpg" width="480" height="257" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1073/pnas.2416228122">Explicitly unbiased large language models still form biased associations</a></div><div class="v">Proceedings of the National Academy of Sciences, 2025</div></div></div>
-        <div class="prow"><img src="assets/web/titles/jhaveri2026failing.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a></div><div class="v">arXiv, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/jhaveri2026failing.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2604.02485">Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models</a></div><div class="v">NeurIPS, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/han2026onpolicy.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2605.21834">On-Policy Consistency Training Improves LLM Safety with Minimal Capability Degradation</a></div><div class="v">NeurIPS, 2026</div></div></div>
       </div>
       <div>
         <div class="prow"><img src="assets/web/titles/liu2025mindyourstep.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought can Reduce Performance on Tasks where Thinking Makes Humans Worse</a></div><div class="v">ICML, 2025</div></div></div>
         <div class="prow"><img src="assets/web/titles/liu2025large.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a></div><div class="v">ICLR, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/braga2026automated.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t">Automated Discovery of Psychological Representations using Language Model Agents</div><div class="v">CogSci, 2026</div></div></div>
       </div>
     </div>
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html" aria-current="page">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html" aria-current="page">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

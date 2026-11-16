@@ -40,7 +40,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   /* diagram vocabulary */
@@ -241,11 +241,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html" aria-current="page">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html" aria-current="page">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -260,8 +261,8 @@
 <script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
 
   <div class="open" id="top">
-    <h1>A partner needs an accurate model of <span class="node k">the person</span>.</h1>
-    <p class="lede">People do not represent, perceive, choose or judge the way idealised agents do. A system can reproduce a person's answers without recovering the concepts and preferences behind them, so we measure what a particular person actually represents. Each task here takes one of those measurements on you.</p>
+    <h1>An AI partner needs an accurate model of <span class="node k">the person</span>.</h1>
+    <p class="lede">An AI thought partner that teaches or advises a person needs a model of that person. People do not represent, perceive, choose or judge the way idealised agents do, and a system can reproduce a person's answers without recovering the concepts and preferences behind them, so we measure what a particular person actually represents.</p>
   </div>
 
   <!-- 1. Colour triplets -->
@@ -269,8 +270,8 @@
     <div class="pair">
       <div>
         <h2>How do you represent colour?</h2>
-        <p class="lead">We measure how a mind represents things by asking about similarity: which of two items is closer to a third. Sixteen of those questions are enough for a structure to appear, and that structure, rather than any single answer, is the first thing a partner needs to know about a person. The same question can be put to a language model with the paper's prompt. Answer the sixteen in the box and your similarity matrix over eight colours fills in beside Claude Fable 5.1's.</p>
-        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>The paper put pairwise similarity questions to GPT-3, GPT-3.5 and GPT-4 for six kinds of sensory stimuli, pitch, loudness, colour, vocal consonants, taste and timbre, and compared the answers with human judgments. GPT-4's correlations with people were r = .92 for pitch, .89 for loudness and .84 for colours, and lower for consonants (.57), taste (.54) and timbre (.42). Multidimensional scaling of the model's judgments recovers the colour wheel and the pitch helix with its octave peaks. GPT-4's gain over the earlier models was about the same size in every modality, so multimodal training is not what drives it.</p><div class="src"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a>, Scientific Reports 2024.</div></div></details>
+        <p class="lead">We measure how a mind represents things by asking about similarity: which of two items is closer to a third. Sixteen of those questions are enough for a structure to appear, and that structure, rather than any single answer, is the first thing an AI partner needs to know about a person. The same question can be put to a language model with the paper's prompt. Answer the sixteen in the box and your similarity matrix over eight colours fills in beside Claude Fable 5.1's.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We found that GPT-4's similarity judgments track people's closely for pitch, loudness and colour, and less closely for taste and timbre, from text alone. Its correlations with people were r = .92 for pitch, .89 for loudness and .84 for colours, and lower for consonants (.57), taste (.54) and timbre (.42). Multidimensional scaling of the model's judgments recovers the colour wheel and the pitch helix with its octave peaks.</p><div class="src"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a>, Scientific Reports 2024.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You answered sixteen triplet questions, which of two colours is closer to a reference. Each answer adds a count for the pair you chose, and the left matrix fills in as your similarity structure over eight colours. The right matrix holds Claude Fable 5.1's ratings for the same 28 pairs, collected with the paper's pairwise prompt, and the correlation between the two is one person's version of the paper's comparison, where GPT-4 reached r = .84 with people's colour judgments.</p></div></details>
       </div>
       <div class="box" id="cs-task">
@@ -294,7 +295,7 @@
     <div class="pair flip">
       <div>
         <h2>A sentence about each object predicts how similar people find them.</h2>
-        <p class="lead">Ask people to describe things in a few sentences, and the words they use already predict how similar they will say those things are. The paper tested this for images, sounds, and videos, comparing descriptions against hundreds of neural networks, and the descriptions came out ahead. That matters to us because language is the channel a person and an AI share, and this result says it carries much of what people mean by similar. You will describe four photos, rate how similar each pair is, and see whether your own words predicted your ratings.</p>
+        <p class="lead">Ask people to describe things in a few sentences, and the words they use already predict how similar they will say those things are. We tested this for images, sounds, and videos, comparing descriptions against hundreds of neural networks, and the descriptions came out ahead. That matters to us because language is the channel a person and an AI share, and this result says it carries much of what people mean by similar. You will describe four photos, rate how similar each pair is, and see whether your own words predicted your ratings.</p>
         <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Across five stimulus sets in three modalities (images, emotional-speech clips, and short videos), 1,492 participants rated pairwise similarity and wrote free descriptions of each stimulus. Similarity was then predicted from 611 pretrained neural networks, from language-model embeddings of the descriptions, and from plain word statistics over the descriptions. In every modality the ordering was the same: stacking language and network embeddings came closest to inter-rater reliability, language-based predictors came next, and network-based predictors last, with word-frequency methods competitive without any pretrained model. Because descriptions grow with the number of stimuli rather than the number of pairs, the method approximates 1,000 by 1,000 audio and video similarity matrices that would take about 2.5 million judgments to collect directly.</p><div class="src"><a href="https://arxiv.org/abs/2206.04105">Words are all you need? Language as an approximation for human similarity judgments</a>, ICLR 2023.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You produced both halves of the paper's comparison for four photos: the descriptions and the similarity judgments. The rank correlation between your six ratings and the word overlap of your six pairs of sentences is a one-person version of the paper's question, whether language about the things is enough to recover how similar people find them.</p></div></details>
       </div>
@@ -331,7 +332,7 @@
     <div class="pair">
       <div>
         <h2>How many colour words do you use, and where do you draw the lines?</h2>
-        <p class="lead">Every language cuts the colour spectrum into words, and the cuts differ: Italian keeps blu, azzurro, and celeste apart where English has blue. The paper collected colour names from speakers of 22 languages online, and asked GPT-4 for the same names, to see whether a shared internet is flattening those differences and whether the model knows them. We care because an AI that works with you needs to know where a word you both use means something slightly different to each of you. You will name thirty colour patches, one word each, and see how many terms you used and which patches share one.</p>
+        <p class="lead">Every language cuts the colour spectrum into words, and the cuts differ: Italian keeps blu, azzurro, and celeste apart where English has blue. We collected colour names from speakers of 22 languages online, and asked GPT-4 for the same names, to see whether a shared internet is flattening those differences and whether the model knows them. This matters because an AI partner needs to know where a word you both use means something slightly different to each of you. You will name thirty colour patches, one word each, and see how many terms you used and which patches share one.</p>
         <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>2,280 native speakers of 22 languages, recruited online and screened with a vocabulary test and an Ishihara test, freely named Munsell colour chips. Languages still differ in structure: Italian keeps blu, azzurro, and celeste apart, and Russian and Japanese split light blue from blue. Online speakers use more terms than the World Color Survey found, 8.54 against 5.71 per language, yet the two sets of counts track each other closely. Given the same prompt in each language, GPT-4 produces language-specific maps with more terms than people use, correlated with the human term counts across languages at r = .39, and reaches for lower-frequency words such as peach, maroon, and burgundy.</p><div class="src"><a href="https://escholarship.org/uc/item/4hs755zz">Studying the Effect of Globalization on Color Perception using Multilingual Online Recruitment and Large Language Models</a>, CogSci 2024.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You did the paper's task for 30 chips instead of 50: name each colour with one word, and let the names partition the chips. The paper compares those partitions across 22 languages and against GPT-4; this page has only your own, in one language, so the comparison here is between your term count and the paper's averages.</p></div></details>
       </div>
@@ -360,7 +361,7 @@
 
   <section class="inst" id="vocab">
     <h2>Twenty yes-or-no items are enough to see a vocabulary.</h2>
-    <p class="lead">How many words you know in a language is a good measure of how well you know it, and a short test of rare words mixed with invented look-alikes can measure it in a minute. The papers build such a test automatically for any language from its own texts, so that online studies across dozens of languages can check who speaks the language they claim to. What a person knows, starting with which words, is part of the model a partner needs, and our own experiments recruit across languages and need a fast screen that works the same everywhere. You will see twenty words, say yes or no to each, and get your score.</p>
+    <p class="lead">How many words you know in a language is a good measure of how well you know it, and a short test of rare words mixed with invented look-alikes can measure it in a minute. We build such a test automatically for any language from its own texts, so that online studies across dozens of languages can check who speaks the language they claim to. What a person knows, starting with which words, is part of the model an AI partner needs, and our own experiments recruit across languages and need a fast screen that works the same everywhere. You will see twenty words, say yes or no to each, and get your score.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div class="q">Real word or made up?</div>
@@ -383,7 +384,7 @@
     <div class="pair flip">
       <div>
         <h3>For risky choices, models predict ideals better than behaviour.</h3>
-        <p>Asked to predict human decisions, language models treated people as closer to rational expected-value maximisers than participants were. The same models more accurately matched how people inferred others' preferences. Reproducing expectations about behaviour is not the same as reproducing behaviour.</p>
+        <p>We found that LLMs predict an idealised chooser better than a real one. Asked to predict human decisions, they treated people as closer to rational expected-value maximisers than participants were, while they matched how people inferred others' preferences more accurately. Reproducing expectations about behaviour is different from reproducing behaviour.</p>
         <div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People Are More Rational Than We Really Are</a>, ICLR 2025.</div>
       </div>
       <figure>
@@ -397,8 +398,8 @@
     <div class="pair">
       <div>
         <h2>Would a language model predict your choice?</h2>
-        <p class="lead">People choosing between risky bets are not the expected-value maximisers that models tend to assume. Asked to predict what a person will choose, language models mostly predict the higher-payoff option, so their picture of the chooser is more rational than the person. A partner that wants to predict you needs the pattern in your actual choices. Take the six bets in the box and see how often your pick had the higher expected value.</p>
-        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>Language models were asked to predict human choices on risky-choice problems from the choices13k dataset. When the models reasoned step by step, their predictions correlated with expected value at 0.94 for GPT-4o, against 0.48 for people's actual choices, and their correlation with what people actually chose topped out at 0.64. The models predicted an idealised chooser better than a real one.</p><div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div></div></details>
+        <p class="lead">People choosing between risky bets are not the expected-value maximisers that models tend to assume. Asked to predict what a person will choose, language models mostly predict the higher-payoff option, so their picture of the chooser is more rational than the person. An AI partner that wants to predict you needs the pattern in your actual choices. Take the six bets in the box and see how often your pick had the higher expected value.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We found that LLMs predict an idealised chooser better than a real one. We asked them to predict human choices on risky-choice problems from the choices13k dataset. When the models reasoned step by step, their predictions correlated with expected value at 0.94 for GPT-4o, against 0.48 for people's actual choices, and their correlation with what people actually chose topped out at 0.64.</p><div class="src"><a href="https://arxiv.org/abs/2406.17055">Large Language Models Assume People are More Rational than We Really Are</a>, ICLR 2025.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You made six risky choices of the kind in choices13k. The paper's measure is how well a predictor's choice rates correlate with expected value and with real human choice rates; the tally compares your picks with the expected-value maximiser, which is what the models most resembled.</p></div></details>
       </div>
       <div class="box">
@@ -417,7 +418,7 @@
 
   <section class="inst" id="song">
     <h2>Say a sentence enough times and it starts to sound like song.</h2>
-    <p class="idea">Hear a short phrase repeated several times and it can start to sound like singing. Perception runs on statistics: repetition is common in song and rare in talk, so a listener who keeps track of those odds hears song once a phrase repeats enough. A partner that predicts what a person will perceive has to model those statistics, and this paper shows how far the statistics of text alone get you. You will hear a phrase once, rate it, then hear it ten times and rate it again.</p>
+    <p class="idea">Hear a short phrase repeated several times and it can start to sound like singing. Perception runs on statistics: repetition is common in song and rare in talk, so a listener who keeps track of those odds hears song once a phrase repeats enough. An AI partner that predicts what a person will perceive has to model those statistics, and we showed how far the statistics of text alone get you. You will hear a phrase once, rate it, then hear it ten times and rate it again.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div class="q">Speech or song?</div>
@@ -439,7 +440,7 @@
         <div class="result" id="sg-res" hidden></div>
       </div>
     </div>
-    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>The paper recasts the speech-to-song illusion as the log-odds of a repeated utterance under a model of song against a model of speech, with the two likelihoods estimated from repetition statistics in text corpora. Song corpora have heavier repetition tails, so the odds favour song after two repetitions and keep rising, and sentences differ: "I love you" transforms faster than "go away". The analysis predicts a text-only prose-to-lyrics illusion, and 120 UK participants confirmed it: the mean rating rose from .31 (speech-like) to .58 (song-like) with repetition. GPT-4's ratings of the same items correlated r = .64 with people's.</p><div class="src"><a href="https://arxiv.org/abs/2402.06992">A Rational Analysis of the Speech-to-Song Illusion</a>, CogSci 2024.</div></div></details>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>We recast the speech-to-song illusion as the log-odds of a repeated utterance under a model of song against a model of speech, with the two likelihoods estimated from repetition statistics in text corpora. Song corpora have heavier repetition tails, so the odds favour song after two repetitions and keep rising, and sentences differ: "I love you" transforms faster than "go away". The analysis predicts a text-only prose-to-lyrics illusion, and 120 UK participants confirmed it: the mean rating rose from .31 (speech-like) to .58 (song-like) with repetition. GPT-4's ratings of the same items correlated r = .64 with people's.</p><div class="src"><a href="https://arxiv.org/abs/2402.06992">A Rational Analysis of the Speech-to-Song Illusion</a>, CogSci 2024.</div></div></details>
     <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You rated the same utterance before and after repetition, the contrast the illusion turns on. In the paper's account, a listener weighs how likely that much repetition is under song against how likely it is under speech; because song corpora repeat far more, the odds tip toward song after only two repetitions and keep moving with each one. Your two ratings are one listener's version of the mean shift from .31 to .58.</p></div></details>
   </section>
 
@@ -461,7 +462,7 @@
     <div class="pair">
       <div>
         <h2>You cannot read a goal off a path without knowing what the walker knew.</h2>
-        <p class="lead">Watching someone act, we try to work out what they want. That inference goes wrong when the person understood their situation differently from us, because a detour that looks like a preference may only be a gap in their map. We care because an AI that helps people has to read their goals through what they know. Look at three trips by the same walker and say which square it wanted and whether it knew about the gap in the wall.</p>
+        <p class="lead">Watching someone act, we try to work out what they want. That inference goes wrong when the person understood their situation differently from us, because a detour that looks like a preference may only be a gap in their map. This matters because an AI partner has to read a person's goals through what that person knows. Look at three trips by the same walker and say which square it wanted and whether it knew about the gap in the wall.</p>
         <details class="more"><summary class="node b">What the paper found</summary><div class="body">Inverse reinforcement learning usually assumes the demonstrator sees the world as the observer does; the paper adds construals, so the observer infers the goal and the demonstrator's simplified model of the world jointly. In gridworlds with walls and notches, reward-only inference confidently picks the wrong goal when the demonstrator does not understand notches, while the joint model recovers the right goal. One hundred people judged the same twelve trajectories; they picked the correct goal in 99%, 70%, 98% and 98% of the four scenarios, and their judgments correlated with the joint model (r = .97) and not significantly with reward-only inference (r = .76).<div class="src"><a href="https://arxiv.org/abs/2310.20059">Concept alignment as a prerequisite for value alignment</a>, CogSci 2024.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body">You answered the two questions the paper's participants answered: which goal did the demonstrator want, and did it know about the notch. In the hard scenario the walker wants A but cannot see the way through, so from a start beside the notch it settles for B, and from a start near the bottom of the wall it walks round to A. An observer who assumes the walker shares its map reads the first trip as a preference for B. Asking what the walker knew turns the same three trips into one consistent story.</div></details>
       </div>
@@ -486,7 +487,7 @@
 
   <section class="related" id="related">
     <h2>Related stories</h2>
-    <p>The same tasks, run on a language model instead of a person, are the subject of <a href="understanding-ai.html">understanding AI systems</a>, which shows what a model's answers to these tasks reveal about its concepts and habits. The colour task returns on <a href="alignment.html">alignment and learning</a> as a measure of how far two agents agree about what is similar to what, which sets how much one can learn from the other. Once a system has a model of a person, how that person takes its advice is the subject of <a href="working-with-ai.html">working with AI</a>.</p>
+    <p>A model of the person is one half of an AI thought partner. The colour task returns on <a href="alignment.html">shared representations</a> as a measure of how far two agents agree about what is similar to what, which sets how much one can learn from the other, and <a href="working-with-ai.html">working with AI</a> measures what an AI partner's help does to the person who uses it. The same tasks, run on LLMs, are how we go about <a href="understanding-ai.html">studying AI systems</a>.</p>
   </section>
 
   <section class="papers" id="papers">
@@ -510,7 +511,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html" aria-current="page">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html" aria-current="page">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

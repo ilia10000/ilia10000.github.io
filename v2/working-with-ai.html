@@ -39,7 +39,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   /* diagram vocabulary */
@@ -212,11 +212,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html" aria-current="page">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html" aria-current="page">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -231,26 +232,26 @@
 <script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
 
   <div class="open" id="top">
-    <h1>The partnership is the thing to measure, not the person or the model alone.</h1>
-    <p class="lede">Whether AI help leaves someone more capable, how they take its advice, and what it costs them are properties of the pair. So the pair is what we measure: how help feels against what it does, how a person reads a partner's advice, and what passes between two partners who see the world differently.</p>
+    <h1>What AI help does to the person who uses it.</h1>
+    <p class="lede">Whether AI help leaves someone more capable, how they take its advice, and what it costs them depend on the person and the AI together. We measure how help feels against what it does, how a person reads an AI partner's advice, and what passes between a teacher and a student who see the world differently.</p>
   </div>
 
   <section class="part" style="padding-top:var(--u4)">
-    <h2>What we mean by a thought partner.</h2>
-    <p class="lead">A thought partner is a system that thinks with you rather than for you. In the 2024 paper that set out the idea, that takes three things: the system has a model of you, you can understand it, and the two of you share a model of the world. All three are properties of the pair; neither member has them alone.</p>
+    <h2>What we mean by an AI thought partner.</h2>
+    <p class="lead">In <a href="https://www.nature.com/articles/s41562-024-01991-9">Collins, Sucholutsky et al.</a> (2024), we argued that an AI thought partner needs a model of the person, behaviour the person can understand, and a shared model of the world. All three are properties of the pair; neither member has them alone.</p>
   </section>
   <figure class="fig" style="padding-top:0">
     <img src="assets/web/thought_partners.jpg" width="1000" height="295" alt="Three diagrams. Humans as thought partners: Alice and Bob each hold beliefs about the other and about the world, and produce a product of thought together. Machines as tools: Alice holds beliefs about the machine and the world; the machine only receives. Machines as thought partners: the machine also holds beliefs about Alice.">
-    <figcaption><b>Three ways to think with a machine.</b> Two people hold beliefs about each other and about the world. A machine used as a tool holds no beliefs of its own; the person holds beliefs about it and about the world. A machine that is a thought partner also holds beliefs about the person. From <a href="https://www.nature.com/articles/s41562-024-01991-9"><i>Building machines that learn and think with people</i></a>, Nature Human Behaviour, 2024.</figcaption>
+    <figcaption><b>Three ways to think with a machine.</b> Two people hold beliefs about each other and about the world. A tool holds no beliefs of its own. An AI thought partner also holds beliefs about the person. From <a href="https://www.nature.com/articles/s41562-024-01991-9"><i>Building machines that learn and think with people</i></a>, Nature Human Behaviour, 2024.</figcaption>
   </figure>
 
   <section class="part" id="evidence">
-    <h2>What thinking with a partner costs.</h2>
+    <h2>What thinking with an AI partner costs.</h2>
     <p class="lead">The first things to measure about a pair are what the help costs the person and whether that cost is visible to them. One paper lists the risks; another finds a gap between how the help feels and what the clock says.</p>
       <div class="pair stack">
         <div>
           <h3>Thought partnerships carry risks of their own.</h3>
-          <p>A 2026 commentary sorts the risks of thinking with an AI into real-time, individual and societal risks, each split by whether the partner is performing appropriately and whether it is being used appropriately. The six categories are illustrated with medical and policy examples: generic, context-insensitive deliberation, unclear credit for who contributed what, user manipulation, cognitive atrophy, systemic fragility, and homogeneity of thought. The paper proposes ways to check for each, including analysis of thinking traces to attribute contributions and periodic assessment of professionals with and without access to an AI partner, and mitigations such as protocols for when to delegate, training in critical judgment, logging, and preserving spaces where people deliberate with each other.</p>
+          <p>In <a href="https://dl.acm.org/doi/10.1145/3803024">Oktar, Collins et al.</a> (ACM AI Letters 2026), we mapped six risks of AI thought partnership, from manipulation to homogeneity of thought, and proposed ways to evaluate and mitigate them, such as periodically assessing professionals with and without access to an AI partner.</p>
           <div class="src"><a href="https://dl.acm.org/doi/10.1145/3803024">Identifying, evaluating, and mitigating risks of AI thought partnerships</a>, ACM AI Letters, 2026.</div>
         </div>
       </div>
@@ -258,7 +259,7 @@
       <div class="pair stack">
         <div>
           <h3>Help that feels faster than it is.</h3>
-          <p>In a pre-registered study, 1,237 people either predicted or completed 24 short tasks, working alone or with GPT-4o. People expected the AI to cut completion time by 68.5 seconds, against 17.1 seconds for a highly intelligent other participant. Actual AI-assisted time was 57.8 seconds longer than predicted, while predictions for working alone were accurate. The AI sped up only 3 of the 24 tasks, and on one logic task it made completion 111 seconds slower because its answer was verbose. Reported effort still fell by 0.61 points on the NASA-TLX scale, so the help felt lighter even when it was not faster.</p>
+          <p>We found that people expect AI to save them time, but in a pre-registered study of 1,237 people it sped up only 3 of 24 tasks. People expected the AI to cut completion time by 68.5 seconds, yet AI-assisted work took 57.8 seconds longer than they predicted, while their predictions for working alone were accurate. The work still felt easier with the AI, so the help felt lighter even when it was not faster.</p>
           <div class="src"><a href="#papers">Cognitive offloading and the speedup illusion in human-AI interaction</a>, CogSci 2026.</div>
         </div>
         <figure>
@@ -272,7 +273,7 @@
     <div class="pair flip">
       <div>
         <h2>Guess your time, then do two tasks.</h2>
-        <p class="lead">People expect an AI assistant to save them a lot of time. In a large study, working with one felt easier and took longer than people had predicted, while their predictions for working alone were on target. The lab studies gaps like this between how help feels and what it does, because that is where a thought partner can mislead. You will guess your time for two short tasks, do them, one alone and one with an assistant, and then compare your guess, your memory, and the clock.</p>
+        <p class="lead">People expect an AI assistant to save them a lot of time. In a large study, working with one felt easier and took longer than people had predicted, while their predictions for working alone were on target. We study gaps like this between how help feels and what it does, because that is where an AI partner can mislead. You will guess your time for two short tasks, do them, one alone and one with an assistant, and then compare your guess, your memory, and the clock.</p>
         <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>1,237 people either predicted or completed 24 short tasks, working alone or with GPT-4o. People expected the AI to cut completion time by 68.5 seconds; actual AI-assisted time was 57.8 seconds longer than predicted, while predictions for working alone were accurate. The AI sped up only 3 of the 24 tasks. Reported effort still fell with the AI, even though time did not.</p><div class="src"><a href="#papers">Cognitive offloading and the speedup illusion in human-AI interaction</a>, CogSci 2026.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You predicted, then did, then remembered two short tasks, one alone and one with an assistant that answers after a delay. The paper compares predicted to actual completion time under the same two conditions; the gap it reports is specific to the AI condition.</p></div></details>
       </div>
@@ -314,12 +315,12 @@
   </section>
 
   <section class="part" id="evidence-trust">
-    <h2>How a person reads the partner's advice.</h2>
-    <p class="lead">The second property of the pair is how the person judges what the partner says. One cue people use with each other, time spent thinking, means much less to them when the adviser is an AI.</p>
+    <h2>How a person reads an AI partner's advice.</h2>
+    <p class="lead">The second property of the pair is how the person judges what the AI partner says. One cue people use with each other, time spent thinking, means much less to them when the adviser is an AI.</p>
       <div class="pair">
         <div>
           <h3>Thinking longer earns trust for a person, much less for an AI.</h3>
-          <p>In a vignette study, two advisors think for different lengths of time and choose differently, and participants say whose decision they trust more. With human advisors, across all 27 scenarios, participants chose the one who had thought for longer 74.8% of the time, most strongly for financial and technical decisions and weakly or in reverse for low-stakes choices such as a party playlist. When the same scenarios described AI systems, the share fell to about 58%, close to chance, though it rose as the gap in thinking time grew. Independent of the size of that gap, people were 3.67 times more likely to choose the slower advisor when it was a person.</p>
+          <p>We found that people trust a person who thinks longer before deciding, but barely extend that trust to an AI that does the same. In scenarios where two advisors thought for different lengths of time and chose differently, participants chose the slower human advisor about three times in four, and the slower AI barely more often than chance.</p>
           <div class="src"><a href="#papers">Thinking time increases perceived trustworthiness of human but not AI advice</a>, CogSci 2026.</div>
         </div>
         <figure style="max-width:519px">
@@ -333,7 +334,7 @@
     <div class="pair flip">
       <div>
         <h2>Whose decision do you trust more?</h2>
-        <p class="lead">When a person takes longer to decide, we tend to read the extra time as care and trust the decision more. This study asked whether the same reading applies when the adviser is an AI system. We care because how people judge AI advice shapes when they take it, and this cue turns out to work differently for machines. In the box, four short scenes each show two advisers who thought for different lengths of time, people in two scenes and AI systems in the other two; pick the one you trust more.</p>
+        <p class="lead">When a person takes longer to decide, we tend to read the extra time as care and trust the decision more. This study asked whether the same reading applies when the adviser is an AI system. This matters because how people judge AI advice shapes when they take it. In the box, four short scenes each show two advisers who thought for different lengths of time, people in two scenes and AI systems in the other two; pick the one you trust more.</p>
         <details class="more b"><summary>What the paper found</summary>
           <p>Across all 27 of the paper's two-advisor scenarios, participants chose the advisor who had thought for longer 74.8% of the time when the advisors were people, and about 58% of the time when the same advisors were described as AI systems, which is close to chance. Independent of the size of the time gap, people were 3.67 times more likely to choose the slower advisor when it was human. Preference for the slower AI did rise as the time gap grew.</p>
           <div class="src"><a href="#papers">Thinking time increases perceived trustworthiness of human but not AI advice</a>, CogSci 2026.</div>
@@ -367,8 +368,8 @@
     <div class="pair">
       <div>
         <h2>Resisting bad advice is a separate skill from solving.</h2>
-        <p class="intro">A pair is only as good as the weaker of two skills, taking good advice and resisting bad advice. In this game the advisor is sometimes wrong on purpose. The paper behind it measures both skills in language models: how persuasive a model is as an advisor and how vigilant it is as the one being advised. You estimate the number of dots in a brief flash, read the advisor's number, and give a final answer, ten times, without being told which rounds are honest.</p>
-        <details class="more"><summary class="node b">What the paper found</summary><div class="body">Six frontier language models acted as agents on three realistic tasks built from real data: finding a safe game download among malware sites, picking the best deal among listings that include a real scam, and merging the code change that actually fixes a security flaw. A second model advised them at every step, prompted to help or to mislead. Misleading advice cut success by about 40 points on average, and a model's skill at the task did not predict how easily it was fooled. Asked directly, the models rated the bad advice as bad; they just did not check before acting. A vigilance harness that judges the advice separately and tracks how trustworthy the advisor has been recovered most of the loss, about twice as much as a plain warning.<div class="src"><a href="https://arxiv.org/abs/2602.21262">Under the influence: evaluating and improving LLM vigilance in agentic tasks</a>, 2026.</div></div></details>
+        <p class="intro">A pair is only as good as the weaker of two skills, taking good advice and resisting bad advice. In this game the advisor is sometimes wrong on purpose. The paper behind it measures how vigilant LLM agents are when another model advises them. You estimate the number of dots in a brief flash, read the advisor's number, and give a final answer, ten times, without being told which rounds are honest.</p>
+        <details class="more"><summary class="node b">What the paper found</summary><div class="body">We found that when a second model gave misleading advice, LLM agents' success fell by about 40 points. Asked directly, the agents rated the advice as bad, yet still acted on it. A vigilance harness that judges the advice separately and tracks how trustworthy the advisor has been recovered most of the loss, about twice as much as a plain warning.<div class="src"><a href="https://arxiv.org/abs/2602.21262">Under the influence: evaluating and improving LLM vigilance in agentic tasks</a>, 2026.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body">You made ten estimates with an advisor who was sometimes helping and sometimes misleading you, without being told which. The page scores you the way the paper scores a model: how often your answer landed close to the truth under each kind of advice, how far you moved toward the advice, and a vigilance score that rewards following good advice and ignoring bad advice.</div></details>
       </div>
       <div class="box adv">
@@ -432,13 +433,13 @@
   </section>
 
   <section class="now" id="now">
-    <p>The question in front of the lab now is whether a person is more capable after the partner is gone. The measure is performance on held-out tasks, done without the AI, after a period of working with it, rather than the quality of the pair's joint output.</p>
+    <p>Our next question is whether a person is more capable after the AI partner is gone. The measure is performance on held-out tasks, done without the AI, after a period of working with it, rather than the quality of the pair's joint output.</p>
     <p><a class="btn" href="join.html#now">What we are working on now</a></p>
   </section>
 
   <section class="related" id="related">
     <h2>Related stories</h2>
-    <p>The teaching game costs what it does because of how much the two maps share; <a href="alignment.html">alignment and learning</a> gives the theory behind that count and the fast learning it buys. The two members of the pair each have a page of their own: <a href="understanding-people.html">people</a>, on how a person represents a problem, and <a href="understanding-ai.html">AI systems</a>, on a model's concepts and habits. <a href="thinking-together.html">Thinking together</a> asks what happens when pairs like these compose into a group.</p>
+    <p>The teaching game costs what it does because of how much the two maps share; <a href="alignment.html">shared representations</a> gives the theory behind that count and the fast learning it buys. <a href="understanding-people.html">Understanding people</a> covers the other half of an AI thought partner, its model of the person. <a href="thinking-together.html">Human-AI collectives</a> asks what happens when pairs like these compose into a group.</p>
   </section>
 
   <section class="papers" id="papers">
@@ -458,7 +459,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html" aria-current="page">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html" aria-current="page">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

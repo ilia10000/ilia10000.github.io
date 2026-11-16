@@ -36,7 +36,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   figure{margin:0}
@@ -94,11 +94,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -122,7 +123,7 @@
     <div>
       <h2>Ilia Sucholutsky</h2>
       <span class="role">Assistant Professor, Computer Science, Purdue University</span>
-      <p>Ilia Sucholutsky is an Assistant Professor of Computer Science at Purdue University, where he leads the AI Thought Partner Lab in developing AI that thinks with people rather than instead of them. His research asks what a system must understand about individuals, pairs, and groups to be a good partner, using a combination of theory, simulation, and large-scale human-AI studies. He is also co-PI on the DARPA In the Moment program on algorithmic trust and previously held positions at NYU and Princeton.</p>
+      <p>Ilia Sucholutsky is an Assistant Professor of Computer Science at Purdue University, where he leads the AI Thought Partner Lab in building AI that thinks with people rather than instead of them. His lab develops AI cognitive scientists: systems that propose models of natural and artificial minds and choose the experiments that test them. He is one of five program chairs of CogSci 2027, an Action Editor for TMLR, and co-PI on the DARPA In the Moment program on algorithmic trust. Before Purdue, he was a Faculty Fellow at NYU and a postdoc at Princeton.</p>
       <div class="links">
         <a href="cv.html">CV</a>
         <a href="https://scholar.google.ca/citations?user=6MfHyuMAAAAJ&amp;hl=en">Google Scholar</a>
@@ -481,7 +482,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html" aria-current="page">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html" aria-current="page">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

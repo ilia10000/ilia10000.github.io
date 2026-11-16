@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thinking together</title>
+<title>Human-AI collectives</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
 <style>
   :root{
@@ -39,7 +39,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   /* diagram vocabulary */
@@ -192,11 +192,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html" aria-current="page">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html" aria-current="page">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -211,16 +212,38 @@
 <script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
 
   <div class="open" id="top">
-    <h1>A good partner for one person is not automatically good for the group.</h1>
-    <p class="lede">A partnership that helps one person may not improve a team or a population. Collective outcomes depend on how information, expertise, and deference are organised, whether the members are people, AI systems, or both. Here the object of study is the group: what it learns, what it finds, and what it settles on.</p>
+    <h1>Designing safe and effective human-AI collectives.</h1>
+    <p class="lede">An AI partner that helps one person may not improve a team or a population. Collective outcomes depend on how information, expertise, and deference are organised, whether the members are people, AI systems, or both.</p>
   </div>
+
+  <!-- 0. Teams of AI agents; agents under bad advice -->
+  <section class="part" id="evidence-teams">
+    <div class="pair stack">
+      <div>
+        <h3>Teams of AI agents fail like distributed systems.</h3>
+        <p>In <a href="https://arxiv.org/abs/2603.12229">Mieczkowski et al.</a> (PNAS, in press), we showed that teams of LLM agents share the properties of distributed systems, and fail like them, with conflicting edits when nobody assigns tasks. In <a href="https://arxiv.org/abs/2605.06320">Mieczkowski et al.</a> (NeurIPS 2026), an adaptive shared task graph (LATTE) raised team accuracy from 70% to 80% at about half the token cost.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a>, PNAS (in press). <a href="https://arxiv.org/abs/2605.06320">Improving the Efficiency of Language Agent Teams with Adaptive Task Graphs</a>, NeurIPS 2026.</div>
+      </div>
+      <figure>
+        <img src="assets/web/figs/mieczkowski2026language.jpg" width="1000" height="368" loading="lazy" alt="Three line charts of speedup against number of teammates, one to five, for coding tasks that are highly parallel, mixed, and highly serial, with lines for Claude Sonnet 4.6, Gemini 3 Flash and GPT-5.2 and a dashed Amdahl bound.">
+        <figcaption>Speedup against team size for teams of one to five LLM agents on coding tasks that are highly parallel, mixed, or highly serial, beside the bound from Amdahl's law. Most teams fall short of the bound. Figure from <a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a> (PNAS, in press).</figcaption>
+      </figure>
+    </div>
+    <div class="pair stack">
+      <div>
+        <h3>AI agents act on advice they know is bad.</h3>
+        <p>We found that when a second model gave misleading advice, LLM agents' success fell by about 40 points. Asked directly, the agents rated the advice as bad, yet still acted on it. A vigilance harness that judges the advice separately and tracks how trustworthy the advisor has been recovered most of the loss, about twice as much as a plain warning.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2602.21262">Under the Influence: Evaluating and Improving LLM Vigilance in Agentic Tasks</a>, arXiv 2026.</div>
+      </div>
+    </div>
+  </section>
 
   <!-- 1. Rogers' paradox: evidence, then instrument -->
   <section class="part" id="evidence-rogers">
     <div class="pair flip">
       <div>
         <h3>Adding AI does not automatically improve collective understanding.</h3>
-        <p>In simulation, an AI that learned only socially from the population left equilibrium collective understanding unchanged, even with zero access cost. Gains appeared when learners checked what they copied and fell back on their own learning when it failed, or when the AI also learned for itself. When each use of the AI weakened a learner's own learning, the population settled lower.</p>
+        <p>In <a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Collins, Bhatt &amp; Sucholutsky</a> (Phil. Trans. R. Soc. A 2026), we showed in simulation that adding an AI that learns from everyone does not raise a population's performance unless people use it critically, and can lower it if it erodes their own skills. Gains appeared when learners checked what they copied and fell back on their own learning when it failed, or when the AI also learned for itself. When each use of the AI weakened a learner's own learning, the population settled lower.</p>
         <div class="src"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the Context of Human-AI Interaction</a>, Philosophical Transactions of the Royal Society A, 2026.</div>
       </div>
       <figure>
@@ -232,7 +255,7 @@
 
   <section class="inst" id="rogers">
     <h2>Does a population learn faster when it can copy an AI for free?</h2>
-    <p class="lead">Learners can work an answer out for themselves, which costs effort, or copy someone who already has it for free. Copying spreads because it is cheap, but a population of copiers has nothing new to copy, and an AI that only copies people does not change that. We care because more and more people now take their answers from AI systems that were themselves trained on human output. Below, each square is a learner in a changing world; set how many learners copy, how often the world changes, and what the AI charges, tick the box to let the AI learn for itself, and watch whether the line with the AI settles above the line without it.</p>
+    <p class="lead">Learners can work an answer out for themselves, which costs effort, or copy someone who already has it for free. Copying spreads because it is cheap, but a population of copiers has nothing new to copy, and an AI that only copies people does not change that. This matters because more and more people now take their answers from AI systems that were themselves trained on human output. Below, each square is a learner in a changing world; set how many learners copy, how often the world changes, and what the AI charges, tick the box to let the AI learn for itself, and watch whether the line with the AI settles above the line without it.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div class="q">Watch 400 learners keep up with a changing world.</div>
@@ -271,9 +294,9 @@
   <section class="part" id="evidence-search">
     <div class="pair">
       <div>
-        <h3>Groups that mixed people and language models found good guesses soonest and reached the highest scores.</h3>
-        <p>People explored broadly while the AI exploited promising regions. Mixed groups reached the highest peak and kept a level of diversity between the all-human and all-AI groups. A group of two different language models scored above either model alone but well below the mixed groups, so most of the gain comes from pairing people with AI rather than from having two different agents. The Nature Computational Science comment sets out why groups like these are worth studying with language models in the loop, as participants, environments, analysts, interviewers, or facilitators.</p>
-        <div class="src"><a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a>, 2026. <a href="https://doi.org/10.1038/s43588-025-00848-z">Using large language models to advance the cognitive science of collectives</a>, Nature Computational Science, 2025.</div>
+        <h3>Groups that mix people and an LLM reach the highest scores.</h3>
+        <p>In <a href="https://arxiv.org/abs/2602.10001">Li et al.</a> (CogSci 2026), we found that groups mixing people and an LLM reached the highest scores in a collective word-search game, ahead of all-human and all-AI groups. People explored broadly while the AI exploited promising regions. Mixed groups reached the highest peak and kept a level of diversity between the all-human and all-AI groups. A group of two different language models scored above either model alone but well below the mixed groups, so most of the gain comes from pairing people with AI rather than from having two different agents. The Nature Computational Science comment sets out why groups like these are worth studying with language models in the loop, as participants, environments, analysts, interviewers, or facilitators.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a>, CogSci 2026. <a href="https://doi.org/10.1038/s43588-025-00848-z">Using large language models to advance the cognitive science of collectives</a>, Nature Computational Science, 2025.</div>
       </div>
       <figure>
         <img src="assets/web/collectives.jpg" width="1000" height="365" loading="lazy" alt="Three panels: axes of complexity for collectives; five roles a language model can play in a collective (participant, environment, analyst, interviewer, facilitator); a network integrating the axes.">
@@ -284,7 +307,7 @@
 
   <section class="inst" id="search">
     <h2>Search a hidden landscape beside three fixed strategies.</h2>
-    <p class="intro">When people search for something together, each person's guesses feed the others, so what the group finds depends on the mix of strategies in it. This paper set groups of people and language models on a hidden-word game and asked whether mixed groups find better answers than either alone. We care because a good thought partner should widen what a group can find. Here you search a square for a hidden high point while three computer searchers with fixed strategies guess beside you; compare the best point and the spread of guesses for each of the four of you.</p>
+    <p class="intro">When people search for something together, each person's guesses feed the others, so what the group finds depends on the mix of strategies in it. We set groups of people and LLMs on a hidden-word game and asked whether mixed groups find better answers than either alone. This matters because a good AI partner should widen what a group can find. Here you search a square for a hidden high point while three computer searchers with fixed strategies guess beside you; compare the best point and the spread of guesses for each of the four of you.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div class="q">Find the hidden high point.</div>
@@ -316,7 +339,7 @@
   <!-- 3. Serial reproduction -->
   <section class="inst" id="serial">
     <h2>A chain of reproductions drifts toward what the reproducer expects.</h2>
-    <p class="intro">Pass a message down a chain of people and it drifts until it settles on whatever the people in the chain expect. Where it settles is set by the expectations shared along the chain, which makes the end point a property of the chain rather than of any one member. Cognitive scientists use this drift on purpose to read out shared expectations, and this paper shows that a diffusion model generating an image runs the same kind of chain step by step. Here you play six rounds with a pattern of dots and watch your copies drift.</p>
+    <p class="intro">Pass a message down a chain of people and it drifts until it settles on whatever the people in the chain expect. Where it settles is set by the expectations shared along the chain, which makes the end point a property of the chain rather than of any one member. Cognitive scientists use this drift on purpose to read out shared expectations, and we showed that a diffusion model generating an image runs the same kind of chain step by step. Here you play six rounds with a pattern of dots and watch your copies drift.</p>
     <figure class="stack">
       <img src="assets/web/figs/marjieh2023analyzing.jpg" width="1000" height="153" loading="lazy" alt="Six panels joined by arrows: points scattered across a square move, panel by panel, into three tight clusters at the corners of a triangle.">
       <figcaption>A chain of reconstructions: points scattered over the square move, step by step, toward the three clusters the reconstructor expects. Figure from <a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a>, ICML 2023.</figcaption>
@@ -343,7 +366,7 @@
         </div>
       </div>
     </div>
-    <details class="more"><summary class="node b">What the paper found</summary><div class="body">The optimal reverse step of a diffusion model is a Bayesian posterior with the noise kernel as likelihood and the forward marginal as prior, so its sampling loop has the same structure as serial reproduction, the telephone-game method cognitive scientists use to expose priors. The paper proves the sampled distribution approximates the data distribution for any ergodic noise family as long as the schedule keeps successive marginals near-stationary. In simulation, every noise family recovered a Swiss roll when scheduled gradually and failed under abrupt or constant schedules; on real DDPMs the FID improved with more steps and then plateaued.<div class="src"><a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a>, ICML 2023.</div></div></details>
+    <details class="more"><summary class="node b">What the paper found</summary><div class="body">The optimal reverse step of a diffusion model is a Bayesian posterior with the noise kernel as likelihood and the forward marginal as prior, so its sampling loop has the same structure as serial reproduction, the telephone-game method cognitive scientists use to expose priors. We proved that the sampled distribution approximates the data distribution for any ergodic noise family as long as the schedule keeps successive marginals near-stationary. In simulation, every noise family recovered a Swiss roll when scheduled gradually and failed under abrupt or constant schedules; on real DDPMs the FID improved with more steps and then plateaued.<div class="src"><a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a>, ICML 2023.</div></div></details>
     <details class="more"><summary class="node k">What you just did</summary><div class="body">You ran a six-step serial reproduction chain and watched the two measures move. The paper's point is that a diffusion sampler is doing the same thing: each denoising step is a Bayesian reconstruction whose prior is the forward marginal, and gradual schedules keep those priors close enough between steps that the chain lands on the data distribution.</div></details>
   </section>
 
@@ -352,7 +375,7 @@
     <div class="pair">
       <div>
         <h3>Routing between several agents pays only when they differ.</h3>
-        <p>The paper gives a rule for sending each question to the agent with the highest expected correctness per unit cost, and a measure of when routing is worth doing at all: the best achievable correctness divided by what a random orchestrator achieves, which is bounded below by how different the agents are. In a simulation that extends the Rogers' paradox model above to a population choosing among three AI systems, learners who picked their strategy at random reached an equilibrium adaptation of 0.578; orchestrating that choice gave 0.926. The group does better when the choice of whom to ask is organised, and the paper says when organising it is worth the trouble.</p>
+        <p>We gave a rule for sending each question to the agent with the highest expected correctness per unit cost, and a measure of when routing is worth doing at all: the best achievable correctness divided by what a random orchestrator achieves, which is bounded below by how different the agents are. In a simulation that extends the Rogers' paradox model above to a population choosing among three AI systems, learners who picked their strategy at random reached an equilibrium adaptation of 0.578; orchestrating that choice gave 0.926. The group does better when the choice of whom to ask is organised, and the paper says when organising it is worth the trouble.</p>
         <div class="src"><a href="https://arxiv.org/abs/2503.13577">When should we orchestrate multiple agents?</a>, 2025.</div>
       </div>
       <figure style="max-width:504px">
@@ -364,7 +387,7 @@
 
   <section class="inst" id="orchestrate">
     <h2>Set two agents against two kinds of question.</h2>
-    <p class="intro">When several AI agents are available, someone has to decide which one handles which question. This paper asks when that routing is worth doing at all and answers: only when the agents are good at different things, and only when the cost of switching does not eat the gain. We care because a thought partner is often a small team of models and people rather than one system. Move the sliders to set how good two agents are on easy and hard questions and see whether routing beats using the better one for everything.</p>
+    <p class="intro">When several AI agents are available, someone has to decide which one handles which question. We asked when that routing is worth doing at all and found that it pays only when the agents are good at different things, and only when the cost of switching does not eat the gain. This matters because an AI thought partner is often a small team of models and people rather than one system. Move the sliders to set how good two agents are on easy and hard questions and see whether routing beats using the better one for everything.</p>
 
     <div class="box orch" style="margin-top:var(--u3)">
       <div class="q">When is it worth switching between two AI agents?</div>
@@ -394,7 +417,7 @@
 
   <section class="related" id="related">
     <h2>Related stories</h2>
-    <p>The pair that every group here is built from is the subject of <a href="working-with-ai.html">working with AI</a>, which measures the partnership rather than the person or the model alone. <a href="alignment.html">Alignment and learning</a> asks what representations a whole population shares, which is what a reproduction chain settles on and what an AI trained on everyone inherits. <a href="understanding-people.html">Understanding people</a> studies the individual choices, to copy, explore, or defer, that these simulations add up.</p>
+    <p>Every collective here is built from pairs, and <a href="working-with-ai.html">working with AI</a> measures what an AI partner's help does to one person. <a href="understanding-ai.html">Studying AI systems</a> measures the failures of single models that teams of agents inherit, and <a href="alignment.html">shared representations</a> asks what a whole population shares, which is what a reproduction chain settles on and what an AI trained on everyone inherits.</p>
   </section>
 
   <section class="papers" id="papers">
@@ -404,8 +427,11 @@
         <div class="prow"><img src="assets/web/titles/collins2026revisiting.jpg" width="480" height="271" loading="lazy" alt=""><div><div class="t"><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the Context of Human-AI Interaction</a></div><div class="v">Philosophical Transactions of the Royal Society A, 2026</div></div></div>
         <div class="prow"><img src="assets/web/titles/li2026humanai.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a></div><div class="v">CogSci, 2026</div></div></div>
         <div class="prow"><img src="assets/web/titles/sucholutsky2025using.jpg" width="480" height="254" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1038/s43588-025-00848-z">Using Large Language Models to Advance the Cognitive Science of Collectives</a></div><div class="v">Nature Computational Science, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/mieczkowski2026language.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a></div><div class="v">PNAS (in press), 2026</div></div></div>
       </div>
       <div>
+        <div class="prow"><img src="assets/web/titles/mieczkowski2026efficient.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2605.06320">Improving the Efficiency of Language Agent Teams with Adaptive Task Graphs</a></div><div class="v">NeurIPS, 2026</div></div></div>
+        <div class="prow"><img src="assets/web/titles/robinson2026persuasion.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2602.21262">Under the Influence: Evaluating and Improving LLM Vigilance in Agentic Tasks</a></div><div class="v">arXiv, 2026</div></div></div>
         <div class="prow"><img src="assets/web/titles/marjieh2023analyzing.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2209.14821">Analyzing Diffusion as Serial Reproduction</a></div><div class="v">ICML, 2023</div></div></div>
         <div class="prow"><img src="assets/web/titles/bhatt2025orchestrate.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2503.13577">When Should We Orchestrate Multiple Agents?</a></div><div class="v">arXiv, 2025</div></div></div>
       </div>
@@ -413,7 +439,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html" aria-current="page">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html" aria-current="page">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

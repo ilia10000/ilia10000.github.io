@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alignment and efficient learning</title>
+<title>Shared representations and few-shot learning</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap">
 <style>
   :root{
@@ -40,7 +40,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   /* diagram vocabulary */
@@ -300,11 +300,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb cur" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html" aria-current="page">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html" aria-current="page">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -320,20 +321,20 @@
 
   <div class="open" id="top">
     <h1>What two minds share sets how little has to be said.</h1>
-    <p class="lede">Representational alignment is how much two agents agree about what is similar to what. It sets the cost of learning from each other, and the floor on that cost is lower than most people expect.</p>
+    <p class="lede">Shared representations are the theory behind our AI thought partners: what an AI partner and a person need to share for teaching and learning to be cheap. Representational alignment is how much two agents agree about what is similar to what. It sets the cost of learning from each other, and the floor on that cost is lower than most people expect.</p>
     <nav class="sub" aria-label="sections of this page"><a href="#what">What alignment is</a><a href="#buys">Alignment buys fast learning</a><a href="#little">How little is enough</a></nav>
   </div>
 
   <section class="half first" id="what">
     <h2>What alignment is.</h2>
-    <p class="lead">Two agents are aligned to the extent that they agree about what is similar to what. The lab measures that agreement directly, by putting the same similarity questions to people and to models, and then asks what the agreement buys.</p>
+    <p class="lead">Two agents are aligned to the extent that they agree about what is similar to what. We measure that agreement directly, by putting the same similarity questions to people and to models, and then asks what the agreement buys.</p>
   </section>
 
   <section class="part">
       <div class="pair">
         <div>
           <h3>Alignment is agreement about what is similar to what.</h3>
-          <p>The NeurIPS 2023 paper describes a representation by its similarity judgments, whether an item is closer to a second item than to a third, and defines the alignment of two agents as how far those judgments agree. Scored that way against more than 425,000 human similarity judgments, 491 vision models spread across the whole range. Alignment is a quantity a pair has more or less of, and it can be measured before either side has learned anything from the other.</p>
+          <p>In <a href="https://arxiv.org/abs/2301.11990">Sucholutsky &amp; Griffiths</a> (NeurIPS 2023, spotlight), we scored 491 vision models against more than 425,000 human similarity judgments and found that the most human-aligned models beat less-aligned ones at few-shot learning and robustness. We describe a representation by its similarity judgments, whether an item is closer to a second item than to a third, and define the alignment of two agents as how far those judgments agree. Alignment can be measured before either side has learned anything from the other.</p>
           <div class="src"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a>, NeurIPS 2023.</div>
         </div>
         <figure>
@@ -348,7 +349,7 @@
       <h3>Measure alignment yourself</h3>
       <p>This is the measurement in the figure above, in miniature. We ask which of two colours is closer to a third; sixteen answers give your similarity structure over eight colours, drawn beside Claude Fable 5.1's answers to the same questions, and the correlation between the two is your alignment with that model. The question is the one used in <a href="#papers">Large language models predict human sensory judgments across six modalities</a> (Scientific Reports, 2024), where GPT-4's colour judgments reached r = .84 with people's.</p>
       <details class="more b"><summary>What the paper found</summary>
-        <p>The paper put pairwise similarity questions to GPT-3, GPT-3.5 and GPT-4 for six kinds of sensory stimuli, pitch, loudness, colour, vocal consonants, taste and timbre, and compared the answers with human judgments. GPT-4's correlations with people were r = .92 for pitch, .89 for loudness and .84 for colours, and lower for consonants (.57), taste (.54) and timbre (.42). Multidimensional scaling of the model's judgments recovers the colour wheel and the pitch helix with its octave peaks. GPT-4's gain over the earlier models was about the same size in every modality, so multimodal training is not what drives it.</p>
+        <p>We found that GPT-4's similarity judgments track people's closely for pitch, loudness and colour, and less closely for taste and timbre, from text alone. Its correlations with people were r = .92 for pitch, .89 for loudness and .84 for colours, and lower for consonants (.57), taste (.54) and timbre (.42). Multidimensional scaling of the model's judgments recovers the colour wheel and the pitch helix with its octave peaks.</p>
         <div class="src"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a>, Scientific Reports 2024.</div>
       </details>
       <details class="more k"><summary>What you just did</summary>
@@ -402,7 +403,7 @@
     <div class="pair flip">
       <div>
         <h2>Why alignment is U-shaped.</h2>
-        <p class="intro">When a teacher and a student see the world differently, teaching takes longer, but only up to a point. The paper's theorem says a student who disagrees with the teacher on half of all similarity judgments can learn nothing, while a student who disagrees on nearly all of them can flip every message and learn as fast as one who agrees. We care because how much a person and an AI share in how they see things sets how cheaply they can teach each other. Here you set the disagreement rate and watch how much the student needs to be told.</p>
+        <p class="intro">When a teacher and a student see the world differently, teaching takes longer, but only up to a point. The paper's theorem says a student who disagrees with the teacher on half of all similarity judgments can learn nothing, while a student who disagrees on nearly all of them can flip every message and learn as fast as one who agrees. This matters because how much a person and an AI share in how they see things sets how cheaply they can teach each other. Here you set the disagreement rate and watch how much the student needs to be told.</p>
         <details class="more b"><summary>What the paper found</summary>
           <p>Supervision from a teacher to a student is modelled as a noisy channel whose flip rate &epsilon; is the misalignment, so the bits a student needs scale as d log n / C(&epsilon;), largest at &epsilon; = 0.5 and smallest at &epsilon; = 0 or 1. Across 491 ImageNet-1k models scored against more than 425,000 human similarity judgments, the five most aligned models beat the middle five and the bottom five at every shot count on CIFAR-100 and on every robustness set. On ImageNet-A, top-1 accuracy was 59.9 for the high group, 10.3 for the middle group and 30.9 for the low group. Alignment explained about 20% of one-shot variance in distribution.</p>
           <div class="src"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a>, NeurIPS 2023.</div>
@@ -474,7 +475,7 @@
       <div class="pair stack">
         <div>
           <h3>Teaching as a function of alignment.</h3>
-          <p>In the GRADE study, a teacher and a student work on a number grid. Student accuracy falls as the teacher's error rate rises, and rises with representational alignment between the two; assigning students to teachers by alignment beats random and course-style assignment.</p>
+          <p>In GRADE, we found that an accurate but poorly aligned AI teacher helped simulated students about as much as an aligned AI teacher who was wrong 40% of the time, and alignment also predicted how much human students learned from AI teachers. Assigning students to teachers by alignment beat random and course-style assignment.</p>
           <div class="src"><a href="https://arxiv.org/abs/2406.04302">Representational Alignment Supports Effective Teaching</a>, PMLR 273, 2025.</div>
         </div>
         <figure>
@@ -484,9 +485,19 @@
       </div>
   </section>
 
+  <section class="part" style="padding-top:0">
+    <div class="pair stack">
+      <div>
+        <h3>LLM teachers fit a Bayes-optimal model but do not take coaching.</h3>
+        <p>In <a href="https://arxiv.org/abs/2604.01594">Harootonian et al.</a> (2026), we found that a Bayes-optimal teaching model best fit the teaching choices of 12 LLMs, yet prompts that help human teachers did not reliably help them. The models complied with the prompts, so following an instruction and teaching better came apart.</p>
+        <div class="src"><a href="https://arxiv.org/abs/2604.01594">Do Large Language Models Mentalize When They Teach?</a>, arXiv 2026.</div>
+      </div>
+    </div>
+  </section>
+
   <section class="inst" id="values">
     <h2>Learning values with aligned representations.</h2>
-    <p class="intro">An agent that learns what people value has to guess about actions it has never tried, and it does that by knowing which actions resemble each other. The paper shows that the closer the agent's sense of similarity is to a person's, the faster it learns their values and the fewer bad actions it takes along the way. We care because getting an AI to see things the way a person does may matter more than showing it more examples. Here you set how accurate the agent's similarity table is and watch it learn.</p>
+    <p class="intro">An agent that learns what people value has to guess about actions it has never tried, and it does that by knowing which actions resemble each other. We found that the closer the agent's sense of similarity is to a person's, the faster it learns their values and the fewer bad actions it takes along the way. This matters because getting an AI to see things the way a person does may matter more than showing it more examples. Here you set how accurate the agent's similarity table is and watch it learn.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div class="q">An agent learns which actions are bad</div>
@@ -525,16 +536,16 @@
 
   <section class="half" id="little">
     <h2>How little is enough.</h2>
-    <p class="lead">Shared representations set how much a learner needs to be told. The floor is lower than most people expect. The lab introduced less-than-one-shot learning, where a learner extracts more categories from a training set than there are examples in it (<a href="https://ojs.aaai.org/index.php/AAAI/article/view/17171">'Less Than One'-Shot Learning</a>, AAAI 2021), and has since mapped how far that goes for machines and for people.</p>
+    <p class="lead">Shared representations set how much a learner needs to be told. The floor is lower than most people expect. We introduced less-than-one-shot learning, where a learner extracts more categories from a training set than there are examples in it (<a href="https://ojs.aaai.org/index.php/AAAI/article/view/17171">'Less Than One'-Shot Learning</a>, AAAI 2021), and have since mapped how far that goes for machines and for people.</p>
     <figure>
-      <img src="assets/web/fslspace.jpg" width="1000" height="597" loading="lazy" alt="Scatter plot of number of categories against number of labelled examples, both on log scales. A diagonal 1-shot line divides the plot; the lab's results sit above it in the less-than-one-shot region, capped by a steep doubly-exponential bound, while MNIST, CIFAR-10, ImageNet, BabyLM and GPT and LLaMA pretraining sit far below it.">
-      <figcaption>The few-shot landscape. Number of categories learned against number of labelled examples, both on log scales. Above the 1-shot line a learner gets more categories than examples; the lab's results sit in that wedge, up to the doubly-exponential bound from <a href="https://escholarship.org/uc/item/011374xq">Learning a doubly-exponential number of concepts from few examples</a> (CogSci 2025). Standard benchmarks and language-model pretraining sit far below the line.</figcaption>
+      <img src="assets/web/fslspace.jpg" width="1000" height="597" loading="lazy" alt="Scatter plot of number of categories against number of labelled examples, both on log scales. A diagonal 1-shot line divides the plot; our results sit above it in the less-than-one-shot region, capped by a steep doubly-exponential bound, while MNIST, CIFAR-10, ImageNet, BabyLM and GPT and LLaMA pretraining sit far below it.">
+      <figcaption>The few-shot landscape. Number of categories learned against number of labelled examples, both on log scales. Above the 1-shot line a learner gets more categories than examples; our results sit in that wedge, up to the doubly-exponential bound from <a href="https://escholarship.org/uc/item/011374xq">Learning a doubly-exponential number of concepts from few examples</a> (CogSci 2025). Standard benchmarks and language-model pretraining sit far below the line.</figcaption>
     </figure>
   </section>
 
   <section class="inst" id="loshot">
     <h2>Two examples can teach three classes.</h2>
-    <p class="lead">A classifier usually needs at least one example of every class it is meant to recognise. If each example carries a mix of labels, saying how much it belongs to each class, two examples can mark out three classes, and a few examples can mark out many more. We care because a teacher and a learner who share a space can say a lot with a few well-placed examples, and this is one route to machines that learn new categories from as few examples as people do. Below, the two dots are the only examples the classifier has seen; drag them or move the sliders, and count the coloured stretches of the line.</p>
+    <p class="lead">A classifier usually needs at least one example of every class it is meant to recognise. If each example carries a mix of labels, saying how much it belongs to each class, two examples can mark out three classes, and a few examples can mark out many more. This matters because a teacher and a learner who share a space can say a lot with a few well-placed examples, and this is one route to machines that learn new categories from as few examples as people do. Below, the two dots are the only examples the classifier has seen; drag them or move the sliders, and count the coloured stretches of the line.</p>
 
     <div class="box lo" style="margin-top:var(--u3)">
       <div class="q">Two examples, three classes.</div>
@@ -557,7 +568,7 @@
 
   <section class="inst" id="aliens">
     <h2>Learning 256 concepts from four examples.</h2>
-    <p class="lead">A few examples can carry a lot if a teacher chooses them well. In the paper, four alien pictures and eight made-up words were enough for people to learn eight body features and combine them into 256 possible aliens. We study this because a partner that teaches should be able to say a great deal with a handful of well-chosen examples. Here you learn the eight words from the four aliens, then label six new ones.</p>
+    <p class="lead">A few examples can carry a lot if a teacher chooses them well. In the paper, four alien pictures and eight made-up words were enough for people to learn eight body features and combine them into 256 possible aliens. This matters because an AI partner that teaches should be able to say a great deal with a handful of well-chosen examples. Here you learn the eight words from the four aliens, then label six new ones.</p>
 
     <div class="box" style="margin-top:var(--u3)">
       <div class="q">Learn eight alien words</div>
@@ -586,7 +597,7 @@
     <div class="pair">
       <div>
         <h2>Three categories from two examples.</h2>
-        <p class="lead">People can learn a category without ever seeing an example of it. In the paper, two dinosaurs came with mixed labels such as 60% species 1, 30% species 2, 10% species 3, and people then sorted new dinosaurs into all three species, including the one neither example mostly belonged to. We care because partial, uncertain labels are how people and machines often describe things to each other. Here you see two example creatures with mixed labels and sort twelve new ones.</p>
+        <p class="lead">People can learn a category without ever seeing an example of it. In the paper, two dinosaurs came with mixed labels such as 60% species 1, 30% species 2, 10% species 3, and people then sorted new dinosaurs into all three species, including the one neither example mostly belonged to. This matters because partial, uncertain labels are how people and machines often describe things to each other. Here you see two example creatures with mixed labels and sort twelve new ones.</p>
         <details class="more"><summary class="node b">What the paper found</summary><div class="body"><p>70 participants saw two dinosaurs with soft labels and classified 20 new ones from each of two shape families, with 14 different label pairs. Their answers followed the labels: a participant agreed with their own answers across the two families 74.1% of the time and with other participants 68.2%, against 33.3% by chance. A prototype model with three fitted prototypes fit the responses best (R&sup2; = .61), ahead of exemplar models using the nearest one (.28) or two (.30) examples.</p><div class="src"><a href="https://arxiv.org/abs/2202.04670">Can Humans Do Less-Than-One-Shot Learning?</a>, CogSci 2022.</div></div></details>
         <details class="more"><summary class="node k">What you just did</summary><div class="body"><p>You did the paper's task on a plane instead of a line: two examples, three species, and a series of new creatures to sort. The paper's question was whether people's answers follow the soft labels at all, and which model of the learner predicts them; its answer was that they do, and that three prototypes predict people better than the examples themselves do.</p></div></details>
       </div>
@@ -629,7 +640,7 @@
 
   <section class="related" id="related">
     <h2>Related stories</h2>
-    <p>The two sides of every alignment measured here have pages of their own: <a href="understanding-people.html">understanding people</a> measures what a particular person represents, perceives and chooses, and <a href="understanding-ai.html">understanding AI systems</a> runs the same tasks on a model. <a href="working-with-ai.html">Working with AI</a> takes up what alignment buys once the two are a pair: whether the help leaves the person more capable, how they take its advice, and what it costs them.</p>
+    <p>This is the theory for our AI thought partners. <a href="understanding-people.html">Understanding people</a> measures what a particular person represents, perceives and chooses, and <a href="working-with-ai.html">working with AI</a> measures what an AI partner's help does to the person: whether it leaves them more capable, how they take its advice, and what it costs them. <a href="understanding-ai.html">Studying AI systems</a> runs the same tasks on models.</p>
   </section>
 
   <section class="papers" id="papers">
@@ -639,6 +650,7 @@
         <div class="prow"><img src="assets/web/titles/sucholutsky2023alignment.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2301.11990">Alignment with human representations supports robust few-shot learning</a></div><div class="v">NeurIPS, 2023</div></div></div>
         <div class="prow"><img src="assets/web/titles/wynn2024learning.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2312.14106">Learning Human-like Representations to Enable Learning Human Values</a></div><div class="v">NeurIPS, 2024</div></div></div>
         <div class="prow"><img src="assets/web/titles/sucholutsky2025representational.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2406.04302">Representational Alignment Supports Effective Teaching</a></div><div class="v">Proceedings of Machine Learning Research, 2025</div></div></div>
+        <div class="prow"><img src="assets/web/titles/harootonian2026do.jpg" width="480" height="248" loading="lazy" alt=""><div><div class="t"><a href="https://arxiv.org/abs/2604.01594">Do Large Language Models Mentalize When They Teach?</a></div><div class="v">arXiv, 2026</div></div></div>
         <div class="prow"><img src="assets/web/titles/marjieh2024llms.jpg" width="480" height="252" loading="lazy" alt=""><div><div class="t"><a href="https://doi.org/10.1038/s41598-024-72071-1">Large language models predict human sensory judgments across six modalities</a></div><div class="v">Scientific Reports, 2024</div></div></div>
       </div>
       <div>
@@ -650,7 +662,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html" aria-current="page">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html" aria-current="page">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

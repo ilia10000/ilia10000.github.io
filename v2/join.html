@@ -35,7 +35,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   .open{padding:var(--u4) 0 var(--u4);max-width:66ch}
@@ -76,11 +76,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -121,15 +122,16 @@
     <h2>What we are working on now.</h2>
     <div class="cols">
       <div>
-        <p>The lab opened at Purdue in August 2026, and the first projects follow the five research stories. On <span class="node k">people</span>, we are building systems that learn how one person represents a problem from a handful of interactions, and that show what they are still unsure about, using similarity and triplet judgments as the measurement.</p>
-        <p>On <span class="node k">working with AI</span>, we want to know whether a person is more capable after working with a partner than before. That means pre-registered studies with held-out tasks after the partner is gone, rather than judging the partnership by the quality of its joint output.</p>
+        <p>The lab opened at Purdue in August 2026, and our first projects follow the three thrusts. On <span class="node k">AI systems</span>, we are building AI scientists that design and run cognitive experiments on models.</p>
+        <p>On <span class="node k">studying users</span>, we are building systems that learn how one person represents a problem from a handful of interactions, and that show what they are still unsure about, using similarity and triplet judgments as the measurement.</p>
+        <p>On <span class="node k">working with AI</span>, we want to know whether a person is more capable after working with an AI partner than before. That means pre-registered studies with held-out tasks after the AI partner is gone, rather than judging the pair by the quality of its joint output.</p>
       </div>
       <div>
-        <p>On <span class="node k">thinking together</span>, we are asking when human-AI partnerships that help each person also help the group discover and correct its errors, and when they fail to compose. The tools are group experiments, agent-based simulations, and measures from the collective-intelligence literature.</p>
+        <p>On <span class="node k">collectives</span>, we are asking when human-AI partnerships that help each person also help the group discover and correct its errors, and when they fail to compose. The tools are group experiments, agent-based simulations, and measures from the collective-intelligence literature.</p>
         <p>Each of these is a place where a new student could start.</p>
       </div>
     </div>
-    <div class="btnrow"><a class="learn" href="understanding-people.html">More on understanding people</a><a class="learn" href="working-with-ai.html">More on working with AI</a><a class="learn" href="thinking-together.html">More on thinking together</a></div>
+    <div class="btnrow"><a class="learn" href="understanding-ai.html">Studying AI systems</a><a class="learn" href="understanding-people.html">Understanding people</a><a class="learn" href="working-with-ai.html">Working with AI</a><a class="learn" href="thinking-together.html">Human-AI collectives</a></div>
   </section>
 
   <section class="blk" id="purdue">
@@ -151,7 +153,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html" aria-current="page">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html">News</a><a href="join.html" aria-current="page">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>

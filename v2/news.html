@@ -35,7 +35,7 @@
   .dd{position:relative}
   .dd .menu{display:none;position:absolute;top:100%;left:-14px;background:var(--ground);border:2px solid var(--edge);padding:6px 0;min-width:280px;z-index:20}
   @media (hover:hover){ .dd:hover .menu{display:block} } .dd.open .menu{display:block}
-  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
+  .dd .menu a{display:block;padding:7px 14px;white-space:nowrap} .dd .menu .mh{display:block;padding:10px 14px 2px;font-size:13px;color:var(--ink-3)} .dd .menu a.sub{padding-left:28px} @media (max-width:600px){ .dd .menu{min-width:0;width:calc(100vw - 48px)} .dd .menu a{white-space:normal} } .dd .menu a:hover{background:var(--khaki);color:var(--khaki-ink);text-decoration:none}
   @media (max-width:600px){ .mast{flex-direction:column;align-items:flex-start} .mast .name span{display:block;margin-left:0} .nav{column-gap:var(--u2)} .dd .menu{left:0} }
 
   .open{padding:var(--u4) 0 var(--u4);max-width:66ch}
@@ -81,11 +81,12 @@
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
-          <a href="understanding-people.html">Understanding people</a>
-          <a href="understanding-ai.html">Understanding AI systems</a>
-          <a href="alignment.html">Alignment and efficient learning</a>
-          <a href="working-with-ai.html">Working with AI</a>
-          <a href="thinking-together.html">Thinking together</a>
+          <a href="understanding-ai.html">Studying AI systems</a>
+          <span class="mh">AI thought partners</span>
+          <a class="sub" href="understanding-people.html">Understanding people</a>
+          <a class="sub" href="alignment.html">Foundations: shared representations and few-shot learning</a>
+          <a class="sub" href="working-with-ai.html">Working with AI</a>
+          <a href="thinking-together.html">Human-AI collectives</a>
         </div>
       </div>
       <a href="papers.html">Papers</a>
@@ -105,13 +106,19 @@
   <section class="yr">
     <h2>2026</h2>
     <div class="items">
-      <div><span>October 2026</span>Ilia is co-chairing CogSci 2027, "Human Cognition in the Age of AI", in Bilbao, Spain, July 28&ndash;31, 2027.</div>
+      <div><span>2026</span>Three papers at NeurIPS 2026, on <a href="https://arxiv.org/abs/2605.21834">safer LLMs through on-policy consistency training</a> (Han et al.), <a href="https://arxiv.org/abs/2605.06320">efficient LLM agent teams with adaptive task graphs</a> (Mieczkowski et al.), and <a href="https://arxiv.org/abs/2604.02485">confirmation bias in LLMs</a> (Jhaveri et al.).</div>
+      <div><span>2026</span><a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a> (Mieczkowski et al.) is in press at PNAS.</div>
+      <div><span>2026</span>Ilia joins Transactions on Machine Learning Research as an Action Editor, and serves as Area Chair for ICLR 2027.</div>
+      <div><span>2026</span><a href="https://doi.org/10.1609/aies.v9i2.43225">Measuring and Mitigating (Over)reliance to Build Human-Compatible AI</a> (Ibrahim et al.) appears at AIES 2026.</div>
+      <div><span>October 2026</span>Ilia is helping lead CogSci 2027, the annual conference of the Cognitive Science Society, as one of its five program chairs (Bilbao, Spain, July 28&ndash;31, 2027).</div>
       <div><span>August 2026</span>The lab opens at Purdue with six PhD students; the graduate seminar "AI Thought Partners" begins.</div>
       <div><span>July 2026</span>Four lab papers at CogSci 2026, and the workshop "The Cognitive Science of AI Alignment" runs at the conference.</div>
+      <div><span>June 2026</span><a href="https://arxiv.org/abs/2502.01540">What is a Number, That a Large Language Model May Know It?</a> is published in Transactions on Machine Learning Research.</div>
       <div><span>May 2026</span><a href="https://royalsocietypublishing.org/doi/10.1098/rsta.2025.0149">Revisiting Rogers' Paradox in the context of human-AI interaction</a> is published in Philosophical Transactions of the Royal Society A.</div>
-      <div><span>April 2026</span>New preprint: <a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a> (Mieczkowski et al.) reframes multi-agent LLM workflows using distributed-systems primitives.</div>
       <div><span>March 2026</span><a href="https://dl.acm.org/doi/10.1145/3803024">Identifying, evaluating, and mitigating risks of AI thought partnerships</a> is published in ACM AI Letters.</div>
       <div><span>March 2026</span>New preprints: <a href="https://arxiv.org/abs/2602.10001">Human-AI Synergy Supports Collective Creative Search</a> and <a href="https://arxiv.org/abs/2602.10473">Why Human Guidance Matters in Collaborative Vibe Coding</a>.</div>
+      <div><span>March 2026</span>New preprint: <a href="https://arxiv.org/abs/2603.12229">Language Model Teams as Distributed Systems</a> (Mieczkowski et al.) shows that teams of LLM agents fail in the ways distributed systems do.</div>
+      <div><span>March 2026</span><a href="https://doi.org/10.1073/pnas.2420179123">One test, many tongues</a> (van Rijn et al.) is published in PNAS.</div>
       <div><span>January 2026</span>Ilia is serving as Area Chair for ICLR 2026, ICML 2026, and NeurIPS 2026.</div>
     </div>
   </section>
@@ -139,7 +146,7 @@
   </section>
 
   <footer>
-    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-people.html">Understanding people</a><a href="understanding-ai.html">Understanding AI systems</a><a href="alignment.html">Alignment and efficient learning</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Thinking together</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html" aria-current="page">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
+    <nav class="site" aria-label="Site"><div><b>Research</b><a href="understanding-ai.html">Studying AI systems</a><a href="understanding-people.html">Understanding people</a><a href="alignment.html">Shared representations</a><a href="working-with-ai.html">Working with AI</a><a href="thinking-together.html">Human-AI collectives</a></div><div><b>Lab</b><a href="index.html">Home</a><a href="papers.html">Papers</a><a href="people.html">People</a><a href="news.html" aria-current="page">News</a><a href="join.html">Join</a></div><div><b>Ilia Sucholutsky</b><a href="teaching.html">Teaching</a><a href="cv.html">CV</a><a href="contact.html">Contact</a></div></nav>
     <div class="addr">AI Thought Partner Lab, Department of Computer Science, Purdue University, West Lafayette, Indiana</div>
   </footer>
 </div>
