@@ -30,9 +30,6 @@
   .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:var(--u4);row-gap:var(--u1);padding:var(--u2) 0;border-bottom:2px solid var(--edge);position:relative}
   .mast .name{font-weight:700;font-size:var(--s1);color:var(--ink);text-decoration:none}
   .mast .name span{font-weight:400;color:var(--ink-3);margin-left:var(--u2)}
-  .mast{align-items:flex-start}
-  .mast .brand{display:flex;flex-direction:column}
-  .mast .motto{margin:4px 0 0;font-size:14px;line-height:1.3;color:var(--ink-2);max-width:none}
   .nav{display:flex;flex-wrap:wrap;column-gap:var(--u3);row-gap:var(--u1);font-size:15px;align-items:baseline}
   .nav a,.ddb{color:var(--ink);text-decoration:none} .nav a:hover,.ddb:hover{text-decoration:underline} .nav a[aria-current=page],.ddb.cur{font-weight:700}
   .ddb{background:none;border:0;padding:0;font:inherit;cursor:pointer;line-height:inherit} .ddb::after{content:" \25BE";font-size:11px}
@@ -217,7 +214,7 @@
 <div class="page">
 
   <header class="mast">
-    <div class="brand"><a class="name" href="index.html" aria-current="page">AI Thought Partner Lab <span>Purdue Computer Science</span></a><p class="motto">AI that thinks with people rather than instead of them</p></div>
+    <a class="name" href="index.html" aria-current="page">AI Thought Partner Lab <span>Purdue Computer Science</span></a>
     <nav class="nav" aria-label="Main">
       <div class="dd"><button type="button" class="ddb" aria-expanded="false" aria-controls="menu-research">Research</button>
         <div class="menu" id="menu-research">
@@ -241,14 +238,14 @@
 <script>document.querySelectorAll('.ddb').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const o=b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',o);}));document.addEventListener('click',e=>{document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ddb').setAttribute('aria-expanded','false');}});});</script>
 
   <div class="open">
-    <h1>We build AI cognitive scientists.</h1>
-    <p class="lede">These systems study how people and AI think, so AI can work with people and people can oversee AI.</p>
+    <h1>AI that thinks with people rather than instead of them.</h1>
+    <p class="lede">AI is spreading faster than we can study how it changes people. We build AI cognitive scientists to keep up.</p>
     <p class="who-line">Directed by Ilia Sucholutsky, Assistant Professor of Computer Science at Purdue. <a href="join.html">We are recruiting PhD students for Fall 2027.</a></p>
   </div>
 
   <section class="part" id="program" style="padding-top:0;border-top:none">
     
-    <p class="lead tight">AI is entering classrooms, workplaces, and homes faster than researchers, running one experiment at a time, can measure its effects.</p>
+    
     <p>Our AI cognitive scientists propose executable hypotheses about a natural or artificial mind, select the experiments that best distinguish them, and validate the resulting models. In <a href="https://www.nature.com/articles/s41562-024-01991-9">Collins, Sucholutsky et al.</a> (2024), we argued that an AI thought partner needs a model of the person, behavior the person can understand, and a shared model of the world. We pursue this program in three thrusts: studying AI systems so people can oversee them, studying individual users so an AI partner can teach and advise them, and studying groups to design safe and effective human-AI collectives.</p>
   <figure class="herofig progfig">
       <img src="assets/web/thought_partners.jpg" width="1000" height="295" alt="Three diagrams. Humans as thought partners: Alice and Bob each hold beliefs about the other and about the world, and produce a product of thought together. Machines as tools: Alice holds beliefs about the machine and the world; the machine only receives. Machines as thought partners: the machine also holds beliefs about Alice.">
